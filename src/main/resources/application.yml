@@ -1,0 +1,9 @@
+spring:
+  datasource:
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
