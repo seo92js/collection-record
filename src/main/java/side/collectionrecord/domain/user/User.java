@@ -21,13 +21,13 @@ public class User {
     private String password;
 
     @Column
-    private String profile_image;
+    private String profileImage;
 
     @Builder
-    public User(String username, String email, String password, String profile_image){
+    public User(String username, String email, String password, String profileImage){
         this.username = username;
         this.email = email;
         this.password = password;
-        this.profile_image = profile_image;
+        this.profileImage = profileImage;
     }
 }
