@@ -2,19 +2,21 @@ package side.collectionrecord.web.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class UserDto {
+@NoArgsConstructor
+public class UserJoinDto {
     private String username;
     private String password;
     private String email;
-    private String profileImage;
+    private String profile;
 
     @Builder
-    public UserDto(String username, String password, String email, String profileImage){
+    public UserJoinDto(String username, String password, String email, String profile){
         this.username = username;
         this.password = password;
         this.email = email;
-        this.profileImage = profileImage;
+        this.profile = profile;
     }
 }

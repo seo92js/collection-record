@@ -26,13 +26,13 @@ class UserRepositoryTest {
         String username = "seo";
         String email = "test@test.com";
         String password = "ff";
-        String profileImage = "ff";
+        String profile = "ff";
 
         userRepository.save(User.builder()
                         .username(username)
                         .email(email)
                         .password(password)
-                        .profileImage(null)
+                        .profile(null)
                 .build());
 
         //when
@@ -43,6 +43,6 @@ class UserRepositoryTest {
         assertThat(findUser.getUsername()).isEqualTo(username);
         assertThat(findUser.getEmail()).isEqualTo(email);
         assertThat(findUser.getPassword()).isEqualTo(password);
-        assertThat(findUser.getProfileImage()).isEqualTo(profileImage);
+        assertThat(findUser.getProfile()).isEqualTo(profile);
     }
 }

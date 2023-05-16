@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 public class User {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -21,13 +21,18 @@ public class User {
     private String password;
 
     @Column
-    private String profileImage;
+    private String profile;
 
     @Builder
-    public User(String username, String email, String password, String profileImage){
+    public User(String username, String email, String password, String profile){
         this.username = username;
         this.email = email;
         this.password = password;
-        this.profileImage = profileImage;
+        this.profile = profile;
+    }
+
+    public void update(String username, String profile){
+        this.username = username;
+        this.profile = profile;
     }
 }
