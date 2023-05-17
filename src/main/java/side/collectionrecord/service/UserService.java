@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.UserJoinDto;
-import side.collectionrecord.web.dto.UserUpdateDto;
+import side.collectionrecord.web.dto.UserLoginDto;
 
 @RequiredArgsConstructor
 @Service
@@ -25,15 +25,8 @@ public class UserService {
     }
 
     @Transactional
-    public Long update(Long id, UserUpdateDto userUpdateDto){
-        User findUser = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("유저가 없습니다. id=" + id));
-
-        findUser.update(
-                userUpdateDto.getUsername(),
-                userUpdateDto.getProfile()
-        );
-
-        return id;
+    public User login(UserLoginDto userLoginDto){
+        return userRepository.findByEmail(userLoginDto.getEmail()).filter(u -> u.getPassword().equals(userLoginDto.getPassword())
+                ).orElse(null);
     }
 }

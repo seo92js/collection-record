@@ -2,11 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header">
   <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
-
-  <title>Collection</title>
+  <!--<title>Collection</title>-->
 </head>
 <body>
-<H1>COLLECTION</H1>
-<div th:replace="fragments/footer :: footer" />
+  <H1>COLLECTION</H1>
+  <a class="btn btn-primary" href="/users/join">회원 가입</a>
+  <a class="btn btn-primary" href="/users/login">로그인</a>
+  <div th:replace="fragments/footer :: footer" />
 </body>
 </html>

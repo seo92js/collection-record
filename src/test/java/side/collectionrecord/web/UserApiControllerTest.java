@@ -14,7 +14,6 @@ import org.springframework.web.context.WebApplicationContext;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.UserJoinDto;
-import side.collectionrecord.web.dto.UserUpdateDto;
 
 import java.util.List;
 
@@ -91,42 +90,5 @@ class UserApiControllerTest {
         List<User> all = userRepository.findAll();
         User findUser = all.get(0);
         assertThat(findUser.getUsername()).isEqualTo(userDto.getUsername());
-    }
-
-    @Test
-    public void 정보수정() throws Exception{
-        //given
-        User savedUser = userRepository.save(User.builder()
-                .username("1")
-                .password("1")
-                .email("1")
-                .profile("1")
-                .build());
-
-        Long savedId = savedUser.getId();
-
-        String updateUsername = "2";
-        String updateProfile = "2";
-
-        UserUpdateDto userUpdateDto = UserUpdateDto.builder()
-                .username(updateUsername)
-                .profile(updateProfile)
-                .build();
-
-        String url = "http://localhost:" + port + "/api/v1/users/" + savedId;
-
-        HttpEntity<UserUpdateDto> userUpdateDtoHttpEntity = new HttpEntity<>(userUpdateDto);
-
-        //when
-        mvc.perform(put(url)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(userUpdateDto)))
-                .andExpect(status().isOk());
-        //then
-
-        List<User> all = userRepository.findAll();
-        User findUser = all.get(0);
-        assertThat(findUser.getUsername()).isEqualTo(updateUsername);
-        assertThat(findUser.getProfile()).isEqualTo(updateProfile);
     }
 }
