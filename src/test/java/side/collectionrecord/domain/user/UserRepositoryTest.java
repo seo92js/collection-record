@@ -33,7 +33,7 @@ class UserRepositoryTest {
                         .username(username)
                         .email(email)
                         .password(password)
-                        .profile(null)
+                        .profile(profile)
                 .build());
 
         //when
