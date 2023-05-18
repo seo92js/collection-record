@@ -1,4 +1,7 @@
-document.getElementById("user-join-btn").addEventListener('click', userJoin);
+document.getElementById("user-join-btn").addEventListener('click', function(event) {
+    event.preventDefault();
+    userJoin();
+});
 
 const joinForm = document.getElementById("user-join-form");
 
