@@ -22,6 +22,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -92,35 +93,31 @@ class UserApiControllerTest {
     @Test
     public void 로그인() throws Exception{
         //given
+        String email = "test@naver.com";
+        String password = "1234";
         //회원가입
-        UserJoinDto userDto = joinDtoBuild();
+        User user = User.builder()
+                .username("test")
+                .password(password)
+                .email(email)
+                .profile("Test")
+                .build();
 
-        String url = "http://localhost:" + port + "/api/v1/user-join";
-
-        mvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(userDto)))
-                .andExpect(status().isOk());
+        userRepository.save(user);
 
         //로그인
         UserLoginDto loginDto = UserLoginDto.builder()
-                .email("test@naver.com")
-                .password("1234")
+                .email(email)
+                .password(password)
                 .build();
 
-        url = "http://localhost:" + port + "/api/v1/user-login";
+        String url = "http://localhost:" + port + "/api/v1/user-login";
 
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(loginDto)))
-                .andExpect(status().isOk());
-
-        //then
-        //이어서 해야함
-        //이어서 해야함
-        //이어서 해야함
-        //이어서 해야함
-
+                        .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value("로그인에 성공하였습니다."));
     }
 
     public UserJoinDto joinDtoBuild(){
