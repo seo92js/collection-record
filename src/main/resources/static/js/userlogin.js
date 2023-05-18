@@ -1,4 +1,7 @@
-document.getElementById("user-login-btn").addEventListener('click', userLogin);
+document.getElementById("user-login-btn").addEventListener('click', function(event) {
+    event.preventDefault();
+    userLogin();
+});
 
 const joinForm = document.getElementById("user-login-form");
 
@@ -13,7 +16,6 @@ function userLogin(){
     $.ajax({
         type: 'POST',
         url: '/api/v1/user-login',
-        dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(userLoginDto)
     }).done(function(){

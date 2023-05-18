@@ -1,12 +1,17 @@
 package side.collectionrecord.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.UserJoinDto;
 import side.collectionrecord.web.dto.UserLoginDto;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,13 +25,15 @@ public class UserApiController {
     }
 
     @PostMapping("/api/v1/user-login")
-    public ResponseEntity<String> login(@RequestBody UserLoginDto userLoginDto){
+    public ResponseEntity login(@RequestBody UserLoginDto userLoginDto, HttpServletRequest httpServletRequest){
         User loginUser = userService.login(userLoginDto);
 
-        if(loginUser == null){
-            return ResponseEntity.badRequest().body("로그인에 실패하였습니다.");
+        if(loginUser != null){
+            HttpSession httpSession = httpServletRequest.getSession();
+            httpSession.setAttribute("user", userLoginDto);
+            return new ResponseEntity(HttpStatus.OK);
         }else{
-            return ResponseEntity.ok().body("로그인에 성공하였습니다.");
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
 }
