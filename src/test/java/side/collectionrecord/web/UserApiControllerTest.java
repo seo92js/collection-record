@@ -123,8 +123,7 @@ class UserApiControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(loginDto)))
                         .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value("로그인에 성공하였습니다."))
-                .andExpect(status().isOk());
+                .andExpect(jsonPath("$").value("로그인에 성공하였습니다."));
     }
 
     @Test
