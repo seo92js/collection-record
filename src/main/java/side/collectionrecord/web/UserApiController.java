@@ -9,7 +9,6 @@ import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.UserJoinDto;
 import side.collectionrecord.web.dto.UserLoginDto;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -19,10 +18,11 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("/api/v1/user-join")
-    public Long save(@RequestBody UserJoinDto userJoinDto){
+    public Long save (@RequestBody UserJoinDto userJoinDto){
         Long id = userService.join(userJoinDto);
         return id;
     }
+
 
     @PostMapping("/api/v1/user-login")
     public ResponseEntity login(@RequestBody UserLoginDto userLoginDto, HttpServletRequest httpServletRequest){
@@ -30,10 +30,17 @@ public class UserApiController {
 
         if(loginUser != null){
             HttpSession httpSession = httpServletRequest.getSession();
-            httpSession.setAttribute("user", userLoginDto);
+            httpSession.setAttribute("username", loginUser.getUsername());
             return new ResponseEntity(HttpStatus.OK);
         }else{
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @PostMapping("api/v1/user-logout")
+    public void logout(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+
+        session.invalidate();
     }
 }

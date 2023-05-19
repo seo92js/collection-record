@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -17,11 +18,12 @@ import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.UserJoinDto;
 import side.collectionrecord.web.dto.UserLoginDto;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -40,6 +42,9 @@ class UserApiControllerTest {
 
     @Autowired
     private WebApplicationContext context;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @AfterEach
     public void cleanup(){
@@ -114,13 +119,41 @@ class UserApiControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(loginDto)))
                 .andExpect(status().isOk());
+    }
 
-        //then
-        //이어서 해야함
-        //이어서 해야함
-        //이어서 해야함
-        //이어서 해야함
+    @Test
+    public void 로그아웃() throws  Exception{
+        //회원가입
+        UserJoinDto userDto = joinDtoBuild();
 
+        String url = "http://localhost:" + port + "/api/v1/user-join";
+
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(userDto)))
+                .andExpect(status().isOk());
+
+        // 로그인
+        UserLoginDto loginDto = UserLoginDto.builder()
+                .email("test@naver.com")
+                .password("1234")
+                .build();
+
+        HttpSession session = mvc.perform(post("/api/v1/user-login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(loginDto)))
+                .andExpect(status().isOk())
+                .andReturn().getRequest().getSession(false);
+
+
+        // 로그아웃
+        session = mvc.perform(post("/api/v1/user-logout")
+                        .session((MockHttpSession) session)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getRequest().getSession(false);
+
+        assertThat(session).isNull();
     }
 
     public UserJoinDto joinDtoBuild(){

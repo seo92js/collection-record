@@ -6,8 +6,19 @@
 </head>
 <body>
   <H1>COLLECTION</H1>
-  <a class="btn btn-primary" href="/user/join">회원 가입</a>
-  <a class="btn btn-primary" href="/user/login">로그인</a>
+
+  <div th:if="${login}">
+    <span th:text="|${username} 님|"></span>
+    <button class="btn btn-primary" id="user-logout-btn">로그아웃</button>
+  </div>
+
+  <div th:unless="${login}">
+    <a class="btn btn-primary" href="/user/join">회원 가입</a>
+    <a class="btn btn-primary" href="/user/login">로그인</a>
+  </div>
+
+  <script src="/js/userlogout.js"></script>
+
   <div th:replace="fragments/footer :: footer" />
 </body>
 </html>
