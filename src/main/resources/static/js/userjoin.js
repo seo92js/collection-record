@@ -12,7 +12,7 @@ function userJoin(){
         username: formData.get('username'),
         password: formData.get('password'),
         email: formData.get('email'),
-        profile: formData.get('profile')
+        image: formData.get('image')
     };
 
     if(!checkRequiredValue(userJoinDto))

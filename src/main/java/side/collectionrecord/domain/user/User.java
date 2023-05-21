@@ -22,18 +22,18 @@ public class User extends BaseTimeEntity {
     private String password;
 
     @Column
-    private String profile;
+    private String image;
 
     @Builder
-    public User(String username, String email, String password, String profile){
+    public User(String username, String email, String password, String image){
         this.username = username;
         this.email = email;
         this.password = password;
-        this.profile = profile;
+        this.image = image;
     }
 
-    public void update(String username, String profile){
+    public void update(String username, String image){
         this.username = username;
-        this.profile = profile;
+        this.image = image;
     }
 }

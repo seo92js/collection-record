@@ -8,6 +8,7 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.UserJoinDto;
 import side.collectionrecord.web.dto.UserLoginDto;
+import side.collectionrecord.web.dto.UserProfileDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,6 +31,7 @@ public class UserApiController {
 
         if(loginUser != null){
             HttpSession httpSession = httpServletRequest.getSession();
+            httpSession.setAttribute("userId", loginUser.getId());
             httpSession.setAttribute("username", loginUser.getUsername());
             return new ResponseEntity(HttpStatus.OK);
         }else{
@@ -42,5 +44,18 @@ public class UserApiController {
         HttpSession session = request.getSession(false);
 
         session.invalidate();
+    }
+
+    @PutMapping("api/v1/user-update")
+    public Long update(@RequestBody UserProfileDto userProfileDto, HttpServletRequest httpServletRequest){
+        HttpSession httpSession = httpServletRequest.getSession();
+
+        Long userId = (Long) httpSession.getAttribute("userId");
+
+        userId = userService.update(userId, userProfileDto);
+
+        httpSession.setAttribute("username", userProfileDto.getUsername());
+
+        return userId;
     }
 }

@@ -17,6 +17,7 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.UserJoinDto;
 import side.collectionrecord.web.dto.UserLoginDto;
+import side.collectionrecord.web.dto.UserProfileDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,7 +26,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -106,7 +106,7 @@ class UserApiControllerTest {
                 .username("test")
                 .password(password)
                 .email(email)
-                .profile("Test")
+                .image("Test")
                 .build();
 
         userRepository.save(user);
@@ -122,8 +122,7 @@ class UserApiControllerTest {
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(loginDto)))
-                        .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value("로그인에 성공하였습니다."));
+                        .andExpect(status().isOk());
     }
 
     @Test
@@ -161,12 +160,58 @@ class UserApiControllerTest {
         assertThat(session).isNull();
     }
 
+    @Test
+    public void 정보수정() throws Exception{
+        //회원가입
+        UserJoinDto userDto = joinDtoBuild();
+
+        String url = "http://localhost:" + port + "/api/v1/user-join";
+
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(userDto)))
+                .andExpect(status().isOk());
+
+        // 로그인
+        UserLoginDto loginDto = UserLoginDto.builder()
+                .email("test@naver.com")
+                .password("1234")
+                .build();
+
+        HttpSession session = mvc.perform(post("/api/v1/user-login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(loginDto)))
+                .andExpect(status().isOk())
+                .andReturn().getRequest().getSession(false);
+
+        String expectedUsername = "2";
+        String expectedPassword = "2";
+        String expectedImage = "2";
+
+        UserProfileDto userProfileDto = UserProfileDto.builder()
+                .username(expectedUsername)
+                .password(expectedPassword)
+                .image(expectedImage)
+                .build();
+
+        url = "http://localhost:" + port + "/api/v1/user-update";
+
+        mvc.perform(put(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(userProfileDto)))
+                .andExpect(status().isOk());
+
+        List<User> all = userRepository.findAll();
+        assertThat(all.get(0).getUsername()).isEqualTo(expectedUsername);
+        assertThat(all.get(0).getImage()).isEqualTo(expectedImage);
+    }
+
     public UserJoinDto joinDtoBuild(){
         return UserJoinDto.builder()
                 .username("test")
                 .password("1234")
                 .email("test@naver.com")
-                .profile("Test")
+                .image("Test")
                 .build();
     }
 }

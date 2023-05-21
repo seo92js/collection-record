@@ -7,6 +7,7 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.UserJoinDto;
 import side.collectionrecord.web.dto.UserLoginDto;
+import side.collectionrecord.web.dto.UserProfileDto;
 
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public class UserService {
                 .username(userJoinDto.getUsername())
                 .password(userJoinDto.getPassword())
                 .email(userJoinDto.getEmail())
-                .profile(userJoinDto.getProfile())
+                .image(userJoinDto.getImage())
                 .build()).getId();
     }
 
@@ -33,6 +34,14 @@ public class UserService {
     public User login(UserLoginDto userLoginDto){
         return userRepository.findByEmail(userLoginDto.getEmail()).filter(u -> u.getPassword().equals(userLoginDto.getPassword())
                 ).orElse(null);
+    }
+
+    @Transactional
+    public Long update(Long id, UserProfileDto userProfileDto){
+        User findUser = userRepository.findById(id).orElse(null);
+        findUser.update(userProfileDto.getUsername(), userProfileDto.getImage());
+
+        return id;
     }
 
     private void validateDuplicateUser(String email){
