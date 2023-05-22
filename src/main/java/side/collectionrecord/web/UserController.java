@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.UserJoinDto;
-import side.collectionrecord.web.dto.UserLoginDto;
-import side.collectionrecord.web.dto.UserProfileDto;
+import side.collectionrecord.service.UserService;
+import side.collectionrecord.web.dto.UserJoinRequestDto;
+import side.collectionrecord.web.dto.UserLoginRequestDto;
+import side.collectionrecord.web.dto.UserProfileResponseDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,17 +19,17 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @GetMapping("/user/join")
     public String joinUserForm(Model model){
-        model.addAttribute("userJoinDto", new UserJoinDto());
+        model.addAttribute("userJoinRequestDto", new UserJoinRequestDto());
         return "user/userJoinForm";
     }
 
     @GetMapping("/user/login")
     public String loginUserForm(Model model){
-        model.addAttribute("userLoginDto", new UserLoginDto());
+        model.addAttribute("userLoginRequestDto", new UserLoginRequestDto());
         return "user/userLoginForm";
     }
 
@@ -37,15 +39,10 @@ public class UserController {
 
         Long userId = (Long)session.getAttribute("userId");
 
-        User findUser = userRepository.findById(userId).orElse(null);
+        UserProfileResponseDto userProfileResponseDto = userService.findById(userId);
 
-        UserProfileDto userProfileDto = new UserProfileDto().builder()
-                .username(findUser.getUsername())
-                .password(findUser.getPassword())
-                .image(findUser.getImage())
-                .build();
-
-        model.addAttribute("userProfileDto", userProfileDto);
+        model.addAttribute("userId", userId);
+        model.addAttribute("userProfileResponseDto", userProfileResponseDto);
 
         return "user/userProfileForm";
     }

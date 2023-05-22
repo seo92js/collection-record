@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UserJoinDto {
+public class UserJoinRequestDto {
     private String username;
     private String password;
     private String email;
     private String image;
 
     @Builder
-    public UserJoinDto(String username, String password, String email, String image){
+    public UserJoinRequestDto(String username, String password, String email, String image){
         this.username = username;
         this.password = password;
         this.email = email;

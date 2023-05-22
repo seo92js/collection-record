@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header" />
 <body>
-
-<form th:object="${userProfileDto}" id="user-profile-form">
+<input type="hidden" id="userId" th:value="${userId}" />
+<form th:object="${userProfileResponseDto}" id="user-profile-form">
     <div>
         <label>이름</label>
         <input type="text" th:value="*{username}" th:field="*{username}" placeholder="이름">

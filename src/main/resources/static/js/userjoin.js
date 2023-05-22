@@ -8,14 +8,14 @@ const joinForm = document.getElementById("user-join-form");
 function userJoin(){
     const formData = new FormData(joinForm);
 
-    const userJoinDto = {
+    const userJoinRequestDto = {
         username: formData.get('username'),
         password: formData.get('password'),
         email: formData.get('email'),
         image: formData.get('image')
     };
 
-    if(!checkRequiredValue(userJoinDto))
+    if(!checkRequiredValue(userJoinRequestDto))
         return;
 
     $.ajax({
@@ -23,7 +23,7 @@ function userJoin(){
         url: '/api/v1/user-join',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(userJoinDto)
+        data: JSON.stringify(userJoinRequestDto)
     }).done(function(){
         alert('회원가입이 완료되었습니다.');
         window.location.href = '/';

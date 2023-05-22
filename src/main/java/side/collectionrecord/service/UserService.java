@@ -5,9 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.UserJoinDto;
-import side.collectionrecord.web.dto.UserLoginDto;
-import side.collectionrecord.web.dto.UserProfileDto;
+import side.collectionrecord.web.dto.UserJoinRequestDto;
+import side.collectionrecord.web.dto.UserLoginRequestDto;
+import side.collectionrecord.web.dto.UserProfileResponseDto;
+import side.collectionrecord.web.dto.UserUpdateRequestDto;
 
 import java.util.Optional;
 
@@ -18,30 +19,37 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long join(UserJoinDto userJoinDto){
+    public Long join(UserJoinRequestDto userJoinRequestDto){
 
-        validateDuplicateUser(userJoinDto.getEmail());
+        validateDuplicateUser(userJoinRequestDto.getEmail());
 
         return userRepository.save(User.builder()
-                .username(userJoinDto.getUsername())
-                .password(userJoinDto.getPassword())
-                .email(userJoinDto.getEmail())
-                .image(userJoinDto.getImage())
+                .username(userJoinRequestDto.getUsername())
+                .password(userJoinRequestDto.getPassword())
+                .email(userJoinRequestDto.getEmail())
+                .image(userJoinRequestDto.getImage())
                 .build()).getId();
     }
 
     @Transactional
-    public User login(UserLoginDto userLoginDto){
-        return userRepository.findByEmail(userLoginDto.getEmail()).filter(u -> u.getPassword().equals(userLoginDto.getPassword())
+    public User login(UserLoginRequestDto userLoginRequestDto){
+        return userRepository.findByEmail(userLoginRequestDto.getEmail()).filter(u -> u.getPassword().equals(userLoginRequestDto.getPassword())
                 ).orElse(null);
     }
 
     @Transactional
-    public Long update(Long id, UserProfileDto userProfileDto){
+    public Long update(Long id, UserUpdateRequestDto userUpdateRequestDto){
         User findUser = userRepository.findById(id).orElse(null);
-        findUser.update(userProfileDto.getUsername(), userProfileDto.getImage());
+        findUser.update(userUpdateRequestDto.getUsername(), userUpdateRequestDto.getImage());
 
         return id;
+    }
+
+    @Transactional
+    public UserProfileResponseDto findById (Long id){
+        User user = userRepository.findById(id).orElse(null);
+
+        return new UserProfileResponseDto(user);
     }
 
     private void validateDuplicateUser(String email){

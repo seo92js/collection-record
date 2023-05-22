@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header" />
 <body>
-  <form th:object="${userJoinDto}" id="user-join-form">
+  <form th:object="${userJoinRequestDto}" id="user-join-form">
     <div>
       <label>이름</label>
       <input type="text" th:field="*{username}" placeholder="이름" th:required="true">

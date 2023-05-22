@@ -15,9 +15,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.UserJoinDto;
-import side.collectionrecord.web.dto.UserLoginDto;
-import side.collectionrecord.web.dto.UserProfileDto;
+import side.collectionrecord.web.dto.UserJoinRequestDto;
+import side.collectionrecord.web.dto.UserLoginRequestDto;
+import side.collectionrecord.web.dto.UserProfileResponseDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -63,7 +63,7 @@ class UserApiControllerTest {
     @Test
     public void 회원가입() throws Exception{
         //given
-        UserJoinDto userDto = joinDtoBuild();
+        UserJoinRequestDto userDto = joinDtoBuild();
 
         String url = "http://localhost:" + port + "/api/v1/user-join";
 
@@ -81,7 +81,7 @@ class UserApiControllerTest {
     @Test
     public void 회원가입2() throws Exception{
         //given
-        UserJoinDto userDto = joinDtoBuild();
+        UserJoinRequestDto userDto = joinDtoBuild();
 
         String url = "http://localhost:" + port + "/api/v1/user-join";
 
@@ -112,7 +112,7 @@ class UserApiControllerTest {
         userRepository.save(user);
 
         //로그인
-        UserLoginDto loginDto = UserLoginDto.builder()
+        UserLoginRequestDto loginDto = UserLoginRequestDto.builder()
                 .email(email)
                 .password(password)
                 .build();
@@ -128,7 +128,7 @@ class UserApiControllerTest {
     @Test
     public void 로그아웃() throws  Exception{
         //회원가입
-        UserJoinDto userDto = joinDtoBuild();
+        UserJoinRequestDto userDto = joinDtoBuild();
 
         String url = "http://localhost:" + port + "/api/v1/user-join";
 
@@ -138,7 +138,7 @@ class UserApiControllerTest {
                 .andExpect(status().isOk());
 
         // 로그인
-        UserLoginDto loginDto = UserLoginDto.builder()
+        UserLoginRequestDto loginDto = UserLoginRequestDto.builder()
                 .email("test@naver.com")
                 .password("1234")
                 .build();
@@ -163,7 +163,7 @@ class UserApiControllerTest {
     @Test
     public void 정보수정() throws Exception{
         //회원가입
-        UserJoinDto userDto = joinDtoBuild();
+        UserJoinRequestDto userDto = joinDtoBuild();
 
         String url = "http://localhost:" + port + "/api/v1/user-join";
 
@@ -173,7 +173,7 @@ class UserApiControllerTest {
                 .andExpect(status().isOk());
 
         // 로그인
-        UserLoginDto loginDto = UserLoginDto.builder()
+        UserLoginRequestDto loginDto = UserLoginRequestDto.builder()
                 .email("test@naver.com")
                 .password("1234")
                 .build();
@@ -188,7 +188,7 @@ class UserApiControllerTest {
         String expectedPassword = "2";
         String expectedImage = "2";
 
-        UserProfileDto userProfileDto = UserProfileDto.builder()
+        UserProfileResponseDto userProfileResponseDto = UserProfileResponseDto.builder()
                 .username(expectedUsername)
                 .password(expectedPassword)
                 .image(expectedImage)
@@ -197,8 +197,9 @@ class UserApiControllerTest {
         url = "http://localhost:" + port + "/api/v1/user-update";
 
         mvc.perform(put(url)
+                        .session((MockHttpSession) session)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(userProfileDto)))
+                        .content(new ObjectMapper().writeValueAsString(userProfileResponseDto)))
                 .andExpect(status().isOk());
 
         List<User> all = userRepository.findAll();
@@ -206,8 +207,8 @@ class UserApiControllerTest {
         assertThat(all.get(0).getImage()).isEqualTo(expectedImage);
     }
 
-    public UserJoinDto joinDtoBuild(){
-        return UserJoinDto.builder()
+    public UserJoinRequestDto joinDtoBuild(){
+        return UserJoinRequestDto.builder()
                 .username("test")
                 .password("1234")
                 .email("test@naver.com")
