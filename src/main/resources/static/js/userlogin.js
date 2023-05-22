@@ -9,7 +9,7 @@ function userLogin(){
     const formData = new FormData(joinForm);
 
     const userLoginRequestDto = {
-        email: formData.get('email'),
+        username: formData.get('username'),
         password: formData.get('password'),
     };
 

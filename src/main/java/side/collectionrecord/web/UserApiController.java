@@ -8,7 +8,6 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserLoginRequestDto;
-import side.collectionrecord.web.dto.UserProfileResponseDto;
 import side.collectionrecord.web.dto.UserUpdateRequestDto;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,8 +49,6 @@ public class UserApiController {
     @PutMapping("api/v1/user-update/{id}")
     public Long update(@PathVariable Long id, @RequestBody UserUpdateRequestDto userUpdateRequestDto, HttpServletRequest httpServletRequest){
         HttpSession httpSession = httpServletRequest.getSession();
-
-        //Long userId = (Long) httpSession.getAttribute("userId");
 
         userService.update(id, userUpdateRequestDto);
 

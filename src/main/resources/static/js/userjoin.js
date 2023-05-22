@@ -11,8 +11,6 @@ function userJoin(){
     const userJoinRequestDto = {
         username: formData.get('username'),
         password: formData.get('password'),
-        email: formData.get('email'),
-        image: formData.get('image')
     };
 
     if(!checkRequiredValue(userJoinRequestDto))
@@ -33,7 +31,7 @@ function userJoin(){
 }
 
 function checkRequiredValue(value){
-    if(!value.username || !value.password || !value.email){
+    if (!value.username || !value.password) {
         alert('필수 값을 입력하시오');
         return false;
     }else{

@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class UserLoginRequestDto {
-    private String email;
+    private String username;
     private String password;
 
     @Builder
-    public UserLoginRequestDto(String email, String password){
-        this.email = email;
+    public UserLoginRequestDto(String username, String password){
+        this.username = username;
         this.password = password;
     }
 }

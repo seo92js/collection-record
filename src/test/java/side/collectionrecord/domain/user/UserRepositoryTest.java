@@ -31,7 +31,6 @@ class UserRepositoryTest {
 
         userRepository.save(User.builder()
                         .username(username)
-                        .email(email)
                         .password(password)
                         .image(image)
                 .build());
@@ -42,7 +41,6 @@ class UserRepositoryTest {
         //then
         User findUser = findUsers.get(0);
         assertThat(findUser.getUsername()).isEqualTo(username);
-        assertThat(findUser.getEmail()).isEqualTo(email);
         assertThat(findUser.getPassword()).isEqualTo(password);
         assertThat(findUser.getImage()).isEqualTo(image);
     }
@@ -54,7 +52,6 @@ class UserRepositoryTest {
         userRepository.save(User.builder()
                         .username("test")
                         .password("test")
-                        .email("test")
                         .image("test")
                         .build());
         //when

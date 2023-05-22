@@ -21,19 +21,18 @@ public class UserService {
     @Transactional
     public Long join(UserJoinRequestDto userJoinRequestDto){
 
-        validateDuplicateUser(userJoinRequestDto.getEmail());
+        validateDuplicateUser(userJoinRequestDto.getUsername());
 
         return userRepository.save(User.builder()
                 .username(userJoinRequestDto.getUsername())
                 .password(userJoinRequestDto.getPassword())
-                .email(userJoinRequestDto.getEmail())
-                .image(userJoinRequestDto.getImage())
+                .image(null)
                 .build()).getId();
     }
 
     @Transactional
     public User login(UserLoginRequestDto userLoginRequestDto){
-        return userRepository.findByEmail(userLoginRequestDto.getEmail()).filter(u -> u.getPassword().equals(userLoginRequestDto.getPassword())
+        return userRepository.findByUsername(userLoginRequestDto.getUsername()).filter(u -> u.getPassword().equals(userLoginRequestDto.getPassword())
                 ).orElse(null);
     }
 
@@ -52,8 +51,8 @@ public class UserService {
         return new UserProfileResponseDto(user);
     }
 
-    private void validateDuplicateUser(String email){
-        Optional<User> findUser = userRepository.findByEmail(email);
+    private void validateDuplicateUser(String username){
+        Optional<User> findUser = userRepository.findByUsername(username);
 
         if(!findUser.isEmpty()){
             throw new IllegalStateException("이미 존재하는 회원입니다.");

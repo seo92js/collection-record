@@ -17,7 +17,7 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserLoginRequestDto;
-import side.collectionrecord.web.dto.UserProfileResponseDto;
+import side.collectionrecord.web.dto.UserUpdateRequestDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -63,7 +63,10 @@ class UserApiControllerTest {
     @Test
     public void 회원가입() throws Exception{
         //given
-        UserJoinRequestDto userDto = joinDtoBuild();
+        UserJoinRequestDto userDto = UserJoinRequestDto.builder()
+                .username("test")
+                .password("1234")
+                .build();
 
         String url = "http://localhost:" + port + "/api/v1/user-join";
 
@@ -81,7 +84,10 @@ class UserApiControllerTest {
     @Test
     public void 회원가입2() throws Exception{
         //given
-        UserJoinRequestDto userDto = joinDtoBuild();
+        UserJoinRequestDto userDto = UserJoinRequestDto.builder()
+                .username("test")
+                .password("1234")
+                .build();
 
         String url = "http://localhost:" + port + "/api/v1/user-join";
 
@@ -99,13 +105,12 @@ class UserApiControllerTest {
     @Test
     public void 로그인() throws Exception{
         //given
-        String email = "test@naver.com";
+        String username ="test";
         String password = "1234";
         //회원가입
         User user = User.builder()
-                .username("test")
+                .username(username)
                 .password(password)
-                .email(email)
                 .image("Test")
                 .build();
 
@@ -113,7 +118,7 @@ class UserApiControllerTest {
 
         //로그인
         UserLoginRequestDto loginDto = UserLoginRequestDto.builder()
-                .email(email)
+                .username(username)
                 .password(password)
                 .build();
 
@@ -128,7 +133,10 @@ class UserApiControllerTest {
     @Test
     public void 로그아웃() throws  Exception{
         //회원가입
-        UserJoinRequestDto userDto = joinDtoBuild();
+        UserJoinRequestDto userDto = UserJoinRequestDto.builder()
+                .username("test")
+                .password("1234")
+                .build();
 
         String url = "http://localhost:" + port + "/api/v1/user-join";
 
@@ -139,7 +147,7 @@ class UserApiControllerTest {
 
         // 로그인
         UserLoginRequestDto loginDto = UserLoginRequestDto.builder()
-                .email("test@naver.com")
+                .username("test")
                 .password("1234")
                 .build();
 
@@ -162,57 +170,36 @@ class UserApiControllerTest {
 
     @Test
     public void 정보수정() throws Exception{
-        //회원가입
-        UserJoinRequestDto userDto = joinDtoBuild();
-
-        String url = "http://localhost:" + port + "/api/v1/user-join";
-
-        mvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(userDto)))
-                .andExpect(status().isOk());
-
-        // 로그인
-        UserLoginRequestDto loginDto = UserLoginRequestDto.builder()
-                .email("test@naver.com")
-                .password("1234")
-                .build();
-
-        HttpSession session = mvc.perform(post("/api/v1/user-login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(loginDto)))
-                .andExpect(status().isOk())
-                .andReturn().getRequest().getSession(false);
-
+        //given
         String expectedUsername = "2";
         String expectedPassword = "2";
         String expectedImage = "2";
 
-        UserProfileResponseDto userProfileResponseDto = UserProfileResponseDto.builder()
+        User user = User.builder()
+                .username("1")
+                .password("1")
+                .image("1")
+                .build();
+
+        userRepository.save(user);
+
+        UserUpdateRequestDto userUpdateRequestDto = UserUpdateRequestDto.builder()
                 .username(expectedUsername)
                 .password(expectedPassword)
                 .image(expectedImage)
                 .build();
 
-        url = "http://localhost:" + port + "/api/v1/user-update";
+        String url = "http://localhost:" + port + "/api/v1/user-update/" + user.getId();
 
+        //when
         mvc.perform(put(url)
-                        .session((MockHttpSession) session)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(userProfileResponseDto)))
+                        .content(new ObjectMapper().writeValueAsString(userUpdateRequestDto)))
                 .andExpect(status().isOk());
 
+        //then
         List<User> all = userRepository.findAll();
         assertThat(all.get(0).getUsername()).isEqualTo(expectedUsername);
         assertThat(all.get(0).getImage()).isEqualTo(expectedImage);
-    }
-
-    public UserJoinRequestDto joinDtoBuild(){
-        return UserJoinRequestDto.builder()
-                .username("test")
-                .password("1234")
-                .email("test@naver.com")
-                .image("Test")
-                .build();
     }
 }
