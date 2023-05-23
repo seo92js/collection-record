@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header" />
 <body>
+  <h1>회원 가입</h1>
+
   <form th:object="${userJoinRequestDto}" id="user-join-form">
     <div>
       <label>이름</label>

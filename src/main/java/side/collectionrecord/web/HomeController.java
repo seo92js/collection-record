@@ -12,6 +12,7 @@ public class HomeController {
     @RequestMapping("/")
     public String home(HttpServletRequest request, Model model){
         HttpSession session = request.getSession(false);
+
         if(session != null){
             model.addAttribute("login", true);
             model.addAttribute("username", session.getAttribute("username").toString());

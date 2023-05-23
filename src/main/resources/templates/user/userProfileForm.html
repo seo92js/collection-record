@@ -2,7 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header" />
 <body>
+<h1>프로필</h1>
+
 <input type="hidden" id="userId" th:value="${userId}" />
+
 <form th:object="${userProfileResponseDto}" id="user-profile-form">
     <div>
         <label>이름</label>

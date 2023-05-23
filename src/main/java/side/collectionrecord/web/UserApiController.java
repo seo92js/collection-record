@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.service.UserService;
+import side.collectionrecord.auth.dto.LoginRequestDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserLoginRequestDto;
 import side.collectionrecord.web.dto.UserUpdateRequestDto;

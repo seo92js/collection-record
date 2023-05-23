@@ -9,13 +9,13 @@
 
   <div th:if="${login}">
     <span th:text="|${username} 님|"></span>
-    <a class="btn btn-primary" href="user/profile">내 정보</a>
+    <a class="btn btn-primary" href="user/home">마이홈</a>
     <button class="btn btn-primary" id="user-logout-btn">로그아웃</button>
   </div>
 
   <div th:unless="${login}">
     <a class="btn btn-primary" href="/user/join">회원 가입</a>
-    <a class="btn btn-primary" href="/user/login">로그인</a>
+    <a class="btn btn-primary" href="/login">로그인</a>
   </div>
 
   <script src="/js/userlogout.js"></script>

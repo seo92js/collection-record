@@ -28,6 +28,10 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user")
     private List<Category> categories = new ArrayList<>();
 
+    public void addCategory(Category category){
+        this.categories.add(category);
+    }
+
     @Builder
     public User(String username, String password, String image){
         this.username = username;

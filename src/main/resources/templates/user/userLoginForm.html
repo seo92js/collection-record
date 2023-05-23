@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header" />
 <body>
-<form th:object="${userLoginRequestDto}" id="user-login-form">
 
+<h1>로그인</h1>
+
+<form th:object="${userLoginRequestDto}" id="user-login-form">
   <div>
     <label>이름</label>
     <input type="text" th:field="*{username}" placeholder="이름" th:required="true">
@@ -12,7 +14,6 @@
     <label>비밀번호</label>
     <input type="text" th:field="*{password}" placeholder="비밀번호" th:required="true">
   </div>
-
   <button type="submit" class="btn btn-primary" id="user-login-btn">로그인</button>
 </form>
 
