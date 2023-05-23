@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
-import side.collectionrecord.web.dto.UserLoginRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
 import side.collectionrecord.web.dto.UserUpdateRequestDto;
 
@@ -28,12 +27,6 @@ public class UserService {
                 .password(userJoinRequestDto.getPassword())
                 .image(null)
                 .build()).getId();
-    }
-
-    @Transactional
-    public User login(UserLoginRequestDto userLoginRequestDto){
-        return userRepository.findByUsername(userLoginRequestDto.getUsername()).filter(u -> u.getPassword().equals(userLoginRequestDto.getPassword())
-                ).orElse(null);
     }
 
     @Transactional

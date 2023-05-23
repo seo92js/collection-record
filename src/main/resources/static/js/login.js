@@ -1,23 +1,23 @@
-document.getElementById("user-login-btn").addEventListener('click', function(event) {
+document.getElementById("login-btn").addEventListener('click', function(event) {
     event.preventDefault();
     userLogin();
 });
 
-const joinForm = document.getElementById("user-login-form");
+const joinForm = document.getElementById("login-form");
 
 function userLogin(){
     const formData = new FormData(joinForm);
 
-    const userLoginRequestDto = {
+    const loginRequestDto = {
         username: formData.get('username'),
         password: formData.get('password'),
     };
 
     $.ajax({
         type: 'POST',
-        url: '/api/v1/user-login',
+        url: '/api/v1/login',
         contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(userLoginRequestDto)
+        data: JSON.stringify(loginRequestDto)
     }).done(function(){
         alert('로그인이 완료되었습니다.');
         window.location.href = '/';

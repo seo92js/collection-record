@@ -3,14 +3,21 @@
 <head th:replace="fragments/header :: header" />
 
 <body>
-<h1>카테고리 관리</h1>
+    <h1>카테고리 관리</h1>
 
-<div>
-    <ul>
-        <li th:each="category : ${categories}" th:text="${category.name}"></li>
-    </ul>
-</div>
+    <form th:object="${categoryAddRequestDto}" id="user-join-form">
+        <div>
+            <input type="text" th:field="*{name}" placeholder="카테고리 명" th:required="true">
+            <button type="submit" class="btn btn-primary" id="category-add-btn">추가</button>
+        </div>
+    </form>
 
-<div th:replace="fragments/footer :: footer" />
+    <div>
+        <ul>
+            <li th:each="category : ${categories}" th:text="${category.name}"></li>
+        </ul>
+    </div>
+
+    <div th:replace="fragments/footer :: footer" />
 </body>
 </html>

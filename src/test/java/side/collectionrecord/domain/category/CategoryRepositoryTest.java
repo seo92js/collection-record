@@ -10,8 +10,6 @@ import side.collectionrecord.domain.user.UserRepository;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @Transactional
 class CategoryRepositoryTest {

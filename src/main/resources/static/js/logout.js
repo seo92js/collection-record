@@ -1,4 +1,4 @@
-document.getElementById("user-logout-btn").addEventListener('click', function(event) {
+document.getElementById("logout-btn").addEventListener('click', function(event) {
     event.preventDefault();
     userLogout();
 });
@@ -6,7 +6,7 @@ document.getElementById("user-logout-btn").addEventListener('click', function(ev
 function userLogout(){
     $.ajax({
         type: 'POST',
-        url: '/api/v1/user-logout',
+        url: '/api/v1/logout',
     }).done(function(){
         alert('로그아웃.');
         window.location.href = '/';

@@ -9,18 +9,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
-import side.collectionrecord.web.dto.UserLoginRequestDto;
 import side.collectionrecord.web.dto.UserUpdateRequestDto;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -100,72 +97,6 @@ class UserApiControllerTest {
         List<User> all = userRepository.findAll();
         User findUser = all.get(0);
         assertThat(findUser.getUsername()).isEqualTo(userDto.getUsername());
-    }
-
-    @Test
-    public void 로그인() throws Exception{
-        //given
-        String username ="test";
-        String password = "1234";
-        //회원가입
-        User user = User.builder()
-                .username(username)
-                .password(password)
-                .image("Test")
-                .build();
-
-        userRepository.save(user);
-
-        //로그인
-        UserLoginRequestDto loginDto = UserLoginRequestDto.builder()
-                .username(username)
-                .password(password)
-                .build();
-
-        String url = "http://localhost:" + port + "/api/v1/user-login";
-
-        mvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(loginDto)))
-                        .andExpect(status().isOk());
-    }
-
-    @Test
-    public void 로그아웃() throws  Exception{
-        //회원가입
-        UserJoinRequestDto userDto = UserJoinRequestDto.builder()
-                .username("test")
-                .password("1234")
-                .build();
-
-        String url = "http://localhost:" + port + "/api/v1/user-join";
-
-        mvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(userDto)))
-                .andExpect(status().isOk());
-
-        // 로그인
-        UserLoginRequestDto loginDto = UserLoginRequestDto.builder()
-                .username("test")
-                .password("1234")
-                .build();
-
-        HttpSession session = mvc.perform(post("/api/v1/user-login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(loginDto)))
-                .andExpect(status().isOk())
-                .andReturn().getRequest().getSession(false);
-
-
-        // 로그아웃
-        session = mvc.perform(post("/api/v1/user-logout")
-                        .session((MockHttpSession) session)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn().getRequest().getSession(false);
-
-        assertThat(session).isNull();
     }
 
     @Test
