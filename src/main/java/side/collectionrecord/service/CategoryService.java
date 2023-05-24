@@ -9,8 +9,10 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.CategoryAddRequestDto;
 import side.collectionrecord.web.dto.CategoryListResponseDto;
+import side.collectionrecord.web.dto.CategoryUpdateRequestDto;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -40,5 +42,20 @@ public class CategoryService {
         return categoryRepository.findAllCategory(user).stream()
                 .map(CategoryListResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Long update(Long id, CategoryUpdateRequestDto categoryUpdateRequestDto){
+        Category category = categoryRepository.findById(id).orElse(null);
+        category.update(categoryUpdateRequestDto.getName());
+
+        return id;
+    }
+
+    @Transactional
+    public void delete(Long id){
+        Category category = categoryRepository.findById(id).orElse(null);
+
+        categoryRepository.delete(category);
     }
 }

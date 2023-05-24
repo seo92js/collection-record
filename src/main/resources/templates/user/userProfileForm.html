@@ -2,24 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header" />
 <body>
-<h1>프로필</h1>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>프로필</h1>
 
-<input type="hidden" id="userId" th:value="${userId}" />
+            <input type="hidden" id="userId" th:value="${userId}" />
 
-<form th:object="${userProfileResponseDto}" id="user-profile-form">
-    <div>
-        <label>이름</label>
-        <input type="text" th:value="*{username}" th:field="*{username}" placeholder="이름">
+            <form th:object="${userProfileResponseDto}" id="user-profile-form">
+                <div>
+                    <label>이름</label>
+                    <input type="text" th:value="*{username}" th:field="*{username}" placeholder="이름">
+                </div>
+                <div>
+                    <label>이미지</label>
+                    <input type="text" th:value="*{image}" th:field="*{image}" placeholder="이미지">
+                </div>
+                <button type="submit" class="btn btn-primary" id="user-update-btn">수정</button>
+            </form>
+
+            <script src="/js/userUpdate.js"></script>
+        </div>
+
+        <div th:replace="fragments/footer :: footer" />
     </div>
-    <div>
-        <label>이미지</label>
-        <input type="text" th:value="*{image}" th:field="*{image}" placeholder="이미지">
-    </div>
-    <button type="submit" class="btn btn-primary" id="user-update-btn">수정</button>
-</form>
-
-<script src="/js/userUpdate.js"></script>
-
-<div th:replace="fragments/footer :: footer" />
 </body>
 </html>

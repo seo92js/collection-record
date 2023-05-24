@@ -32,4 +32,8 @@ public class Category {
         setUser(user);
         this.name = name;
     }
+
+    public void update(String name){
+        this.name = name;
+    }
 }

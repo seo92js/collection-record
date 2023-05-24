@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.h2.engine.Mode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
@@ -32,9 +33,12 @@ public class CategoryController {
 
         List<CategoryListResponseDto> categories = categoryService.findCategories(user);
 
-        model.addAttribute("categoryAddRequestDto", new CategoryAddRequestDto());
+        model.addAttribute("categoryAddRequestDto", CategoryAddRequestDto.builder()
+                        .userId(userId)
+                        .name(null)
+                        .build());
         model.addAttribute("categories", categories);
 
-        return "category/categorySetting";
+        return "category/category";
     }
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>카테고리 관리</h1>
+
+            <form th:object="${categoryAddRequestDto}" id="category-add-form">
+                <div>
+                    <input type="hidden" th:field="*{userId}" placeholder="카테고리 명" th:required="true">
+                    <input type="text" th:field="*{name}" placeholder="카테고리 명" th:required="true">
+                    <button type="submit" class="btn btn-primary" id="category-add-btn">추가</button>
+                </div>
+            </form>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>카테고리 명</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="category : ${categories}">
+                        <!--<td th:text="${category.id}"></td>-->
+                        <td>
+                            <input type="text" th:value="${category.name}" th:id="'category-name-input-' + ${category.id}">
+                        </td>
+                        <td>
+                            <a class="btn btn-secondary" th:onclick="categoryUpdate([[${category.id}]])">수정</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-secondary" th:onclick="categoryDelete([[${category.id}]])">삭제</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <script src="/js/categoryAdd.js"></script>
+            <script src="/js/categoryDelete.js"></script>
+            <script src="/js/categoryUpdate.js"></script>
+        </div>
+
+        <div th:replace="fragments/footer :: footer" />
+    </div>
+</body>
+</html>

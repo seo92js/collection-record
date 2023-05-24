@@ -3,18 +3,22 @@
 <head th:replace="fragments/header :: header" />
 
 <body>
-<h1>마이홈</h1>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>마이홈</h1>
 
-<div>
-    <a class="btn btn-primary" href="profile">내 정보</a>
-    <a class="btn btn-primary" href="/category">카테고리 관리</a>
-</div>
-<div>
-    <ul>
-        <li th:each="category : ${categories}" th:text="${category.name}"></li>
-    </ul>
-</div>
+            <div>
+                <a class="btn btn-primary" href="profile">내 정보</a>
+                <a class="btn btn-primary" href="/category">카테고리 관리</a>
+            </div>
+            <div>
+                <ul>
+                    <li th:each="category : ${categories}" th:text="${category.name}"></li>
+                </ul>
+            </div>
+        </div>
 
-<div th:replace="fragments/footer :: footer" />
+        <div th:replace="fragments/footer :: footer" />
+    </div>
 </body>
 </html>
