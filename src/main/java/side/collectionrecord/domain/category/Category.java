@@ -3,9 +3,11 @@ package side.collectionrecord.domain.category;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.user.User;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -20,6 +22,9 @@ public class Category {
     private User user;
 
     private String name;
+
+    @OneToMany(mappedBy = "category")
+    private List<Posts> posts;
 
     //연관관계 편의
     public void setUser(User user){
