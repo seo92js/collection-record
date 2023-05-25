@@ -1,30 +1,37 @@
-package side.collectionrecord.domain.category;
+package side.collectionrecord.domain.posts;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import side.collectionrecord.domain.category.Category;
+import side.collectionrecord.domain.category.CategoryRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @Transactional
-class CategoryRepositoryTest {
+class PostsRepositoryTest {
+    @Autowired
+    private PostsRepository postsRepository;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private CategoryRepository categoryRepository;
 
-
     @Test
     public void save(){
-        //given
         User user = User.builder()
-                .username("userA")
-                .password("1")
+                .username("user")
+                .password("password")
                 .image(null)
                 .build();
 
@@ -32,15 +39,22 @@ class CategoryRepositoryTest {
 
         Category category = Category.builder()
                 .user(user)
-                .name("test")
+                .name("category")
                 .build();
 
         categoryRepository.save(category);
 
-        //when
-        List<Category> allCategory = categoryRepository.findAllCategory(user);
+        Posts posts = Posts.builder()
+                .title("title")
+                .image("image")
+                .text("text")
+                .category(category)
+                .build();
 
-        //then
-        Assertions.assertThat(allCategory.get(0).getName()).isEqualTo("test");
+        postsRepository.save(posts);
+
+        List<Posts> all = postsRepository.findAll();
+
+        assertThat(all.size()).isEqualTo(1);
     }
 }

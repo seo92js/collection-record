@@ -63,4 +63,24 @@ class UserRepositoryTest {
         assertThat(findUser.getCreatedDate()).isAfter(now);
         assertThat(findUser.getModifiedDate()).isAfter(now);
     }
+
+    @Test
+    public void 이름으로_찾기(){
+        //given
+        User user = User.builder()
+                .username("user1")
+                .password("1234")
+                .image("1234")
+                .build();
+
+        userRepository.save(user);
+
+        //when
+        User findUser = userRepository.findByUsername("user1").get();
+
+        //then
+        assertThat(findUser.getUsername()).isEqualTo(user.getUsername());
+        assertThat(findUser.getPassword()).isEqualTo(user.getPassword());
+        assertThat(findUser.getImage()).isEqualTo(user.getImage());
+    }
 }

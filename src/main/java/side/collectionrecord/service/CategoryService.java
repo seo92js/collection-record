@@ -12,7 +12,6 @@ import side.collectionrecord.web.dto.CategoryListResponseDto;
 import side.collectionrecord.web.dto.CategoryUpdateRequestDto;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
