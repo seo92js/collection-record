@@ -24,7 +24,7 @@ public class Category {
 
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Posts> posts = new ArrayList<>();
 
     //연관관계 편의

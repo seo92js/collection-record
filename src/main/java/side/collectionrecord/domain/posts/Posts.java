@@ -25,7 +25,7 @@ public class Posts extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -35,10 +35,17 @@ public class Posts extends BaseTimeEntity {
         category.addPosts(this);
     }
 
-    // User는 단방향이니 생성자에 넣지 말자.. 나중에 확인 필요
     @Builder
-    public Posts(Category category, String title, String image, String text){
+    public Posts(User user, Category category, String title, String image, String text){
         setCategory(category);
+        this.user = user;
+        this.title = title;
+        this.image = image;
+        this.text = text;
+    }
+
+    public void update(Category category, String title, String image, String text){
+        this.category = category;
         this.title = title;
         this.image = image;
         this.text = text;

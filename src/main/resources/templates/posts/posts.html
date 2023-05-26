@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1>글쓰기</h1>
+
+      <form th:object="${postsAddRequestDto}" id="posts-add-form">
+        <div>
+          <select style="width:100px;height:22px" th:field="*{categoryName}">
+            <option th:each = "category : ${categories}" th:text="${category.name}" th:value="${category.name}"></option>
+          </select>
+        </div>
+        <div>
+          <input type="text" th:field="*{title}" placeholder="제목">
+        </div>
+        <div>
+          <input type="text" th:field="*{image}" placeholder="이미지">
+        </div>
+        <div>
+          <input type="text" th:field="*{text}" placeholder="내용">
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="posts-add-btn">추가</button>
+      </form>
+
+      <script src="/js/postsAdd.js"></script>
+    </div>
+
+    <div th:replace="fragments/footer :: footer" />
+  </div>
+</body>
+</html>

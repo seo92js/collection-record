@@ -1,29 +1,30 @@
 package side.collectionrecord.web;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.CategoryService;
-import side.collectionrecord.web.dto.CategoryAddRequestDto;
 import side.collectionrecord.web.dto.CategoryListResponseDto;
+import side.collectionrecord.web.dto.PostsAddRequestDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@RequiredArgsConstructor
 @Controller
-public class CategoryController {
+public class PostsController {
+    @Autowired
+    UserRepository userRepository;
 
-    private final UserRepository userRepository;
-    private final CategoryService categoryService;
+    @Autowired
+    CategoryService categoryService;
 
-    @GetMapping("/category")
-    public String categories(Model model, HttpServletRequest httpServletRequest){
-        HttpSession session = httpServletRequest.getSession(false);
+    @GetMapping("/posts")
+    public String posts(Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
 
         Long userId = (Long)session.getAttribute("userId");
 
@@ -31,12 +32,16 @@ public class CategoryController {
 
         List<CategoryListResponseDto> categories = categoryService.findCategories(user);
 
-        model.addAttribute("categoryAddRequestDto", CategoryAddRequestDto.builder()
+        model.addAttribute("postsAddRequestDto", PostsAddRequestDto.builder()
                         .userId(userId)
-                        .name(null)
+                        .categoryName(null)
+                        .title(null)
+                        .image(null)
+                        .text(null)
                         .build());
+
         model.addAttribute("categories", categories);
 
-        return "category/category";
+        return "posts/posts";
     }
 }

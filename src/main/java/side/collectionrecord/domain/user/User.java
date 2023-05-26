@@ -25,7 +25,7 @@ public class User extends BaseTimeEntity {
     @Column
     private String image;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Category> categories = new ArrayList<>();
 
     public void addCategory(Category category){
