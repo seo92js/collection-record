@@ -12,13 +12,32 @@
                 <a class="btn btn-primary" href="/category">카테고리 관리</a>
                 <a class="btn btn-primary" href="/posts">글쓰기</a>
             </div>
-            <!--
-            <div>
-                <ul>
-                    <li th:each="category : ${categories}" th:text="${category.name}"></li>
-                </ul>
+            <!--수평정렬 수정 필-->
+            <div class="col">
+                <!--카테고리 목록-->
+                <div>
+                    <div>전체</div>
+                    <div th:each="category : ${categories}">
+                        <div th:text="${category.name}"></div>
+                    </div>
+                </div>
+                <div>
+                    <!--게시물 목록-->
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>게시물</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="post : ${posts}">
+                            <td th:text="${post.image}"></td>
+                            <td th:text="${post.title}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            -->
         </div>
 
         <div th:replace="fragments/footer :: footer" />

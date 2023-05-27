@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.CategoryService;
+import side.collectionrecord.service.PostsService;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.CategoryListResponseDto;
+import side.collectionrecord.web.dto.PostsListResponseDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
 
@@ -27,6 +29,8 @@ public class UserController {
 
     private final CategoryService categoryService;
 
+    private final PostsService postsService;
+
     @GetMapping("/user/join")
     public String joinUserForm(Model model){
         model.addAttribute("userJoinRequestDto", new UserJoinRequestDto());
@@ -44,6 +48,11 @@ public class UserController {
         List<CategoryListResponseDto> categories = categoryService.findCategories(user);
 
         model.addAttribute("categories", categories);
+
+        List<PostsListResponseDto> posts = postsService.findAllPosts();
+
+        model.addAttribute("posts", posts);
+
         return "user/userHome";
     }
 

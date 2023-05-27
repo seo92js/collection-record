@@ -8,7 +8,11 @@ import side.collectionrecord.domain.category.CategoryRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.web.dto.PostsAddRequestDto;
+import side.collectionrecord.web.dto.PostsListResponseDto;
 import side.collectionrecord.web.dto.PostsUpdateRequestDto;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -16,6 +20,13 @@ public class PostsService {
     private final PostsRepository postsRepository;
 
     private final CategoryRepository categoryRepository;
+
+    @Transactional
+    public List<PostsListResponseDto> findAllPosts(){
+        return postsRepository.findAll().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     public Long addPosts(PostsAddRequestDto postsAddRequestDto){

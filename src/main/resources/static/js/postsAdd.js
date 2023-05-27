@@ -26,7 +26,7 @@ function postsAdd(){
         data: JSON.stringify(postsAddRequestDto)
     }).done(function(){
         alert('게시물 추가 완료.');
-        window.location.href = '/posts';
+        window.location.href = '/user/home';
     }).fail(function (error){
         alert(JSON.stringify(error));
     });
