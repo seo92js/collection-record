@@ -1,7 +1,6 @@
 package side.collectionrecord.domain.category;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import side.collectionrecord.domain.user.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -19,9 +18,9 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
     }
 
     @Override
-    public List<Category> findAllCategory(User user){
+    public List<Category> findAllCategory(Long userId){
         return queryFactory.selectFrom(category)
-                .where(category.user.eq(user))
+                .where(category.user.id.eq(userId))
                 .fetch();
     }
 }

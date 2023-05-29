@@ -37,8 +37,8 @@ public class CategoryService {
     }
 
     @Transactional
-    public List<CategoryListResponseDto> findCategories(User user){
-        return categoryRepository.findAllCategory(user).stream()
+    public List<CategoryListResponseDto> findCategories(Long userId){
+        return categoryRepository.findAllCategory(userId).stream()
                 .map(CategoryListResponseDto::new)
                 .collect(Collectors.toList());
     }

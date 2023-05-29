@@ -38,7 +38,7 @@ class CategoryRepositoryTest {
         categoryRepository.save(category);
 
         //when
-        List<Category> allCategory = categoryRepository.findAllCategory(user);
+        List<Category> allCategory = categoryRepository.findAllCategory(user.getId());
 
         //then
         Assertions.assertThat(allCategory.get(0).getName()).isEqualTo("test");

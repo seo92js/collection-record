@@ -4,13 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import side.collectionrecord.domain.user.User;
-import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.CategoryListResponseDto;
-import side.collectionrecord.web.dto.PostsListResponseDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
 
@@ -22,9 +19,6 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class UserController {
-
-    private final UserRepository userRepository;
-
     private final UserService userService;
 
     private final CategoryService categoryService;
@@ -43,15 +37,9 @@ public class UserController {
 
         Long userId = (Long)session.getAttribute("userId");
 
-        User user = userRepository.findById(userId).get();
-
-        List<CategoryListResponseDto> categories = categoryService.findCategories(user);
+        List<CategoryListResponseDto> categories = categoryService.findCategories(userId);
 
         model.addAttribute("categories", categories);
-
-        List<PostsListResponseDto> posts = postsService.findAllPosts();
-
-        model.addAttribute("posts", posts);
 
         return "user/userHome";
     }

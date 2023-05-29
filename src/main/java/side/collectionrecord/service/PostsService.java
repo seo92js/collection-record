@@ -7,6 +7,7 @@ import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.category.CategoryRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
+import side.collectionrecord.domain.user.User;
 import side.collectionrecord.web.dto.PostsAddRequestDto;
 import side.collectionrecord.web.dto.PostsListResponseDto;
 import side.collectionrecord.web.dto.PostsUpdateRequestDto;
@@ -22,8 +23,13 @@ public class PostsService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public List<PostsListResponseDto> findAllPosts(){
-        return postsRepository.findAll().stream()
+    public Posts findPosts(Long id){
+        return postsRepository.findById(id).get();
+    }
+
+    @Transactional
+    public List<PostsListResponseDto> findPostsList(Long userId, String categoryName){
+        return postsRepository.findPostsList(userId, categoryName).stream()
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
     }
