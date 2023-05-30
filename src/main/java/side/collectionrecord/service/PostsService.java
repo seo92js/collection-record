@@ -35,9 +35,9 @@ public class PostsService {
     }
 
     @Transactional
-    public Long addPosts(PostsAddRequestDto postsAddRequestDto){
+    public Long addPosts(Long userId, PostsAddRequestDto postsAddRequestDto){
 
-        Category category = categoryRepository.findByName(postsAddRequestDto.getCategoryName()).orElse(null);
+        Category category = categoryRepository.findByName(userId, postsAddRequestDto.getCategoryName());
 
         return postsRepository.save(Posts.builder()
                         .title(postsAddRequestDto.getTitle())
@@ -50,14 +50,14 @@ public class PostsService {
     }
 
     @Transactional
-    public Long update(Long id, PostsUpdateRequestDto postsUpdateRequestDto){
-        Posts posts = postsRepository.findById(id).orElse(null);
+    public Long update(Long userId, Long postsId, PostsUpdateRequestDto postsUpdateRequestDto){
+        Posts posts = postsRepository.findById(postsId).orElse(null);
 
-        Category category = categoryRepository.findById(postsUpdateRequestDto.getCategoryId()).orElse(null);
+        Category category = categoryRepository.findByName(userId, postsUpdateRequestDto.getCategoryName());
 
         posts.update(category, postsUpdateRequestDto.getTitle(), postsUpdateRequestDto.getImage(), postsUpdateRequestDto.getText());
 
-        return id;
+        return postsId;
     }
 
     @Transactional

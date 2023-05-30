@@ -7,13 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import side.collectionrecord.domain.posts.Posts;
-import side.collectionrecord.domain.user.User;
-import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.web.dto.CategoryListResponseDto;
 import side.collectionrecord.web.dto.PostsAddRequestDto;
-import side.collectionrecord.web.dto.PostsViewResponseDto;
+import side.collectionrecord.web.dto.PostsResponseDto;
+import side.collectionrecord.web.dto.PostsUpdateRequestDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,7 +25,7 @@ public class PostsController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping("/posts")
+    @GetMapping("/posts/add")
     public String posts(Model model, HttpServletRequest request){
         HttpSession session = request.getSession();
 
@@ -44,7 +43,7 @@ public class PostsController {
 
         model.addAttribute("categories", categories);
 
-        return "posts/posts";
+        return "posts/postsAdd";
     }
 
     @GetMapping("/posts/{id}")
@@ -52,8 +51,23 @@ public class PostsController {
 
         Posts posts = postsService.findPosts(id);
 
-        model.addAttribute("", new PostsViewResponseDto(posts));
+        model.addAttribute("postsResponseDto", new PostsResponseDto(posts));
 
-        return "posts/postsView";
+        return "posts/posts";
+    }
+
+    @GetMapping("/posts/update/{id}")
+    public String postsUpdate(@PathVariable Long id, Model model){
+
+        Posts posts = postsService.findPosts(id);
+
+        model.addAttribute(PostsUpdateRequestDto.builder()
+                        .categoryName(posts.getCategory().getName())
+                        .title(null)
+                        .text(null)
+                        .image(null)
+                        .build());
+
+        return "posts/postsUpdate";
     }
 }

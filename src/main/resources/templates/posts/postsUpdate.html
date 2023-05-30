@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+  <div class="jumbotron">
+    <h1>게시물 수정</h1>
+
+    <form th:object="${postsUpdateRequestDto}" id="posts-update-form">
+      <div>
+        <label>카테고리</label>
+        <input type="text" th:value="*{categoryName}" th:field="*{categoryName}" placeholder="카테고리" th:required="true">
+      </div>
+
+      <div>
+        <label>타이틀</label>
+        <input type="text" th:value="*{title}" th:field="*{title}" placeholder="타이틀" th:required="true">
+      </div>
+
+      <div>
+        <label>이미지</label>
+        <input type="text" th:value="*{image}" th:field="*{image}" placeholder="이미지" th:required="true">
+      </div>
+
+      <div>
+        <label>내용</label>
+        <input type="text" th:value="*{text}" th:field="*{text}" placeholder="내용" th:required="true">
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="posts-update-btn">등록</button>
+    </form>
+
+  </div>
+
+  <div th:replace="fragments/footer :: footer" />
+
+</div>
+</body>
+</html>
