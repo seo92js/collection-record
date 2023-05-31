@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.web.dto.PostsAddRequestDto;
 import side.collectionrecord.web.dto.PostsListResponseDto;
+import side.collectionrecord.web.dto.PostsUpdateRequestDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,5 +35,13 @@ public class PostsApiController {
         Long userId = (Long) httpSession.getAttribute("userId");
 
         return postsService.findPostsList(userId, categoryName);
+    }
+
+    @PutMapping("/api/v1/posts-update/{id}")
+    public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto postsUpdateRequestDto){
+
+        Long userId = postsService.findPosts(id).getUser().getId();
+
+        return postsService.update(userId, id, postsUpdateRequestDto);
     }
 }

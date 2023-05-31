@@ -63,10 +63,12 @@ public class PostsController {
 
         model.addAttribute(PostsUpdateRequestDto.builder()
                         .categoryName(posts.getCategory().getName())
-                        .title(null)
-                        .text(null)
-                        .image(null)
+                        .title(posts.getTitle())
+                        .text(posts.getText())
+                        .image(posts.getImage())
                         .build());
+
+        model.addAttribute("postsId", id);
 
         return "posts/postsUpdate";
     }

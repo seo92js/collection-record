@@ -7,6 +7,7 @@
     <h1>게시물 수정</h1>
 
     <form th:object="${postsUpdateRequestDto}" id="posts-update-form">
+
       <div>
         <label>카테고리</label>
         <input type="text" th:value="*{categoryName}" th:field="*{categoryName}" placeholder="카테고리" th:required="true">
@@ -27,9 +28,10 @@
         <input type="text" th:value="*{text}" th:field="*{text}" placeholder="내용" th:required="true">
       </div>
 
-      <button type="submit" class="btn btn-primary" id="posts-update-btn">등록</button>
+      <button type="submit" class="btn btn-primary" id="posts-update-btn" th:onclick="postsUpdate([[${postsId}]])">등록</button>
     </form>
 
+    <script src="/js/postsUpdate.js"></script>
   </div>
 
   <div th:replace="fragments/footer :: footer" />
