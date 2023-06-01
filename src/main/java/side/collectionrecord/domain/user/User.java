@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.BaseTimeEntity;
 import side.collectionrecord.domain.category.Category;
+import side.collectionrecord.domain.comment.Comment;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Category> categories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
 
     public void addCategory(Category category){
         this.categories.add(category);

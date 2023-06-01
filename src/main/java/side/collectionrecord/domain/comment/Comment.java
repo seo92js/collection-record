@@ -1,5 +1,6 @@
 package side.collectionrecord.domain.comment;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.BaseTimeEntity;
@@ -25,4 +26,11 @@ public class Comment extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "posts_id")
     private Posts posts;
+
+    @Builder
+    public Comment(User user, Posts posts, String text){
+        this.user = user;
+        this.posts = posts;
+        this.text = text;
+    }
 }

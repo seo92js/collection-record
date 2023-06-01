@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.BaseTimeEntity;
 import side.collectionrecord.domain.category.Category;
+import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.user.User;
 
 import javax.persistence.*;
@@ -28,6 +29,9 @@ public class Posts extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "posts")
+    private Comment comment;
 
     // 연관관계 편의
     public void setCategory(Category category){
