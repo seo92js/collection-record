@@ -9,6 +9,7 @@ function postsAdd(){
     const formData = new FormData(addForm);
 
     const postsAddRequestDto = {
+        userId: formData.get('userId'),
         categoryName: formData.get('categoryName'),
         title: formData.get('title'),
         image: formData.get('image'),
@@ -17,6 +18,8 @@ function postsAdd(){
 
     if(!checkRequiredValue(postsAddRequestDto))
         return;
+
+    console.log(postsAddRequestDto);
 
     $.ajax({
         type: 'POST',

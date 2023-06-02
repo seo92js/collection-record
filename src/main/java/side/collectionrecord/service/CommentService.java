@@ -9,7 +9,12 @@ import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.web.dto.CategoryListResponseDto;
 import side.collectionrecord.web.dto.CommentAddRequestDto;
+import side.collectionrecord.web.dto.CommentListResponseDto;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -30,5 +35,20 @@ public class CommentService {
                         .text(commentAddRequestDto.getText())
                         .build())
                         .getId();
+    }
+
+    @Transactional
+    public void deleteComment(Long id){
+        Comment comment = commentRepository.findById(id).orElse(null);
+
+        commentRepository.delete(comment);
+    }
+
+    @Transactional
+    public List<CommentListResponseDto> findComments(Posts posts){
+
+        return commentRepository.findAllComments(posts).stream()
+                .map(CommentListResponseDto::new)
+                .collect(Collectors.toList());
     }
 }

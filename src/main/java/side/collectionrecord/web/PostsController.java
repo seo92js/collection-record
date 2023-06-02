@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.service.CategoryService;
+import side.collectionrecord.service.CommentService;
 import side.collectionrecord.service.PostsService;
-import side.collectionrecord.web.dto.CategoryListResponseDto;
-import side.collectionrecord.web.dto.PostsAddRequestDto;
-import side.collectionrecord.web.dto.PostsResponseDto;
-import side.collectionrecord.web.dto.PostsUpdateRequestDto;
+import side.collectionrecord.web.dto.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,6 +22,9 @@ public class PostsController {
     PostsService postsService;
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    CommentService commentService;
 
     @GetMapping("/posts/add")
     public String posts(Model model, HttpServletRequest request){
@@ -52,6 +53,16 @@ public class PostsController {
         Posts posts = postsService.findPosts(id);
 
         model.addAttribute("postsResponseDto", new PostsResponseDto(posts));
+
+        model.addAttribute("commentAddRequestDto", CommentAddRequestDto.builder()
+                        .userId(posts.getUser().getId())
+                        .postsId(id)
+                        .text(null)
+                .build());
+
+        List<CommentListResponseDto> comments = commentService.findComments(posts);
+
+        model.addAttribute("comments", comments);
 
         return "posts/posts";
     }

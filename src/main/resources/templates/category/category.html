@@ -9,7 +9,7 @@
 
             <form th:object="${categoryAddRequestDto}" id="category-add-form">
                 <div>
-                    <input type="hidden" th:field="*{userId}" placeholder="카테고리 명" th:required="true">
+                    <input type="hidden" th:field="*{userId}">
                     <input type="text" th:field="*{name}" placeholder="카테고리 명" th:required="true">
                     <button type="submit" class="btn btn-primary" id="category-add-btn">추가</button>
                 </div>
@@ -23,7 +23,6 @@
                 </thead>
                 <tbody>
                     <tr th:each="category : ${categories}">
-                        <!--<td th:text="${category.id}"></td>-->
                         <td>
                             <input type="text" th:value="${category.name}" th:id="'category-name-input-' + ${category.id}">
                         </td>

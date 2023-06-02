@@ -35,9 +35,9 @@ public class PostsService {
     }
 
     @Transactional
-    public Long addPosts(Long userId, PostsAddRequestDto postsAddRequestDto){
+    public Long addPosts(PostsAddRequestDto postsAddRequestDto){
 
-        Category category = categoryRepository.findByName(userId, postsAddRequestDto.getCategoryName());
+        Category category = categoryRepository.findByName(postsAddRequestDto.getUserId(), postsAddRequestDto.getCategoryName());
 
         return postsRepository.save(Posts.builder()
                         .title(postsAddRequestDto.getTitle())

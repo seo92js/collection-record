@@ -9,6 +9,8 @@ import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -31,12 +33,16 @@ public class Posts extends BaseTimeEntity {
     private Category category;
 
     @OneToMany(mappedBy = "posts")
-    private Comment comment;
+    private List<Comment> comments = new ArrayList<>();
 
     // 연관관계 편의
     public void setCategory(Category category){
         this.category = category;
         category.addPosts(this);
+    }
+
+    public void addComment(Comment comment){
+        this.comments.add(comment);
     }
 
     @Builder

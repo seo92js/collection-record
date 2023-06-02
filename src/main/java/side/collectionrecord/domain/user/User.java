@@ -36,6 +36,10 @@ public class User extends BaseTimeEntity {
         this.categories.add(category);
     }
 
+    public void addComment(Comment comment){
+        this.comments.add(comment);
+    }
+
     @Builder
     public User(String username, String password, String image){
         this.username = username;

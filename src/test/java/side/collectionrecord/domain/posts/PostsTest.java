@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PostsTest {
 
     @Test
-    public void 연간관계세팅(){
+    public void 연관관계세팅(){
         //given
         User user = User.builder()
                 .username("user1")

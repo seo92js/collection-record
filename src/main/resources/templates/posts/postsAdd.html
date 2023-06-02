@@ -9,6 +9,9 @@
 
       <form th:object="${postsAddRequestDto}" id="posts-add-form">
         <div>
+          <input type="hidden" th:field="*{userId}">
+        </div>
+        <div>
           <select style="width:100px;height:22px" th:field="*{categoryName}">
             <option th:each = "category : ${categories}" th:text="${category.name}" th:value="${category.name}"></option>
           </select>

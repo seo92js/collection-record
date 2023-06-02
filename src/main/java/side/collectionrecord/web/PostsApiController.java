@@ -18,12 +18,8 @@ public class PostsApiController {
     private final PostsService postsService;
 
     @PostMapping("/api/v1/posts")
-    public Long save(@RequestBody PostsAddRequestDto postsAddRequestDto, HttpServletRequest request){
-        HttpSession httpSession = request.getSession();
-
-        Long userId = (Long) httpSession.getAttribute("userId");
-
-        Long postsId = postsService.addPosts(userId, postsAddRequestDto);
+    public Long save(@RequestBody PostsAddRequestDto postsAddRequestDto){
+        Long postsId = postsService.addPosts(postsAddRequestDto);
 
         return postsId;
     }
