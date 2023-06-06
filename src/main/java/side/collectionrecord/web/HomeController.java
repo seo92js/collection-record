@@ -15,6 +15,7 @@ public class HomeController {
 
         if(session != null){
             model.addAttribute("login", true);
+            model.addAttribute("userId", (Long)session.getAttribute("userId"));
             model.addAttribute("username", session.getAttribute("username").toString());
         }else {
             model.addAttribute("login", false);

@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.CategoryListResponseDto;
+import side.collectionrecord.web.dto.UserFollowingRequestDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
 
@@ -31,15 +33,20 @@ public class UserController {
         return "user/userJoinForm";
     }
 
-    @GetMapping("/user/home")
-    public String userHome(Model model, HttpServletRequest httpServletRequest){
+    @GetMapping("/user/{id}/home")
+    public String userHome(@PathVariable Long id, Model model, HttpServletRequest httpServletRequest){
+        List<CategoryListResponseDto> categories = categoryService.findCategories(id);
+
+        model.addAttribute("categories", categories);
+
         HttpSession session = httpServletRequest.getSession(false);
 
         Long userId = (Long)session.getAttribute("userId");
 
-        List<CategoryListResponseDto> categories = categoryService.findCategories(userId);
-
-        model.addAttribute("categories", categories);
+        model.addAttribute("userFollowingRequestDto", UserFollowingRequestDto.builder()
+                .userId(userId)
+                .followingUserId(id)
+                .build());
 
         return "user/userHome";
     }

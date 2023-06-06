@@ -11,6 +11,12 @@
                 <a class="btn btn-primary" href="profile">내 정보</a>
                 <a class="btn btn-primary" href="/category">카테고리 관리</a>
                 <a class="btn btn-primary" href="/posts/add">글쓰기</a>
+
+                <form th:object="${userFollowingRequestDto}" id="user-following-form">
+                    <input type="hidden" th:field="*{userId}">
+                    <input type="hidden" th:field="*{followingUserId}">
+                    <button type="button" id="user-following-btn" class="btn btn-primary">팔로우</button>
+                </form>
             </div>
 
             <div class="row">
@@ -40,6 +46,7 @@
             </div>
 
             <script src="/js/postsList.js"></script>
+            <script src="/js/userFollowing.js"></script>
         </div>
 
         <div th:replace="fragments/footer :: footer" />

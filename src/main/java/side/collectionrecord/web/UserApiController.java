@@ -3,6 +3,7 @@ package side.collectionrecord.web;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import side.collectionrecord.service.UserService;
+import side.collectionrecord.web.dto.UserFollowingRequestDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserUpdateRequestDto;
 
@@ -29,5 +30,15 @@ public class UserApiController {
         httpSession.setAttribute("username", userUpdateRequestDto.getUsername());
 
         return id;
+    }
+
+    @PutMapping("/api/v1/user-following/{id}")
+    public void following(@PathVariable Long id, @RequestBody UserFollowingRequestDto userFollowingRequestDto){
+        userService.following(userFollowingRequestDto);
+    }
+
+    @PutMapping("/api/v1/user-unfollowing/{id}")
+    public void unfollowing(@PathVariable Long id, @RequestBody UserFollowingRequestDto userFollowingRequestDto){
+        userService.unfollowing(userFollowingRequestDto);
     }
 }

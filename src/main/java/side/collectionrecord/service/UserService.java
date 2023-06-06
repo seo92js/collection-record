@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.web.dto.UserFollowingRequestDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
 import side.collectionrecord.web.dto.UserUpdateRequestDto;
@@ -42,6 +43,22 @@ public class UserService {
         User user = userRepository.findById(id).orElse(null);
 
         return new UserProfileResponseDto(user);
+    }
+
+    @Transactional
+    public void following(UserFollowingRequestDto userFollowingRequestDto){
+        User user = userRepository.findById(userFollowingRequestDto.getUserId()).get();
+        User followingUser = userRepository.findById(userFollowingRequestDto.getFollowingUserId()).get();
+
+        user.addFollowing(followingUser);
+    }
+
+    @Transactional
+    public void unfollowing(UserFollowingRequestDto userFollowingRequestDto){
+        User user = userRepository.findById(userFollowingRequestDto.getUserId()).get();
+        User unfollowingUser = userRepository.findById(userFollowingRequestDto.getFollowingUserId()).get();
+
+        user.deleteFollowing(unfollowingUser);
     }
 
     private void validateDuplicateUser(String username){

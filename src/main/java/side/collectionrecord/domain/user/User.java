@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.BaseTimeEntity;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.comment.Comment;
+import side.collectionrecord.domain.follow.Follow;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,12 +33,46 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "following", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Follow> following = new ArrayList<>();
+    @OneToMany(mappedBy = "follower", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Follow> follower = new ArrayList<>();
+
     public void addCategory(Category category){
         this.categories.add(category);
     }
 
     public void addComment(Comment comment){
         this.comments.add(comment);
+    }
+
+    public void addFollowing(User user){
+        Follow follow = Follow.builder()
+                .following(this)
+                .follower(user)
+                .build();
+
+        this.following.add(follow);
+        user.follower.add(follow);
+    }
+
+    public void deleteFollowing(User user){
+        Follow follow = findFollowByUser(user);
+
+        if (follow != null) {
+            following.remove(follow);
+            user.follower.remove(follow);
+        }
+    }
+
+    public Follow findFollowByUser(User user){
+        for (Follow follow : following) {
+            if (follow.getFollowing().equals(user)){
+                return follow;
+            }
+        }
+
+        return null;
     }
 
     @Builder
