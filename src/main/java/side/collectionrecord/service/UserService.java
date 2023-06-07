@@ -44,18 +44,6 @@ public class UserService {
         return new UserProfileResponseDto(user);
     }
 
-    @Transactional
-    public boolean isFollowingUser(Long userId, Long followingUserId){
-        User user = userRepository.findById(userId).get();
-        User followingUser = userRepository.findById(followingUserId).get();
-
-        if (user.findFollowByUser(followingUser) == null){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
     private void validateDuplicateUser(String username){
         Optional<User> findUser = userRepository.findByUsername(username);
 

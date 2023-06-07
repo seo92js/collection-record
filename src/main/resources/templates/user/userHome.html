@@ -8,12 +8,12 @@
             <h1>홈</h1>
 
             <div>
-                <a class="btn btn-primary" href="profile">내 정보</a>
-                <a class="btn btn-primary" href="/category">카테고리 관리</a>
-                <a class="btn btn-primary" href="/posts/add">글쓰기</a>
+                <a class="btn btn-primary" th:if="${isFollowing == null}" href="/user/profile">내 정보</a>
+                <a class="btn btn-primary" th:if="${isFollowing == null}" href="/category">카테고리 관리</a>
+                <a class="btn btn-primary" th:if="${isFollowing == null}" href="/posts/add">글쓰기</a>
 
-                <button type="submit" class="btn btn-warning" id="unfollowing-btn" th:if="${isFollowing}" th:onclick="unfollowing([[${id}]])">팔로우 취소</button>
-                <button type="submit" class="btn btn-primary" id="following-btn" th:unless="${isFollowing}" th:onclick="following([[${id}]])">팔로우</button>
+                <button type="submit" class="btn btn-warning" id="unfollowing-btn" th:if="${isFollowing == true}" th:onclick="unfollowing([[${id}]])">팔로우 취소</button>
+                <button type="submit" class="btn btn-primary" id="following-btn" th:if="${isFollowing == false}" th:onclick="following([[${id}]])">팔로우</button>
             </div>
 
             <div class="row">

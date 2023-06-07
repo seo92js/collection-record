@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import side.collectionrecord.service.CategoryService;
+import side.collectionrecord.service.FollowService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.CategoryListResponseDto;
@@ -25,6 +26,8 @@ public class UserController {
 
     private final CategoryService categoryService;
 
+    private final FollowService followService;
+
     private final PostsService postsService;
 
     @GetMapping("/user/join")
@@ -43,10 +46,12 @@ public class UserController {
 
         Long userId = (Long)session.getAttribute("userId");
 
-        if (userService.isFollowingUser(userId, id) == false){
-            model.addAttribute("isFollowing", false);
-        } else{
-            model.addAttribute("isFollowing", true);
+        if (userId != id) {
+            if (followService.isFollowingUser(userId, id) == false) {
+                model.addAttribute("isFollowing", false);
+            } else {
+                model.addAttribute("isFollowing", true);
+            }
         }
 
         model.addAttribute("id", id);
