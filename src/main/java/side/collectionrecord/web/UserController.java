@@ -43,10 +43,13 @@ public class UserController {
 
         Long userId = (Long)session.getAttribute("userId");
 
-        model.addAttribute("userFollowingRequestDto", UserFollowingRequestDto.builder()
-                .userId(userId)
-                .followingUserId(id)
-                .build());
+        if (userService.isFollowingUser(userId, id) == false){
+            model.addAttribute("isFollowing", false);
+        } else{
+            model.addAttribute("isFollowing", true);
+        }
+
+        model.addAttribute("id", id);
 
         return "user/userHome";
     }

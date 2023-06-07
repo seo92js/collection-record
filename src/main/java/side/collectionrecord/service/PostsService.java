@@ -7,7 +7,6 @@ import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.category.CategoryRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
-import side.collectionrecord.domain.user.User;
 import side.collectionrecord.web.dto.PostsAddRequestDto;
 import side.collectionrecord.web.dto.PostsListResponseDto;
 import side.collectionrecord.web.dto.PostsUpdateRequestDto;

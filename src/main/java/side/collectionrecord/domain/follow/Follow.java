@@ -23,6 +23,14 @@ public class Follow {
     @JoinColumn(name = "follower_id", referencedColumnName = "user_id")
     private User follower;
 
+    public void addFollowing(User user, User followingUser){
+        user.following(followingUser, this);
+    }
+
+    public void deleteFollowing(User user, User unfollowingUser){
+        user.unfollowing(unfollowingUser, this);
+    }
+
     @Builder
     public Follow(User following, User follower){
         this.following = following;

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.UserFollowingRequestDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
 import side.collectionrecord.web.dto.UserUpdateRequestDto;
@@ -46,19 +45,15 @@ public class UserService {
     }
 
     @Transactional
-    public void following(UserFollowingRequestDto userFollowingRequestDto){
-        User user = userRepository.findById(userFollowingRequestDto.getUserId()).get();
-        User followingUser = userRepository.findById(userFollowingRequestDto.getFollowingUserId()).get();
+    public boolean isFollowingUser(Long userId, Long followingUserId){
+        User user = userRepository.findById(userId).get();
+        User followingUser = userRepository.findById(followingUserId).get();
 
-        user.addFollowing(followingUser);
-    }
-
-    @Transactional
-    public void unfollowing(UserFollowingRequestDto userFollowingRequestDto){
-        User user = userRepository.findById(userFollowingRequestDto.getUserId()).get();
-        User unfollowingUser = userRepository.findById(userFollowingRequestDto.getFollowingUserId()).get();
-
-        user.deleteFollowing(unfollowingUser);
+        if (user.findFollowByUser(followingUser) == null){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     private void validateDuplicateUser(String username){

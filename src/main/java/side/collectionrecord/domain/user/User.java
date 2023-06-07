@@ -46,32 +46,22 @@ public class User extends BaseTimeEntity {
         this.comments.add(comment);
     }
 
-    public void addFollowing(User user){
-        Follow follow = Follow.builder()
-                .following(this)
-                .follower(user)
-                .build();
-
+    public void following(User user, Follow follow){
         this.following.add(follow);
         user.follower.add(follow);
     }
 
-    public void deleteFollowing(User user){
-        Follow follow = findFollowByUser(user);
-
-        if (follow != null) {
-            following.remove(follow);
-            user.follower.remove(follow);
-        }
+    public void unfollowing(User user, Follow follow){
+        this.following.remove(follow);
+        user.follower.remove(follow);
     }
 
     public Follow findFollowByUser(User user){
         for (Follow follow : following) {
-            if (follow.getFollowing().equals(user)){
+            if (follow.getFollower().equals(user)){
                 return follow;
             }
         }
-
         return null;
     }
 

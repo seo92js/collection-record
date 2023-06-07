@@ -5,18 +5,15 @@
 <body>
     <div class="container">
         <div class="jumbotron">
-            <h1>마이홈</h1>
+            <h1>홈</h1>
 
             <div>
                 <a class="btn btn-primary" href="profile">내 정보</a>
                 <a class="btn btn-primary" href="/category">카테고리 관리</a>
                 <a class="btn btn-primary" href="/posts/add">글쓰기</a>
 
-                <form th:object="${userFollowingRequestDto}" id="user-following-form">
-                    <input type="hidden" th:field="*{userId}">
-                    <input type="hidden" th:field="*{followingUserId}">
-                    <button type="button" id="user-following-btn" class="btn btn-primary">팔로우</button>
-                </form>
+                <button type="submit" class="btn btn-warning" id="unfollowing-btn" th:if="${isFollowing}" th:onclick="unfollowing([[${id}]])">팔로우 취소</button>
+                <button type="submit" class="btn btn-primary" id="following-btn" th:unless="${isFollowing}" th:onclick="following([[${id}]])">팔로우</button>
             </div>
 
             <div class="row">
@@ -46,7 +43,8 @@
             </div>
 
             <script src="/js/postsList.js"></script>
-            <script src="/js/userFollowing.js"></script>
+            <script src="/js/following.js"></script>
+            <script src="/js/unfollowing.js"></script>
         </div>
 
         <div th:replace="fragments/footer :: footer" />
