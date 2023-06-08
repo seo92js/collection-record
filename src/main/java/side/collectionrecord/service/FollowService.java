@@ -34,7 +34,7 @@ public class FollowService {
 
         followRepository.save(follow);
 
-        follow.addFollowing(user, followingUser);
+        //follow.addFollowing(user, followingUser);
     }
 
     @Transactional
