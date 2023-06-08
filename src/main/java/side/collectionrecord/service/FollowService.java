@@ -5,9 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.follow.Follow;
 import side.collectionrecord.domain.follow.FollowRepository;
+import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.web.dto.FollowPostsListResponseDto;
+import side.collectionrecord.web.dto.PostsListResponseDto;
 import side.collectionrecord.web.dto.UserFollowingRequestDto;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -54,5 +60,12 @@ public class FollowService {
         }else{
             return true;
         }
+    }
+
+    @Transactional
+    public List<FollowPostsListResponseDto> findFollowPosts(Long userId){
+        return followRepository.findFollowPosts(userId).stream()
+                .map(FollowPostsListResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
