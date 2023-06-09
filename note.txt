@@ -1,0 +1,6 @@
+todo
+1. user home 들어갔을 때 해당 user의 게시물이 디스플레이 안되는 문제
+2. follow 엔티티 관련 test
+3. api 테스트
+4. ui 설계서
+5. 다이어그램

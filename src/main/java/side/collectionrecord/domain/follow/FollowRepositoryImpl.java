@@ -24,9 +24,9 @@ public class FollowRepositoryImpl implements FollowRepositoryCustom{
     @Override
     public List<Posts> findFollowPosts(Long userId) {
         List<Long> followUserId = queryFactory
-                .select(user.id)
+                .select(follow.follower.id)
                 .from(follow)
-                .where(follow.follower.id.eq(userId))
+                .where(follow.following.id.eq(userId))
                 .fetch();
 
         return queryFactory
