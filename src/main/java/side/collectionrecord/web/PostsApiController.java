@@ -24,13 +24,9 @@ public class PostsApiController {
         return postsId;
     }
 
-    @GetMapping("/api/v1/posts/{categoryName}")
-    public List<PostsListResponseDto> findPostsList(@PathVariable String categoryName, HttpServletRequest request){
-        HttpSession httpSession = request.getSession();
-
-        Long userId = (Long) httpSession.getAttribute("userId");
-
-        return postsService.findPostsList(userId, categoryName);
+    @GetMapping("/api/v1/posts/{id}/{categoryName}")
+    public List<PostsListResponseDto> findPostsList(@PathVariable Long id, @PathVariable String categoryName){
+        return postsService.findPostsList(id, categoryName);
     }
 
     @PutMapping("/api/v1/posts-update/{id}")

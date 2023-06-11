@@ -48,14 +48,18 @@ public class PostsController {
     }
 
     @GetMapping("/posts/{id}")
-    public String postsView(@PathVariable Long id, Model model){
+    public String postsView(@PathVariable Long id, Model model, HttpServletRequest request){
 
         Posts posts = postsService.findPosts(id);
 
         model.addAttribute("postsResponseDto", new PostsResponseDto(posts));
 
+        HttpSession session = request.getSession();
+
+        Long userId = (Long)session.getAttribute("userId");
+
         model.addAttribute("commentAddRequestDto", CommentAddRequestDto.builder()
-                        .userId(posts.getUser().getId())
+                        .userId(userId)
                         .postsId(id)
                         .text(null)
                 .build());

@@ -13,7 +13,7 @@
         <span th:text="|${username} 님|"></span>
         <a class="btn btn-primary" th:href="@{user/{userId}/home(userId=${userId})}">마이홈</a>
         <button class="btn btn-primary" id="logout-btn">로그아웃</button>
-
+        <a class="btn btn-primary" href="/search">검색</a>
         <!-- 팔로잉 유저 게시물 -->
         <table class="table table-striped">
           <thead>

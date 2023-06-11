@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.UserJoinRequestDto;
-import side.collectionrecord.web.dto.UserProfileResponseDto;
-import side.collectionrecord.web.dto.UserUpdateRequestDto;
+import side.collectionrecord.web.dto.*;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -42,6 +42,13 @@ public class UserService {
         User user = userRepository.findById(id).orElse(null);
 
         return new UserProfileResponseDto(user);
+    }
+
+    @Transactional
+    public List<UserSearchResponseDto> findContainsUsername(String username){
+        return userRepository.findContainsUsername(username).stream()
+                .map(UserSearchResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     private void validateDuplicateUser(String username){

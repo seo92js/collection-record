@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+  <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+</head>
+<body>
+<div class="container">
+  <div class="jumbotron">
+    <h1>검색</h1>
+
+    <form>
+      <div>
+        <input id="search-text" type="text" placeholder="유저이름 혹은 해쉬태그" th:required="true">
+        <button type="submit" id="search-btn" class="btn btn-primary">검색</button>
+      </div>
+    </form>
+
+    <!--검색 결과-->
+    <div class="col-md-9">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>유저 이름</th>
+        </tr>
+        </thead>
+        <tbody id="searchList">
+        <!--동적-->
+        </tbody>
+      </table>
+    </div>
+
+    <script src="/js/search.js"></script>
+  </div>
+
+  <div th:replace="fragments/footer :: footer" />
+
+</div>
+</body>
+</html>

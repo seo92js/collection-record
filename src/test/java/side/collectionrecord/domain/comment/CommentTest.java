@@ -7,7 +7,6 @@ import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.user.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CommentTest {

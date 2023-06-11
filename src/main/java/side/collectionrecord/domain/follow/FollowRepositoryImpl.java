@@ -23,7 +23,7 @@ public class FollowRepositoryImpl implements FollowRepositoryCustom{
 
     @Override
     public List<Posts> findFollowPosts(Long userId) {
-        List<Long> followUserId = queryFactory
+/*        List<Long> followUserId = queryFactory
                 .select(follow.follower.id)
                 .from(follow)
                 .where(follow.following.id.eq(userId))
@@ -32,13 +32,13 @@ public class FollowRepositoryImpl implements FollowRepositoryCustom{
         return queryFactory
                 .selectFrom(posts)
                 .where(posts.user.id.in(followUserId))
-                .fetch();
+                .fetch();*/
 
-/*        return queryFactory
+        return queryFactory
                 .selectFrom(posts)
                 .join(posts.user, user)
-                .join(user.following, follow)
+                .join(user.follower, follow)
                 .where(follow.following.id.eq(userId))
-                .fetch();*/
+                .fetch();
     }
 }

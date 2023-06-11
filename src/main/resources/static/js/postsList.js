@@ -1,18 +1,20 @@
 $(document).ready(function() {
     // 카테고리 클릭 이벤트 처리
     $('.category-link').on('click', function(event) {
+        var id = $(this).data('id');
         var category = $(this).data('category');
         event.preventDefault();
-        postList(category);
+        postList(id, category);
     });
 
-    $('.category-link[data-category="all"]').click();
+    var id = $('.category-link[data-category="all"]').data('id');
+    $('.category-link[data-id="' + id + '"][data-category="all"]').click();
 });
 
-function postList(category) {
+function postList(id, category) {
     $.ajax({
         type: 'GET',
-        url: '/api/v1/posts/' + category,
+        url: '/api/v1/posts/' + id + '/' + category,
     }).done(function(response){
         var postList = $('#postList');
         postList.empty();

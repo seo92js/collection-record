@@ -20,9 +20,9 @@
                 <!--카테고리 목록-->
                 <nav class="col-md-3">
                     <ul>
-                        <li><a href="javascript:void(0)" th:data-category='all' class="category-link">전체</a></li>
+                        <li><a href="javascript:void(0)" th:data-id="${id}" th:data-category="all" class="category-link">전체</a></li>
                         <li th:each="category : ${categories}">
-                            <a href="javascript:void(0)" th:text="${category.name}" th:data-category="${category.name}" class="category-link"></a>
+                            <a href="javascript:void(0)" th:text="${category.name}" th:data-id="${id}" th:data-category="${category.name}" class="category-link"></a>
                         </li>
                     </ul>
                 </nav>
