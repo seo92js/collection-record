@@ -7,7 +7,8 @@ function postsUpdate(id){
         categoryName: formData.get('categoryName'),
         title: formData.get('title'),
         image: formData.get('image'),
-        text: formData.get('text')
+        text: formData.get('text'),
+        hashtags: formData.get('hashtags')
     };
 
     if(!checkRequiredValue(postsUpdateRequestDto))
@@ -28,7 +29,7 @@ function postsUpdate(id){
 }
 
 function checkRequiredValue(value){
-    if (!value.categoryName || !value.title || !value.image || !value.text) {
+    if (!value.categoryName || !value.title || !value.image || !value.text || !value.hashtags) {
         alert('필수 값을 입력하시오');
         return false;
     }else{

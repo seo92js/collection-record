@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import side.collectionrecord.domain.user.User;
+import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.FollowService;
 import side.collectionrecord.service.PostsService;
@@ -22,6 +24,8 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class UserController {
+    private final UserRepository userRepository;
+
     private final UserService userService;
 
     private final CategoryService categoryService;
@@ -36,25 +40,30 @@ public class UserController {
         return "user/userJoinForm";
     }
 
-    @GetMapping("/user/{id}/home")
-    public String userHome(@PathVariable Long id, Model model, HttpServletRequest httpServletRequest){
-        List<CategoryListResponseDto> categories = categoryService.findCategories(id);
+    @GetMapping("/user/{username}/home")
+    public String userHome(@PathVariable String username, Model model, HttpServletRequest httpServletRequest){
+        User user = userRepository.findByUsername(username).get();
+
+        Long userId = user.getId();
+
+        List<CategoryListResponseDto> categories = categoryService.findCategories(userId);
 
         model.addAttribute("categories", categories);
 
         HttpSession session = httpServletRequest.getSession(false);
 
-        Long userId = (Long)session.getAttribute("userId");
+        Long loginUserId = (Long)session.getAttribute("userId");
 
-        if (userId != id) {
-            if (followService.isFollowingUser(userId, id) == false) {
+        if (loginUserId != userId) {
+            if (followService.isFollowingUser(loginUserId, userId) == false) {
                 model.addAttribute("isFollowing", false);
             } else {
                 model.addAttribute("isFollowing", true);
             }
         }
 
-        model.addAttribute("id", id);
+        model.addAttribute("id", userId);
+        model.addAttribute("username", username);
 
         return "user/userHome";
     }

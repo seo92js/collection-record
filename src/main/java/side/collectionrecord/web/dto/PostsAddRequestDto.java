@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @Getter
 public class PostsAddRequestDto {
@@ -13,12 +15,15 @@ public class PostsAddRequestDto {
     private String image;
     private String text;
 
+    private String hashtags;
+
     @Builder
-    public PostsAddRequestDto(Long userId, String categoryName, String title, String image, String text){
+    public PostsAddRequestDto(Long userId, String categoryName, String title, String image, String text, String hashtags){
         this.userId = userId;
         this.categoryName = categoryName;
         this.title = title;
         this.image = image;
         this.text = text;
+        this.hashtags = hashtags;
     }
 }

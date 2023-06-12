@@ -24,6 +24,8 @@ public class Posts extends BaseTimeEntity {
     private String text;
     private String image;
 
+    private String hashtags;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -46,18 +48,20 @@ public class Posts extends BaseTimeEntity {
     }
 
     @Builder
-    public Posts(User user, Category category, String title, String image, String text){
+    public Posts(User user, Category category, String title, String image, String text, String hashtags){
         setCategory(category);
         this.user = user;
         this.title = title;
         this.image = image;
         this.text = text;
+        this.hashtags = hashtags;
     }
 
-    public void update(Category category, String title, String image, String text){
+    public void update(Category category, String title, String image, String text, String hashtags){
         this.category = category;
         this.title = title;
         this.image = image;
         this.text = text;
+        this.hashtags = hashtags;
     }
 }

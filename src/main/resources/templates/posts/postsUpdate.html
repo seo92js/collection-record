@@ -28,6 +28,11 @@
         <input type="text" th:value="*{text}" th:field="*{text}" placeholder="내용" th:required="true">
       </div>
 
+      <div>
+        <label>해시태그</label>
+        <input type="text" th:value="*{hashtags}" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)" th:required="true">
+      </div>
+
       <button type="submit" class="btn btn-primary" id="posts-update-btn" th:onclick="postsUpdate([[${postsId}]])">등록</button>
     </form>
 

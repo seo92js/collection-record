@@ -7,9 +7,7 @@ import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.category.CategoryRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
-import side.collectionrecord.web.dto.PostsAddRequestDto;
-import side.collectionrecord.web.dto.PostsListResponseDto;
-import side.collectionrecord.web.dto.PostsUpdateRequestDto;
+import side.collectionrecord.web.dto.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +32,13 @@ public class PostsService {
     }
 
     @Transactional
+    public List<PostsSearchResponseDto> findContainsHashtags(String hashtags){
+        return postsRepository.findContainsHashtag(hashtags).stream()
+                .map(PostsSearchResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
     public Long addPosts(PostsAddRequestDto postsAddRequestDto){
 
         Category category = categoryRepository.findByName(postsAddRequestDto.getUserId(), postsAddRequestDto.getCategoryName());
@@ -42,6 +47,7 @@ public class PostsService {
                         .title(postsAddRequestDto.getTitle())
                         .image(postsAddRequestDto.getImage())
                         .text(postsAddRequestDto.getText())
+                        .hashtags(postsAddRequestDto.getHashtags())
                         .category(category)
                         .user(category.getUser())
                         .build())
@@ -54,7 +60,7 @@ public class PostsService {
 
         Category category = categoryRepository.findByName(userId, postsUpdateRequestDto.getCategoryName());
 
-        posts.update(category, postsUpdateRequestDto.getTitle(), postsUpdateRequestDto.getImage(), postsUpdateRequestDto.getText());
+        posts.update(category, postsUpdateRequestDto.getTitle(), postsUpdateRequestDto.getImage(), postsUpdateRequestDto.getText(), postsUpdateRequestDto.getHashtags());
 
         return postsId;
     }

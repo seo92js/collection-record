@@ -23,7 +23,7 @@ public class HomeController {
 
         if(session != null){
             model.addAttribute("login", true);
-            model.addAttribute("userId", (Long)session.getAttribute("userId"));
+            //model.addAttribute("userId", (Long)session.getAttribute("userId"));
             model.addAttribute("username", session.getAttribute("username").toString());
 
             List<FollowPostsListResponseDto> followPostsListResponseDtos = followService.findFollowPosts((Long)session.getAttribute("userId"));

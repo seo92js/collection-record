@@ -40,6 +40,7 @@ public class PostsController {
                         .title(null)
                         .image(null)
                         .text(null)
+                        .hashtags(null)
                         .build());
 
         model.addAttribute("categories", categories);
@@ -51,6 +52,8 @@ public class PostsController {
     public String postsView(@PathVariable Long id, Model model, HttpServletRequest request){
 
         Posts posts = postsService.findPosts(id);
+
+        model.addAttribute("username", posts.getUser().getUsername());
 
         model.addAttribute("postsResponseDto", new PostsResponseDto(posts));
 
@@ -81,6 +84,7 @@ public class PostsController {
                         .title(posts.getTitle())
                         .text(posts.getText())
                         .image(posts.getImage())
+                        .hashtags(posts.getHashtags())
                         .build());
 
         model.addAttribute("postsId", id);

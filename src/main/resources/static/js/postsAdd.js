@@ -13,7 +13,8 @@ function postsAdd(){
         categoryName: formData.get('categoryName'),
         title: formData.get('title'),
         image: formData.get('image'),
-        text: formData.get('text')
+        text: formData.get('text'),
+        hashtags: formData.get('hashtags')
     };
 
     if(!checkRequiredValue(postsAddRequestDto))

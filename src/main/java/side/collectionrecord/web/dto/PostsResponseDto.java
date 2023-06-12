@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.posts.Posts;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 public class PostsResponseDto {
@@ -12,6 +14,7 @@ public class PostsResponseDto {
     String title;
     String image;
     String text;
+    String hashtags;
 
     public PostsResponseDto(Posts posts){
         this.id = posts.getId();
@@ -19,5 +22,6 @@ public class PostsResponseDto {
         this.title = posts.getTitle();
         this.image = posts.getImage();
         this.text = posts.getText();
+        this.hashtags = posts.getHashtags();
     }
 }

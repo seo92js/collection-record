@@ -10,25 +10,42 @@
 
     <form>
       <div>
-        <input id="search-text" type="text" placeholder="유저이름 혹은 해쉬태그" th:required="true">
+        <input id="search-text" type="text" placeholder="유저이름 혹은 해시태그" th:required="true">
         <button type="submit" id="search-btn" class="btn btn-primary">검색</button>
       </div>
     </form>
 
     <!--검색 결과-->
-    <div class="col-md-9">
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th>유저 이름</th>
-        </tr>
-        </thead>
-        <tbody id="searchList">
-        <!--동적-->
-        </tbody>
-      </table>
+    <div class="row">
+      <!--유저 리스트-->
+      <div class="col-md-6">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>이미지</th>
+            <th>유저 이름</th>
+          </tr>
+          </thead>
+          <tbody id="user-search-list">
+          <!--동적-->
+          </tbody>
+        </table>
+      </div>
+      <!--게시물 리스트-->
+      <div class="col-md-6">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>이미지</th>
+            <th>타이틀</th>
+          </tr>
+          </thead>
+          <tbody id="posts-search-list">
+          <!--동적-->
+          </tbody>
+        </table>
+      </div>
     </div>
-
     <script src="/js/search.js"></script>
   </div>
 

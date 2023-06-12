@@ -6,11 +6,13 @@
 <div class="container">
     <div class="jumbotron">
         <!--게시물 내용-->
+        <a th:text="${username}" th:href="@{/user/{username}/home(username=${username})}"></a>
         <div>
             <div th:text="${postsResponseDto.categoryName}"></div>
             <div th:text="${postsResponseDto.title}"></div>
             <div th:text="${postsResponseDto.image}"></div>
             <div th:text="${postsResponseDto.text}"></div>
+            <div th:text="${postsResponseDto.hashtags}"></div>
             <a th:href="@{/posts/update/{id}(id=${postsResponseDto.id})}">수정</a>
         </div>
 
