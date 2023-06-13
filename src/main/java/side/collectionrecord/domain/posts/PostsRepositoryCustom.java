@@ -1,7 +1,5 @@
 package side.collectionrecord.domain.posts;
 
-import side.collectionrecord.domain.user.User;
-
 import java.util.List;
 
 public interface PostsRepositoryCustom {

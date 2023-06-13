@@ -19,9 +19,6 @@ public class SearchApiController {
     private final PostsService postsService;
     @GetMapping("/api/v1/search/{text}")
     public SearchResponseDto search(@PathVariable String text){
-/*        return userService.findContainsUsername(text);
-
-        return postsService.findContainsHashtags(text);*/
 
         List<UserSearchResponseDto> userSearchList = userService.findContainsUsername(text);
 

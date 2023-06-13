@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.BaseTimeEntity;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.comment.Comment;
+import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.user.User;
 
 import javax.persistence.*;
@@ -23,6 +24,10 @@ public class Posts extends BaseTimeEntity {
     private String title;
     private String text;
     private String image;
+
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image representativeImage;
 
     private String hashtags;
 

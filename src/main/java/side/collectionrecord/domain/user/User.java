@@ -7,6 +7,7 @@ import side.collectionrecord.domain.BaseTimeEntity;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.follow.Follow;
+import side.collectionrecord.domain.image.Image;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,6 +27,10 @@ public class User extends BaseTimeEntity {
     private String password;
     @Column
     private String image;
+
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image profileImage;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Category> categories = new ArrayList<>();

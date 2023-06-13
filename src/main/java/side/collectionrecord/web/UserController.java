@@ -12,7 +12,6 @@ import side.collectionrecord.service.FollowService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.CategoryListResponseDto;
-import side.collectionrecord.web.dto.UserFollowingRequestDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
 

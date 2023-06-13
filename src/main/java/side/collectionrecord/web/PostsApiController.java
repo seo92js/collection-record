@@ -6,11 +6,7 @@ import side.collectionrecord.service.PostsService;
 import side.collectionrecord.web.dto.PostsAddRequestDto;
 import side.collectionrecord.web.dto.PostsListResponseDto;
 import side.collectionrecord.web.dto.PostsUpdateRequestDto;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @RestController

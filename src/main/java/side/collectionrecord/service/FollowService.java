@@ -5,11 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.follow.Follow;
 import side.collectionrecord.domain.follow.FollowRepository;
-import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.FollowPostsListResponseDto;
-import side.collectionrecord.web.dto.PostsListResponseDto;
 import side.collectionrecord.web.dto.UserFollowingRequestDto;
 
 import java.util.List;

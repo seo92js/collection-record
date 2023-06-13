@@ -2,8 +2,6 @@ package side.collectionrecord.domain.follow;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import side.collectionrecord.domain.posts.Posts;
-import side.collectionrecord.domain.posts.QPosts;
-import side.collectionrecord.domain.user.QUser;
 
 import javax.persistence.EntityManager;
 import java.util.List;

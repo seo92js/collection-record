@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.posts.Posts;
 
-import java.util.List;
-
 @Getter
 @NoArgsConstructor
 public class PostsResponseDto {
