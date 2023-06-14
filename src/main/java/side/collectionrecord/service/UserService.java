@@ -3,10 +3,12 @@ package side.collectionrecord.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,14 +27,14 @@ public class UserService {
         return userRepository.save(User.builder()
                 .username(userJoinRequestDto.getUsername())
                 .password(userJoinRequestDto.getPassword())
-                .image(null)
+                .profileImage(null)
                 .build()).getId();
     }
 
     @Transactional
-    public Long update(Long id, UserUpdateRequestDto userUpdateRequestDto){
+    public Long update(Long id, UserUpdateRequestDto userUpdateRequestDto) throws IOException {
         User findUser = userRepository.findById(id).orElse(null);
-        findUser.update(userUpdateRequestDto.getUsername(), userUpdateRequestDto.getImage());
+        findUser.update(userUpdateRequestDto.getUsername(), userUpdateRequestDto.getProfileImage());
 
         return id;
     }

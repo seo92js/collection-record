@@ -78,6 +78,11 @@ public class UserController {
         model.addAttribute("userId", userId);
         model.addAttribute("userProfileResponseDto", userProfileResponseDto);
 
+        if (userProfileResponseDto.getProfileImage() != null){
+            User user = userRepository.findById(userId).get();
+            model.addAttribute("imageId", user.getProfileImage().getId());
+        }
+
         return "user/userProfileForm";
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.http.*;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
@@ -104,12 +105,13 @@ class UserApiControllerTest {
         //given
         String expectedUsername = "2";
         String expectedPassword = "2";
-        String expectedImage = "2";
+        //String expectedImage = "2";
+        byte[] profileImage = null;
 
         User user = User.builder()
                 .username("1")
                 .password("1")
-                .image("1")
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -117,7 +119,7 @@ class UserApiControllerTest {
         UserUpdateRequestDto userUpdateRequestDto = UserUpdateRequestDto.builder()
                 .username(expectedUsername)
                 .password(expectedPassword)
-                .image(expectedImage)
+                .profileImage(profileImage)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/user-update/" + user.getId();
@@ -131,6 +133,6 @@ class UserApiControllerTest {
         //then
         List<User> all = userRepository.findAll();
         assertThat(all.get(0).getUsername()).isEqualTo(expectedUsername);
-        assertThat(all.get(0).getImage()).isEqualTo(expectedImage);
+        assertThat(all.get(0).getProfileImage()).isEqualTo(profileImage);
     }
 }

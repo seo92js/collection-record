@@ -2,6 +2,7 @@ package side.collectionrecord.web.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.user.User;
 
 @Getter
@@ -9,11 +10,16 @@ import side.collectionrecord.domain.user.User;
 public class UserProfileResponseDto {
     private String username;
     private String password;
-    private String image;
+    private byte[] profileImage;
 
     public UserProfileResponseDto(User user){
         this.username = user.getUsername();
         this.password = user.getPassword();
-        this.image = user.getImage();
+
+        if (user.getProfileImage() != null){
+            this.profileImage = user.getProfileImage().getData();
+        }else{
+            this.profileImage = null;
+        }
     }
 }

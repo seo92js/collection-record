@@ -3,11 +3,14 @@ package side.collectionrecord.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
 import side.collectionrecord.web.dto.UserUpdateRequestDto;
+
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,23 +41,26 @@ class UserServiceTest {
     }
 
     @Test
-    public void 유저_업데이트(){
+    public void 유저_업데이트() throws IOException {
         //given
         User user = User.builder()
                 .username("test")
                 .password("test")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
 
         String expectedName = "test2";
-        String expectedImage = "test2";
+        //String expectedImage = "test2";
+        Image image = Image.builder()
+                .data(null)
+                .build();
 
         UserUpdateRequestDto userUpdateRequestDto = UserUpdateRequestDto.builder()
                 .username(expectedName)
                 .password("test")
-                .image(expectedImage)
+                .profileImage(image)
                 .build();
 
         userService.update(user.getId(), userUpdateRequestDto);
@@ -64,7 +70,7 @@ class UserServiceTest {
 
         //then
         assertThat(findUser.getUsername()).isEqualTo(expectedName);
-        assertThat(findUser.getImage()).isEqualTo(expectedImage);
+        assertThat(findUser.getProfileImage()).isEqualTo(image);
     }
 
     @Test
@@ -73,7 +79,7 @@ class UserServiceTest {
         User user = User.builder()
                 .username("test")
                 .password("test")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -83,6 +89,6 @@ class UserServiceTest {
 
         //then
         assertThat(userProfileResponseDto.getUsername()).isEqualTo(user.getUsername());
-        assertThat(userProfileResponseDto.getImage()).isEqualTo(user.getImage());
+        assertThat(userProfileResponseDto.getProfileImage()).isEqualTo(user.getProfileImage());
     }
 }
