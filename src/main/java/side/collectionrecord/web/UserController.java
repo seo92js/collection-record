@@ -61,6 +61,10 @@ public class UserController {
             }
         }
 
+        if (user.getProfileImage() != null){
+            model.addAttribute("imageId", user.getProfileImage().getId());
+        }
+
         model.addAttribute("id", userId);
         model.addAttribute("username", username);
 

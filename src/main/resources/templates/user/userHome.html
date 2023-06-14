@@ -6,6 +6,8 @@
     <div class="container">
         <div class="jumbotron">
             <h1 th:text="${username}"></h1>
+            <!--프로필 이미지-->
+            <img th:if="${imageId != null}" th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
 
             <div>
                 <a class="btn btn-primary" th:if="${isFollowing == null}" href="/user/profile">내 정보</a>

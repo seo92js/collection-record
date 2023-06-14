@@ -14,11 +14,13 @@ public class Image {
     @Column(name = "image_id")
     private Long id;
 
+    private String filename;
     @Lob
     private byte[] data;
 
     @Builder
-    public Image(byte[] data){
+    public Image(String filename, byte[] data){
+        this.filename = filename;
         this.data = data;
     }
 }

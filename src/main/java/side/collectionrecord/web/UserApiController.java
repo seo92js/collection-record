@@ -37,6 +37,7 @@ public class UserApiController {
             byte[] image = imageFile.getBytes();
 
             Long imageId = imageService.upload(ImageUploadRequestDto.builder()
+                                .filename(imageFile.getOriginalFilename())
                                 .data(image)
                                 .build());
 

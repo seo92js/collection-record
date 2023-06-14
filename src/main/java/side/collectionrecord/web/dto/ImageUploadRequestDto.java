@@ -7,10 +7,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ImageUploadRequestDto {
+
+    private String filename;
     private byte[] data;
 
     @Builder
-    public ImageUploadRequestDto(byte[] data){
+    public ImageUploadRequestDto(String filename, byte[] data){
+        this.filename = filename;
         this.data = data;
     }
 }

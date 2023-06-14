@@ -19,6 +19,7 @@ public class ImageService {
     public Long upload(ImageUploadRequestDto imageUploadRequestDto){
 
         Image image = Image.builder()
+                .filename(imageUploadRequestDto.getFilename())
                 .data(imageUploadRequestDto.getData())
                 .build();
 
