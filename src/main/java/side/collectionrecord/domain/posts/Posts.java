@@ -23,7 +23,6 @@ public class Posts extends BaseTimeEntity {
 
     private String title;
     private String text;
-    private String image;
 
     @OneToOne
     @JoinColumn(name = "image_id")
@@ -53,19 +52,19 @@ public class Posts extends BaseTimeEntity {
     }
 
     @Builder
-    public Posts(User user, Category category, String title, String image, String text, String hashtags){
+    public Posts(User user, Category category, String title, Image representativeImage, String text, String hashtags){
         setCategory(category);
         this.user = user;
         this.title = title;
-        this.image = image;
+        this.representativeImage = representativeImage;
         this.text = text;
         this.hashtags = hashtags;
     }
 
-    public void update(Category category, String title, String image, String text, String hashtags){
+    public void update(Category category, String title, Image representativeImage, String text, String hashtags){
         this.category = category;
         this.title = title;
-        this.image = image;
+        this.representativeImage = representativeImage;
         this.text = text;
         this.hashtags = hashtags;
     }

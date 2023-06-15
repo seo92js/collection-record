@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
+import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.*;
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+
+    private final ImageRepository imageRepository;
 
     @Transactional
     public Long join(UserJoinRequestDto userJoinRequestDto){
@@ -34,6 +37,11 @@ public class UserService {
     @Transactional
     public Long update(Long id, UserUpdateRequestDto userUpdateRequestDto) throws IOException {
         User findUser = userRepository.findById(id).orElse(null);
+
+        if (findUser.getProfileImage() != null){
+            imageRepository.delete(findUser.getProfileImage());
+        }
+
         findUser.update(userUpdateRequestDto.getUsername(), userUpdateRequestDto.getProfileImage());
 
         return id;

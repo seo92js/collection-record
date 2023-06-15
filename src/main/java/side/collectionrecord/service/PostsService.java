@@ -45,7 +45,7 @@ public class PostsService {
 
         return postsRepository.save(Posts.builder()
                         .title(postsAddRequestDto.getTitle())
-                        .image(postsAddRequestDto.getImage())
+                        .representativeImage(postsAddRequestDto.getRepresentativeImage())
                         .text(postsAddRequestDto.getText())
                         .hashtags(postsAddRequestDto.getHashtags())
                         .category(category)
@@ -60,7 +60,7 @@ public class PostsService {
 
         Category category = categoryRepository.findByName(userId, postsUpdateRequestDto.getCategoryName());
 
-        posts.update(category, postsUpdateRequestDto.getTitle(), postsUpdateRequestDto.getImage(), postsUpdateRequestDto.getText(), postsUpdateRequestDto.getHashtags());
+        posts.update(category, postsUpdateRequestDto.getTitle(), postsUpdateRequestDto.getRepresentativeImage(), postsUpdateRequestDto.getText(), postsUpdateRequestDto.getHashtags());
 
         return postsId;
     }

@@ -30,7 +30,7 @@ function postsAdd(){
         data: JSON.stringify(postsAddRequestDto)
     }).done(function(){
         alert('게시물 추가 완료.');
-        window.location.href = '/user/' + postsAddRequestDto.userId + '/home';
+        history.back();
     }).fail(function (error){
         alert(JSON.stringify(error));
     });
