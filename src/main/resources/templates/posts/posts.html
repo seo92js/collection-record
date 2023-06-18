@@ -10,7 +10,7 @@
         <div>
             <div th:text="${postsResponseDto.categoryName}"></div>
             <div th:text="${postsResponseDto.title}"></div>
-            <div th:text="${postsResponseDto.image}"></div>
+            <img th:src="@{/api/v1/image-view/{imageId}(imageId=${postsResponseDto.representativeImageId})}">
             <div th:text="${postsResponseDto.text}"></div>
             <div th:text="${postsResponseDto.hashtags}"></div>
             <a th:href="@{/posts/update/{id}(id=${postsResponseDto.id})}">수정</a>

@@ -10,7 +10,8 @@ public class PostsResponseDto {
     Long id;
     String categoryName;
     String title;
-    private byte[] representativeImage;
+    Long representativeImageId;
+
     String text;
     String hashtags;
 
@@ -18,7 +19,7 @@ public class PostsResponseDto {
         this.id = posts.getId();
         this.categoryName = posts.getCategory().getName();
         this.title = posts.getTitle();
-        this.representativeImage = posts.getRepresentativeImage().getData();
+        this.representativeImageId = posts.getRepresentativeImage().getId();
         this.text = posts.getText();
         this.hashtags = posts.getHashtags();
     }

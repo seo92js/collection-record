@@ -9,7 +9,7 @@ function userUpdate(){
     const formData = new FormData(profileForm);
 
     const id = document.getElementById('userId').value;
-    const imageFileInput = document.getElementById('imageFile');
+    const imageFileInput = document.getElementById('user-profile-img');
 
     //이미지 파일 선택 확인
     if (imageFileInput.files.length > 0){

@@ -19,8 +19,8 @@
       </div>
 
       <div>
-        <label>이미지</label>
-        <input type="text" th:value="*{image}" th:field="*{image}" placeholder="이미지" th:required="true">
+        <img th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
+        <input type="file" id="posts-rep-update-img" placeholder="이미지 선택">
       </div>
 
       <div>

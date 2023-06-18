@@ -9,11 +9,11 @@ import side.collectionrecord.domain.posts.Posts;
 public class FollowPostsListResponseDto {
     private String username;
     private String title;
-    private String image;
+    private Long representativeImageId;
 
     public FollowPostsListResponseDto(Posts posts){
         this.username = posts.getUser().getUsername();
         this.title = posts.getTitle();
-        this.image = posts.getImage();
+        this.representativeImageId = posts.getRepresentativeImage().getId();
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import side.collectionrecord.domain.posts.Posts;
+import side.collectionrecord.domain.user.User;
 import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.CommentService;
 import side.collectionrecord.service.PostsService;
@@ -37,7 +38,7 @@ public class PostsController {
                         .userId(userId)
                         .categoryName(null)
                         .title(null)
-                        .image(null)
+                        .representativeImage(null)
                         .text(null)
                         .hashtags(null)
                         .build());
@@ -82,9 +83,11 @@ public class PostsController {
                         .categoryName(posts.getCategory().getName())
                         .title(posts.getTitle())
                         .text(posts.getText())
-                        .image(posts.getImage())
+                        .representativeImage(posts.getRepresentativeImage())
                         .hashtags(posts.getHashtags())
                         .build());
+
+        model.addAttribute("imageId", posts.getRepresentativeImage().getId());
 
         model.addAttribute("postsId", id);
 

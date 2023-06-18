@@ -11,7 +11,7 @@
             <form th:object="${userProfileResponseDto}" id="user-profile-form">
                 <div>
                     <img th:if="${imageId != null}" th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
-                    <input type="file" th:value="*{profileImage}" th:field="*{profileImage}" id="imageFile" placeholder="이미지 선택">
+                    <input type="file" id="user-profile-img" placeholder="이미지 선택">
                 </div>
                 <div>
                     <label>이름</label>

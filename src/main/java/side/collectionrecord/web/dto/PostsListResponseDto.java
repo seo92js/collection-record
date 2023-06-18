@@ -8,12 +8,12 @@ import side.collectionrecord.domain.posts.Posts;
 @NoArgsConstructor
 public class PostsListResponseDto {
     private Long id;
-    private String image;
+    private Long representativeImageId;
     private String title;
 
     public PostsListResponseDto(Posts posts){
         this.id = posts.getId();
-        this.image = posts.getImage();
+        this.representativeImageId = posts.getRepresentativeImage().getId();
         this.title = posts.getTitle();
     }
 }
