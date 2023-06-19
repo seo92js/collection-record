@@ -1,6 +1,7 @@
 package side.collectionrecord.service;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
@@ -9,7 +10,9 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.*;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,14 +26,23 @@ public class UserService {
     private final ImageRepository imageRepository;
 
     @Transactional
-    public Long join(UserJoinRequestDto userJoinRequestDto){
+    public Long join(UserJoinRequestDto userJoinRequestDto) throws IOException {
 
         validateDuplicateUser(userJoinRequestDto.getUsername());
+
+        File file = new File("src/main/resources/static/img/default.jpg");
+
+        Image image = Image.builder()
+                .filename("default")
+                .data(Files.readAllBytes(file.toPath()))
+                .build();
+
+        imageRepository.save(image);
 
         return userRepository.save(User.builder()
                 .username(userJoinRequestDto.getUsername())
                 .password(userJoinRequestDto.getPassword())
-                .profileImage(null)
+                .profileImage(image)
                 .build()).getId();
     }
 

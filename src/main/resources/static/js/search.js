@@ -19,9 +19,12 @@ function searchList(){
 
         response.userSearchList.forEach(function(user){
             var userRow = $('<tr>');
-            var userImageCell = $('<td>').text(user.image);
+            var userImageCell = $('<td>');
+            var userImageLink = $('<img>').attr('src', '/api/v1/image-view/' + user.profileImageId);
+
             var userCell = $('<td>');
             var userLink = $('<a>').attr('href', '/user/' + user.username + '/home').text(user.username);
+            userImageCell.append(userImageLink);
             userCell.append(userLink);
             userRow.append(userImageCell, userCell);
             userSearchList.append(userRow);
@@ -33,9 +36,12 @@ function searchList(){
        response.postsSearchList.forEach(function(post){
             var postRow = $('<tr>');
             var postImageCell = $('<td>').text(post.image);
+            var postImageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId);
+
             var postCell = $('<td>');
             var postLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title);
 
+            postImageCell.append(postImageLink);
             postCell.append(postLink)
             postRow.append(postImageCell, postCell);
             postsSearchList.append(postRow);

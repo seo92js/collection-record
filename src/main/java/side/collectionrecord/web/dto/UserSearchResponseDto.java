@@ -9,11 +9,11 @@ import side.collectionrecord.domain.user.User;
 @NoArgsConstructor
 public class UserSearchResponseDto {
     //private String image;
-    private Image profileImage;
+    private Long profileImageId;
     private String username;
 
     public UserSearchResponseDto(User user){
-        this.profileImage = user.getProfileImage();
+        this.profileImageId = user.getProfileImage().getId();
         this.username = user.getUsername();
     }
 }

@@ -1,3 +1,7 @@
+document.getElementById("posts-update-btn").addEventListener('click', function(event) {
+    event.preventDefault();
+});
+
 function postsUpdate(id){
     const updateForm = document.getElementById("posts-update-form");
 
@@ -11,12 +15,13 @@ function postsUpdate(id){
         hashtags: formData.get('hashtags')
     };
 
-    console.log(checkValue.categoryName);
-
     //이미지 파일 선택 확인
     if (imageFileInput.files.length > 0){
         const imageFile = imageFileInput.files[0];
         formData.append('imageFile', imageFile);
+    } else {
+        alert('이미지를 선택하세요');
+        return;
     }
 
     if(!checkRequiredValue(checkValue))
@@ -30,8 +35,8 @@ function postsUpdate(id){
         contentType: false
     }).done(function(){
         alert('게시물 수정 완료.');
-        //window.location.href = '/posts/' + id;
-        location.reload();
+        window.location.href = '/posts/' + id;
+        //location.reload();
     }).fail(function (error){
         alert(JSON.stringify(error));
     });

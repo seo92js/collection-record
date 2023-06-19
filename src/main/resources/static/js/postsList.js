@@ -21,9 +21,13 @@ function postList(id, category) {
 
         response.forEach(function(post) {
             var row = $('<tr>');
-            var imageCell = $('<td>').text(post.image);
+            var imageCell = $('<td>');
+            var imageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId);
+
             var titleCell = $('<td>');
             var titleLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title);
+
+            imageCell.append(imageLink);
             titleCell.append(titleLink);
             row.append(imageCell, titleCell);
             postList.append(row);

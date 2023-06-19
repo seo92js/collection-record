@@ -50,7 +50,7 @@ public class PostsApiController {
     }
 
     @PutMapping("/api/v1/posts-update/{id}")
-    public Long update(@PathVariable Long id, @RequestParam(name = "title") String title, @RequestParam(name = "categoryName") String categoryName, @RequestParam(name = "text") String text, @RequestParam(name = "hashtags") String hashtags, @RequestParam(value = "imageFile", required = true) MultipartFile imageFile) throws IOException {
+    public Long update(@PathVariable Long id, @RequestParam("title") String title, @RequestParam("categoryName") String categoryName, @RequestParam("text") String text, @RequestParam("hashtags") String hashtags, @RequestParam(value = "imageFile", required = true) MultipartFile imageFile) throws IOException {
 
         byte[] image = imageFile.getBytes();
 

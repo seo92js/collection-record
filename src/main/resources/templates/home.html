@@ -29,7 +29,7 @@
               <div th:text="${post.username}"></div>
             </td>
             <td>
-              <div th:text="${post.image}"></div>
+              <img th:src="@{/api/v1/image-view/{imageId}(imageId=${post.representativeImageId})}">
             </td>
             <td>
               <div th:text="${post.title}"></div>
