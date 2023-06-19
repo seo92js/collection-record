@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import side.collectionrecord.domain.image.Image;
+import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
@@ -22,8 +23,11 @@ class UserServiceTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ImageRepository imageRepository;
+
     @Test
-    public void 유저_회원가입(){
+    public void 유저_회원가입() throws IOException {
         //given
         UserJoinRequestDto userJoinRequestDto = UserJoinRequestDto.builder()
                 .username("test")
@@ -52,10 +56,13 @@ class UserServiceTest {
         userRepository.save(user);
 
         String expectedName = "test2";
-        //String expectedImage = "test2";
+
         Image image = Image.builder()
+                .filename("expectedImage")
                 .data(null)
                 .build();
+
+        imageRepository.save(image);
 
         UserUpdateRequestDto userUpdateRequestDto = UserUpdateRequestDto.builder()
                 .username(expectedName)
@@ -70,7 +77,7 @@ class UserServiceTest {
 
         //then
         assertThat(findUser.getUsername()).isEqualTo(expectedName);
-        assertThat(findUser.getProfileImage()).isEqualTo(image);
+        assertThat(findUser.getProfileImage().getFilename()).isEqualTo("expectedImage");
     }
 
     @Test

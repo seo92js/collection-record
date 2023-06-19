@@ -33,7 +33,7 @@ class CategoryServiceTest {
         User user = User.builder()
                 .username("test")
                 .password("test")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -61,7 +61,7 @@ class CategoryServiceTest {
         User user = User.builder()
                 .username("user1")
                 .password("password1")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -100,7 +100,7 @@ class CategoryServiceTest {
         User user = User.builder()
                 .username("user1")
                 .password("password1")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -133,7 +133,7 @@ class CategoryServiceTest {
         User user = User.builder()
                 .username("user1")
                 .password("password1")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);

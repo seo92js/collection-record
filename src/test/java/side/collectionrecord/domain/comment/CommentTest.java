@@ -17,7 +17,7 @@ class CommentTest {
         User user = User.builder()
                 .username("test")
                 .password("test")
-                .image("test")
+                .profileImage(null)
                 .build();
 
         Category category = new Category();
@@ -26,7 +26,7 @@ class CommentTest {
                 .user(user)
                 .category(category)
                 .title("test")
-                .image("image")
+                .representativeImage(null)
                 .text("text")
                 .build();
 

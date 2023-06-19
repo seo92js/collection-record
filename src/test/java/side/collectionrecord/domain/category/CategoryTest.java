@@ -14,7 +14,7 @@ class CategoryTest {
         User user = User.builder()
                 .username("user1")
                 .password("password1")
-                .image("image1")
+                .profileImage(null)
                 .build();
 
         Category category = Category.builder()

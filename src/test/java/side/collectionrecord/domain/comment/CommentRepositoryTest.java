@@ -36,7 +36,7 @@ class CommentRepositoryTest {
         User user = User.builder()
                 .username("user")
                 .password("1234")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -50,7 +50,7 @@ class CommentRepositoryTest {
 
         Posts posts = Posts.builder()
                 .text("text")
-                .image(null)
+                .representativeImage(null)
                 .title("title")
                 .user(user)
                 .category(category)
@@ -80,7 +80,7 @@ class CommentRepositoryTest {
         User user = User.builder()
                 .username("user")
                 .password("1234")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -94,7 +94,7 @@ class CommentRepositoryTest {
 
         Posts posts = Posts.builder()
                 .text("text")
-                .image(null)
+                .representativeImage(null)
                 .title("title")
                 .user(user)
                 .category(category)

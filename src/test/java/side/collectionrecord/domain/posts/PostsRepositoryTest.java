@@ -30,7 +30,7 @@ class PostsRepositoryTest {
         User user = User.builder()
                 .username("user")
                 .password("password")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -44,7 +44,7 @@ class PostsRepositoryTest {
 
         Posts posts = Posts.builder()
                 .title("title")
-                .image("image")
+                .representativeImage(null)
                 .text("text")
                 .category(category)
                 .build();

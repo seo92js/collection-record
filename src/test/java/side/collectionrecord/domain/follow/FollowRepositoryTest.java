@@ -36,7 +36,7 @@ class FollowRepositoryTest {
         User user1 = User.builder()
                 .username("user1")
                 .password("1")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user1);
@@ -44,7 +44,7 @@ class FollowRepositoryTest {
         User user2 = User.builder()
                 .username("user2")
                 .password("1")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user2);
@@ -72,7 +72,7 @@ class FollowRepositoryTest {
         User user1 = User.builder()
                 .username("user1")
                 .password("1")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user1);
@@ -80,7 +80,7 @@ class FollowRepositoryTest {
         User user2 = User.builder()
                 .username("user2")
                 .password("1")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user2);
@@ -96,7 +96,7 @@ class FollowRepositoryTest {
                 .user(user2)
                 .category(category)
                 .title("title1")
-                .image(null)
+                .representativeImage(null)
                 .text("text1")
                 .build();
 
@@ -106,7 +106,7 @@ class FollowRepositoryTest {
                 .user(user2)
                 .category(category)
                 .title("title2")
-                .image(null)
+                .representativeImage(null)
                 .text("text2")
                 .build();
 

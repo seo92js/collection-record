@@ -106,7 +106,12 @@ class UserApiControllerTest {
         String expectedUsername = "2";
         String expectedPassword = "2";
         //String expectedImage = "2";
-        byte[] profileImage = null;
+        byte[] profileImage = {0,};
+
+        Image image = Image.builder()
+                .filename("image")
+                .data(profileImage)
+                .build();
 
         User user = User.builder()
                 .username("1")
@@ -119,7 +124,7 @@ class UserApiControllerTest {
         UserUpdateRequestDto userUpdateRequestDto = UserUpdateRequestDto.builder()
                 .username(expectedUsername)
                 .password(expectedPassword)
-                .profileImage(profileImage)
+                .profileImage(image)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/user-update/" + user.getId();

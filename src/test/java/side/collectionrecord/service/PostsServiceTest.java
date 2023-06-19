@@ -6,6 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.category.CategoryRepository;
+import side.collectionrecord.domain.image.Image;
+import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
@@ -32,13 +34,16 @@ class PostsServiceTest {
     @Autowired
     PostsRepository postsRepository;
 
+    @Autowired
+    ImageRepository imageRepository;
+
     @Test
     public void 게시물_추가(){
         //given
         User user = User.builder()
                 .username("user1")
                 .password("password1")
-                .image("image1")
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -50,11 +55,20 @@ class PostsServiceTest {
 
         categoryRepository.save(category);
 
+        byte[] data = {0,0};
+
+        Image image = Image.builder()
+                .filename("image")
+                .data(data)
+                .build();
+
+        imageRepository.save(image);
+
         PostsAddRequestDto postsAddRequestDto = PostsAddRequestDto.builder()
                 .userId(user.getId())
                 .categoryName(category.getName())
                 .title("title")
-                .image("image")
+                .representativeImage(image)
                 .text("text")
                 .build();
 
@@ -68,7 +82,7 @@ class PostsServiceTest {
         assertThat(posts.getUser()).isEqualTo(user);
         assertThat(posts.getCategory()).isEqualTo(category);
         assertThat(posts.getTitle()).isEqualTo("title");
-        assertThat(posts.getImage()).isEqualTo("image");
+        assertThat(posts.getRepresentativeImage().getFilename()).isEqualTo("image");
         assertThat(posts.getText()).isEqualTo("text");
     }
 
@@ -78,7 +92,7 @@ class PostsServiceTest {
         User user = User.builder()
                 .username("user1")
                 .password("password1")
-                .image("image1")
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -90,11 +104,20 @@ class PostsServiceTest {
 
         categoryRepository.save(category);
 
+        byte[] data = {0,0};
+
+        Image image = Image.builder()
+                .filename("image1")
+                .data(data)
+                .build();
+
+        imageRepository.save(image);
+
         PostsAddRequestDto postsAddRequestDto1 = PostsAddRequestDto.builder()
                 .userId(user.getId())
                 .categoryName(category.getName())
                 .title("title2")
-                .image("image2")
+                .representativeImage(image)
                 .text("text2")
                 .build();
 
@@ -102,7 +125,7 @@ class PostsServiceTest {
                 .userId(user.getId())
                 .categoryName(category.getName())
                 .title("title2")
-                .image("image2")
+                .representativeImage(image)
                 .text("text2")
                 .build();
 
@@ -128,7 +151,7 @@ class PostsServiceTest {
         User user = User.builder()
                 .username("user1")
                 .password("password1")
-                .image("image1")
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -140,11 +163,20 @@ class PostsServiceTest {
 
         categoryRepository.save(category);
 
+        byte[] data = {0,};
+
+        Image image = Image.builder()
+                .filename("")
+                .data(data)
+                .build();
+
+        imageRepository.save(image);
+
         PostsAddRequestDto postsAddRequestDto1 = PostsAddRequestDto.builder()
                 .userId(user.getId())
                 .categoryName(category.getName())
                 .title("title")
-                .image("image")
+                .representativeImage(image)
                 .text("text")
                 .build();
 
@@ -152,7 +184,6 @@ class PostsServiceTest {
 
         String expectedCategoryName = "category2";
         String expectedTitle = "title2";
-        String expectedImage = "image2";
         String expectedText = "text2";
 
         Category expectedCategory = Category.builder()
@@ -163,10 +194,17 @@ class PostsServiceTest {
         categoryRepository.save(expectedCategory);
 
         //when
+        Image expectedImage = Image.builder()
+                .filename("expectedImage")
+                .data(data)
+                .build();
+
+        imageRepository.save(expectedImage);
+
         PostsUpdateRequestDto postsUpdateRequestDto = PostsUpdateRequestDto.builder()
                 .categoryName(expectedCategory.getName())
                 .title(expectedTitle)
-                .image(expectedImage)
+                .representativeImage(expectedImage)
                 .text(expectedText)
                 .build();
 
@@ -178,7 +216,7 @@ class PostsServiceTest {
         assertThat(posts.getCategory()).isEqualTo(expectedCategory);
         assertThat(posts.getCategory()).isNotEqualTo(category);
         assertThat(posts.getTitle()).isEqualTo(expectedTitle);
-        assertThat(posts.getImage()).isEqualTo(expectedImage);
+        assertThat(posts.getRepresentativeImage().getFilename()).isEqualTo("expectedImage");
         assertThat(posts.getText()).isEqualTo(expectedText);
     }
 }

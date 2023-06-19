@@ -44,7 +44,7 @@ class CommentServiceTest {
         User user = User.builder()
                 .username("user")
                 .password("1234")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -58,7 +58,7 @@ class CommentServiceTest {
 
         Posts posts = Posts.builder()
                 .text("text")
-                .image(null)
+                .representativeImage(null)
                 .title("title")
                 .user(user)
                 .category(category)
@@ -88,7 +88,7 @@ class CommentServiceTest {
         User user = User.builder()
                 .username("user")
                 .password("1234")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -102,7 +102,7 @@ class CommentServiceTest {
 
         Posts posts = Posts.builder()
                 .text("text")
-                .image(null)
+                .representativeImage(null)
                 .title("title")
                 .user(user)
                 .category(category)
@@ -133,7 +133,7 @@ class CommentServiceTest {
         User user = User.builder()
                 .username("user")
                 .password("1234")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -147,7 +147,7 @@ class CommentServiceTest {
 
         Posts posts = Posts.builder()
                 .text("text")
-                .image(null)
+                .representativeImage(null)
                 .title("title")
                 .user(user)
                 .category(category)

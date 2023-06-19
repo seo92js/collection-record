@@ -16,7 +16,7 @@ class PostsTest {
         User user = User.builder()
                 .username("user1")
                 .password("password1")
-                .image("image1")
+                .profileImage(null)
                 .build();
 
         Category category = Category.builder()
@@ -28,7 +28,7 @@ class PostsTest {
         //생성자에 setCategory 함수 포함 되어있음.
         Posts posts = Posts.builder()
                 .title("title")
-                .image("image")
+                .representativeImage(null)
                 .text("text")
                 .category(category)
                 .build();
@@ -44,7 +44,6 @@ class PostsTest {
     public void 빌더패턴(){
         //given
         String title = "title";
-        String image = "image";
         String text = "text";
 
         Category category = new Category();
@@ -52,7 +51,7 @@ class PostsTest {
         //when
         Posts posts = Posts.builder()
                 .title(title)
-                .image(image)
+                .representativeImage(null)
                 .text(text)
                 .category(category)
                 .build();
@@ -60,6 +59,6 @@ class PostsTest {
         //then
         assertThat(posts.getTitle()).isEqualTo(title);
         assertThat(posts.getText()).isEqualTo(text);
-        assertThat(posts.getImage()).isEqualTo(image);
+        assertThat(posts.getRepresentativeImage()).isNull();
     }
 }

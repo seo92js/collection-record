@@ -26,7 +26,7 @@ class CategoryRepositoryTest {
         User user = User.builder()
                 .username("userA")
                 .password("1")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -51,7 +51,7 @@ class CategoryRepositoryTest {
         User user = User.builder()
                 .username("userA")
                 .password("1")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -84,7 +84,7 @@ class CategoryRepositoryTest {
         User user = User.builder()
                 .username("userA")
                 .password("1")
-                .image(null)
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);

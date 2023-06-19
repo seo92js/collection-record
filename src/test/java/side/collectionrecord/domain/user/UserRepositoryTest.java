@@ -25,14 +25,12 @@ class UserRepositoryTest {
     public void save(){
         //given
         String username = "seo";
-        String email = "test@test.com";
         String password = "ff";
-        String image = "ff";
 
         userRepository.save(User.builder()
                         .username(username)
                         .password(password)
-                        .image(image)
+                        .profileImage(null)
                 .build());
 
         //when
@@ -42,17 +40,18 @@ class UserRepositoryTest {
         User findUser = findUsers.get(0);
         assertThat(findUser.getUsername()).isEqualTo(username);
         assertThat(findUser.getPassword()).isEqualTo(password);
-        assertThat(findUser.getImage()).isEqualTo(image);
+        assertThat(findUser.getProfileImage()).isNull();
     }
 
     @Test
     public void BaseTimeEntity_등록(){
         //given
         LocalDateTime now = LocalDateTime.of(2022,5,16,0,0,0);
+
         userRepository.save(User.builder()
                         .username("test")
                         .password("test")
-                        .image("test")
+                        .profileImage(null)
                         .build());
         //when
         List<User> all = userRepository.findAll();
@@ -70,7 +69,7 @@ class UserRepositoryTest {
         User user = User.builder()
                 .username("user1")
                 .password("1234")
-                .image("1234")
+                .profileImage(null)
                 .build();
 
         userRepository.save(user);
@@ -81,6 +80,6 @@ class UserRepositoryTest {
         //then
         assertThat(findUser.getUsername()).isEqualTo(user.getUsername());
         assertThat(findUser.getPassword()).isEqualTo(user.getPassword());
-        assertThat(findUser.getImage()).isEqualTo(user.getImage());
+        assertThat(findUser.getProfileImage()).isNull();
     }
 }

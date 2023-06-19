@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.comment.Comment;
+import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.posts.Posts;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +18,7 @@ class UserTest {
         User user = User.builder()
                 .username("test")
                 .password("test")
-                .image("test")
+                .profileImage(null)
                 .build();
 
         Category category = Category.builder()
@@ -29,7 +30,7 @@ class UserTest {
                 .user(user)
                 .category(category)
                 .title("test")
-                .image("image")
+                .representativeImage(null)
                 .text("text")
                 .build();
 
@@ -60,13 +61,13 @@ class UserTest {
         User user = User.builder()
                 .username("test")
                 .password("test")
-                .image("test")
+                .profileImage(null)
                 .build();
 
         //when
         //then
         assertThat(user.getUsername()).isEqualTo("test");
         assertThat(user.getPassword()).isEqualTo("test");
-        assertThat(user.getImage()).isEqualTo("test");
+        assertThat(user.getProfileImage()).isNull();
     }
 }
