@@ -3,26 +3,23 @@
 <head th:replace="fragments/header :: header" />
 <body>
     <div class="container">
-        <div class="jumbotron">
-            <h1>로그인</h1>
+        <h1>로그인</h1>
 
-            <form th:object="${loginRequestDto}" id="login-form">
-                <div>
-                    <label>이름</label>
-                    <input type="text" th:field="*{username}" placeholder="이름" th:required="true">
-                </div>
-                <div>
-                    <label>비밀번호</label>
-                    <input type="text" th:field="*{password}" placeholder="비밀번호" th:required="true">
-                </div>
-                <button type="submit" class="btn btn-primary" id="login-btn">로그인</button>
-            </form>
+        <form th:object="${loginRequestDto}" id="login-form">
+            <div>
+                <label>이름</label>
+                <input type="text" th:field="*{username}" placeholder="이름" th:required="true">
+            </div>
+            <div>
+                <label>비밀번호</label>
+                <input type="text" th:field="*{password}" placeholder="비밀번호" th:required="true">
+            </div>
+            <button type="submit" class="btn btn-primary" id="login-btn">로그인</button>
+        </form>
 
-            <script src="/js/login.js"></script>
-        </div>
-
-    <div th:replace="fragments/footer :: footer" />
-
+        <script src="/js/login.js"></script>
     </div>
+
+<div th:replace="fragments/footer :: footer" />
 </body>
 </html>

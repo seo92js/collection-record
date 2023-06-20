@@ -3,23 +3,21 @@
 <head th:replace="fragments/header :: header" />
 <body>
   <div class="container">
-    <div class="jumbotron">
-      <h1>회원 가입</h1>
+    <h1>회원 가입</h1>
 
-      <form th:object="${userJoinRequestDto}" id="user-join-form">
-        <div>
-          <label>이름</label>
-          <input type="text" th:field="*{username}" placeholder="이름" th:required="true">
-        </div>
-        <div>
-          <label>비밀번호</label>
-          <input type="text" th:field="*{password}" placeholder="비밀번호" th:required="true">
-        </div>
-        <button type="submit" class="btn btn-primary" id="user-join-btn">회원 가입</button>
-      </form>
+    <form th:object="${userJoinRequestDto}" id="user-join-form">
+      <div>
+        <label>이름</label>
+        <input type="text" th:field="*{username}" placeholder="이름" th:required="true">
+      </div>
+      <div>
+        <label>비밀번호</label>
+        <input type="text" th:field="*{password}" placeholder="비밀번호" th:required="true">
+      </div>
+      <button type="submit" class="btn btn-primary" id="user-join-btn">회원 가입</button>
+    </form>
 
-      <script src="/js/userjoin.js"></script>
-    </div>
+    <script src="/js/userjoin.js"></script>
 
     <div th:replace="fragments/footer :: footer" />
 

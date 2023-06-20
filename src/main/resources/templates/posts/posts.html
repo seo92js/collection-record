@@ -4,43 +4,41 @@
 
 <body>
 <div class="container">
-    <div class="jumbotron">
-        <!--게시물 내용-->
-        <a th:text="${username}" th:href="@{/user/{username}/home(username=${username})}"></a>
-        <div>
-            <div th:text="${postsResponseDto.categoryName}"></div>
-            <div th:text="${postsResponseDto.title}"></div>
-            <img th:src="@{/api/v1/image-view/{imageId}(imageId=${postsResponseDto.representativeImageId})}">
-            <div th:text="${postsResponseDto.text}"></div>
-            <div th:text="${postsResponseDto.hashtags}"></div>
-            <a th:href="@{/posts/update/{id}(id=${postsResponseDto.id})}">수정</a>
-        </div>
-
-        <!--댓글 작성 form-->
-        <div>
-            <form th:object="${commentAddRequestDto}" id="comment-add-form">
-                <div>
-                    <input type="hidden" th:field="*{userId}">
-                    <input type="hidden" th:field="*{postsId}">
-
-                    <input type="text" th:field="*{text}" placeholder="내용" th:required="true">
-                    <button type="submit" class="btn btn-primary" id="comment-add-btn">댓글 달기</button>
-                </div>
-            </form>
-        </div>
-
-        <!--댓글 목록-->
-        <div>
-            <h2>댓글</h2>
-            <ul>
-                <li th:each="comment : ${comments}">
-                    <span th:text="${comment.username}"></span> : <span th:text="${comment.text}"></span>
-                </li>
-            </ul>
-        </div>
-
-        <script src="/js/commentAdd.js"></script>
+    <!--게시물 내용-->
+    <a th:text="${username}" th:href="@{/user/{username}/home(username=${username})}"></a>
+    <div>
+        <div th:text="${postsResponseDto.categoryName}"></div>
+        <div th:text="${postsResponseDto.title}"></div>
+        <img th:src="@{/api/v1/image-view/{imageId}(imageId=${postsResponseDto.representativeImageId})}">
+        <div th:text="${postsResponseDto.text}"></div>
+        <div th:text="${postsResponseDto.hashtags}"></div>
+        <a th:href="@{/posts/update/{id}(id=${postsResponseDto.id})}">수정</a>
     </div>
+
+    <!--댓글 작성 form-->
+    <div>
+        <form th:object="${commentAddRequestDto}" id="comment-add-form">
+            <div>
+                <input type="hidden" th:field="*{userId}">
+                <input type="hidden" th:field="*{postsId}">
+
+                <input type="text" th:field="*{text}" placeholder="내용" th:required="true">
+                <button type="submit" class="btn btn-primary" id="comment-add-btn">댓글 달기</button>
+            </div>
+        </form>
+    </div>
+
+    <!--댓글 목록-->
+    <div>
+        <h2>댓글</h2>
+        <ul>
+            <li th:each="comment : ${comments}">
+                <span th:text="${comment.username}"></span> : <span th:text="${comment.text}"></span>
+            </li>
+        </ul>
+    </div>
+
+    <script src="/js/commentAdd.js"></script>
 
     <div th:replace="fragments/footer :: footer" />
 </div>

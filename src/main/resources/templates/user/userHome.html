@@ -4,51 +4,49 @@
 
 <body>
     <div class="container">
-        <div class="jumbotron">
-            <h1 th:text="${username}"></h1>
-            <!--프로필 이미지-->
-            <img th:if="${imageId != null}" th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
+        <h1 th:text="${username}"></h1>
+        <!--프로필 이미지-->
+        <img th:if="${imageId != null}" th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
 
-            <div>
-                <a class="btn btn-primary" th:if="${isFollowing == null}" href="/user/profile">내 정보</a>
-                <a class="btn btn-primary" th:if="${isFollowing == null}" href="/category">카테고리 관리</a>
-                <a class="btn btn-primary" th:if="${isFollowing == null}" href="/posts/add">글쓰기</a>
+        <div>
+            <a class="btn btn-primary" th:if="${isFollowing == null}" href="/user/profile">내 정보</a>
+            <a class="btn btn-primary" th:if="${isFollowing == null}" href="/category">카테고리 관리</a>
+            <a class="btn btn-primary" th:if="${isFollowing == null}" href="/posts/add">글쓰기</a>
 
-                <button type="submit" class="btn btn-warning" id="unfollowing-btn" th:if="${isFollowing == true}" th:onclick="unfollowing([[${id}]])">팔로우 취소</button>
-                <button type="submit" class="btn btn-primary" id="following-btn" th:if="${isFollowing == false}" th:onclick="following([[${id}]])">팔로우</button>
-            </div>
-
-            <div class="row">
-                <!--카테고리 목록-->
-                <nav class="col-md-3">
-                    <ul>
-                        <li><a href="javascript:void(0)" th:data-id="${id}" th:data-category="all" class="category-link">전체</a></li>
-                        <li th:each="category : ${categories}">
-                            <a href="javascript:void(0)" th:text="${category.name}" th:data-id="${id}" th:data-category="${category.name}" class="category-link"></a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <!--게시물 목록-->
-                <div class="col-md-9">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>이미지</th>
-                            <th>타이틀</th>
-                        </tr>
-                        </thead>
-                        <tbody id="postList">
-                        <!--동적-->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <script src="/js/postsList.js"></script>
-            <script src="/js/following.js"></script>
-            <script src="/js/unfollowing.js"></script>
+            <button type="submit" class="btn btn-warning" id="unfollowing-btn" th:if="${isFollowing == true}" th:onclick="unfollowing([[${id}]])">팔로우 취소</button>
+            <button type="submit" class="btn btn-primary" id="following-btn" th:if="${isFollowing == false}" th:onclick="following([[${id}]])">팔로우</button>
         </div>
+
+        <div class="row">
+            <!--카테고리 목록-->
+            <nav class="col-md-3">
+                <ul>
+                    <li><a href="javascript:void(0)" th:data-id="${id}" th:data-category="all" class="category-link">전체</a></li>
+                    <li th:each="category : ${categories}">
+                        <a href="javascript:void(0)" th:text="${category.name}" th:data-id="${id}" th:data-category="${category.name}" class="category-link"></a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!--게시물 목록-->
+            <div class="col-md-9">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>이미지</th>
+                        <th>타이틀</th>
+                    </tr>
+                    </thead>
+                    <tbody id="postList">
+                    <!--동적-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script src="/js/postsList.js"></script>
+        <script src="/js/following.js"></script>
+        <script src="/js/unfollowing.js"></script>
 
         <div th:replace="fragments/footer :: footer" />
     </div>

@@ -47,6 +47,7 @@ class PostsRepositoryTest {
                 .representativeImage(null)
                 .text("text")
                 .category(category)
+                .hashtags("hashtags")
                 .build();
 
         postsRepository.save(posts);
@@ -54,5 +55,60 @@ class PostsRepositoryTest {
         List<Posts> all = postsRepository.findAll();
 
         assertThat(all.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void 게시물_리스트(){
+        //given
+        User user = User.builder()
+                .username("user")
+                .password("password")
+                .profileImage(null)
+                .build();
+
+        userRepository.save(user);
+
+        Category category = Category.builder()
+                .user(user)
+                .name("category")
+                .build();
+
+        categoryRepository.save(category);
+
+        Posts post1 = Posts.builder()
+                .title("title1")
+                .representativeImage(null)
+                .text("text1")
+                .category(category)
+                .hashtags("hashtags")
+                .build();
+
+        postsRepository.save(post1);
+
+        Posts post2 = Posts.builder()
+                .title("title2")
+                .representativeImage(null)
+                .text("text2")
+                .category(category)
+                .hashtags("hashtags")
+                .build();
+
+        postsRepository.save(post2);
+
+        System.out.println(post1.getCategory().getName());
+        System.out.println(post2.getCategory().getName());
+
+        //when
+        List<Posts> all = postsRepository.findAll();
+        List<Category> all2 = categoryRepository.findAll();
+        List<User> all3 = userRepository.findAll();
+        List<Posts> postsList = postsRepository.findPostsList(user.getId(), category.getName());
+
+        //then
+        assertThat(all.size()).isEqualTo(2);
+        assertThat(all2.size()).isEqualTo(1);
+        assertThat(all3.size()).isEqualTo(1);
+        assertThat(postsList.size()).isEqualTo(2);
+
     }
 }

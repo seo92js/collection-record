@@ -50,11 +50,13 @@ public class UserService {
     public Long update(Long id, UserUpdateRequestDto userUpdateRequestDto) throws IOException {
         User findUser = userRepository.findById(id).orElse(null);
 
-        if (findUser.getProfileImage() != null){
-            imageRepository.delete(findUser.getProfileImage());
-        }
+        Image prevImage = findUser.getProfileImage();
 
         findUser.update(userUpdateRequestDto.getUsername(), userUpdateRequestDto.getProfileImage());
+
+        if (prevImage != null){
+            imageRepository.delete(prevImage);
+        }
 
         return id;
     }

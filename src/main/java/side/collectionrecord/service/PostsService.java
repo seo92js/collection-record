@@ -63,13 +63,15 @@ public class PostsService {
     public Long update(Long userId, Long postsId, PostsUpdateRequestDto postsUpdateRequestDto){
         Posts posts = postsRepository.findById(postsId).orElse(null);
 
-        if (posts.getRepresentativeImage() != null){
-            imageRepository.delete(posts.getRepresentativeImage());
-        }
+        Image prevImage = posts.getRepresentativeImage();
 
         Category category = categoryRepository.findByName(userId, postsUpdateRequestDto.getCategoryName());
 
         posts.update(category, postsUpdateRequestDto.getTitle(), postsUpdateRequestDto.getRepresentativeImage(), postsUpdateRequestDto.getText(), postsUpdateRequestDto.getHashtags());
+
+        if (prevImage != null){
+            imageRepository.delete(prevImage);
+        }
 
         return postsId;
     }

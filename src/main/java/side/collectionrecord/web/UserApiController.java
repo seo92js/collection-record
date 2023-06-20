@@ -12,7 +12,9 @@ import side.collectionrecord.web.dto.UserUpdateRequestDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 @RequiredArgsConstructor
 @RestController
