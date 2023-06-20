@@ -14,13 +14,13 @@ todo
 - 테스트 망가진거 수정 (완료)
 - jumbotron 빼기 (완료)
 - 홈에서 팔로잉 유저 프로필 링크, 게시물 링크 걸기 (완료)
-- Image 테스트
 
+- PostsRepository 테스트 오류 해결하기
+- Image 테스트
 - api 테스트
 - ui 설계서
 - 다이어그램 수정
 - 네비게이션 - 홈, 마이홈, 검색
-- 이미지 등록 시 repository에 save 어디서 할지 통일 - User, Posts
 - 검색 페이징
 - 게시물 페이징
 - MariaDB

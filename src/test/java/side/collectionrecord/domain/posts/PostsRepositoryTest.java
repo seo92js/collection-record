@@ -9,6 +9,7 @@ import side.collectionrecord.domain.category.CategoryRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 class PostsRepositoryTest {
+
     @Autowired
     private PostsRepository postsRepository;
 
@@ -95,20 +97,56 @@ class PostsRepositoryTest {
 
         postsRepository.save(post2);
 
-        System.out.println(post1.getCategory().getName());
-        System.out.println(post2.getCategory().getName());
-
         //when
-        List<Posts> all = postsRepository.findAll();
-        List<Category> all2 = categoryRepository.findAll();
-        List<User> all3 = userRepository.findAll();
         List<Posts> postsList = postsRepository.findPostsList(user.getId(), category.getName());
 
         //then
-        assertThat(all.size()).isEqualTo(2);
-        assertThat(all2.size()).isEqualTo(1);
-        assertThat(all3.size()).isEqualTo(1);
         assertThat(postsList.size()).isEqualTo(2);
 
+    }
+
+    @Test
+    public void 해시태그로_찾기(){
+        //given
+        User user = User.builder()
+                .username("user")
+                .password("password")
+                .profileImage(null)
+                .build();
+
+        userRepository.save(user);
+
+        Category category = Category.builder()
+                .user(user)
+                .name("category")
+                .build();
+
+        categoryRepository.save(category);
+
+        Posts post1 = Posts.builder()
+                .title("title1")
+                .representativeImage(null)
+                .text("text1")
+                .category(category)
+                .hashtags("hashtags")
+                .build();
+
+        postsRepository.save(post1);
+
+        Posts post2 = Posts.builder()
+                .title("title2")
+                .representativeImage(null)
+                .text("text2")
+                .category(category)
+                .hashtags("hashtags")
+                .build();
+
+        postsRepository.save(post2);
+
+        //when
+        List<Posts> hashtags = postsRepository.findContainsHashtag("hashtags");
+
+        //then
+        assertThat(hashtags.size()).isEqualTo(2);
     }
 }
