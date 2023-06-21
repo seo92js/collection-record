@@ -22,6 +22,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom{
     public List<Comment> findAllComments(Posts posts){
         return queryFactory.selectFrom(comment)
                 .where(comment.posts.eq(posts))
+                .orderBy(comment.createdDate.desc())
                 .fetch();
     }
 }

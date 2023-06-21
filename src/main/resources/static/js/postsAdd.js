@@ -39,7 +39,7 @@ function postsAdd(){
     }).done(function(){
         alert('게시물 추가 완료.');
         history.back();
-        window.location.href = '/user/' + checkValue.userId + '/home';
+        //window.location.href = '/user/' + checkValue.userId + '/home';
 
     }).fail(function (error){
         alert(JSON.stringify(error));

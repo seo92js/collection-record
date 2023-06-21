@@ -21,6 +21,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     public List<User> findContainsUsername(String username) {
         return queryFactory.selectFrom(user)
                 .where(user.username.contains(username))
+                .orderBy(user.username.asc())
                 .fetch();
     }
 }

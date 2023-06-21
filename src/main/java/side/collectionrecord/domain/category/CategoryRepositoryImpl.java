@@ -28,6 +28,7 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
     public List<Category> findAllCategory(Long userId){
         return queryFactory.selectFrom(category)
                 .where(category.user.id.eq(userId))
+                .orderBy(category.name.asc())
                 .fetch();
     }
 }

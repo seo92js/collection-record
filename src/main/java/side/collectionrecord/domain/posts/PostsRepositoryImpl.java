@@ -24,10 +24,12 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom{
         if (Objects.equals(categoryName, "all")){
             return queryFactory.selectFrom(posts)
                     .where(posts.user.id.eq(userId))
+                    .orderBy(posts.createdDate.desc())
                     .fetch();
         }else{
             return queryFactory.selectFrom(posts)
                     .where(posts.user.id.eq(userId).and(category.name.eq(categoryName)))
+                    .orderBy(posts.createdDate.desc())
                     .fetch();
         }
     }
@@ -36,6 +38,7 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom{
     public List<Posts> findContainsHashtag(String hashtag) {
         return queryFactory.selectFrom(posts)
                 .where(posts.hashtags.contains(hashtag))
+                .orderBy(posts.createdDate.desc())
                 .fetch();
     }
 }
