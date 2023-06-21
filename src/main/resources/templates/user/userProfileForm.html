@@ -2,10 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header" />
 <body>
+    <div th:replace="fragments/navigation :: navigation" />
+
     <div class="container">
         <h1>프로필</h1>
 
-        <input type="hidden" id="userId" th:value="${userId}" />
+        <input type="hidden" id="userId" th:value="${loginUserId}" />
 
         <form th:object="${userProfileResponseDto}" id="user-profile-form">
             <div>

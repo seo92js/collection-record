@@ -8,8 +8,6 @@ import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.web.dto.CategoryAddRequestDto;
 import side.collectionrecord.web.dto.CategoryListResponseDto;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,10 +17,8 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("/category")
-    public String categories(Model model, HttpServletRequest httpServletRequest){
-        HttpSession session = httpServletRequest.getSession(false);
-
-        Long userId = (Long)session.getAttribute("userId");
+    public String categories(Model model){
+        Long userId = (Long)model.getAttribute("loginUserId");
 
         List<CategoryListResponseDto> categories = categoryService.findCategories(userId);
 

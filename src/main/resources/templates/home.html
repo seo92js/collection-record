@@ -5,14 +5,12 @@
   <!--<title>Collection</title>-->
 </head>
 <body>
+  <div th:replace="fragments/navigation :: navigation" />
+
   <div class="container">
     <H1>COLLECTION</H1>
 
     <div th:if="${login}">
-      <span th:text="|${username} 님|"></span>
-      <a class="btn btn-primary" th:href="@{user/{username}/home(username=${username})}">마이홈</a>
-      <button class="btn btn-primary" id="logout-btn">로그아웃</button>
-      <a class="btn btn-primary" href="/search">검색</a>
       <!-- 팔로잉 유저 게시물 -->
       <table class="table table-striped">
         <thead>
@@ -25,27 +23,17 @@
         <tbody>
         <tr th:each="post : ${posts}">
           <td>
-            <!--<div th:text="${post.username}"></div>-->
             <a th:text="${post.username}" th:href="@{user/{username}/home(username=${post.username})}"></a>
           </td>
           <td>
             <img th:src="@{/api/v1/image-view/{imageId}(imageId=${post.representativeImageId})}">
           </td>
           <td>
-            <!--<div th:text="${post.title}"></div>-->
             <a th:text="${post.title}" th:href="@{posts/{postId}(postId=${post.id})}"></a>
           </td>
         </tr>
         </tbody>
       </table>
-
-
-      <script src="/js/logout.js"></script>
-    </div>
-
-    <div th:unless="${login}">
-      <a class="btn btn-primary" href="/user/join">회원 가입</a>
-      <a class="btn btn-primary" href="/login">로그인</a>
     </div>
 
     <div th:replace="fragments/footer :: footer" />

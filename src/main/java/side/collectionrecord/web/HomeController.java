@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import side.collectionrecord.service.FollowService;
 import side.collectionrecord.web.dto.FollowPostsListResponseDto;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,19 +16,12 @@ public class HomeController {
     private final FollowService followService;
 
     @RequestMapping("/")
-    public String home(HttpServletRequest request, Model model){
-        HttpSession session = request.getSession(false);
+    public String home(Model model){
+        boolean login = (Boolean) model.getAttribute("login");
 
-        if(session != null){
-            model.addAttribute("login", true);
-            //model.addAttribute("userId", (Long)session.getAttribute("userId"));
-            model.addAttribute("username", session.getAttribute("username").toString());
-
-            List<FollowPostsListResponseDto> followPostsListResponseDtos = followService.findFollowPosts((Long)session.getAttribute("userId"));
-
+        if(login == true){
+            List<FollowPostsListResponseDto> followPostsListResponseDtos = followService.findFollowPosts((Long)model.getAttribute("loginUserId"));
             model.addAttribute("posts", followPostsListResponseDtos);
-        }else {
-            model.addAttribute("login", false);
         }
 
         return "home";

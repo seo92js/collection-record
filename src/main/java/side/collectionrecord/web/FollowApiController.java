@@ -1,14 +1,12 @@
 package side.collectionrecord.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import side.collectionrecord.service.FollowService;
 import side.collectionrecord.web.dto.UserFollowingRequestDto;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,10 +15,8 @@ public class FollowApiController {
     private final FollowService followService;
 
     @PutMapping("/api/v1/following/{id}")
-    public Long following(@PathVariable Long id, HttpServletRequest httpServletRequest){
-        HttpSession httpSession = httpServletRequest.getSession();
-
-        Long userId = (Long)httpSession.getAttribute("userId");
+    public Long following(@PathVariable Long id, Model model){
+        Long userId = (Long)model.getAttribute("loginUserId");
 
         followService.following(UserFollowingRequestDto.builder()
                 .userId(userId)
@@ -31,10 +27,8 @@ public class FollowApiController {
     }
 
     @PutMapping("/api/v1/unfollowing/{id}")
-    public Long unfollowing(@PathVariable Long id, HttpServletRequest httpServletRequest){
-        HttpSession httpSession = httpServletRequest.getSession();
-
-        Long userId = (Long)httpSession.getAttribute("userId");
+    public Long unfollowing(@PathVariable Long id, Model model){
+        Long userId = (Long)model.getAttribute("loginUserId");
 
         followService.unfollowing(UserFollowingRequestDto.builder()
                 .userId(userId)

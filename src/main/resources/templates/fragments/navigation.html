@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<nav th:fragment="navigation">
+
+  <div th:if="${login}">
+    <a class="btn btn-info" href="/">홈</a>
+    <a class="btn btn-info" href="/search">검색</a>
+
+    <span th:text="|${loginUsername} 님|"></span>
+    <a class="btn btn-info" th:href="@{/user/{loginUsername}/home(loginUsername=${loginUsername})}">마이홈</a>
+    <button class="btn btn-info" id="logout-btn">로그아웃</button>
+
+    <!-- jquery -->
+    <script src="/js/logout.js"></script>
+  </div>
+
+  <div th:unless="${login}">
+    <a class="btn btn-info" href="/user/join">회원 가입</a>
+    <a class="btn btn-info" href="/login">로그인</a>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</nav>

@@ -1,6 +1,7 @@
 package side.collectionrecord.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import side.collectionrecord.domain.image.Image;
@@ -10,11 +11,8 @@ import side.collectionrecord.web.dto.ImageUploadRequestDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserUpdateRequestDto;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,8 +28,9 @@ public class UserApiController {
     }
 
     @PutMapping("/api/v1/user-update/{id}")
-    public Long update(@PathVariable Long id, @RequestParam("username") String username, @RequestParam("password") String password, @RequestParam(value = "imageFile", required = false) MultipartFile imageFile, HttpServletRequest httpServletRequest) throws IOException {
-        HttpSession httpSession = httpServletRequest.getSession();
+    public Long update(Model model, @PathVariable Long id, @RequestParam("username") String username, @RequestParam("password") String password, @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {
+
+        HttpSession httpSession = (HttpSession) model.getAttribute("session");
 
         Image profileImage = null;
 
@@ -39,9 +38,9 @@ public class UserApiController {
             byte[] image = imageFile.getBytes();
 
             Long imageId = imageService.upload(ImageUploadRequestDto.builder()
-                                .filename(imageFile.getOriginalFilename())
-                                .data(image)
-                                .build());
+                    .filename(imageFile.getOriginalFilename())
+                    .data(image)
+                    .build());
 
             profileImage = imageService.findImage(imageId);
         }
@@ -52,7 +51,7 @@ public class UserApiController {
                 .profileImage(profileImage)
                 .build();
 
-        httpSession.setAttribute("username", userUpdateRequestDto.getUsername());
+        httpSession.setAttribute("loginUsername", userUpdateRequestDto.getUsername());
 
         userService.update(id, userUpdateRequestDto);
 

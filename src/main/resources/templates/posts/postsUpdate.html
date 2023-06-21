@@ -2,43 +2,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header" />
 <body>
-<div class="container">
-  <h1>게시물 수정</h1>
 
-  <form th:object="${postsUpdateRequestDto}" id="posts-update-form">
+  <div th:replace="fragments/navigation :: navigation" />
 
-    <div>
-      <label>카테고리</label>
-      <input type="text" th:value="*{categoryName}" th:field="*{categoryName}" placeholder="카테고리" th:required="true">
-    </div>
+  <div class="container">
+    <h1>게시물 수정</h1>
 
-    <div>
-      <label>타이틀</label>
-      <input type="text" th:value="*{title}" th:field="*{title}" placeholder="타이틀" th:required="true">
-    </div>
+    <form th:object="${postsUpdateRequestDto}" id="posts-update-form">
 
-    <div>
-      <img th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
-      <input type="file" id="posts-rep-update-img" placeholder="이미지 선택">
-    </div>
+      <div>
+        <label>카테고리</label>
+        <input type="text" th:value="*{categoryName}" th:field="*{categoryName}" placeholder="카테고리" th:required="true">
+      </div>
 
-    <div>
-      <label>내용</label>
-      <input type="text" th:value="*{text}" th:field="*{text}" placeholder="내용" th:required="true">
-    </div>
+      <div>
+        <label>타이틀</label>
+        <input type="text" th:value="*{title}" th:field="*{title}" placeholder="타이틀" th:required="true">
+      </div>
 
-    <div>
-      <label>해시태그</label>
-      <input type="text" th:value="*{hashtags}" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)" th:required="true">
-    </div>
+      <div>
+        <img th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
+        <input type="file" id="posts-rep-update-img" placeholder="이미지 선택">
+      </div>
 
-    <button type="submit" class="btn btn-primary" id="posts-update-btn" th:onclick="postsUpdate([[${postsId}]])">등록</button>
-  </form>
+      <div>
+        <label>내용</label>
+        <input type="text" th:value="*{text}" th:field="*{text}" placeholder="내용" th:required="true">
+      </div>
 
-  <script src="/js/postsUpdate.js"></script>
+      <div>
+        <label>해시태그</label>
+        <input type="text" th:value="*{hashtags}" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)" th:required="true">
+      </div>
 
-  <div th:replace="fragments/footer :: footer" />
+      <button type="submit" class="btn btn-primary" id="posts-update-btn" th:onclick="postsUpdate([[${postsId}]])">등록</button>
+    </form>
 
-</div>
+    <script src="/js/postsUpdate.js"></script>
+
+    <div th:replace="fragments/footer :: footer" />
+
+  </div>
 </body>
 </html>

@@ -2,7 +2,6 @@ package side.collectionrecord.web.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.user.User;
 
 @Getter

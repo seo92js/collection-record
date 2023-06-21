@@ -3,6 +3,7 @@ package side.collectionrecord.config.auth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,8 +25,9 @@ public class LoginApiController {
 
         if(loginUser != null){
             HttpSession httpSession = httpServletRequest.getSession();
-            httpSession.setAttribute("userId", loginUser.getId());
-            httpSession.setAttribute("username", loginUser.getUsername());
+            httpSession.setAttribute("loginUserId", loginUser.getId());
+            httpSession.setAttribute("loginUsername", loginUser.getUsername());
+
             return new ResponseEntity(HttpStatus.OK);
         }else{
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
@@ -33,8 +35,8 @@ public class LoginApiController {
     }
 
     @PostMapping("/api/v1/logout")
-    public void logout(HttpServletRequest request){
-        HttpSession session = request.getSession(false);
+    public void logout(Model model){
+        HttpSession session = (HttpSession) model.getAttribute("session");
 
         session.invalidate();
     }

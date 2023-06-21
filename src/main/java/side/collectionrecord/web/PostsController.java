@@ -6,14 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import side.collectionrecord.domain.posts.Posts;
-import side.collectionrecord.domain.user.User;
 import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.CommentService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.web.dto.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -27,10 +24,8 @@ public class PostsController {
     CommentService commentService;
 
     @GetMapping("/posts/add")
-    public String posts(Model model, HttpServletRequest request){
-        HttpSession session = request.getSession();
-
-        Long userId = (Long)session.getAttribute("userId");
+    public String posts(Model model){
+        Long userId = (Long) model.getAttribute("loginUserId");
 
         List<CategoryListResponseDto> categories = categoryService.findCategories(userId);
 
@@ -49,7 +44,7 @@ public class PostsController {
     }
 
     @GetMapping("/posts/{id}")
-    public String postsView(@PathVariable Long id, Model model, HttpServletRequest request){
+    public String postsView(@PathVariable Long id, Model model){
 
         Posts posts = postsService.findPosts(id);
 
@@ -57,9 +52,7 @@ public class PostsController {
 
         model.addAttribute("postsResponseDto", new PostsResponseDto(posts));
 
-        HttpSession session = request.getSession();
-
-        Long userId = (Long)session.getAttribute("userId");
+        Long userId = (Long)model.getAttribute("loginUserId");
 
         model.addAttribute("commentAddRequestDto", CommentAddRequestDto.builder()
                         .userId(userId)

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
-import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.web.dto.ImageUploadRequestDto;
 
 @Getter

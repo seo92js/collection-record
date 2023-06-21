@@ -12,7 +12,6 @@ import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.web.dto.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor

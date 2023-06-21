@@ -4,51 +4,53 @@
   <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
 </head>
 <body>
-<div class="container">
-  <h1>검색</h1>
+  <div th:replace="fragments/navigation :: navigation" />
 
-  <form>
-    <div>
-      <input id="search-text" type="text" placeholder="유저이름 혹은 해시태그" th:required="true">
-      <button type="submit" id="search-btn" class="btn btn-primary">검색</button>
-    </div>
-  </form>
+  <div class="container">
+    <h1>검색</h1>
 
-  <!--검색 결과-->
-  <div class="row">
-    <!--유저 리스트-->
-    <div class="col-md-6">
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th>이미지</th>
-          <th>유저 이름</th>
-        </tr>
-        </thead>
-        <tbody id="user-search-list">
-        <!--동적-->
-        </tbody>
-      </table>
+    <form>
+      <div>
+        <input id="search-text" type="text" placeholder="유저이름 혹은 해시태그" th:required="true">
+        <button type="submit" id="search-btn" class="btn btn-primary">검색</button>
+      </div>
+    </form>
+
+    <!--검색 결과-->
+    <div class="row">
+      <!--유저 리스트-->
+      <div class="col-md-6">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>이미지</th>
+            <th>유저 이름</th>
+          </tr>
+          </thead>
+          <tbody id="user-search-list">
+          <!--동적-->
+          </tbody>
+        </table>
+      </div>
+      <!--게시물 리스트-->
+      <div class="col-md-6">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>이미지</th>
+            <th>타이틀</th>
+          </tr>
+          </thead>
+          <tbody id="posts-search-list">
+          <!--동적-->
+          </tbody>
+        </table>
+      </div>
     </div>
-    <!--게시물 리스트-->
-    <div class="col-md-6">
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th>이미지</th>
-          <th>타이틀</th>
-        </tr>
-        </thead>
-        <tbody id="posts-search-list">
-        <!--동적-->
-        </tbody>
-      </table>
-    </div>
+    <script src="/js/search.js"></script>
+
+    <div th:replace="fragments/footer :: footer" />
+
   </div>
-  <script src="/js/search.js"></script>
-
-  <div th:replace="fragments/footer :: footer" />
-
-</div>
 </body>
 </html>

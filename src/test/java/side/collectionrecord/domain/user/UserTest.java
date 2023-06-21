@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.comment.Comment;
-import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.posts.Posts;
 
 import static org.assertj.core.api.Assertions.assertThat;
