@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.image.Image;
+import side.collectionrecord.domain.posts.PostsStatus;
 
 @Getter
 @NoArgsConstructor
@@ -13,13 +14,15 @@ public class PostsUpdateRequestDto {
     private Image representativeImage;
     private String text;
     private String hashtags;
+    private PostsStatus status;
 
     @Builder
-    public PostsUpdateRequestDto(String categoryName, String title, Image representativeImage, String text, String hashtags){
+    public PostsUpdateRequestDto(String categoryName, String title, Image representativeImage, String text, String hashtags, PostsStatus status){
         this.categoryName = categoryName;
         this.title = title;
         this.representativeImage = representativeImage;
         this.text = text;
         this.hashtags = hashtags;
+        this.status = status;
     }
 }

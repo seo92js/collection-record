@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.posts.Posts;
+import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,6 +41,7 @@ class ImageTest {
                 .text("text")
                 .representativeImage(representativeImage)
                 .hashtags("hashtags")
+                .status(PostsStatus.SALE)
                 .build();
         //when
         //then

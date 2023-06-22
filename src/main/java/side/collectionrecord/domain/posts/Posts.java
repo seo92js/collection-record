@@ -38,6 +38,9 @@ public class Posts extends BaseTimeEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Enumerated(EnumType.STRING)
+    private PostsStatus status;
+
     @OneToMany(mappedBy = "posts")
     private List<Comment> comments = new ArrayList<>();
 
@@ -52,20 +55,22 @@ public class Posts extends BaseTimeEntity {
     }
 
     @Builder
-    public Posts(User user, Category category, String title, Image representativeImage, String text, String hashtags){
+    public Posts(User user, Category category, String title, Image representativeImage, String text, String hashtags, PostsStatus status){
         setCategory(category);
         this.user = user;
         this.title = title;
         this.representativeImage = representativeImage;
         this.text = text;
         this.hashtags = hashtags;
+        this.status = status;
     }
 
-    public void update(Category category, String title, Image representativeImage, String text, String hashtags){
+    public void update(Category category, String title, Image representativeImage, String text, String hashtags, PostsStatus status){
         this.category = category;
         this.title = title;
         this.representativeImage = representativeImage;
         this.text = text;
         this.hashtags = hashtags;
+        this.status = status;
     }
 }

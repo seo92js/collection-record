@@ -1,5 +1,6 @@
 package side.collectionrecord.domain.image;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,11 +12,16 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@Transactional
+//@Transactional
 class ImageRepositoryTest {
 
     @Autowired
     ImageRepository imageRepository;
+
+    @AfterEach
+    public void cleanup(){
+        imageRepository.deleteAll();
+    }
 
     @Test
     public void save(){

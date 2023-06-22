@@ -12,7 +12,16 @@
 
       <div>
         <label>카테고리</label>
-        <input type="text" th:value="*{categoryName}" th:field="*{categoryName}" placeholder="카테고리" th:required="true">
+        <select style="width:100px;height:22px" th:field="*{categoryName}">
+          <option th:each = "category : ${categories}" th:text="${category.name}" th:value="${category.name}"></option>
+        </select>
+      </div>
+
+      <div>
+        <label>상태</label>
+        <select style="width:100px;height:22px" th:field="*{status}">
+          <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>
+        </select>
       </div>
 
       <div>

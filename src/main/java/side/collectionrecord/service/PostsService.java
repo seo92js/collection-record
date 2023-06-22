@@ -54,6 +54,7 @@ public class PostsService {
                         .hashtags(postsAddRequestDto.getHashtags())
                         .category(category)
                         .user(category.getUser())
+                        .status(postsAddRequestDto.getStatus())
                         .build())
                         .getId();
     }
@@ -66,7 +67,7 @@ public class PostsService {
 
         Category category = categoryRepository.findByName(userId, postsUpdateRequestDto.getCategoryName());
 
-        posts.update(category, postsUpdateRequestDto.getTitle(), postsUpdateRequestDto.getRepresentativeImage(), postsUpdateRequestDto.getText(), postsUpdateRequestDto.getHashtags());
+        posts.update(category, postsUpdateRequestDto.getTitle(), postsUpdateRequestDto.getRepresentativeImage(), postsUpdateRequestDto.getText(), postsUpdateRequestDto.getHashtags(), postsUpdateRequestDto.getStatus());
 
         if (prevImage != null){
             imageRepository.delete(prevImage);

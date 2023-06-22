@@ -12,7 +12,8 @@ function postsUpdate(id){
         categoryName: formData.get('categoryName'),
         title: formData.get('title'),
         text: formData.get('text'),
-        hashtags: formData.get('hashtags')
+        hashtags: formData.get('hashtags'),
+        status: formData.get('status')
     };
 
     //이미지 파일 선택 확인
@@ -43,7 +44,7 @@ function postsUpdate(id){
 }
 
 function checkRequiredValue(value){
-    if (!value.categoryName || !value.title || !value.text || !value.hashtags) {
+    if (!value.categoryName || !value.title || !value.text || !value.hashtags || !value.status) {
         alert('필수 값을 입력하시오');
         return false;
     }else{

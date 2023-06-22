@@ -1,5 +1,6 @@
 package side.collectionrecord.domain.comment;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +9,7 @@ import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.category.CategoryRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
+import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 
@@ -29,6 +31,14 @@ class CommentRepositoryTest {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @AfterEach
+    public void cleanup(){
+        commentRepository.deleteAll();
+        postsRepository.deleteAll();
+        categoryRepository.deleteAll();
+        userRepository.deleteAll();
+    }
 
     @Test
     public void save(){
@@ -54,6 +64,7 @@ class CommentRepositoryTest {
                 .title("title")
                 .user(user)
                 .category(category)
+                .status(PostsStatus.SALE)
                 .build();
 
         postsRepository.save(posts);
@@ -98,6 +109,7 @@ class CommentRepositoryTest {
                 .title("title")
                 .user(user)
                 .category(category)
+                .status(PostsStatus.SALE)
                 .build();
 
         postsRepository.save(posts);

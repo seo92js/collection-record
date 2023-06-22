@@ -10,6 +10,7 @@ import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.comment.CommentRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
+import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.CommentAddRequestDto;
@@ -150,6 +151,7 @@ class CommentServiceTest {
                 .title("title")
                 .user(user)
                 .category(category)
+                .status(PostsStatus.SALE)
                 .build();
 
         postsRepository.save(posts);
@@ -174,7 +176,7 @@ class CommentServiceTest {
 
         //then
         assertThat(comments.size()).isEqualTo(2);
-        assertThat(comments.get(0).getText()).isEqualTo("comment1");
-        assertThat(comments.get(1).getText()).isEqualTo("comment2");
+        assertThat(comments.get(1).getText()).isEqualTo("comment1");
+        assertThat(comments.get(0).getText()).isEqualTo("comment2");
     }
 }

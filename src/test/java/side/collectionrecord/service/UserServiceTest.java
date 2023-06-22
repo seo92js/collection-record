@@ -1,21 +1,26 @@
 package side.collectionrecord.service;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
+import side.collectionrecord.web.dto.UserSearchResponseDto;
 import side.collectionrecord.web.dto.UserUpdateRequestDto;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@Transactional
 class UserServiceTest {
     @Autowired
     UserService userService;
@@ -25,6 +30,12 @@ class UserServiceTest {
 
     @Autowired
     ImageRepository imageRepository;
+
+    @AfterEach
+    public void cleanup(){
+        userRepository.deleteAll();
+        imageRepository.deleteAll();
+    }
 
     @Test
     public void 유저_회원가입() throws IOException {
@@ -97,5 +108,48 @@ class UserServiceTest {
         //then
         assertThat(userProfileResponseDto.getUsername()).isEqualTo(user.getUsername());
         assertThat(userProfileResponseDto.getProfileImage()).isEqualTo(user.getProfileImage());
+    }
+
+    @Test
+    public void 이름이_포함된_모든유저_검색() throws IOException {
+        //given
+        String username = "김";
+
+        Image image = Image.builder()
+                .filename("image")
+                .data(null)
+                .build();
+
+        imageRepository.save(image);
+
+        User user1 = User.builder()
+                .username("김김김")
+                .password("1")
+                .profileImage(image)
+                .build();
+
+        userRepository.save(user1);
+
+        User user2 = User.builder()
+                .username("김수미")
+                .password("1")
+                .profileImage(image)
+                .build();
+
+        userRepository.save(user2);
+
+        User user3 = User.builder()
+                .username("김구라")
+                .password("1")
+                .profileImage(image)
+                .build();
+
+        userRepository.save(user3);
+
+        //when
+        List<UserSearchResponseDto> containsUsername = userService.findContainsUsername(username);
+
+        //then
+        assertThat(containsUsername.size()).isEqualTo(3);
     }
 }

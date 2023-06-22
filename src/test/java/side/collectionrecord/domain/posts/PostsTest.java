@@ -30,6 +30,7 @@ class PostsTest {
                 .title("title")
                 .representativeImage(null)
                 .text("text")
+                .status(PostsStatus.SALE)
                 .category(category)
                 .build();
 
@@ -38,6 +39,8 @@ class PostsTest {
         assertThat(user.getCategories()).containsExactly(category);
         assertThat(category).isEqualTo(posts.getCategory());
         assertThat(category.getPosts()).containsExactly(posts);
+        assertThat(category.getPosts()).containsExactly(posts);
+        assertThat(category.getPosts().get(0).getStatus()).isEqualTo(PostsStatus.SALE);
     }
 
     @Test
@@ -54,11 +57,13 @@ class PostsTest {
                 .representativeImage(null)
                 .text(text)
                 .category(category)
+                .status(PostsStatus.SALE)
                 .build();
 
         //then
         assertThat(posts.getTitle()).isEqualTo(title);
         assertThat(posts.getText()).isEqualTo(text);
         assertThat(posts.getRepresentativeImage()).isNull();
+        assertThat(posts.getStatus()).isEqualTo(PostsStatus.SALE);
     }
 }

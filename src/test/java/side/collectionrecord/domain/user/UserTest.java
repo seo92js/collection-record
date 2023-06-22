@@ -5,6 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.posts.Posts;
+import side.collectionrecord.domain.posts.PostsStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,6 +32,7 @@ class UserTest {
                 .title("test")
                 .representativeImage(null)
                 .text("text")
+                .status(PostsStatus.SALE)
                 .build();
 
         Comment comment = Comment.builder()

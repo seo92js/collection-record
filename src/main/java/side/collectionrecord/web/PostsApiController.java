@@ -3,6 +3,8 @@ package side.collectionrecord.web;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import side.collectionrecord.domain.posts.Posts;
+import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.service.ImageService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.web.dto.ImageUploadRequestDto;
@@ -21,7 +23,7 @@ public class PostsApiController {
     private final ImageService imageService;
 
     @PostMapping("/api/v1/posts")
-    public Long save(@RequestParam("userId") Long userId, @RequestParam("categoryName") String categoryName, @RequestParam("title") String title, @RequestParam(value = "imageFile", required = true)MultipartFile imageFile, @RequestParam("text") String text, @RequestParam("hashtags") String hashtags) throws IOException {
+    public Long save(@RequestParam("userId") Long userId, @RequestParam("categoryName") String categoryName, @RequestParam() PostsStatus status, @RequestParam("title") String title, @RequestParam(value = "imageFile", required = true)MultipartFile imageFile, @RequestParam("text") String text, @RequestParam("hashtags") String hashtags) throws IOException {
 
         byte[] image = imageFile.getBytes();
 
@@ -37,6 +39,7 @@ public class PostsApiController {
                 .representativeImage(imageService.findImage(imageId))
                 .text(text)
                 .hashtags(hashtags)
+                .status(status)
                 .build();
 
         Long postsId = postsService.addPosts(postsAddRequestDto);
@@ -50,7 +53,7 @@ public class PostsApiController {
     }
 
     @PutMapping("/api/v1/posts-update/{id}")
-    public Long update(@PathVariable Long id, @RequestParam("title") String title, @RequestParam("categoryName") String categoryName, @RequestParam("text") String text, @RequestParam("hashtags") String hashtags, @RequestParam(value = "imageFile", required = true) MultipartFile imageFile) throws IOException {
+    public Long update(@PathVariable Long id, @RequestParam("title") String title, @RequestParam("categoryName") String categoryName, @RequestParam("status") PostsStatus status, @RequestParam("text") String text, @RequestParam("hashtags") String hashtags, @RequestParam(value = "imageFile", required = true) MultipartFile imageFile) throws IOException {
 
         byte[] image = imageFile.getBytes();
 
@@ -62,6 +65,7 @@ public class PostsApiController {
         PostsUpdateRequestDto postsUpdateRequestDto = PostsUpdateRequestDto.builder()
                 .title(title)
                 .categoryName(categoryName)
+                .status(status)
                 .text(text)
                 .hashtags(hashtags)
                 .representativeImage(imageService.findImage(imageId))

@@ -1,5 +1,6 @@
 package side.collectionrecord.service;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
+import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.PostsAddRequestDto;
@@ -70,6 +72,7 @@ class PostsServiceTest {
                 .title("title")
                 .representativeImage(image)
                 .text("text")
+                .status(PostsStatus.SALE)
                 .build();
 
 
@@ -84,6 +87,7 @@ class PostsServiceTest {
         assertThat(posts.getTitle()).isEqualTo("title");
         assertThat(posts.getRepresentativeImage().getFilename()).isEqualTo("image");
         assertThat(posts.getText()).isEqualTo("text");
+        assertThat(posts.getStatus()).isEqualTo(PostsStatus.SALE);
     }
 
     @Test
@@ -118,6 +122,7 @@ class PostsServiceTest {
                 .categoryName(category.getName())
                 .title("title2")
                 .representativeImage(image)
+                .status(PostsStatus.SALE)
                 .text("text2")
                 .build();
 
@@ -126,6 +131,7 @@ class PostsServiceTest {
                 .categoryName(category.getName())
                 .title("title2")
                 .representativeImage(image)
+                .status(PostsStatus.SALE)
                 .text("text2")
                 .build();
 
@@ -177,6 +183,7 @@ class PostsServiceTest {
                 .categoryName(category.getName())
                 .title("title")
                 .representativeImage(image)
+                .status(PostsStatus.SALE)
                 .text("text")
                 .build();
 
@@ -185,6 +192,7 @@ class PostsServiceTest {
         String expectedCategoryName = "category2";
         String expectedTitle = "title2";
         String expectedText = "text2";
+        PostsStatus expectedStatus = PostsStatus.SOLD_OUT;
 
         Category expectedCategory = Category.builder()
                 .user(user)
@@ -205,6 +213,7 @@ class PostsServiceTest {
                 .categoryName(expectedCategory.getName())
                 .title(expectedTitle)
                 .representativeImage(expectedImage)
+                .status(expectedStatus)
                 .text(expectedText)
                 .build();
 
@@ -218,5 +227,6 @@ class PostsServiceTest {
         assertThat(posts.getTitle()).isEqualTo(expectedTitle);
         assertThat(posts.getRepresentativeImage().getFilename()).isEqualTo("expectedImage");
         assertThat(posts.getText()).isEqualTo(expectedText);
+        assertThat(posts.getStatus()).isEqualTo(expectedStatus);
     }
 }

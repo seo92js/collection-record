@@ -6,11 +6,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import side.collectionrecord.domain.posts.Posts;
+import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.CommentService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.web.dto.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -36,9 +39,14 @@ public class PostsController {
                         .representativeImage(null)
                         .text(null)
                         .hashtags(null)
+                        .status(null)
                         .build());
 
         model.addAttribute("categories", categories);
+
+        List<PostsStatus> statuses = Arrays.asList(PostsStatus.values());
+
+        model.addAttribute("statuses", statuses);
 
         return "posts/postsAdd";
     }
@@ -78,7 +86,18 @@ public class PostsController {
                         .text(posts.getText())
                         .representativeImage(posts.getRepresentativeImage())
                         .hashtags(posts.getHashtags())
+                        .status(posts.getStatus())
                         .build());
+
+        Long userId = (Long) model.getAttribute("loginUserId");
+
+        List<CategoryListResponseDto> categories = categoryService.findCategories(userId);
+
+        model.addAttribute("categories", categories);
+
+        List<PostsStatus> statuses = Arrays.asList(PostsStatus.values());
+
+        model.addAttribute("statuses", statuses);
 
         model.addAttribute("imageId", posts.getRepresentativeImage().getId());
 

@@ -3,6 +3,7 @@ package side.collectionrecord.web.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.posts.Posts;
+import side.collectionrecord.domain.posts.PostsStatus;
 
 @Getter
 @NoArgsConstructor
@@ -14,6 +15,7 @@ public class PostsResponseDto {
 
     String text;
     String hashtags;
+    PostsStatus status;
 
     public PostsResponseDto(Posts posts){
         this.id = posts.getId();
@@ -22,5 +24,6 @@ public class PostsResponseDto {
         this.representativeImageId = posts.getRepresentativeImage().getId();
         this.text = posts.getText();
         this.hashtags = posts.getHashtags();
+        this.status = posts.getStatus();
     }
 }

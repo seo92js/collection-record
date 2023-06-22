@@ -15,7 +15,8 @@ function postsAdd(){
         categoryName: formData.get('categoryName'),
         title: formData.get('title'),
         text: formData.get('text'),
-        hashtags: formData.get('hashtags')
+        hashtags: formData.get('hashtags'),
+        status: formData.get('status')
     };
 
     if(!checkRequiredValue(checkValue))
@@ -30,6 +31,8 @@ function postsAdd(){
         return;
     }
 
+    var username=$('input[name=loginUsername]').val();
+
     $.ajax({
         type: 'POST',
         url: '/api/v1/posts',
@@ -38,8 +41,7 @@ function postsAdd(){
         contentType: false
     }).done(function(){
         alert('게시물 추가 완료.');
-        history.back();
-        //window.location.href = '/user/' + checkValue.userId + '/home';
+        window.location.href = '/user/' + username + '/home';
 
     }).fail(function (error){
         alert(JSON.stringify(error));
@@ -47,7 +49,7 @@ function postsAdd(){
 }
 
 function checkRequiredValue(value){
-    if (!value.categoryName || !value.title || !value.text) {
+    if (!value.categoryName || !value.title || !value.text || !value.status) {
         alert('필수 값을 입력하시오');
         return false;
     }else{

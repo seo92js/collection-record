@@ -1,5 +1,6 @@
 package side.collectionrecord.domain.category;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,11 @@ class CategoryRepositoryTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @AfterEach
+    public void cleanup(){
+        categoryRepository.deleteAll();
+        userRepository.deleteAll();
+    }
 
     @Test
     public void save(){

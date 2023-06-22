@@ -10,6 +10,7 @@
         <a th:text="${username}" th:href="@{/user/{username}/home(username=${username})}"></a>
         <div>
             <div th:text="${postsResponseDto.categoryName}"></div>
+            <div th:text="${postsResponseDto.status}"></div>
             <div th:text="${postsResponseDto.title}"></div>
             <img th:src="@{/api/v1/image-view/{imageId}(imageId=${postsResponseDto.representativeImageId})}">
             <div th:text="${postsResponseDto.text}"></div>

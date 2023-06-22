@@ -8,6 +8,8 @@
   <div class="container">
     <h1>글쓰기</h1>
 
+    <input type="hidden" name="loginUsername" th:value="${loginUsername}">
+
     <form th:object="${postsAddRequestDto}" id="posts-add-form">
       <div>
         <input type="hidden" th:field="*{userId}">
@@ -16,6 +18,12 @@
       <div>
         <select style="width:100px;height:22px" th:field="*{categoryName}">
           <option th:each = "category : ${categories}" th:text="${category.name}" th:value="${category.name}"></option>
+        </select>
+      </div>
+
+      <div>
+        <select style="width:100px;height:22px" th:field="*{status}">
+          <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>
         </select>
       </div>
 
@@ -38,7 +46,7 @@
       <button type="submit" class="btn btn-primary" id="posts-add-btn">추가</button>
     </form>
 
-    <script src="/js/postsAdd.js"></script>
+    <script th:inline="javascript" src="/js/postsAdd.js"></script>
 
     <div th:replace="fragments/footer :: footer" />
   </div>

@@ -1,5 +1,6 @@
 package side.collectionrecord.domain.follow;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +9,7 @@ import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.category.CategoryRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
+import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 
@@ -29,6 +31,14 @@ class FollowRepositoryTest {
 
     @Autowired
     FollowRepository followRepository;
+
+    @AfterEach
+    public void cleanup(){
+        postsRepository.deleteAll();
+        categoryRepository.deleteAll();
+        followRepository.deleteAll();
+        userRepository.deleteAll();
+    }
 
     @Test
     public void save(){
@@ -98,6 +108,7 @@ class FollowRepositoryTest {
                 .title("title1")
                 .representativeImage(null)
                 .text("text1")
+                .status(PostsStatus.SALE)
                 .build();
 
         postsRepository.save(posts1);
@@ -108,6 +119,7 @@ class FollowRepositoryTest {
                 .title("title2")
                 .representativeImage(null)
                 .text("text2")
+                .status(PostsStatus.SALE)
                 .build();
 
         postsRepository.save(posts2);
@@ -121,7 +133,7 @@ class FollowRepositoryTest {
 
         List<Posts> followPosts = followRepository.findFollowPosts(user1.getId());
         assertThat(followPosts.size()).isEqualTo(2);
-        assertThat(followPosts.get(0).getTitle()).isEqualTo("title1");
-        assertThat(followPosts.get(1).getTitle()).isEqualTo("title2");
+        assertThat(followPosts.get(0).getTitle()).isEqualTo("title2");
+        assertThat(followPosts.get(1).getTitle()).isEqualTo("title1");
     }
 }
