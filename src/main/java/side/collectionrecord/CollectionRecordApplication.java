@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
-public class CollectionRecordApplication {
+public class  CollectionRecordApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CollectionRecordApplication.class, args);

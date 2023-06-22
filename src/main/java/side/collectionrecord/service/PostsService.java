@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.category.CategoryRepository;
+import side.collectionrecord.domain.comment.Comment;
+import side.collectionrecord.domain.comment.CommentRepository;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.posts.Posts;
@@ -22,6 +24,8 @@ public class PostsService {
     private final CategoryRepository categoryRepository;
 
     private final ImageRepository imageRepository;
+
+    private final CommentRepository commentRepository;
 
     @Transactional
     public Posts findPosts(Long id){
@@ -79,6 +83,12 @@ public class PostsService {
     @Transactional
     public void delete(Long id){
         Posts posts = postsRepository.findById(id).orElse(null);
+
+        List<Comment> comments = posts.getComments();
+
+        for (Comment comment : comments){
+            commentRepository.delete(comment);
+        }
 
         postsRepository.delete(posts);
     }

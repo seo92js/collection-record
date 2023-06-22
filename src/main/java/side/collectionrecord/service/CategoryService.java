@@ -5,6 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.category.CategoryRepository;
+import side.collectionrecord.domain.comment.Comment;
+import side.collectionrecord.domain.comment.CommentRepository;
+import side.collectionrecord.domain.posts.Posts;
+import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.CategoryAddRequestDto;
@@ -19,6 +23,10 @@ import java.util.stream.Collectors;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+
+    private final PostsRepository postsRepository;
+
+    private final CommentRepository commentRepository;
 
     @Transactional
     public Long addCategory(CategoryAddRequestDto categoryAddRequestDto){
@@ -54,6 +62,17 @@ public class CategoryService {
     @Transactional
     public void delete(Long id){
         Category category = categoryRepository.findById(id).orElse(null);
+
+        List<Posts> posts = category.getPosts();
+
+        for (Posts post : posts){
+            List<Comment> comments = post.getComments();
+
+            for (Comment comment : comments){
+                commentRepository.delete(comment);
+            }
+            postsRepository.delete(post);
+        }
 
         categoryRepository.delete(category);
     }
