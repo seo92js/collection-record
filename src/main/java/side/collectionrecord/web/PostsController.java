@@ -91,6 +91,8 @@ public class PostsController {
 
         Long userId = (Long) model.getAttribute("loginUserId");
 
+        model.addAttribute("loginUsername", model.getAttribute("loginUsername"));
+
         List<CategoryListResponseDto> categories = categoryService.findCategories(userId);
 
         model.addAttribute("categories", categories);

@@ -1,9 +1,9 @@
-package side.collectionrecord.config.auth;
+package side.collectionrecord.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import side.collectionrecord.config.auth.dto.LoginRequestDto;
+import side.collectionrecord.web.dto.LoginRequestDto;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 

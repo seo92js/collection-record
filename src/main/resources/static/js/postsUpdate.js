@@ -2,6 +2,10 @@ document.getElementById("posts-update-btn").addEventListener('click', function(e
     event.preventDefault();
 });
 
+document.getElementById("posts-delete-btn").addEventListener('click', function(event) {
+    event.preventDefault();
+});
+
 function postsUpdate(id){
     const updateForm = document.getElementById("posts-update-form");
 
@@ -50,4 +54,19 @@ function checkRequiredValue(value){
     }else{
         return true;
     }
+}
+
+function postsDelete(id){
+    var username=$('input[name=loginUsername]').val();
+
+    $.ajax({
+        type: 'DELETE',
+        url: '/api/v1/posts-delete/' + id,
+    }).done(function(){
+        alert('게시물 삭제 완료.');
+        window.location.href = '/user/' + username + '/home';
+        //location.reload();
+    }).fail(function (error){
+        alert(JSON.stringify(error));
+    });
 }

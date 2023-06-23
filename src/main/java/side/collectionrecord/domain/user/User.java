@@ -8,6 +8,7 @@ import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.follow.Follow;
 import side.collectionrecord.domain.image.Image;
+import side.collectionrecord.domain.userchatroom.UserChatRoom;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -40,6 +41,9 @@ public class User extends BaseTimeEntity {
     private List<Follow> following = new ArrayList<>();
     @OneToMany(mappedBy = "follower", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Follow> follower = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<UserChatRoom> userChatRooms = new ArrayList<>();
 
     public void addCategory(Category category){
         this.categories.add(category);

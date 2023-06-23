@@ -8,6 +8,8 @@
   <div class="container">
     <h1>게시물 수정</h1>
 
+    <input type="hidden" name="loginUsername" th:value="${loginUsername}">
+
     <form th:object="${postsUpdateRequestDto}" id="posts-update-form">
 
       <div>
@@ -44,7 +46,8 @@
         <input type="text" th:value="*{hashtags}" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)" th:required="true">
       </div>
 
-      <button type="submit" class="btn btn-primary" id="posts-update-btn" th:onclick="postsUpdate([[${postsId}]])">등록</button>
+      <button type="submit" class="btn btn-primary" id="posts-update-btn" th:onclick="postsUpdate([[${postsId}]])">수정</button>
+      <button type="submit" class="btn btn-primary" id="posts-delete-btn" th:onclick="postsDelete([[${postsId}]])">삭제</button>
     </form>
 
     <script src="/js/postsUpdate.js"></script>

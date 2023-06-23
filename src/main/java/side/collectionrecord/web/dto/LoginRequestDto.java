@@ -1,4 +1,4 @@
-package side.collectionrecord.config.auth.dto;
+package side.collectionrecord.web.dto;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,9 +1,9 @@
-package side.collectionrecord.config.auth;
+package side.collectionrecord.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import side.collectionrecord.config.auth.dto.LoginRequestDto;
+import side.collectionrecord.web.dto.LoginRequestDto;
 
 @Controller
 public class LoginController {
