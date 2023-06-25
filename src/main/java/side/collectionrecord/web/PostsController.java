@@ -62,6 +62,13 @@ public class PostsController {
 
         Long userId = (Long)model.getAttribute("loginUserId");
 
+        if (posts.getUser().getId() == userId){
+            model.addAttribute("isMyPost", true);
+        } else{
+            model.addAttribute("isMyPost", false);
+            model.addAttribute("userId", posts.getUser().getId());
+        }
+
         model.addAttribute("commentAddRequestDto", CommentAddRequestDto.builder()
                         .userId(userId)
                         .postsId(id)
@@ -90,8 +97,6 @@ public class PostsController {
                         .build());
 
         Long userId = (Long) model.getAttribute("loginUserId");
-
-        model.addAttribute("loginUsername", model.getAttribute("loginUsername"));
 
         List<CategoryListResponseDto> categories = categoryService.findCategories(userId);
 

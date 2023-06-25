@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.BaseTimeEntity;
 import side.collectionrecord.domain.category.Category;
+import side.collectionrecord.domain.chatmessage.ChatMessage;
+import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.follow.Follow;
 import side.collectionrecord.domain.image.Image;
@@ -45,6 +47,9 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user")
     private List<UserChatRoom> userChatRooms = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<ChatMessage> chatMessages = new ArrayList<>();
+
     public void addCategory(Category category){
         this.categories.add(category);
     }
@@ -70,6 +75,14 @@ public class User extends BaseTimeEntity {
             }
         }
         return null;
+    }
+
+    public void addUserChatRoom(UserChatRoom userChatRoom){
+        this.userChatRooms.add(userChatRoom);
+    }
+
+    public void addChetMessage(ChatMessage chatMessage){
+        this.chatMessages.add(chatMessage);
     }
 
     @Builder

@@ -16,11 +16,11 @@ public class ChatMessage {
     @Column(name = "chatmessage_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatroom_id")
     private ChatRoom chatRoom;
 
@@ -31,5 +31,8 @@ public class ChatMessage {
         this.user = user;
         this.chatRoom = chatRoom;
         this.message = message;
+
+        user.addChetMessage(this);
+        chatRoom.addChatMessage(this);
     }
 }

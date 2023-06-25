@@ -3,7 +3,8 @@ spring:
     console:
       enabled: true
   datasource:
-    url: jdbc:h2:tcp://localhost/~/collection-record
+    #url: jdbc:h2:tcp://localhost/~/collection-record
+    url: jdbc:h2:mem:test
     username: sa
   jpa:
     hibernate:
