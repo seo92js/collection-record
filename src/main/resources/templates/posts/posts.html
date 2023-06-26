@@ -19,7 +19,7 @@
                 <a th:href="@{/posts/update/{id}(id=${postsResponseDto.id})}">수정</a>
             </div>
             <div th:unless="${isMyPost}">
-                <button type="button" class="btn btn-primary" th:onclick="connectToChatRoom([[${loginUserId}]], [[${userId}]])">채팅</button>
+                <a class="btn btn-primary" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${userId})}" target="_blank">채팅</a>
             </div>
         </div>
 
@@ -47,7 +47,6 @@
         </div>
 
         <script src="/js/commentAdd.js"></script>
-        <script src="/js/chat.js"></script>
 
         <div th:replace="fragments/footer :: footer" />
     </div>

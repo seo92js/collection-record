@@ -3,6 +3,7 @@ package side.collectionrecord.domain.chatmessage;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import side.collectionrecord.domain.BaseTimeEntity;
 import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.user.User;
 
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class ChatMessage {
+public class ChatMessage extends BaseTimeEntity {
     @Id @GeneratedValue
     @Column(name = "chatmessage_id")
     private Long id;

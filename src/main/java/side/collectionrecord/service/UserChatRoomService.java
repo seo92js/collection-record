@@ -18,7 +18,7 @@ public class UserChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
 
     @Transactional
-    public void createChatRoom(Long user1Id, Long user2Id){
+    public UserChatRoom createChatRoom(Long user1Id, Long user2Id){
 
         UserChatRoom userChatRoom = findChatRoom(user1Id, user2Id);
 
@@ -40,8 +40,9 @@ public class UserChatRoomService {
                     .chatRoom(chatRoom)
                     .build();
 
-            userChatRoomRepository.save(userChatRoom1);
-            userChatRoomRepository.save(userChatRoom2);
+            return userChatRoom1;
+        }else{
+            return userChatRoom;
         }
     }
 

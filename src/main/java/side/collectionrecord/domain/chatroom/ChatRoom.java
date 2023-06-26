@@ -1,6 +1,5 @@
 package side.collectionrecord.domain.chatroom;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.chatmessage.ChatMessage;

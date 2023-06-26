@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ChatMessageAddDto {
+public class ChatMessageAddRequestDto {
     private Long userId;
     private Long chatRoomId;
     private String text;
 
     @Builder
-    public ChatMessageAddDto(Long userId, Long chatRoomId, String text){
+    public ChatMessageAddRequestDto(Long userId, Long chatRoomId, String text){
         this.userId = userId;
         this.chatRoomId = chatRoomId;
         this.text = text;
