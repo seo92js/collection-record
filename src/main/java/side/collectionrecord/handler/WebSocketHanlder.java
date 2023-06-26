@@ -1,6 +1,8 @@
 package side.collectionrecord.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -33,7 +35,7 @@ public class WebSocketHanlder extends TextWebSocketHandler {
 
         Long id = chatMessageService.addMessage(chatMessageAddRequestDto);
 
-        ChatMessageResponseDto chatMessageResponseDto = new ChatMessageResponseDto(chatMessageService.findById(id));
+        ChatMessageResponseDto chatMessageResponseDto = chatMessageService.findById(id);
 
         sendToClient(session, chatMessageResponseDto);
     }

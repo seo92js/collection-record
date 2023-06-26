@@ -1,5 +1,6 @@
 package side.collectionrecord.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.chatmessage.ChatMessage;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ChatMessageResponseDto {
     private String username;
-    private LocalDateTime createdTime;
+    private String createdTime;
     private String message;
 
     public ChatMessageResponseDto(ChatMessage chatMessage){

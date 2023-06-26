@@ -6,18 +6,22 @@ socket.onmessage = function(event) {
 
     var messageContainer = document.getElementById('message-container');
 
-    var username = document.createElement('div');
-    username.textContent = chatMessageResponseDto.username;
+    var div = document.createElement('div');
 
-    var createdTime = document.createElement('div');
-    username.textContent = chatMessageResponseDto.createdTime;
+    var createdTime = document.createElement('span');
+    createdTime.textContent = chatMessageResponseDto.createdTime + ' / ';
 
-    var message = document.createElement('div');
-    username.textContent = chatMessageResponseDto.message;
+    var username = document.createElement('span');
+    username.textContent = chatMessageResponseDto.username + ' / ';
 
-    messageContainer.appendChild(username);
-    messageContainer.appendChild(createdTime);
-    messageContainer.appendChild(message);
+    var message = document.createElement('span');
+    message.textContent = chatMessageResponseDto.message;
+
+    div.appendChild(createdTime);
+    div.appendChild(username);
+    div.appendChild(message);
+
+    messageContainer.appendChild(div);
 }
 
 function send(userId, chatRoomId){

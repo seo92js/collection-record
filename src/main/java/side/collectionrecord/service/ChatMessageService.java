@@ -10,6 +10,7 @@ import side.collectionrecord.domain.chatroom.ChatRoomRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.ChatMessageAddRequestDto;
+import side.collectionrecord.web.dto.ChatMessageResponseDto;
 
 @RequiredArgsConstructor
 @Service
@@ -21,8 +22,12 @@ public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
 
     @Transactional
-    public ChatMessage findById(Long id){
-        return chatMessageRepository.findById(id).get();
+    public ChatMessageResponseDto findById(Long id){
+        ChatMessage chatMessage = chatMessageRepository.findById(id).get();
+
+        ChatMessageResponseDto chatMessageResponseDto = new ChatMessageResponseDto(chatMessage);
+
+        return chatMessageResponseDto;
     }
 
     @Transactional
