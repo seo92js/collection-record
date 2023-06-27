@@ -10,15 +10,18 @@ function postsUpdate(id){
     const updateForm = document.getElementById("posts-update-form");
 
     const formData = new FormData(updateForm);
+
     const imageFileInput = document.getElementById('posts-rep-update-img');
 
-    const checkValue = {
+    const postsUpdateRequestDto = {
         categoryName: formData.get('categoryName'),
         title: formData.get('title'),
         text: formData.get('text'),
         hashtags: formData.get('hashtags'),
         status: formData.get('status')
     };
+
+    formData.append('postsUpdateRequestDto', new Blob([JSON.stringify(postsUpdateRequestDto)] , {type: "application/json"}))
 
     //이미지 파일 선택 확인
     if (imageFileInput.files.length > 0){
@@ -29,7 +32,7 @@ function postsUpdate(id){
         return;
     }
 
-    if(!checkRequiredValue(checkValue))
+    if(!checkRequiredValue(postsUpdateRequestDto))
         return;
 
     $.ajax({

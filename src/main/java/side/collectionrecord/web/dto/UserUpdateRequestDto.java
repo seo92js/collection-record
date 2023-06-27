@@ -3,9 +3,11 @@ package side.collectionrecord.web.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import side.collectionrecord.domain.image.Image;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class UserUpdateRequestDto {
     private String username;

@@ -28,7 +28,7 @@ public class UserApiController {
     }
 
     @PutMapping("/api/v1/user-update/{id}")
-    public Long update(Model model, @PathVariable Long id, @RequestParam("username") String username, @RequestParam("password") String password, @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {
+    public Long update(Model model, @PathVariable Long id, @RequestPart(value = "userUpdateRequestDto") UserUpdateRequestDto userUpdateRequestDto, @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {
 
         HttpSession httpSession = (HttpSession) model.getAttribute("session");
 
@@ -45,11 +45,7 @@ public class UserApiController {
             profileImage = imageService.findImage(imageId);
         }
 
-        UserUpdateRequestDto userUpdateRequestDto = UserUpdateRequestDto.builder()
-                .username(username)
-                .password(password)
-                .profileImage(profileImage)
-                .build();
+        userUpdateRequestDto.setProfileImage(profileImage);
 
         httpSession.setAttribute("loginUsername", userUpdateRequestDto.getUsername());
 

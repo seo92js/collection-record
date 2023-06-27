@@ -3,10 +3,12 @@ package side.collectionrecord.web.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.posts.PostsStatus;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class PostsUpdateRequestDto {
     private String categoryName;

@@ -3,14 +3,15 @@ document.getElementById("posts-add-btn").addEventListener('click', function(even
     postsAdd();
 });
 
-const addForm = document.getElementById("posts-add-form");
 
 function postsAdd(){
+    const addForm = document.getElementById("posts-add-form");
+
     const formData = new FormData(addForm);
 
     const imageFileInput = document.getElementById('posts-rep-add-img')
 
-    const checkValue = {
+    const postsAddRequestDto = {
         userId: formData.get('userId'),
         categoryName: formData.get('categoryName'),
         title: formData.get('title'),
@@ -19,7 +20,9 @@ function postsAdd(){
         status: formData.get('status')
     };
 
-    if(!checkRequiredValue(checkValue))
+    formData.append('postsAddRequestDto', new Blob([JSON.stringify(postsAddRequestDto)] , {type: "application/json"}));
+
+    if(!checkRequiredValue(postsAddRequestDto))
         return;
 
     //이미지 파일 선택 확인

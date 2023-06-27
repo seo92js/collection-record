@@ -3,13 +3,24 @@ document.getElementById("user-update-btn").addEventListener('click', function(ev
     userUpdate();
 });
 
-const profileForm = document.getElementById("user-profile-form");
-
 function userUpdate(){
+    const profileForm = document.getElementById("user-profile-form");
+
     const formData = new FormData(profileForm);
 
     const id = document.getElementById('userId').value;
+
     const imageFileInput = document.getElementById('user-profile-img');
+
+    const userUpdateRequestDto = {
+        username: formData.get('username'),
+        password: formData.get('password')
+    }
+
+    formData.append('userUpdateRequestDto', new Blob([JSON.stringify(userUpdateRequestDto)] , {type: "application/json"}));
+
+    if(!checkRequiredValue(userUpdateRequestDto))
+        return;
 
     //이미지 파일 선택 확인
     if (imageFileInput.files.length > 0){
@@ -29,4 +40,13 @@ function userUpdate(){
     }).fail(function (error){
         alert(JSON.stringify(error));
     });
+}
+
+function checkRequiredValue(value){
+    if (!value.username || !value.password ) {
+        alert('필수 값을 입력하시오');
+        return false;
+    }else{
+        return true;
+    }
 }

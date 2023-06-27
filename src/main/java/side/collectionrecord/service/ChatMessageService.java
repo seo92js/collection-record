@@ -11,6 +11,10 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.ChatMessageAddRequestDto;
 import side.collectionrecord.web.dto.ChatMessageResponseDto;
+import side.collectionrecord.web.dto.CommentListResponseDto;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -42,5 +46,14 @@ public class ChatMessageService {
                 .build();
 
         return chatMessageRepository.save(chatMessage).getId();
+    }
+
+    @Transactional
+    public List<ChatMessageResponseDto> findChatRoomMessage(Long chatRoomId){
+
+        return chatMessageRepository.findAllMessageByChatRoom(chatRoomId).stream()
+                .map(ChatMessageResponseDto::new)
+                .collect(Collectors.toList());
+
     }
 }

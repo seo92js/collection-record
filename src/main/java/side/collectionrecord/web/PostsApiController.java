@@ -23,7 +23,7 @@ public class PostsApiController {
     private final ImageService imageService;
 
     @PostMapping("/api/v1/posts")
-    public Long save(@RequestParam("userId") Long userId, @RequestParam("categoryName") String categoryName, @RequestParam() PostsStatus status, @RequestParam("title") String title, @RequestParam(value = "imageFile", required = true)MultipartFile imageFile, @RequestParam("text") String text, @RequestParam("hashtags") String hashtags) throws IOException {
+    public Long save(@RequestPart(value = "postsAddRequestDto") PostsAddRequestDto postsAddRequestDto, @RequestPart(value = "imageFile", required = true)MultipartFile imageFile) throws IOException {
 
         byte[] image = imageFile.getBytes();
 
@@ -32,15 +32,7 @@ public class PostsApiController {
                 .data(image)
                 .build());
 
-        PostsAddRequestDto postsAddRequestDto = PostsAddRequestDto.builder()
-                .userId(userId)
-                .categoryName(categoryName)
-                .title(title)
-                .representativeImage(imageService.findImage(imageId))
-                .text(text)
-                .hashtags(hashtags)
-                .status(status)
-                .build();
+        postsAddRequestDto.setRepresentativeImage(imageService.findImage(imageId));
 
         Long postsId = postsService.addPosts(postsAddRequestDto);
 
@@ -53,7 +45,7 @@ public class PostsApiController {
     }
 
     @PutMapping("/api/v1/posts-update/{id}")
-    public Long update(@PathVariable Long id, @RequestParam("title") String title, @RequestParam("categoryName") String categoryName, @RequestParam("status") PostsStatus status, @RequestParam("text") String text, @RequestParam("hashtags") String hashtags, @RequestParam(value = "imageFile", required = true) MultipartFile imageFile) throws IOException {
+    public Long update(@PathVariable Long id, @RequestPart(value = "postsUpdateRequestDto") PostsUpdateRequestDto postsUpdateRequestDto, @RequestPart(value = "imageFile", required = true) MultipartFile imageFile) throws IOException {
 
         byte[] image = imageFile.getBytes();
 
@@ -62,14 +54,7 @@ public class PostsApiController {
                 .data(image)
                 .build());
 
-        PostsUpdateRequestDto postsUpdateRequestDto = PostsUpdateRequestDto.builder()
-                .title(title)
-                .categoryName(categoryName)
-                .status(status)
-                .text(text)
-                .hashtags(hashtags)
-                .representativeImage(imageService.findImage(imageId))
-                .build();
+        postsUpdateRequestDto.setRepresentativeImage(imageService.findImage(imageId));
 
         Long userId = postsService.findPosts(id).getUser().getId();
 

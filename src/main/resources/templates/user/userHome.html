@@ -15,6 +15,8 @@
             <a class="btn btn-primary" th:if="${isFollowing == null}" href="/category">카테고리 관리</a>
             <a class="btn btn-primary" th:if="${isFollowing == null}" href="/posts/add">글쓰기</a>
 
+            <a class="btn btn-primary" th:if="${isFollowing != null}" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${id})}" target="_blank">채팅</a>
+
             <button type="submit" class="btn btn-warning" id="unfollowing-btn" th:if="${isFollowing == true}" th:onclick="unfollowing([[${id}]])">팔로우 취소</button>
             <button type="submit" class="btn btn-primary" id="following-btn" th:if="${isFollowing == false}" th:onclick="following([[${id}]])">팔로우</button>
         </div>

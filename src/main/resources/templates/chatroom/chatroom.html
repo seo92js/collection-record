@@ -15,7 +15,12 @@
     </div>
 
     <div id="message-container">
-
+        <!--이 전 메세지-->
+        <div th:each ="chatRoomMessage : ${chatRoomMessages}">
+            <span th:text="|${chatRoomMessage.createdTime} / |"></span>
+            <span th:text="|${chatRoomMessage.username} / |"></span>
+            <span th:text="${chatRoomMessage.message}"></span>
+        </div>
     </div>
 
     <div th:replace="fragments/footer :: footer" />

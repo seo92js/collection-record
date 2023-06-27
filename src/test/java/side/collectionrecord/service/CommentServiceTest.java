@@ -176,7 +176,7 @@ class CommentServiceTest {
 
         //then
         assertThat(comments.size()).isEqualTo(2);
-        assertThat(comments.get(1).getText()).isEqualTo("comment1");
-        assertThat(comments.get(0).getText()).isEqualTo("comment2");
+        assertThat(comments.get(0).getText()).isEqualTo("comment1");
+        assertThat(comments.get(1).getText()).isEqualTo("comment2");
     }
 }

@@ -10,12 +10,18 @@ import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
+import side.collectionrecord.service.ChatMessageService;
 import side.collectionrecord.service.UserChatRoomService;
+import side.collectionrecord.web.dto.ChatMessageResponseDto;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 public class ChatRoomController {
     private final UserRepository userRepository;
+
+    private final ChatMessageService chatMessageService;
 
     private final UserChatRoomService userChatRoomService;
 
@@ -29,6 +35,10 @@ public class ChatRoomController {
         model.addAttribute("username", user.getUsername());
 
         model.addAttribute("chatRoomId", userChatRoom.getChatRoom().getId());
+
+        List<ChatMessageResponseDto> chatRoomMessage = chatMessageService.findChatRoomMessage(userChatRoom.getChatRoom().getId());
+
+        model.addAttribute("chatRoomMessages", chatRoomMessage);
 
         return "/chatroom/chatroom";
     }

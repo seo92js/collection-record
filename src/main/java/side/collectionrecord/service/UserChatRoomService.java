@@ -40,6 +40,9 @@ public class UserChatRoomService {
                     .chatRoom(chatRoom)
                     .build();
 
+            userChatRoomRepository.save(userChatRoom1);
+            userChatRoomRepository.save(userChatRoom2);
+
             return userChatRoom1;
         }else{
             return userChatRoom;
