@@ -87,7 +87,7 @@ public class PostsController {
 
         Posts posts = postsService.findPosts(id);
 
-        model.addAttribute(PostsUpdateRequestDto.builder()
+        model.addAttribute("postsUpdateRequestDto", PostsUpdateRequestDto.builder()
                         .categoryName(posts.getCategory().getName())
                         .title(posts.getTitle())
                         .text(posts.getText())

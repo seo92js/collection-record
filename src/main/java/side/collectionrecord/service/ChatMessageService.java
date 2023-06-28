@@ -42,7 +42,7 @@ public class ChatMessageService {
         ChatMessage chatMessage = ChatMessage.builder()
                 .user(user)
                 .chatRoom(chatRoom)
-                .message(chatMessageAddRequestDto.getText())
+                .message(chatMessageAddRequestDto.getMessage())
                 .build();
 
         return chatMessageRepository.save(chatMessage).getId();

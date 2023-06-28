@@ -27,9 +27,6 @@ function postsUpdate(id){
     if (imageFileInput.files.length > 0){
         const imageFile = imageFileInput.files[0];
         formData.append('imageFile', imageFile);
-    } else {
-        alert('이미지를 선택하세요');
-        return;
     }
 
     if(!checkRequiredValue(postsUpdateRequestDto))
@@ -44,7 +41,6 @@ function postsUpdate(id){
     }).done(function(){
         alert('게시물 수정 완료.');
         window.location.href = '/posts/' + id;
-        //location.reload();
     }).fail(function (error){
         alert(JSON.stringify(error));
     });

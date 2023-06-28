@@ -25,12 +25,12 @@ socket.onmessage = function(event) {
 }
 
 function send(userId, chatRoomId){
-    var text = document.getElementById("input-chat").value;
+    var message = document.getElementById("input-chat").value;
 
     const chatMessageAddRequestDto = {
         userId: userId,
         chatRoomId: chatRoomId,
-        text: text
+        message: message
     }
 
     var json = JSON.stringify(chatMessageAddRequestDto);

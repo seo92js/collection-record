@@ -54,7 +54,7 @@ public class UserService {
 
         findUser.update(userUpdateRequestDto.getUsername(), userUpdateRequestDto.getPassword(), userUpdateRequestDto.getProfileImage());
 
-        if (prevImage != null){
+        if (prevImage.getId() != userUpdateRequestDto.getProfileImage().getId()){
             imageRepository.delete(prevImage);
         }
 

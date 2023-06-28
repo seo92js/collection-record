@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 public class ChatMessageAddRequestDto {
     private Long userId;
     private Long chatRoomId;
-    private String text;
+    private String message;
 
     @Builder
-    public ChatMessageAddRequestDto(Long userId, Long chatRoomId, String text){
+    public ChatMessageAddRequestDto(Long userId, Long chatRoomId, String message){
         this.userId = userId;
         this.chatRoomId = chatRoomId;
-        this.text = text;
+        this.message = message;
     }
 }

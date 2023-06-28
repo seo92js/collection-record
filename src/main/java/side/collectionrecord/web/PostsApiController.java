@@ -45,18 +45,25 @@ public class PostsApiController {
     }
 
     @PutMapping("/api/v1/posts-update/{id}")
-    public Long update(@PathVariable Long id, @RequestPart(value = "postsUpdateRequestDto") PostsUpdateRequestDto postsUpdateRequestDto, @RequestPart(value = "imageFile", required = true) MultipartFile imageFile) throws IOException {
+    public Long update(@PathVariable Long id, @RequestPart(value = "postsUpdateRequestDto") PostsUpdateRequestDto postsUpdateRequestDto, @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {
+        Long imageId;
 
-        byte[] image = imageFile.getBytes();
+        Posts posts = postsService.findPosts(id);
 
-        Long imageId = imageService.upload(ImageUploadRequestDto.builder()
-                .filename(imageFile.getOriginalFilename())
-                .data(image)
-                .build());
+        if (imageFile != null){
+            byte[] image = imageFile.getBytes();
+
+            imageId = imageService.upload(ImageUploadRequestDto.builder()
+                    .filename(imageFile.getOriginalFilename())
+                    .data(image)
+                    .build());
+        }else{
+            imageId = imageService.findImage(posts.getRepresentativeImage().getId()).getId();
+        }
 
         postsUpdateRequestDto.setRepresentativeImage(imageService.findImage(imageId));
 
-        Long userId = postsService.findPosts(id).getUser().getId();
+        Long userId = posts.getUser().getId();
 
         return postsService.update(userId, id, postsUpdateRequestDto);
     }

@@ -73,7 +73,7 @@ public class PostsService {
 
         posts.update(category, postsUpdateRequestDto.getTitle(), postsUpdateRequestDto.getRepresentativeImage(), postsUpdateRequestDto.getText(), postsUpdateRequestDto.getHashtags(), postsUpdateRequestDto.getStatus());
 
-        if (prevImage != null){
+        if (prevImage.getId() != postsUpdateRequestDto.getRepresentativeImage().getId()){
             imageRepository.delete(prevImage);
         }
 
