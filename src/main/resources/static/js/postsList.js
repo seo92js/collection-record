@@ -1,39 +1,49 @@
 var page = 0;
 var isEnd = false;
-
-window.addEventListener('scroll', function(){
-        if ($(window).scrollTop() + $(window).height() == $(document).height() && !isEnd) {
-          page = page + 1;
-          var id = $('.category-link').data('id');
-          var category = $('.category-link').data('category');
-          postList(id, category, page);
-        }
-    }
-)
+var id;
+var category;
 
 $(document).ready(function() {
+    var isCategoryClicked = false;
+
     // 카테고리 클릭 이벤트 처리
     $('.category-link').on('click', function(event) {
-        var id = $(this).data('id');
-        var category = $(this).data('category');
-        var post = $('#postList');
-        post.empty();
-        event.preventDefault();
+        id = $(this).data('id');
+        category = $(this).data('category');
+
+        $('#postList').empty();
         page = 0;
-        postList(id, category, page);
+
+        isCategoryClicked = true;
+
+        event.preventDefault();
+
+        loadPostList(id, category, page);
+        isEnd = false;
     });
 
-    var id = $('.category-link[data-category="all"]').data('id');
+    $(window).on('scroll', function(){
+        if ($(window).scrollTop() + $(window).height() == $(document).height() && !isEnd &&!isCategoryClicked) {
+              page = page + 1;
+              loadPostList(id, category, page);
+        }
+        isCategoryClicked = false;
+    })
+
+    id = $('.category-link[data-category="all"]').data('id');
     $('.category-link[data-id="' + id + '"][data-category="all"]').click();
 });
 
-function postList(id, category, page) {
+
+function loadPostList(id, category, page) {
     $.ajax({
         type: 'GET',
         url: '/api/v1/posts/' + id + '/' + category + '/' + page,
     }).done(function(response){
-        var postList = $('#postList');
-        //postList.empty();
+        if (response.length === 0){
+            isEnd = true;
+            return;
+        }
 
         response.forEach(function(post) {
             var row = $('<tr>');
@@ -46,7 +56,8 @@ function postList(id, category, page) {
             imageCell.append(imageLink);
             titleCell.append(titleLink);
             row.append(imageCell, titleCell);
-            postList.append(row);
+
+            $('#postList').append(row);
         });
     }).fail(function (error){
         alert(JSON.stringify(error));
