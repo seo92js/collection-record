@@ -131,7 +131,7 @@ class FollowRepositoryTest {
 
         Follow saved = followRepository.save(follow);
 
-        List<Posts> followPosts = followRepository.findFollowPosts(user1.getId());
+        List<Posts> followPosts = followRepository.findFollowPosts(user1.getId(), 0, 5);
         assertThat(followPosts.size()).isEqualTo(2);
         // 초 단위 까지 변경
         //assertThat(followPosts.get(0).getTitle()).isEqualTo("title2");

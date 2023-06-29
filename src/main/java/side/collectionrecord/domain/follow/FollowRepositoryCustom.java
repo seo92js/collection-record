@@ -5,5 +5,5 @@ import side.collectionrecord.domain.posts.Posts;
 import java.util.List;
 
 public interface FollowRepositoryCustom {
-    public List<Posts> findFollowPosts(Long userId);
+    public List<Posts> findFollowPosts(Long userId, int offset, int size);
 }

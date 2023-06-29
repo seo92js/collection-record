@@ -19,17 +19,21 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom{
     }
 
     @Override
-    public List<Posts> findPostsList(Long userId, String categoryName){
+    public List<Posts> findPostsList(Long userId, String categoryName, int offset, int size){
 
         if (Objects.equals(categoryName, "all")){
             return queryFactory.selectFrom(posts)
                     .where(posts.user.id.eq(userId))
                     .orderBy(posts.createdDate.desc())
+                    .offset(offset)
+                    .limit(size)
                     .fetch();
         }else{
             return queryFactory.selectFrom(posts)
                     .where(posts.user.id.eq(userId).and(category.name.eq(categoryName)))
                     .orderBy(posts.createdDate.desc())
+                    .offset(offset)
+                    .limit(size)
                     .fetch();
         }
     }

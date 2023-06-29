@@ -105,7 +105,7 @@ class PostsRepositoryTest {
         postsRepository.save(post2);
 
         //when
-        List<Posts> postsList = postsRepository.findPostsList(user.getId(), category.getName());
+        List<Posts> postsList = postsRepository.findPostsList(user.getId(), category.getName(), 0, 5);
 
         //then
         assertThat(postsList.size()).isEqualTo(2);

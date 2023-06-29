@@ -61,8 +61,11 @@ public class FollowService {
     }
 
     @Transactional
-    public List<FollowPostsListResponseDto> findFollowPosts(Long userId){
-        return followRepository.findFollowPosts(userId).stream()
+    public List<FollowPostsListResponseDto> findFollowPosts(Long userId, int page, int size){
+
+        int offset = page * size;
+
+        return followRepository.findFollowPosts(userId, offset, size).stream()
                 .map(FollowPostsListResponseDto::new)
                 .collect(Collectors.toList());
     }

@@ -33,8 +33,11 @@ public class PostsService {
     }
 
     @Transactional
-    public List<PostsListResponseDto> findPostsList(Long userId, String categoryName){
-        return postsRepository.findPostsList(userId, categoryName).stream()
+    public List<PostsListResponseDto> findPostsList(Long userId, String categoryName, int page, int size){
+
+        int offset = page * size;
+
+        return postsRepository.findPostsList(userId, categoryName, offset, size).stream()
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
     }

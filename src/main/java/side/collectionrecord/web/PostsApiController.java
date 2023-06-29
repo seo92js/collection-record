@@ -39,9 +39,9 @@ public class PostsApiController {
         return postsId;
     }
 
-    @GetMapping("/api/v1/posts/{id}/{categoryName}")
-    public List<PostsListResponseDto> findPostsList(@PathVariable Long id, @PathVariable String categoryName){
-        return postsService.findPostsList(id, categoryName);
+    @GetMapping("/api/v1/posts/{id}/{categoryName}/{page}")
+    public List<PostsListResponseDto> findPostsList(@PathVariable Long id, @PathVariable String categoryName, @PathVariable int page){
+        return postsService.findPostsList(id, categoryName, page, 5);
     }
 
     @PutMapping("/api/v1/posts-update/{id}")

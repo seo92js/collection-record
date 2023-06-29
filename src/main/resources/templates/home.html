@@ -20,20 +20,14 @@
           <th>타이틀</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="post : ${posts}">
-          <td>
-            <a th:text="${post.username}" th:href="@{user/{username}/home(username=${post.username})}"></a>
-          </td>
-          <td>
-            <img th:src="@{/api/v1/image-view/{imageId}(imageId=${post.representativeImageId})}">
-          </td>
-          <td>
-            <a th:text="${post.title}" th:href="@{posts/{postId}(postId=${post.id})}"></a>
-          </td>
-        </tr>
+        <tbody id="follow-posts-list">
+        <!-- 동적 -->
+
         </tbody>
       </table>
+
+      <script src="/js/followPostsList.js"></script>
+
     </div>
 
     <div th:replace="fragments/footer :: footer" />

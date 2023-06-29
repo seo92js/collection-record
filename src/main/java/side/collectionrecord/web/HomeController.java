@@ -17,12 +17,6 @@ public class HomeController {
 
     @RequestMapping("/")
     public String home(Model model){
-        boolean login = (Boolean) model.getAttribute("login");
-
-        if(login == true){
-            List<FollowPostsListResponseDto> followPostsListResponseDtos = followService.findFollowPosts((Long)model.getAttribute("loginUserId"));
-            model.addAttribute("posts", followPostsListResponseDtos);
-        }
 
         return "home";
     }
