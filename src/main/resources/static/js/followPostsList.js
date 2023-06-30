@@ -2,12 +2,11 @@ var page = 0;
 var isEnd = false;
 
 window.addEventListener('scroll', function(){
-        if ($(window).scrollTop() + $(window).height() == $(document).height() && !isEnd) {
-          page = page + 1;
-          loadFollowPostsList(page);
-        }
+    if ($(window).scrollTop() + $(window).height() == $(document).height() && !isEnd) {
+      page = page + 1;
+      loadFollowPostsList(page);
     }
-)
+})
 
 loadFollowPostsList(page);
 
@@ -16,8 +15,6 @@ function loadFollowPostsList(page){
         type: 'GET',
         url: '/api/v1/home/' + page,
     }).done(function(response){
-        var followPostsList = $('#follow-posts-list');
-
         if (response.length === 0){
             isEnd = true;
             return;
@@ -38,7 +35,7 @@ function loadFollowPostsList(page){
 
             row.append(usernameCell, imageCell, titleCell);
 
-            followPostsList.append(row);
+            $('#follow-posts-list').append(row);
         });
     }).fail(function (error){
         alert(JSON.stringify(error));

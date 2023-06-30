@@ -147,7 +147,7 @@ class UserServiceTest {
         userRepository.save(user3);
 
         //when
-        List<UserSearchResponseDto> containsUsername = userService.findContainsUsername(username);
+        List<UserSearchResponseDto> containsUsername = userService.findContainsUsername(username, 0, 5);
 
         //then
         assertThat(containsUsername.size()).isEqualTo(3);

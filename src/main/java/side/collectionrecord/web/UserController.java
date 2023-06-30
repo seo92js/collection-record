@@ -65,6 +65,14 @@ public class UserController {
         return "user/userHome";
     }
 
+    @GetMapping("/user/{username}/chatroomList")
+    public String userChatroomList(@PathVariable String username, Model model){
+
+
+
+        return "user/userChatroomList";
+    }
+
     @GetMapping("/user/profile")
     public String userProfile(Model model){
         Long userId = (Long)model.getAttribute("loginUserId");

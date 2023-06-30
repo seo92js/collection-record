@@ -18,10 +18,12 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
 
 
     @Override
-    public List<User> findContainsUsername(String username) {
+    public List<User> findContainsUsername(String username, int offset, int size) {
         return queryFactory.selectFrom(user)
                 .where(user.username.contains(username))
                 .orderBy(user.username.asc())
+                .offset(offset)
+                .limit(size)
                 .fetch();
     }
 }

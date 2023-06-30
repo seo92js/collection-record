@@ -151,7 +151,7 @@ class PostsRepositoryTest {
         postsRepository.save(post2);
 
         //when
-        List<Posts> hashtags = postsRepository.findContainsHashtag("hashtags");
+        List<Posts> hashtags = postsRepository.findContainsHashtag("hashtags", 0, 5);
 
         //then
         assertThat(hashtags.size()).isEqualTo(2);

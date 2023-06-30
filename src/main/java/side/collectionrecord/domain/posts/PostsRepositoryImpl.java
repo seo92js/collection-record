@@ -39,10 +39,12 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom{
     }
 
     @Override
-    public List<Posts> findContainsHashtag(String hashtag) {
+    public List<Posts> findContainsHashtag(String hashtag, int offset, int size) {
         return queryFactory.selectFrom(posts)
                 .where(posts.hashtags.contains(hashtag))
                 .orderBy(posts.createdDate.desc())
+                .offset(offset)
+                .limit(size)
                 .fetch();
     }
 }

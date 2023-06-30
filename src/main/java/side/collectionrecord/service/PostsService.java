@@ -43,8 +43,10 @@ public class PostsService {
     }
 
     @Transactional
-    public List<PostsSearchResponseDto> findContainsHashtags(String hashtags){
-        return postsRepository.findContainsHashtag(hashtags).stream()
+    public List<PostsSearchResponseDto> findContainsHashtags(String hashtags, int page, int size){
+        int offset = page * size;
+
+        return postsRepository.findContainsHashtag(hashtags, offset, size).stream()
                 .map(PostsSearchResponseDto::new)
                 .collect(Collectors.toList());
     }

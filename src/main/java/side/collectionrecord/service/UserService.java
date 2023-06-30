@@ -69,8 +69,10 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserSearchResponseDto> findContainsUsername(String username){
-        return userRepository.findContainsUsername(username).stream()
+    public List<UserSearchResponseDto> findContainsUsername(String username, int page, int size){
+        int offset = page * size;
+
+        return userRepository.findContainsUsername(username, offset, size).stream()
                 .map(UserSearchResponseDto::new)
                 .collect(Collectors.toList());
     }

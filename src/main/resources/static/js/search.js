@@ -1,21 +1,38 @@
-document.getElementById("search-btn").addEventListener('click', function(event) {
-    event.preventDefault();
-    searchList();
-});
+var page = 0;
+var isEnd = false;
 
-function searchList(){
+window.addEventListener('scroll', function(){
+    if ($(window).scrollTop() + $(window).height() == $(document).height() && !isEnd) {
+      page = page + 1;
+      searchList(page, $('#search-text').val());
+    }
+})
 
-    const text = document.getElementById('search-text').value;
+document.getElementById("search-btn").addEventListener('click', function(event){
+    isEnd = false;
 
-    if(!checkRequiredValue(text))
-        return;
+    page = 0;
+
+    $('#user-search-list').empty();
+    $('#posts-search-list').empty();
+
+    if ($('#search-text').val() != ""){
+        event.preventDefault();
+        searchList(page, $('#search-text').val());
+    }
+})
+
+function searchList(page, text){
 
     $.ajax({
         type: 'GET',
-        url: '/api/v1/search/' + text,
+        url: '/api/v1/search/' + text + '/' + page,
     }).done(function(response){
-        var userSearchList = $('#user-search-list');
-        userSearchList.empty();
+
+        if (response.userSearchList.length === 0 && response.postsSearchList.length === 0){
+            isEnd = true;
+            return;
+        }
 
         response.userSearchList.forEach(function(user){
             var userRow = $('<tr>');
@@ -27,11 +44,8 @@ function searchList(){
             userImageCell.append(userImageLink);
             userCell.append(userLink);
             userRow.append(userImageCell, userCell);
-            userSearchList.append(userRow);
+            $('#user-search-list').append(userRow);
         });
-
-       var postsSearchList = $('#posts-search-list');
-       postsSearchList.empty();
 
        response.postsSearchList.forEach(function(post){
             var postRow = $('<tr>');
@@ -44,19 +58,10 @@ function searchList(){
             postImageCell.append(postImageLink);
             postCell.append(postLink)
             postRow.append(postImageCell, postCell);
-            postsSearchList.append(postRow);
+            $('#posts-search-list').append(postRow);
         });
 
     }).fail(function (error){
         alert(JSON.stringify(error));
     });
-}
-
-function checkRequiredValue(value){
-    if (!value) {
-        alert('필수 값을 입력하시오');
-        return false;
-    }else{
-        return true;
-    }
 }

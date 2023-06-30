@@ -9,6 +9,9 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
 import side.collectionrecord.domain.userchatroom.UserChatRoomRepository;
+import side.collectionrecord.web.dto.UserChatRoomListResponseDto;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -65,4 +68,5 @@ public class UserChatRoomService {
 
         return null;
     }
+
 }
