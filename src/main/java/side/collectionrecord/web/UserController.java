@@ -9,8 +9,10 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.FollowService;
+import side.collectionrecord.service.UserChatRoomService;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.CategoryListResponseDto;
+import side.collectionrecord.web.dto.UserChatRoomListResponseDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
 
@@ -27,6 +29,8 @@ public class UserController {
     private final CategoryService categoryService;
 
     private final FollowService followService;
+
+    private final UserChatRoomService userChatRoomService;
 
     @GetMapping("/user/join")
     public String joinUserForm(Model model){
@@ -68,7 +72,11 @@ public class UserController {
     @GetMapping("/user/{username}/chatroomList")
     public String userChatroomList(@PathVariable String username, Model model){
 
+        Long loginUserId = (Long) model.getAttribute("loginUserId");
 
+        List<UserChatRoomListResponseDto> userChatRoomListResponseDtos = userChatRoomService.findUserChatRoomList(loginUserId);
+
+        model.addAttribute("chatrooms", userChatRoomListResponseDtos);
 
         return "user/userChatroomList";
     }

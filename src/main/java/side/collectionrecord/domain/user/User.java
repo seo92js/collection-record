@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.BaseTimeEntity;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.chatmessage.ChatMessage;
-import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.follow.Follow;
 import side.collectionrecord.domain.image.Image;
+import side.collectionrecord.domain.notification.Notification;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
 
 import javax.persistence.*;
@@ -50,6 +50,9 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user")
     private List<ChatMessage> chatMessages = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notifications = new ArrayList<>();
+
     public void addCategory(Category category){
         this.categories.add(category);
     }
@@ -83,6 +86,10 @@ public class User extends BaseTimeEntity {
 
     public void addChetMessage(ChatMessage chatMessage){
         this.chatMessages.add(chatMessage);
+    }
+
+    public void addNotification(Notification notification) {
+        ;this.notifications.add(notification);
     }
 
     @Builder

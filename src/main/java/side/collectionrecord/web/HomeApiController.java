@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import side.collectionrecord.service.FollowService;
 import side.collectionrecord.web.dto.FollowPostsListResponseDto;
-import side.collectionrecord.web.dto.PostsListResponseDto;
 
 import java.util.List;
 

@@ -11,7 +11,9 @@ import side.collectionrecord.domain.userchatroom.UserChatRoom;
 import side.collectionrecord.domain.userchatroom.UserChatRoomRepository;
 import side.collectionrecord.web.dto.UserChatRoomListResponseDto;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -23,7 +25,7 @@ public class UserChatRoomService {
     @Transactional
     public UserChatRoom createChatRoom(Long user1Id, Long user2Id){
 
-        UserChatRoom userChatRoom = findChatRoom(user1Id, user2Id);
+        UserChatRoom userChatRoom = findUserChatRoom(user1Id, user2Id);
 
         if (userChatRoom == null){
             User user1 = userRepository.findById(user1Id).get();
@@ -53,20 +55,16 @@ public class UserChatRoomService {
     }
 
     @Transactional
-    public UserChatRoom findChatRoom(Long user1Id, Long user2Id){
+    public UserChatRoom findUserChatRoom(Long user1Id, Long user2Id){
 
-        User user1 = userRepository.findById(user1Id).get();
-        User user2 = userRepository.findById(user2Id).get();
-
-        for (UserChatRoom userChatRoom1 : user1.getUserChatRooms()) {
-            for (UserChatRoom userChatRoom2 : user2.getUserChatRooms()){
-                if (userChatRoom1.getChatRoom().getId() == userChatRoom2.getChatRoom().getId()){
-                    return userChatRoom1;
-                }
-            }
-        }
-
-        return null;
+        return userChatRoomRepository.findUserChatRoom(user1Id, user2Id);
     }
 
+    @Transactional
+    public List<UserChatRoomListResponseDto> findUserChatRoomList(Long userId){
+
+        return userChatRoomRepository.findUserChatRoomList(userId).stream()
+                .map(UserChatRoomListResponseDto::new)
+                .collect(Collectors.toList());
+    }
 }

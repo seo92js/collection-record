@@ -1,12 +1,10 @@
 package side.collectionrecord.web;
 
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;

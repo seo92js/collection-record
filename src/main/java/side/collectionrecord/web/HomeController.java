@@ -5,9 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import side.collectionrecord.service.FollowService;
-import side.collectionrecord.web.dto.FollowPostsListResponseDto;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller

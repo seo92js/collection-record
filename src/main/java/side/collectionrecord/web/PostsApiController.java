@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import side.collectionrecord.domain.posts.Posts;
-import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.service.ImageService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.web.dto.ImageUploadRequestDto;

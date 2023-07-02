@@ -12,7 +12,6 @@ import side.collectionrecord.service.CommentService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.web.dto.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

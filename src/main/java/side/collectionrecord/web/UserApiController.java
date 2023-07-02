@@ -11,12 +11,10 @@ import side.collectionrecord.service.ImageService;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.ImageUploadRequestDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
-import side.collectionrecord.web.dto.UserProfileResponseDto;
 import side.collectionrecord.web.dto.UserUpdateRequestDto;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController

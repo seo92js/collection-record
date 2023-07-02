@@ -3,7 +3,6 @@ package side.collectionrecord.domain.image;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import side.collectionrecord.domain.BaseTimeEntity;
 
 import javax.persistence.*;
 
