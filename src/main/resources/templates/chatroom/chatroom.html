@@ -10,6 +10,7 @@
     <h1 th:text="|${username} 님|"></h1>
 
     <div>
+        <input type="hidden" id="username" th:value="${username}">
         <input type="text" id="input-chat" placeholder="내용" th:required="true">
         <button type="button" th:onclick="send([[${loginUserId}]], [[${receiverId}]], [[${chatRoomId}]])">보내기</button>
     </div>

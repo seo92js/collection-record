@@ -1,5 +1,6 @@
 package side.collectionrecord.handler;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RequiredArgsConstructor
@@ -26,7 +28,7 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
 
     private final ChatMessageService chatMessageService;
 
-    private static HashMap<String, WebSocketSession> webSocketSessions = new HashMap<String, WebSocketSession>();
+    private final Map<String, WebSocketSession> webSocketSessions = new HashMap<>();
 
     // 클라이언트로부터 수신된 메세지 처리
     @Override
@@ -35,19 +37,31 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
+        JsonNode messageNode = objectMapper.readTree(payload);
+
+        // 만약 메시지의 타입이 "username"이면, 세션에 username 저장하고 리턴
+        if (messageNode.has("type") && messageNode.get("type").asText().equals("username")) {
+            String username = messageNode.get("value").asText();
+            session.getAttributes().put("username", username);
+            webSocketSessions.put(username, session);
+            return;
+        }
+
+        // 일반 메세지
         ChatMessageAddRequestDto chatMessageAddRequestDto = objectMapper.readValue(payload, ChatMessageAddRequestDto.class);
 
         Long id = chatMessageService.addMessage(chatMessageAddRequestDto);
 
         ChatMessageResponseDto chatMessageResponseDto = chatMessageService.findById(id);
 
-        sendToClient(session, chatMessageResponseDto);
+        sendToClient(chatMessageResponseDto);
     }
 
     // 클라이언트 연결 성립 시 처리
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        webSocketSessions.add(session);
+        //username 저장을 위해 handleTextMessage 에서 처리
+        //webSocketSessions.add(session);
     }
 
     // 클라이언트 연결 종료 시 처리
@@ -56,11 +70,13 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
         webSocketSessions.remove(session);
     }
 
-    private void sendToClient(WebSocketSession session, ChatMessageResponseDto chatMessageResponseDto) throws IOException {
+    private void sendToClient(ChatMessageResponseDto chatMessageResponseDto) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         String json = objectMapper.writeValueAsString(chatMessageResponseDto);
 
-        session.sendMessage(new TextMessage(json));
+        WebSocketSession webSocketSession = webSocketSessions.get(chatMessageResponseDto.getReceiverName());
+
+        webSocketSession.sendMessage(new TextMessage(json));
     }
 }

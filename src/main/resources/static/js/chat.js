@@ -1,9 +1,13 @@
 var socket = new WebSocket('ws://localhost:8080/chatroom');
 
 socket.onopen = function() {
-    socket.send(JSON.stringify({
-        username: "" // 사용자 이름 설정
-    }));
+
+      var username = document.getElementById('username').value;
+      var message = {
+        type: 'username',
+        value: username
+      };
+      socket.send(JSON.stringify(message));
 };
 
 socket.onmessage = function(event) {
