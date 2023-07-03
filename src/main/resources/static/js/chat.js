@@ -1,5 +1,11 @@
 var socket = new WebSocket('ws://localhost:8080/chatroom');
 
+socket.onopen = function() {
+    socket.send(JSON.stringify({
+        username: "" // 사용자 이름 설정
+    }));
+};
+
 socket.onmessage = function(event) {
     var json = event.data;
     var chatMessageResponseDto = JSON.parse(json);
@@ -12,7 +18,7 @@ socket.onmessage = function(event) {
     createdTime.textContent = chatMessageResponseDto.createdTime + ' / ';
 
     var username = document.createElement('span');
-    username.textContent = chatMessageResponseDto.username + ' / ';
+    username.textContent = chatMessageResponseDto.senderName + ' / ';
 
     var message = document.createElement('span');
     message.textContent = chatMessageResponseDto.message;
@@ -24,11 +30,12 @@ socket.onmessage = function(event) {
     messageContainer.appendChild(div);
 }
 
-function send(userId, chatRoomId){
+function send(senderId, receiverId, chatRoomId){
     var message = document.getElementById("input-chat").value;
 
     const chatMessageAddRequestDto = {
-        userId: userId,
+        senderId: senderId,
+        receiverId: receiverId,
         chatRoomId: chatRoomId,
         message: message
     }

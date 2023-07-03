@@ -18,8 +18,12 @@ public class ChatMessage extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "sender_id")
+    private User sender;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatroom_id")
@@ -28,12 +32,15 @@ public class ChatMessage extends BaseTimeEntity {
     private String message;
 
     @Builder
-    public ChatMessage(User user, ChatRoom chatRoom, String message){
-        this.user = user;
+    public ChatMessage(User sender, User receiver, ChatRoom chatRoom, String message){
+        this.sender = sender;
+        this.receiver = receiver;
         this.chatRoom = chatRoom;
         this.message = message;
 
-        user.addChetMessage(this);
+        sender.addSendMessage(this);
+        receiver.addReceiveMessage(this);
+
         chatRoom.addChatMessage(this);
     }
 }

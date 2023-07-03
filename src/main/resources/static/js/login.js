@@ -19,6 +19,8 @@ function userLogin(){
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(loginRequestDto)
     }).done(function(){
+        var socket = new WebSocket('ws://localhost:8080/notification');
+
         alert('로그인이 완료되었습니다.');
         window.location.href = '/';
     }).fail(function (error){

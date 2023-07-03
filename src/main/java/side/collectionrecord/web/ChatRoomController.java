@@ -30,6 +30,8 @@ public class ChatRoomController {
 
         User user = userRepository.findById(user2Id).get();
 
+        model.addAttribute("receiverId", user2Id);
+
         model.addAttribute("username", user.getUsername());
 
         model.addAttribute("chatRoomId", userChatRoom.getChatRoom().getId());

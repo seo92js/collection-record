@@ -7,13 +7,16 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ChatMessageAddRequestDto {
-    private Long userId;
+    private Long senderId;
+    private Long receiverId;
+
     private Long chatRoomId;
     private String message;
 
     @Builder
-    public ChatMessageAddRequestDto(Long userId, Long chatRoomId, String message){
-        this.userId = userId;
+    public ChatMessageAddRequestDto(Long senderId, Long receiverId, Long chatRoomId, String message){
+        this.senderId = senderId;
+        this.receiverId = receiverId;
         this.chatRoomId = chatRoomId;
         this.message = message;
     }

@@ -47,11 +47,17 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user")
     private List<UserChatRoom> userChatRooms = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<ChatMessage> chatMessages = new ArrayList<>();
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
+    private List<ChatMessage> sendMessage = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Notification> notifications = new ArrayList<>();
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
+    private List<ChatMessage> receiveMessage = new ArrayList<>();
+
+    @OneToMany(mappedBy = "sender")
+    private List<Notification> sendNotify = new ArrayList<>();
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Notification> receiveNotify = new ArrayList<>();
 
     public void addCategory(Category category){
         this.categories.add(category);
@@ -84,12 +90,20 @@ public class User extends BaseTimeEntity {
         this.userChatRooms.add(userChatRoom);
     }
 
-    public void addChetMessage(ChatMessage chatMessage){
-        this.chatMessages.add(chatMessage);
+    public void addSendMessage(ChatMessage chatMessage){
+        this.sendMessage.add(chatMessage);
     }
 
-    public void addNotification(Notification notification) {
-        ;this.notifications.add(notification);
+    public void addReceiveMessage(ChatMessage chatMessage){
+        this.receiveMessage.add(chatMessage);
+    }
+
+    public void addSendNotify(Notification notification) {
+        this.sendNotify.add(notification);
+    }
+
+    public void addReceiveNotify(Notification notification) {
+        this.receiveNotify.add(notification);
     }
 
     @Builder

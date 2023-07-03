@@ -36,11 +36,14 @@ public class ChatMessageService {
 
     @Transactional
     public Long addMessage(ChatMessageAddRequestDto chatMessageAddRequestDto){
-        User user = userRepository.findById(chatMessageAddRequestDto.getUserId()).get();
+        User serder = userRepository.findById(chatMessageAddRequestDto.getSenderId()).get();
+        User receiver = userRepository.findById(chatMessageAddRequestDto.getReceiverId()).get();
+
         ChatRoom chatRoom = chatRoomRepository.findById(chatMessageAddRequestDto.getChatRoomId()).get();
 
         ChatMessage chatMessage = ChatMessage.builder()
-                .user(user)
+                .sender(serder)
+                .receiver(receiver)
                 .chatRoom(chatRoom)
                 .message(chatMessageAddRequestDto.getMessage())
                 .build();

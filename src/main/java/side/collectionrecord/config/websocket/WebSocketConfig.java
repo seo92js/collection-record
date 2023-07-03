@@ -5,17 +5,22 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
-import side.collectionrecord.handler.WebSocketHanlder;
+import side.collectionrecord.handler.WebSocketHandlerByChat;
+import side.collectionrecord.handler.WebSocketHandlerByNotification;
 
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
-    private final WebSocketHanlder webSocketHanlder;
+    private final WebSocketHandlerByChat webSocketHandlerByChat;
+
+    private final WebSocketHandlerByNotification webSocketHandlerByNotification;
 
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketHanlder, "/chatroom").setAllowedOrigins("*");
+        registry.addHandler(webSocketHandlerByChat, "/chatroom").setAllowedOrigins("*");
+
+        registry.addHandler(webSocketHandlerByNotification, "/notification").setAllowedOrigins("*");
     }
 }
