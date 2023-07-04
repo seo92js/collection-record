@@ -43,7 +43,11 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
         if (messageNode.has("type") && messageNode.get("type").asText().equals("username")) {
             String username = messageNode.get("value").asText();
             session.getAttributes().put("username", username);
-            webSocketSessions.put(username, session);
+
+            if (!webSocketSessions.containsKey(username)){
+                webSocketSessions.put(username, session);
+            }
+
             return;
         }
 
@@ -54,7 +58,7 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
 
         ChatMessageResponseDto chatMessageResponseDto = chatMessageService.findById(id);
 
-        sendToClient(chatMessageResponseDto);
+        sendToClient(session, chatMessageResponseDto);
     }
 
     // 클라이언트 연결 성립 시 처리
@@ -67,16 +71,36 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
     // 클라이언트 연결 종료 시 처리
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        webSocketSessions.remove(session);
+        // 연결이 종료된 세션에 매핑된 유저네임을 찾아서 제거
+        String usernameToRemove = null;
+
+        for (Map.Entry<String, WebSocketSession> entry : webSocketSessions.entrySet()) {
+            if (entry.getValue().equals(session)) {
+                usernameToRemove = entry.getKey();
+                break;
+            }
+        }
+        if (usernameToRemove != null) {
+            webSocketSessions.remove(usernameToRemove);
+        }
+
+        //webSocketSessions.remove(session);
     }
 
-    private void sendToClient(ChatMessageResponseDto chatMessageResponseDto) throws IOException {
+    private void sendToClient(WebSocketSession session, ChatMessageResponseDto chatMessageResponseDto) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         String json = objectMapper.writeValueAsString(chatMessageResponseDto);
 
         WebSocketSession webSocketSession = webSocketSessions.get(chatMessageResponseDto.getReceiverName());
 
-        webSocketSession.sendMessage(new TextMessage(json));
+        // receiver 가 연결 중일 때
+        if (webSocketSession != null){
+            webSocketSession.sendMessage(new TextMessage(json));
+        }
+
+        // sender 채팅방에도 메세지를 뿌리기 위해
+        session.sendMessage(new TextMessage(json));
     }
+
 }

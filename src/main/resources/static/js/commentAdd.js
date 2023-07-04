@@ -1,8 +1,3 @@
-document.getElementById("comment-add-btn").addEventListener('click', function(event) {
-    event.preventDefault();
-    commentAdd();
-});
-
 const addForm = document.getElementById("comment-add-form");
 
 function commentAdd(){

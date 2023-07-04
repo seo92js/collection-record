@@ -27,11 +27,12 @@
         <div>
             <form th:object="${commentAddRequestDto}" id="comment-add-form">
                 <div>
+                    <input type="hidden" th:value="${loginUsername}" id="loginUsername">
                     <input type="hidden" th:field="*{userId}">
                     <input type="hidden" th:field="*{postsId}">
 
                     <input type="text" th:field="*{text}" placeholder="내용" th:required="true">
-                    <button type="submit" class="btn btn-primary" id="comment-add-btn">댓글 달기</button>
+                    <button type="submit" class="btn btn-primary" id="comment-add-btn" th:onclick="commentAdd(); notificationSend([[${loginUsername}]],[[${username}]])">댓글 달기</button>
                 </div>
             </form>
         </div>
@@ -47,6 +48,7 @@
         </div>
 
         <script src="/js/commentAdd.js"></script>
+        <script src="/js/notificationPosts.js"></script>
 
         <div th:replace="fragments/footer :: footer" />
     </div>

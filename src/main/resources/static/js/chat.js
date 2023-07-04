@@ -2,7 +2,7 @@ var socket = new WebSocket('ws://localhost:8080/chatroom');
 
 socket.onopen = function() {
 
-      var username = document.getElementById('username').value;
+      var username = document.getElementById('loginUsername').value;
       var message = {
         type: 'username',
         value: username
