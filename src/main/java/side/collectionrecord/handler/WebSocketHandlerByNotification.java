@@ -51,8 +51,9 @@ public class WebSocketHandlerByNotification extends TextWebSocketHandler {
 
             List<NotificationResponseDto> notReadNotification = notificationService.findNotReadNotification(user.getId());
 
+            //본인한테
             if (notReadNotification.size() > 0){
-                sendToClient(session, notReadNotification);
+                sendToClient(session);
             }
 
             return;
@@ -62,6 +63,8 @@ public class WebSocketHandlerByNotification extends TextWebSocketHandler {
         NotificationAddRequestDto notificationAddRequestDto = objectMapper.readValue(payload, NotificationAddRequestDto.class);
 
         Long id = notificationService.save(notificationAddRequestDto);
+
+        //상대한테 send 해야 함
     }
 
     // 클라이언트 연결 성립 시 처리
@@ -87,15 +90,9 @@ public class WebSocketHandlerByNotification extends TextWebSocketHandler {
         if (usernameToRemove != null) {
             webSocketSessions.remove(usernameToRemove);
         }
-
-        //webSocketSessions.remove(session);
     }
 
-    private void sendToClient(WebSocketSession session, List<NotificationResponseDto> notificationResponseDto) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        String json = objectMapper.writeValueAsString(notificationResponseDto);
-
-        session.sendMessage(new TextMessage(json));
+    private void sendToClient(WebSocketSession session) throws IOException {
+        session.sendMessage(new TextMessage("send"));
     }
 }

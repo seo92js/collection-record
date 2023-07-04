@@ -11,12 +11,12 @@ socket.onopen = function() {
       socket.send(JSON.stringify(message));
 };
 
-//댓글달기 버튼에 send 기능
-function notificationSend(senderName, receiverName){
+function notificationSend(senderName, receiverName, postsId){
     const notificationAddRequestDto = {
         senderName: senderName,
         receiverName: receiverName,
-        text: senderName + '님이 댓글을 달았습니다.'
+        text: senderName + '님이 댓글을 달았습니다.',
+        url: '/posts/' + postsId
     }
 
     var json = JSON.stringify(notificationAddRequestDto);

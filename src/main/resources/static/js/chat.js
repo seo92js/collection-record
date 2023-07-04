@@ -41,7 +41,7 @@ function send(senderId, receiverId, chatRoomId){
         senderId: senderId,
         receiverId: receiverId,
         chatRoomId: chatRoomId,
-        message: message
+        message: message,
     }
 
     var json = JSON.stringify(chatMessageAddRequestDto);

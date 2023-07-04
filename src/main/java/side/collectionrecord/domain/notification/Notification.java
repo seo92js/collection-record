@@ -29,14 +29,21 @@ public class Notification extends BaseTimeEntity {
 
     private boolean read;
 
+    private String url;
+
     @Builder
-    public Notification(User sender, User receiver, String message, boolean read){
+    public Notification(User sender, User receiver, String message, boolean read, String url){
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
         this.read = read;
+        this.url = url;
 
         sender.addSendNotify(this);
         receiver.addReceiveNotify(this);
+    }
+
+    public void setRead(){
+        this.read = true;
     }
 }

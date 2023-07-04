@@ -17,13 +17,14 @@ socket.onmessage = function(event) {
     notificationButton.classList.remove('btn-primary');
     notificationButton.classList.add('btn-warning');
 
-    // 실시간 알림 받거나,
+/*    // 실시간 알림 받거나,
 
-    //홈 화면에서 안읽은 메세지를 체크했을 때
+    // 홈 화면에서 안읽은 알림을 체크했을 때
 
+    // 필요 없을 듯?
     var jsonArray = JSON.parse(event.data);
 
     for (var i = 0; i < jsonArray.length; i++){
         var notification = jsonArray[i];
-    }
+    }*/
 }

@@ -21,6 +21,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom{
     public List<Notification> findNotReadNotification(Long userId) {
         return queryFactory.selectFrom(notification)
                 .where(notification.receiver.id.eq(userId).and(notification.read.eq(false)))
+                .orderBy(notification.createdDate.desc())
                 .fetch();
     }
 }

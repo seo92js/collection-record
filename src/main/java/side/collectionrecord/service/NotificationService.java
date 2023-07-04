@@ -1,7 +1,6 @@
 package side.collectionrecord.service;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.notification.Notification;
@@ -31,9 +30,19 @@ public class NotificationService {
                 .receiver(receiver)
                 .message(notificationAddRequestDto.getText())
                 .read(false)
+                .url(notificationAddRequestDto.getUrl())
                 .build();
 
         return notificationRepository.save(notification).getId();
+    }
+
+    @Transactional
+    public Long read(Long id){
+        Notification notification = notificationRepository.findById(id).get();
+
+        notification.setRead();
+
+        return id;
     }
 
     @Transactional

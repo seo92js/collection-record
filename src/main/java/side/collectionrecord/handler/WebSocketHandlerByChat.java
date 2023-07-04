@@ -83,8 +83,6 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
         if (usernameToRemove != null) {
             webSocketSessions.remove(usernameToRemove);
         }
-
-        //webSocketSessions.remove(session);
     }
 
     private void sendToClient(WebSocketSession session, ChatMessageResponseDto chatMessageResponseDto) throws IOException {

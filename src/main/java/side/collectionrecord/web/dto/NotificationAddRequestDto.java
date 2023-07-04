@@ -11,10 +11,13 @@ public class NotificationAddRequestDto {
     private String receiverName;
     private String text;
 
+    private String url;
+
     @Builder
-    public NotificationAddRequestDto(String senderName, String receiverName, String text){
+    public NotificationAddRequestDto(String senderName, String receiverName, String text, String url){
         this.senderName = senderName;
         this.receiverName = receiverName;
         this.text = text;
+        this.url = url;
     }
 }

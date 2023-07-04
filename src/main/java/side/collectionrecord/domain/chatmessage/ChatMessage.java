@@ -31,12 +31,15 @@ public class ChatMessage extends BaseTimeEntity {
 
     private String message;
 
+    private boolean read;
+
     @Builder
-    public ChatMessage(User sender, User receiver, ChatRoom chatRoom, String message){
+    public ChatMessage(User sender, User receiver, ChatRoom chatRoom, String message, boolean read){
         this.sender = sender;
         this.receiver = receiver;
         this.chatRoom = chatRoom;
         this.message = message;
+        this.read = read;
 
         sender.addSendMessage(this);
         receiver.addReceiveMessage(this);

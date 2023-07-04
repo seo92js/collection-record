@@ -32,7 +32,7 @@
                     <input type="hidden" th:field="*{postsId}">
 
                     <input type="text" th:field="*{text}" placeholder="내용" th:required="true">
-                    <button type="submit" class="btn btn-primary" id="comment-add-btn" th:onclick="commentAdd(); notificationSend([[${loginUsername}]],[[${username}]])">댓글 달기</button>
+                    <button type="submit" class="btn btn-primary" id="comment-add-btn" th:onclick="commentAdd(); notificationSend([[${loginUsername}]],[[${username}]],[[*{postsId}]])">댓글 달기</button>
                 </div>
             </form>
         </div>
