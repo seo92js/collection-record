@@ -8,7 +8,6 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import side.collectionrecord.domain.notification.Notification;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.NotificationService;
@@ -32,8 +31,39 @@ public class WebSocketHandlerByNotification extends TextWebSocketHandler {
     // 클라이언트로부터 수신된 메세지 처리
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+
         String payload = message.getPayload();
 
+        if (addSession(payload, session))
+            return;
+
+        // 일반 알림
+        NotificationAddRequestDto notificationAddRequestDto = objectMapper.readValue(payload, NotificationAddRequestDto.class);
+        Long id = notificationService.save(notificationAddRequestDto);
+
+        // 상대한테 send
+        WebSocketSession sessionByUsername = findSessionByUsername(notificationAddRequestDto.getReceiverName());
+        sendToClient(sessionByUsername);
+    }
+
+    // 클라이언트 연결 성립 시 처리
+    @Override
+    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        //username 저장을 위해 handleTextMessage 에서 처리
+    }
+
+    // 클라이언트 연결 종료 시 처리
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        // 연결이 종료된 세션에 매핑된 유저네임을 찾아서 제거
+        String usernameToRemove = findSessionKeyByValue(session);
+
+        if (usernameToRemove != null)
+            webSocketSessions.remove(usernameToRemove);
+    }
+
+    private boolean addSession(String payload, WebSocketSession session) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         JsonNode messageNode = objectMapper.readTree(payload);
@@ -43,42 +73,29 @@ public class WebSocketHandlerByNotification extends TextWebSocketHandler {
             String username = messageNode.get("value").asText();
             session.getAttributes().put("username", username);
 
-            if (!webSocketSessions.containsKey(username)){
+            if (!webSocketSessions.containsKey(username))
                 webSocketSessions.put(username, session);
-            }
 
             User user = userRepository.findByUsername(username).get();
 
             List<NotificationResponseDto> notReadNotification = notificationService.findNotReadNotification(user.getId());
 
-            //본인한테
-            if (notReadNotification.size() > 0){
+            // 안읽은 알림이 있으면 본인에게 send
+            if (notReadNotification.size() > 0)
                 sendToClient(session);
-            }
 
-            return;
+            return true;
         }
 
-        // 일반 알림
-        NotificationAddRequestDto notificationAddRequestDto = objectMapper.readValue(payload, NotificationAddRequestDto.class);
-
-        Long id = notificationService.save(notificationAddRequestDto);
-
-        //상대한테 send 해야 함
+        return false;
     }
 
-    // 클라이언트 연결 성립 시 처리
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        //username 저장을 위해 handleTextMessage 에서 처리
-        //webSocketSessions.add(session);
-        return;
-    }
+    private WebSocketSession findSessionByUsername(String username){
+        WebSocketSession webSocketSession = webSocketSessions.get(username);
 
-    // 클라이언트 연결 종료 시 처리
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        // 연결이 종료된 세션에 매핑된 유저네임을 찾아서 제거
+        return webSocketSession;
+    }
+    private String findSessionKeyByValue(WebSocketSession session){
         String usernameToRemove = null;
 
         for (Map.Entry<String, WebSocketSession> entry : webSocketSessions.entrySet()) {
@@ -87,12 +104,13 @@ public class WebSocketHandlerByNotification extends TextWebSocketHandler {
                 break;
             }
         }
-        if (usernameToRemove != null) {
-            webSocketSessions.remove(usernameToRemove);
-        }
+
+        return usernameToRemove;
     }
 
     private void sendToClient(WebSocketSession session) throws IOException {
-        session.sendMessage(new TextMessage("send"));
+        if (session != null)
+            session.sendMessage(new TextMessage("send"));
     }
+
 }

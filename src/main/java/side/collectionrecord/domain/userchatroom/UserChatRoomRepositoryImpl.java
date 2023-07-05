@@ -2,11 +2,16 @@ package side.collectionrecord.domain.userchatroom;
 
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import side.collectionrecord.domain.chatmessage.QChatMessage;
+import side.collectionrecord.domain.chatroom.QChatRoom;
+import side.collectionrecord.domain.user.QUser;
 import side.collectionrecord.domain.user.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static side.collectionrecord.domain.chatmessage.QChatMessage.chatMessage;
+import static side.collectionrecord.domain.chatroom.QChatRoom.chatRoom;
 import static side.collectionrecord.domain.user.QUser.user;
 import static side.collectionrecord.domain.userchatroom.QUserChatRoom.userChatRoom;
 

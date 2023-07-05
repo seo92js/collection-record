@@ -1,5 +1,6 @@
 package side.collectionrecord.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,43 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
     // 클라이언트로부터 수신된 메세지 처리
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+
         String payload = message.getPayload();
 
+        if (addSession(payload, session))
+            return;
+
+        // 일반 메세지
+        ChatMessageAddRequestDto chatMessageAddRequestDto = objectMapper.readValue(payload, ChatMessageAddRequestDto.class);
+        Long id = chatMessageService.addMessage(chatMessageAddRequestDto);
+        ChatMessageResponseDto chatMessageResponseDto = chatMessageService.findById(id);
+
+        // 자신에게 Send
+        sendToClient(session, chatMessageResponseDto);
+
+        // 상대에게 Send
+        WebSocketSession sessionByUsername = findSessionByUsername(chatMessageResponseDto.getReceiverName());
+        sendToClient(sessionByUsername, chatMessageResponseDto);
+    }
+
+    // 클라이언트 연결 성립 시 처리
+    @Override
+    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        //username 저장을 위해 handleTextMessage 에서 처리
+    }
+
+    // 클라이언트 연결 종료 시 처리
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        // 연결이 종료된 세션에 매핑된 유저네임을 찾아서 제거
+        String usernameToRemove = findSessionKeyByValue(session);
+
+        if (usernameToRemove != null)
+            webSocketSessions.remove(usernameToRemove);
+    }
+
+    private boolean addSession(String payload, WebSocketSession session) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         JsonNode messageNode = objectMapper.readTree(payload);
@@ -44,34 +80,22 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
             String username = messageNode.get("value").asText();
             session.getAttributes().put("username", username);
 
-            if (!webSocketSessions.containsKey(username)){
+            if (!webSocketSessions.containsKey(username))
                 webSocketSessions.put(username, session);
-            }
 
-            return;
+            return true;
         }
 
-        // 일반 메세지
-        ChatMessageAddRequestDto chatMessageAddRequestDto = objectMapper.readValue(payload, ChatMessageAddRequestDto.class);
-
-        Long id = chatMessageService.addMessage(chatMessageAddRequestDto);
-
-        ChatMessageResponseDto chatMessageResponseDto = chatMessageService.findById(id);
-
-        sendToClient(session, chatMessageResponseDto);
+        return false;
     }
 
-    // 클라이언트 연결 성립 시 처리
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        //username 저장을 위해 handleTextMessage 에서 처리
-        //webSocketSessions.add(session);
+    private WebSocketSession findSessionByUsername(String username){
+        WebSocketSession webSocketSession = webSocketSessions.get(username);
+
+        return webSocketSession;
     }
 
-    // 클라이언트 연결 종료 시 처리
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        // 연결이 종료된 세션에 매핑된 유저네임을 찾아서 제거
+    private String findSessionKeyByValue(WebSocketSession session){
         String usernameToRemove = null;
 
         for (Map.Entry<String, WebSocketSession> entry : webSocketSessions.entrySet()) {
@@ -80,9 +104,8 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
                 break;
             }
         }
-        if (usernameToRemove != null) {
-            webSocketSessions.remove(usernameToRemove);
-        }
+
+        return usernameToRemove;
     }
 
     private void sendToClient(WebSocketSession session, ChatMessageResponseDto chatMessageResponseDto) throws IOException {
@@ -90,15 +113,9 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
 
         String json = objectMapper.writeValueAsString(chatMessageResponseDto);
 
-        WebSocketSession webSocketSession = webSocketSessions.get(chatMessageResponseDto.getReceiverName());
-
-        // receiver 가 연결 중일 때
-        if (webSocketSession != null){
-            webSocketSession.sendMessage(new TextMessage(json));
-        }
-
-        // sender 채팅방에도 메세지를 뿌리기 위해
-        session.sendMessage(new TextMessage(json));
+        // 연결 중일 때
+        if (session != null)
+            session.sendMessage(new TextMessage(json));
     }
 
 }
