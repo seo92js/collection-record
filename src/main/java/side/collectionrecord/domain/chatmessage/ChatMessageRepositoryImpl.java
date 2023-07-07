@@ -25,4 +25,12 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepositoryCustom{
                 .orderBy(chatMessage.createdDate.asc())
                 .fetch();
     }
+
+    @Override
+    public List<ChatMessage> findNotReadMessage(Long chatRoomId, Long userId){
+
+        return queryFactory.selectFrom(chatMessage)
+                .where(chatMessage.receiver.id.eq(userId).and(chatMessage.read.eq(false)))
+                .fetch();
+    }
 }

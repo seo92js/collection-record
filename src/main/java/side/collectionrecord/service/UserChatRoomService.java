@@ -1,10 +1,13 @@
 package side.collectionrecord.service;
 
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.chatroom.ChatRoomRepository;
+import side.collectionrecord.domain.chatroom.QChatRoom;
+import side.collectionrecord.domain.user.QUser;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
@@ -63,8 +66,32 @@ public class UserChatRoomService {
     @Transactional
     public List<UserChatRoomListResponseDto> findUserChatRoomList(Long userId){
 
-        return userChatRoomRepository.findUserChatRoomList(userId).stream()
-                .map(UserChatRoomListResponseDto::new)
-                .collect(Collectors.toList());
+        List<Tuple> userChatRoomList = userChatRoomRepository.findUserChatRoomList(userId);
+
+        List<UserChatRoomListResponseDto> responseDtoList = new ArrayList<>();
+
+        for (Tuple tuple : userChatRoomList){
+            User user = tuple.get(QUser.user);
+            Long chatRoomId = tuple.get(QChatRoom.chatRoom.id);
+            Boolean read = chatRoomRepository.readAllMessage(chatRoomId, userId);
+
+            responseDtoList.add(new UserChatRoomListResponseDto(user, read));
+        }
+
+        return responseDtoList;
+    }
+
+    @Transactional
+    public boolean readAllMessage(Long userId){
+        User user = userRepository.findById(userId).get();
+
+        for ( UserChatRoom userChatRoom : user.getUserChatRooms()){
+            Boolean read = chatRoomRepository.readAllMessage(userChatRoom.getChatRoom().getId(), userId);
+
+            if (read == false)
+                return false;
+        }
+
+        return true;
     }
 }

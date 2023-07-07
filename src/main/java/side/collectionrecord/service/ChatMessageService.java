@@ -60,4 +60,12 @@ public class ChatMessageService {
                 .collect(Collectors.toList());
 
     }
+
+    @Transactional
+    public void updateRead(Long chatRoomId, Long userId){
+        List<ChatMessage> notReadMessage = chatMessageRepository.findNotReadMessage(chatRoomId, userId);
+
+        for (ChatMessage chatMessage : notReadMessage)
+            chatMessage.updateRead();
+    }
 }

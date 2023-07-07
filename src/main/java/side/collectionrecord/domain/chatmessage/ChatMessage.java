@@ -46,4 +46,8 @@ public class ChatMessage extends BaseTimeEntity {
 
         chatRoom.addChatMessage(this);
     }
+
+    public void updateRead(){
+        this.read = true;
+    }
 }

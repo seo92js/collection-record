@@ -1,6 +1,6 @@
-var socket = new WebSocket('ws://localhost:8080/notification');
+var notificationSocket = new WebSocket('ws://localhost:8080/notification');
 
-socket.onopen = function() {
+notificationSocket.onopen = function() {
 
       var username = document.getElementById('loginUsername').value;
       var message = {
@@ -8,23 +8,12 @@ socket.onopen = function() {
         value: username
       };
 
-      socket.send(JSON.stringify(message));
+      notificationSocket.send(JSON.stringify(message));
 };
 
-socket.onmessage = function(event) {
+notificationSocket.onmessage = function(event) {
     var notificationButton = document.getElementById('notification-btn');
 
     notificationButton.classList.remove('btn-primary');
     notificationButton.classList.add('btn-warning');
-
-/*    // 실시간 알림 받거나,
-
-    // 홈 화면에서 안읽은 알림을 체크했을 때
-
-    // 필요 없을 듯?
-    var jsonArray = JSON.parse(event.data);
-
-    for (var i = 0; i < jsonArray.length; i++){
-        var notification = jsonArray[i];
-    }*/
 }

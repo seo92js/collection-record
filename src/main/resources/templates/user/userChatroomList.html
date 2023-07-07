@@ -10,7 +10,10 @@
 
     <!-- 채팅방 리스트 -->
     <div th:each="chatroom : ${chatrooms}">
-        <a th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${chatroom.userId})}" th:text="${chatroom.username}" target="_blank"></a>
+        <!-- 안읽은 메세지가 있으면 -->
+        <a th:if="${chatroom.read == false}" style="color:red;" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${chatroom.userId})}" th:text="${chatroom.username}" target="_blank"></a>
+        <!-- 안읽은 메세지가 없으면 -->
+        <a th:if="${chatroom.read == true}" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${chatroom.userId})}" th:text="${chatroom.username}" target="_blank"></a>
     </div>
 
     <div th:replace="fragments/footer :: footer" />

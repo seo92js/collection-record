@@ -11,7 +11,7 @@
     <H1>COLLECTION</H1>
 
     <div th:if="${login}">
-      <a class="btn btn-info" th:href="@{/user/{loginUsername}/chatroomList(loginUsername=${loginUsername})}">채팅방</a>
+      <a th:id="chatroom-list" class="btn btn-info" th:href="@{/user/{loginUsername}/chatroomList(loginUsername=${loginUsername})}">채팅방</a>
       <a th:href="@{/notification/{id}(id=${loginUserId})}" class="btn btn-primary" id="notification-btn">알림</a>
 
       <input type="hidden" th:value="${loginUsername}" th:id="loginUsername">
@@ -31,6 +31,7 @@
         </tbody>
       </table>
 
+      <script src="/js/chatHome.js"></script>
       <script src="/js/notificationHome.js"></script>
       <script src="/js/followPostsList.js"></script>
 

@@ -1,5 +1,6 @@
 package side.collectionrecord.domain.userchatroom;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import side.collectionrecord.domain.chatmessage.QChatMessage;
@@ -54,9 +55,9 @@ public class UserChatRoomRepositoryImpl implements UserChatRoomRepositoryCustom{
 
 
     @Override
-    public List<User> findUserChatRoomList(Long userId) {
+    public List<Tuple> findUserChatRoomList(Long userId) {
 
-        List<User> users = queryFactory.select(user)
+        List<Tuple> users = queryFactory.select(user, userChatRoom.chatRoom.id)
                 .from(userChatRoom)
                 .where(userChatRoom.chatRoom.id.in(
                         JPAExpressions.select(userChatRoom.chatRoom.id)

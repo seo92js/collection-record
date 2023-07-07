@@ -40,6 +40,9 @@ public class ChatRoomController {
 
         model.addAttribute("chatRoomMessages", chatRoomMessage);
 
+        // 안 읽은 메세지 읽음으로 처리
+        chatMessageService.updateRead(userChatRoom.getChatRoom().getId(), user1Id);
+
         return "/chatroom/chatroom";
     }
 }

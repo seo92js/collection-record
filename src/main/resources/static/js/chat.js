@@ -1,16 +1,16 @@
-var socket = new WebSocket('ws://localhost:8080/chatroom');
+var chatSocket = new WebSocket('ws://localhost:8080/chatroom');
 
-socket.onopen = function() {
+chatSocket.onopen = function() {
 
       var username = document.getElementById('loginUsername').value;
       var message = {
         type: 'username',
         value: username
       };
-      socket.send(JSON.stringify(message));
+      chatSocket.send(JSON.stringify(message));
 };
 
-socket.onmessage = function(event) {
+chatSocket.onmessage = function(event) {
     var json = event.data;
     var chatMessageResponseDto = JSON.parse(json);
 
@@ -32,6 +32,19 @@ socket.onmessage = function(event) {
     div.appendChild(message);
 
     messageContainer.appendChild(div);
+
+    $.ajax({
+        type: 'PUT',
+        url: '/api/v1/chatmessage-update/' + chatMessageResponseDto.chatRoomId,
+        data: formData,
+        processData: false,
+        contentType: false
+    }).done(function(){
+        alert('수정완료.');
+        location.reload();
+    }).fail(function (error){
+        alert(JSON.stringify(error));
+    });
 }
 
 function send(senderId, receiverId, chatRoomId){
@@ -42,9 +55,10 @@ function send(senderId, receiverId, chatRoomId){
         receiverId: receiverId,
         chatRoomId: chatRoomId,
         message: message,
+        read: false
     }
 
     var json = JSON.stringify(chatMessageAddRequestDto);
 
-    socket.send(json);
+    chatSocket.send(json);
 }
