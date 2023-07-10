@@ -1,6 +1,9 @@
 package side.collectionrecord.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +38,15 @@ public class UserController {
     @GetMapping("/user/join")
     public String joinUserForm(Model model){
         model.addAttribute("userJoinRequestDto", new UserJoinRequestDto());
-        return "user/userJoinForm";
+        //return "user/userJoinForm";
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication instanceof AnonymousAuthenticationToken)
+            return "user/userJoinForm";
+
+        return "redirect:/";
+
     }
 
     @GetMapping("/user/{username}/home")

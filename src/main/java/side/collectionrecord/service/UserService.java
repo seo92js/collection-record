@@ -3,6 +3,7 @@ package side.collectionrecord.service;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
@@ -26,6 +27,8 @@ public class UserService {
 
     private final ImageRepository imageRepository;
 
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Transactional
     public Long join(UserJoinRequestDto userJoinRequestDto) throws IOException {
 
@@ -42,7 +45,7 @@ public class UserService {
 
         return userRepository.save(User.builder()
                 .username(userJoinRequestDto.getUsername())
-                .password(encryptPassword(userJoinRequestDto.getPassword()))
+                .password(passwordEncoder.encode(userJoinRequestDto.getPassword()))
                 .profileImage(image)
                 .build()).getId();
     }
@@ -53,7 +56,7 @@ public class UserService {
 
         Image prevImage = findUser.getProfileImage();
 
-        findUser.update(userUpdateRequestDto.getUsername(), userUpdateRequestDto.getPassword(), userUpdateRequestDto.getProfileImage());
+        findUser.update(userUpdateRequestDto.getUsername(), passwordEncoder.encode(userUpdateRequestDto.getPassword()), userUpdateRequestDto.getProfileImage());
 
         if (prevImage.getId() != userUpdateRequestDto.getProfileImage().getId()){
             imageRepository.delete(prevImage);
@@ -84,12 +87,5 @@ public class UserService {
         if(!findUser.isEmpty()){
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
-    }
-
-    private String encryptPassword(String password) {
-        // 패스워드를 암호화하는 로직을 구현합니다.
-        // 예: BCryptPasswordEncoder를 사용하여 암호화
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.encode(password);
     }
 }
