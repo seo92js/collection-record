@@ -6,8 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.CategoryService;
@@ -19,6 +19,7 @@ import side.collectionrecord.web.dto.UserChatRoomListResponseDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -36,17 +37,17 @@ public class UserController {
     private final UserChatRoomService userChatRoomService;
 
     @GetMapping("/user/join")
-    public String joinUserForm(Model model){
+    public String joinUserForm(Model model) {
         model.addAttribute("userJoinRequestDto", new UserJoinRequestDto());
-        //return "user/userJoinForm";
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return "user/userJoinForm";
+    }
 
-        if (authentication instanceof AnonymousAuthenticationToken)
-            return "user/userJoinForm";
+    @PostMapping("/user/join")
+    public String joinUserForm(@ModelAttribute UserJoinRequestDto userJoinRequestDto) throws IOException {
+        userService.join(userJoinRequestDto);
 
         return "redirect:/";
-
     }
 
     @GetMapping("/user/{username}/home")

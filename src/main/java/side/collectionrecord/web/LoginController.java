@@ -7,11 +7,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import side.collectionrecord.web.dto.LoginRequestDto;
 
 @Controller
 public class LoginController {
-    @GetMapping("/login")
+/*    @GetMapping("/login")
     public String loginUserForm(Model model){
         model.addAttribute("loginRequestDto", new LoginRequestDto());
 
@@ -21,5 +22,11 @@ public class LoginController {
             return "loginForm";
 
         return "redirect:/";
+    }*/
+
+    @GetMapping("/login")
+    public String loginUserForm(@ModelAttribute LoginRequestDto loginRequestDto){
+
+        return "loginForm";
     }
 }

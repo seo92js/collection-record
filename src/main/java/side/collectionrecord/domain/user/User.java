@@ -59,6 +59,10 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "receiver")
     private List<Notification> receiveNotify = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole userRole;
+
     public void addCategory(Category category){
         this.categories.add(category);
     }
@@ -107,10 +111,11 @@ public class User extends BaseTimeEntity {
     }
 
     @Builder
-    public User(String username, String password, Image profileImage){
+    public User(String username, String password, Image profileImage, UserRole userRole){
         this.username = username;
         this.password = password;
         this.profileImage = profileImage;
+        this.userRole = userRole;
     }
 
     public void update(String username, String password, Image profileImage){

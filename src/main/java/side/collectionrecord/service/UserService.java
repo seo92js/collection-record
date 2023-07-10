@@ -10,6 +10,7 @@ import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.web.dto.*;
 
 import java.io.File;
@@ -27,8 +28,6 @@ public class UserService {
 
     private final ImageRepository imageRepository;
 
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     @Transactional
     public Long join(UserJoinRequestDto userJoinRequestDto) throws IOException {
 
@@ -45,8 +44,9 @@ public class UserService {
 
         return userRepository.save(User.builder()
                 .username(userJoinRequestDto.getUsername())
-                .password(passwordEncoder.encode(userJoinRequestDto.getPassword()))
+                .password(userJoinRequestDto.getPassword())
                 .profileImage(image)
+                .userRole(UserRole.USER)
                 .build()).getId();
     }
 
@@ -56,7 +56,7 @@ public class UserService {
 
         Image prevImage = findUser.getProfileImage();
 
-        findUser.update(userUpdateRequestDto.getUsername(), passwordEncoder.encode(userUpdateRequestDto.getPassword()), userUpdateRequestDto.getProfileImage());
+        findUser.update(userUpdateRequestDto.getUsername(), userUpdateRequestDto.getPassword(), userUpdateRequestDto.getProfileImage());
 
         if (prevImage.getId() != userUpdateRequestDto.getProfileImage().getId()){
             imageRepository.delete(prevImage);
