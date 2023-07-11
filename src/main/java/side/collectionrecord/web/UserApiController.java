@@ -26,11 +26,11 @@ public class UserApiController {
 
     private final ImageService imageService;
 
-    @PostMapping("/api/v1/user-join")
+/*    @PostMapping("/api/v1/user-join")
     public Long save (@RequestBody UserJoinRequestDto userJoinRequestDto) throws IOException {
         Long id = userService.join(userJoinRequestDto);
         return id;
-    }
+    }*/
 
     @PutMapping("/api/v1/user-update/{id}")
     public Long update(Model model, @PathVariable Long id, @RequestPart(value = "userUpdateRequestDto") UserUpdateRequestDto userUpdateRequestDto, @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {

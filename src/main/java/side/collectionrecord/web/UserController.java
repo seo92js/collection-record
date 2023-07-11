@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -36,6 +37,8 @@ public class UserController {
 
     private final UserChatRoomService userChatRoomService;
 
+    private final PasswordEncoder passwordEncoder;
+
     @GetMapping("/user/join")
     public String joinUserForm(Model model) {
         model.addAttribute("userJoinRequestDto", new UserJoinRequestDto());
@@ -45,7 +48,7 @@ public class UserController {
 
     @PostMapping("/user/join")
     public String joinUserForm(@ModelAttribute UserJoinRequestDto userJoinRequestDto) throws IOException {
-        userService.join(userJoinRequestDto);
+        userService.join(userJoinRequestDto, passwordEncoder);
 
         return "redirect:/";
     }

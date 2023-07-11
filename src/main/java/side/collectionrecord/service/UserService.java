@@ -2,6 +2,9 @@ package side.collectionrecord.service;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,14 +25,14 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
     private final ImageRepository imageRepository;
 
     @Transactional
-    public Long join(UserJoinRequestDto userJoinRequestDto) throws IOException {
+    public Long join(UserJoinRequestDto userJoinRequestDto, PasswordEncoder passwordEncoder) throws IOException {
 
         validateDuplicateUser(userJoinRequestDto.getUsername());
 
@@ -44,7 +47,7 @@ public class UserService {
 
         return userRepository.save(User.builder()
                 .username(userJoinRequestDto.getUsername())
-                .password(userJoinRequestDto.getPassword())
+                .password(passwordEncoder.encode(userJoinRequestDto.getPassword()))
                 .profileImage(image)
                 .userRole(UserRole.USER)
                 .build()).getId();
@@ -87,5 +90,17 @@ public class UserService {
         if(!findUser.isEmpty()){
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username).orElse(null);
+
+        //UserDetails 의 User 객체
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .roles(user.getUserRole().toString())
+                .build();
     }
 }

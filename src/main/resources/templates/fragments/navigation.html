@@ -1,20 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <nav th:fragment="navigation">
 
-  <div th:if="${login}">
-    <a class="btn btn-info" href="/">홈</a>
+
+<!--  <div th:if="${login}">
+    <a class="btn btn-info" href="/" >홈</a>
     <a class="btn btn-info" href="/search">검색</a>
 
     <span th:text="|${loginUsername} 님|"></span>
     <a class="btn btn-info" th:href="@{/user/{loginUsername}/home(loginUsername=${loginUsername})}">마이홈</a>
     <button class="btn btn-info" id="logout-btn">로그아웃</button>
 
-    <!-- jquery -->
+    &lt;!&ndash; jquery &ndash;&gt;
     <script src="/js/logout.js"></script>
   </div>
 
   <div th:unless="${login}">
+    <a class="btn btn-info" href="/user/join">회원 가입</a>
+    <a class="btn btn-info" href="/login">로그인</a>
+  </div>-->
+
+  <div sec:authorize="isAuthenticated()">
+    <a class="btn btn-info" href="/" >홈</a>
+    <a class="btn btn-info" href="/search">검색</a>
+
+    <span th:text="|${loginUsername} 님|"></span>
+    <a class="btn btn-info" th:href="@{/user/{loginUsername}/home(loginUsername=${loginUsername})}">마이홈</a>
+    <a class="btn btn-info" href="/logout" id="logout-btn">로그아웃</a>
+  </div>
+
+  <div sec:authorize="isAnonymous()">
     <a class="btn btn-info" href="/user/join">회원 가입</a>
     <a class="btn btn-info" href="/login">로그인</a>
   </div>
