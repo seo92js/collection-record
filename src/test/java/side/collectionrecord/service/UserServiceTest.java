@@ -4,11 +4,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
 import side.collectionrecord.web.dto.UserSearchResponseDto;
@@ -31,6 +33,9 @@ class UserServiceTest {
     @Autowired
     ImageRepository imageRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @AfterEach
     public void cleanup(){
         userRepository.deleteAll();
@@ -45,6 +50,8 @@ class UserServiceTest {
                 .password("test")
                 .build();
 
+        userJoinRequestDto.encodePassword(passwordEncoder);
+
         Long id = userService.join(userJoinRequestDto);
 
         //when
@@ -52,7 +59,8 @@ class UserServiceTest {
 
         //then
         assertThat(findUser.getUsername()).isEqualTo(userJoinRequestDto.getUsername());
-        assertThat(findUser.getPassword()).isEqualTo(userJoinRequestDto.getPassword());
+        //assertThat(findUser.getPassword()).isEqualTo(passwordEncoder.encode(userJoinRequestDto.getPassword()));
+        assertThat(passwordEncoder.matches(findUser.getPassword(), userJoinRequestDto.getPassword()));
     }
 
     @Test
@@ -62,6 +70,7 @@ class UserServiceTest {
                 .username("test")
                 .password("test")
                 .profileImage(null)
+                .userRole(UserRole.USER)
                 .build();
 
         userRepository.save(user);
@@ -81,6 +90,8 @@ class UserServiceTest {
                 .profileImage(image)
                 .build();
 
+        userUpdateRequestDto.encodePassword(passwordEncoder);
+
         userService.update(user.getId(), userUpdateRequestDto);
 
         //when
@@ -88,6 +99,7 @@ class UserServiceTest {
 
         //then
         assertThat(findUser.getUsername()).isEqualTo(expectedName);
+        assertThat(passwordEncoder.matches(findUser.getPassword(), userUpdateRequestDto.getPassword()));
         assertThat(findUser.getProfileImage().getFilename()).isEqualTo("expectedImage");
     }
 
@@ -98,6 +110,8 @@ class UserServiceTest {
                 .username("test")
                 .password("test")
                 .profileImage(null)
+                .userRole(UserRole.USER)
+
                 .build();
 
         userRepository.save(user);
@@ -126,6 +140,7 @@ class UserServiceTest {
                 .username("김김김")
                 .password("1")
                 .profileImage(image)
+                .userRole(UserRole.USER)
                 .build();
 
         userRepository.save(user1);
@@ -133,6 +148,7 @@ class UserServiceTest {
         User user2 = User.builder()
                 .username("김수미")
                 .password("1")
+                .userRole(UserRole.USER)
                 .profileImage(image)
                 .build();
 
@@ -141,6 +157,7 @@ class UserServiceTest {
         User user3 = User.builder()
                 .username("김구라")
                 .password("1")
+                .userRole(UserRole.USER)
                 .profileImage(image)
                 .build();
 

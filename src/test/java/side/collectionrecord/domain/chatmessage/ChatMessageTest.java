@@ -14,8 +14,14 @@ class ChatMessageTest {
     @Test
     public void 연관관계_세팅(){
         //given
-        User user = User.builder()
-                .username("user")
+        User sender = User.builder()
+                .username("sender")
+                .password("1")
+                .profileImage(null)
+                .build();
+
+        User receiver = User.builder()
+                .username("receiver")
                 .password("1")
                 .profileImage(null)
                 .build();
@@ -24,21 +30,30 @@ class ChatMessageTest {
 
         ChatMessage chatMessage = ChatMessage.builder()
                 .chatRoom(chatRoom)
-                .user(user)
+                .sender(sender)
+                .receiver(receiver)
                 .message("message")
                 .build();
 
         //when
         //then
-        assertThat(chatMessage.getUser()).isEqualTo(user);
-        assertThat(user.getChatMessages()).containsExactly(chatMessage);
+        assertThat(chatMessage.getSender()).isEqualTo(sender);
+        assertThat(chatMessage.getReceiver()).isEqualTo(receiver);
+        assertThat(sender.getSendMessage()).containsExactly(chatMessage);
+        assertThat(receiver.getReceiveMessage()).containsExactly(chatMessage);
     }
 
     @Test
     public void 빌더패턴(){
         //given
-        User user = User.builder()
-                .username("user")
+        User sender = User.builder()
+                .username("sender")
+                .password("1")
+                .profileImage(null)
+                .build();
+
+        User receiver = User.builder()
+                .username("receiver")
                 .password("1")
                 .profileImage(null)
                 .build();
@@ -47,15 +62,15 @@ class ChatMessageTest {
 
         ChatMessage chatMessage = ChatMessage.builder()
                 .chatRoom(chatRoom)
-                .user(user)
+                .sender(sender)
+                .receiver(receiver)
                 .message("message")
                 .build();
 
         //when
         //then
         assertThat(chatMessage.getMessage()).isEqualTo("message");
-        assertThat(chatMessage.getUser()).isEqualTo(user);
+        assertThat(chatMessage.getSender()).isEqualTo(sender);
         assertThat(chatMessage.getChatRoom()).isEqualTo(chatRoom);
-
     }
 }

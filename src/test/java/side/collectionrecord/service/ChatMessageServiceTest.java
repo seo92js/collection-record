@@ -10,6 +10,7 @@ import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.chatroom.ChatRoomRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.web.dto.ChatMessageAddRequestDto;
 import side.collectionrecord.web.dto.ChatMessageResponseDto;
 
@@ -34,20 +35,30 @@ class ChatMessageServiceTest {
 
     @Test
     public void 아이디로_찾기() {
-        User user = User.builder()
+        User sender = User.builder()
                 .username("user")
+                .userRole(UserRole.USER)
                 .password("1")
                 .profileImage(null)
                 .build();
 
-        userRepository.save(user);
+        User receiver = User.builder()
+                .username("user")
+                .userRole(UserRole.USER)
+                .password("1")
+                .profileImage(null)
+                .build();
+
+        userRepository.save(sender);
+        userRepository.save(receiver);
 
         ChatRoom chatRoom = new ChatRoom();
 
         chatRoomRepository.save(chatRoom);
 
         ChatMessage chatMessage = ChatMessage.builder()
-                .user(user)
+                .sender(sender)
+                .receiver(receiver)
                 .chatRoom(chatRoom)
                 .message("message")
                 .build();
@@ -57,26 +68,37 @@ class ChatMessageServiceTest {
         ChatMessageResponseDto chatMessageResponseDto = chatMessageService.findById(chatMessage.getId());
 
         assertThat(chatMessageResponseDto.getMessage()).isEqualTo("message");
-        assertThat(chatMessageResponseDto.getUsername()).isEqualTo(user.getUsername());
+        assertThat(chatMessageResponseDto.getSenderName()).isEqualTo(sender.getUsername());
+        assertThat(chatMessageResponseDto.getReceiverName()).isEqualTo(receiver.getUsername());
     }
 
     @Test
     public void 메세지_추가() {
         //given
-        User user = User.builder()
-                .username("user")
+        User sender = User.builder()
+                .username("sender")
+                .userRole(UserRole.USER)
                 .password("1")
                 .profileImage(null)
                 .build();
 
-        userRepository.save(user);
+        User receiver = User.builder()
+                .username("receiver")
+                .userRole(UserRole.USER)
+                .password("1")
+                .profileImage(null)
+                .build();
+
+        userRepository.save(sender);
+        userRepository.save(receiver);
 
         ChatRoom chatRoom = new ChatRoom();
 
         chatRoomRepository.save(chatRoom);
 
         ChatMessageAddRequestDto chatMessageAddRequestDto = ChatMessageAddRequestDto.builder()
-                .userId(user.getId())
+                .senderId(sender.getId())
+                .receiverId(receiver.getId())
                 .chatRoomId(chatRoom.getId())
                 .message("message")
                 .build();
@@ -93,20 +115,30 @@ class ChatMessageServiceTest {
     @Test
     public void 채팅방_메세지찾기(){
         //given
-        User user = User.builder()
-                .username("user")
+        User sender = User.builder()
+                .username("sender")
+                .userRole(UserRole.USER)
                 .password("1")
                 .profileImage(null)
                 .build();
 
-        userRepository.save(user);
+        User receiver = User.builder()
+                .username("receiver")
+                .userRole(UserRole.USER)
+                .password("1")
+                .profileImage(null)
+                .build();
+
+        userRepository.save(sender);
+        userRepository.save(receiver);
 
         ChatRoom chatRoom = new ChatRoom();
 
         chatRoomRepository.save(chatRoom);
 
         ChatMessageAddRequestDto chatMessageAddRequestDto = ChatMessageAddRequestDto.builder()
-                .userId(user.getId())
+                .senderId(sender.getId())
+                .receiverId(receiver.getId())
                 .chatRoomId(chatRoom.getId())
                 .message("message")
                 .build();

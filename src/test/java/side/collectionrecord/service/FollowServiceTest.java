@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.web.dto.UserFollowingRequestDto;
 
 import java.util.Optional;
@@ -29,6 +30,7 @@ class FollowServiceTest {
         User user1 = User.builder()
                 .username("user1")
                 .password("1")
+                .userRole(UserRole.USER)
                 .profileImage(null)
                 .build();
 
@@ -37,6 +39,7 @@ class FollowServiceTest {
         User user2 = User.builder()
                 .username("user2")
                 .password("1")
+                .userRole(UserRole.USER)
                 .profileImage(null)
                 .build();
 

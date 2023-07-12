@@ -8,6 +8,7 @@ import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.chatroom.ChatRoomRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ class UserChatRoomRepositoryTest {
     public void save(){
         User user = User.builder()
                 .username("user")
+                .userRole(UserRole.USER)
                 .password("1")
                 .profileImage(null)
                 .build();

@@ -12,6 +12,7 @@ import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 
 import java.util.List;
 
@@ -47,6 +48,7 @@ class FollowRepositoryTest {
                 .username("user1")
                 .password("1")
                 .profileImage(null)
+                .userRole(UserRole.USER)
                 .build();
 
         userRepository.save(user1);
@@ -54,6 +56,7 @@ class FollowRepositoryTest {
         User user2 = User.builder()
                 .username("user2")
                 .password("1")
+                .userRole(UserRole.USER)
                 .profileImage(null)
                 .build();
 
@@ -82,6 +85,7 @@ class FollowRepositoryTest {
         User user1 = User.builder()
                 .username("user1")
                 .password("1")
+                .userRole(UserRole.USER)
                 .profileImage(null)
                 .build();
 
@@ -90,6 +94,7 @@ class FollowRepositoryTest {
         User user2 = User.builder()
                 .username("user2")
                 .password("1")
+                .userRole(UserRole.USER)
                 .profileImage(null)
                 .build();
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
 import side.collectionrecord.domain.userchatroom.UserChatRoomRepository;
 
@@ -32,6 +33,7 @@ class UserChatRoomServiceTest {
         User user1 = User.builder()
                 .username("user1")
                 .password("1")
+                .userRole(UserRole.USER)
                 .profileImage(null)
                 .build();
 
@@ -39,6 +41,7 @@ class UserChatRoomServiceTest {
 
         User user2 = User.builder()
                 .username("user2")
+                .userRole(UserRole.USER)
                 .password("1")
                 .profileImage(null)
                 .build();

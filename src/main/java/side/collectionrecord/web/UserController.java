@@ -1,13 +1,9 @@
 package side.collectionrecord.web;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
@@ -48,7 +44,9 @@ public class UserController {
 
     @PostMapping("/user/join")
     public String joinUserForm(@ModelAttribute UserJoinRequestDto userJoinRequestDto) throws IOException {
-        userService.join(userJoinRequestDto, passwordEncoder);
+        userJoinRequestDto.encodePassword(passwordEncoder);
+
+        userService.join(userJoinRequestDto);
 
         return "redirect:/";
     }

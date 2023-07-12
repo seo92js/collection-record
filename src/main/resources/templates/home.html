@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/header :: header">
   <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
   <!--<title>Collection</title>-->
@@ -10,7 +11,7 @@
   <div class="container">
     <H1>COLLECTION</H1>
 
-    <div th:if="${login}">
+    <div div sec:authorize="isAuthenticated()">
       <a th:id="chatroom-list" class="btn btn-info" th:href="@{/user/{loginUsername}/chatroomList(loginUsername=${loginUsername})}">채팅방</a>
       <a th:href="@{/notification/{id}(id=${loginUserId})}" class="btn btn-primary" id="notification-btn">알림</a>
 

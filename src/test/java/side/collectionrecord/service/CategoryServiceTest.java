@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.web.dto.CategoryAddRequestDto;
 import side.collectionrecord.web.dto.CategoryListResponseDto;
 import side.collectionrecord.web.dto.CategoryUpdateRequestDto;
@@ -33,6 +34,7 @@ class CategoryServiceTest {
         User user = User.builder()
                 .username("test")
                 .password("test")
+                .userRole(UserRole.USER)
                 .profileImage(null)
                 .build();
 
@@ -61,6 +63,7 @@ class CategoryServiceTest {
         User user = User.builder()
                 .username("user1")
                 .password("password1")
+                .userRole(UserRole.USER)
                 .profileImage(null)
                 .build();
 
@@ -100,6 +103,7 @@ class CategoryServiceTest {
         User user = User.builder()
                 .username("user1")
                 .password("password1")
+                .userRole(UserRole.USER)
                 .profileImage(null)
                 .build();
 
@@ -132,6 +136,7 @@ class CategoryServiceTest {
         //given
         User user = User.builder()
                 .username("user1")
+                .userRole(UserRole.USER)
                 .password("password1")
                 .profileImage(null)
                 .build();

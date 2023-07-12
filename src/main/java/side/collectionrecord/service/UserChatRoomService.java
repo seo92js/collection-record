@@ -16,7 +16,6 @@ import side.collectionrecord.web.dto.UserChatRoomListResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service

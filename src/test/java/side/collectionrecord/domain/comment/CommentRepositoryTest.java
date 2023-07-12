@@ -12,6 +12,7 @@ import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 
 import java.util.List;
 
@@ -45,6 +46,7 @@ class CommentRepositoryTest {
         //given
         User user = User.builder()
                 .username("user")
+                .userRole(UserRole.USER)
                 .password("1234")
                 .profileImage(null)
                 .build();
@@ -90,6 +92,7 @@ class CommentRepositoryTest {
         //given
         User user = User.builder()
                 .username("user")
+                .userRole(UserRole.USER)
                 .password("1234")
                 .profileImage(null)
                 .build();

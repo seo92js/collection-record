@@ -8,6 +8,7 @@ import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.chatroom.ChatRoomRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 
 import java.util.List;
 
@@ -27,19 +28,29 @@ class ChatMessageRepositoryTest {
     @Test
     public void 채팅방의_모든메세지_찾기(){
         //given
-        User user = User.builder()
-                .username("username")
+        User sender = User.builder()
+                .userRole(UserRole.USER)
+                .username("sender")
                 .password("1")
                 .profileImage(null)
                 .build();
 
-        userRepository.save(user);
+        User receiver = User.builder()
+                .username("receiver")
+                .userRole(UserRole.USER)
+                .password("1")
+                .profileImage(null)
+                .build();
+
+        userRepository.save(sender);
+        userRepository.save(receiver);
 
         ChatRoom chatRoom = new ChatRoom();
         chatRoomRepository.save(chatRoom);
 
         ChatMessage chatMessage1 = ChatMessage.builder()
-                .user(user)
+                .sender(sender)
+                .receiver(receiver)
                 .chatRoom(chatRoom)
                 .message("1")
                 .build();
@@ -47,7 +58,8 @@ class ChatMessageRepositoryTest {
         chatMessageRepository.save(chatMessage1);
 
         ChatMessage chatMessage2 = ChatMessage.builder()
-                .user(user)
+                .sender(sender)
+                .receiver(receiver)
                 .chatRoom(chatRoom)
                 .message("2")
                 .build();

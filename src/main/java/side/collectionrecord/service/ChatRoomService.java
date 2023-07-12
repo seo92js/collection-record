@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.chatroom.ChatRoomRepository;
-import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

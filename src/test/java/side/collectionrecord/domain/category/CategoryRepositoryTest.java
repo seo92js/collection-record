@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ class CategoryRepositoryTest {
         //given
         User user = User.builder()
                 .username("userA")
+                .userRole(UserRole.USER)
                 .password("1")
                 .profileImage(null)
                 .build();
@@ -56,6 +58,7 @@ class CategoryRepositoryTest {
         //given
         User user = User.builder()
                 .username("userA")
+                .userRole(UserRole.USER)
                 .password("1")
                 .profileImage(null)
                 .build();
@@ -89,6 +92,7 @@ class CategoryRepositoryTest {
         //given
         User user = User.builder()
                 .username("userA")
+                .userRole(UserRole.USER)
                 .password("1")
                 .profileImage(null)
                 .build();

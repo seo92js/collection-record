@@ -13,6 +13,7 @@ import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.web.dto.CommentAddRequestDto;
 import side.collectionrecord.web.dto.CommentListResponseDto;
 
@@ -43,6 +44,7 @@ class CommentServiceTest {
         //given
         User user = User.builder()
                 .username("user")
+                .userRole(UserRole.USER)
                 .password("1234")
                 .profileImage(null)
                 .build();
@@ -87,6 +89,7 @@ class CommentServiceTest {
         //given
         User user = User.builder()
                 .username("user")
+                .userRole(UserRole.USER)
                 .password("1234")
                 .profileImage(null)
                 .build();
@@ -132,6 +135,7 @@ class CommentServiceTest {
         //given
         User user = User.builder()
                 .username("user")
+                .userRole(UserRole.USER)
                 .password("1234")
                 .profileImage(null)
                 .build();

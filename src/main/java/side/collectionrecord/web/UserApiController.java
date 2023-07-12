@@ -1,7 +1,10 @@
 package side.collectionrecord.web;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,10 +14,8 @@ import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.ImageService;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.ImageUploadRequestDto;
-import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserUpdateRequestDto;
 
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @RequiredArgsConstructor
@@ -26,17 +27,11 @@ public class UserApiController {
 
     private final ImageService imageService;
 
-/*    @PostMapping("/api/v1/user-join")
-    public Long save (@RequestBody UserJoinRequestDto userJoinRequestDto) throws IOException {
-        Long id = userService.join(userJoinRequestDto);
-        return id;
-    }*/
+    private final PasswordEncoder passwordEncoder;
 
     @PutMapping("/api/v1/user-update/{id}")
     public Long update(Model model, @PathVariable Long id, @RequestPart(value = "userUpdateRequestDto") UserUpdateRequestDto userUpdateRequestDto, @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {
         Long imageId;
-
-        HttpSession httpSession = (HttpSession) model.getAttribute("session");
 
         Image profileImage = null;
 
@@ -56,10 +51,15 @@ public class UserApiController {
         }
 
         userUpdateRequestDto.setProfileImage(profileImage);
-
-        httpSession.setAttribute("loginUsername", userUpdateRequestDto.getUsername());
+        userUpdateRequestDto.encodePassword(passwordEncoder);
 
         userService.update(id, userUpdateRequestDto);
+
+        // 변경된 사용자 정보를 다시 로드하여 Spring Security에 반영
+        UserDetails updatedUserDetails = userService.loadUserByUsername(userUpdateRequestDto.getUsername());
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                updatedUserDetails, null, updatedUserDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return id;
     }

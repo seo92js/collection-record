@@ -14,6 +14,7 @@ import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.web.dto.PostsAddRequestDto;
 import side.collectionrecord.web.dto.PostsUpdateRequestDto;
 
@@ -44,6 +45,7 @@ class PostsServiceTest {
         //given
         User user = User.builder()
                 .username("user1")
+                .userRole(UserRole.USER)
                 .password("password1")
                 .profileImage(null)
                 .build();
@@ -95,6 +97,7 @@ class PostsServiceTest {
         //given
         User user = User.builder()
                 .username("user1")
+                .userRole(UserRole.USER)
                 .password("password1")
                 .profileImage(null)
                 .build();
@@ -156,6 +159,7 @@ class PostsServiceTest {
         //given
         User user = User.builder()
                 .username("user1")
+                .userRole(UserRole.USER)
                 .password("password1")
                 .profileImage(null)
                 .build();

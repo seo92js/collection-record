@@ -11,7 +11,6 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.ChatMessageAddRequestDto;
 import side.collectionrecord.web.dto.ChatMessageResponseDto;
-import side.collectionrecord.web.dto.CommentListResponseDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

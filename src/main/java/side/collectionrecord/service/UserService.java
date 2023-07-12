@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +31,7 @@ public class UserService implements UserDetailsService {
     private final ImageRepository imageRepository;
 
     @Transactional
-    public Long join(UserJoinRequestDto userJoinRequestDto, PasswordEncoder passwordEncoder) throws IOException {
+    public Long join(UserJoinRequestDto userJoinRequestDto) throws IOException {
 
         validateDuplicateUser(userJoinRequestDto.getUsername());
 
@@ -47,7 +46,7 @@ public class UserService implements UserDetailsService {
 
         return userRepository.save(User.builder()
                 .username(userJoinRequestDto.getUsername())
-                .password(passwordEncoder.encode(userJoinRequestDto.getPassword()))
+                .password(userJoinRequestDto.getPassword())
                 .profileImage(image)
                 .userRole(UserRole.USER)
                 .build()).getId();
@@ -61,7 +60,7 @@ public class UserService implements UserDetailsService {
 
         findUser.update(userUpdateRequestDto.getUsername(), userUpdateRequestDto.getPassword(), userUpdateRequestDto.getProfileImage());
 
-        if (prevImage.getId() != userUpdateRequestDto.getProfileImage().getId()){
+        if (prevImage != null && prevImage.getId() != userUpdateRequestDto.getProfileImage().getId()){
             imageRepository.delete(prevImage);
         }
 

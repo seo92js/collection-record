@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import side.collectionrecord.domain.image.Image;
 
 @Getter
@@ -19,5 +20,9 @@ public class UserUpdateRequestDto {
         this.username = username;
         this.password = password;
         this.profileImage = profileImage;
+    }
+
+    public void encodePassword(PasswordEncoder passwordEncoder){
+        this.password = passwordEncoder.encode(this.password);
     }
 }

@@ -1,6 +1,7 @@
 package side.collectionrecord.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +18,9 @@ public class HomeApiController {
     private final FollowService followService;
 
     @GetMapping("/api/v1/home/{page}")
-    public List<FollowPostsListResponseDto> findFollowPosts(@PathVariable int page, Model model){
+    public List<FollowPostsListResponseDto> findFollowPosts(@PathVariable int page, Model model, Authentication authentication){
 
-        boolean login = (Boolean) model.getAttribute("login");
-
-        if(login == true){
+        if (authentication != null && authentication.isAuthenticated()){
             return followService.findFollowPosts((Long) model.getAttribute("loginUserId"), page, 5);
         } else {
             return null;

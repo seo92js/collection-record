@@ -30,6 +30,7 @@ class UserRepositoryTest {
         userRepository.save(User.builder()
                         .username(username)
                         .password(password)
+                        .userRole(UserRole.USER)
                         .profileImage(null)
                 .build());
 
@@ -51,6 +52,7 @@ class UserRepositoryTest {
         userRepository.save(User.builder()
                         .username("test")
                         .password("test")
+                        .userRole(UserRole.USER)
                         .profileImage(null)
                         .build());
         //when
@@ -71,6 +73,7 @@ class UserRepositoryTest {
         User user = User.builder()
                 .username("user1")
                 .password("1234")
+                .userRole(UserRole.USER)
                 .profileImage(null)
                 .build();
 

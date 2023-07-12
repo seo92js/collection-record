@@ -1,7 +1,6 @@
 package side.collectionrecord.domain.userchatroom;
 
 import com.querydsl.core.Tuple;
-import side.collectionrecord.domain.user.User;
 
 import java.util.List;
 

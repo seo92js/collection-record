@@ -15,8 +15,14 @@ class ChatRoomTest {
     @Test
     public void 연관관계_세팅(){
         //given
-        User user = User.builder()
-                .username("user")
+        User sender = User.builder()
+                .username("sender")
+                .password("1")
+                .profileImage(null)
+                .build();
+
+        User receiver = User.builder()
+                .username("receiver")
                 .password("1")
                 .profileImage(null)
                 .build();
@@ -24,7 +30,8 @@ class ChatRoomTest {
         ChatRoom chatRoom = new ChatRoom();
 
         ChatMessage chatMessage = ChatMessage.builder()
-                .user(user)
+                .sender(sender)
+                .receiver(receiver)
                 .chatRoom(chatRoom)
                 .message("message")
                 .build();

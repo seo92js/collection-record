@@ -9,6 +9,7 @@ import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.category.CategoryRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.user.UserRole;
 
 import java.util.List;
 
@@ -40,6 +41,7 @@ class PostsRepositoryTest {
                 .username("user")
                 .password("password")
                 .profileImage(null)
+                .userRole(UserRole.USER)
                 .build();
 
         userRepository.save(user);
@@ -71,6 +73,7 @@ class PostsRepositoryTest {
         //given
         User user = User.builder()
                 .username("user")
+                .userRole(UserRole.USER)
                 .password("password")
                 .profileImage(null)
                 .build();
@@ -117,6 +120,7 @@ class PostsRepositoryTest {
         //given
         User user = User.builder()
                 .username("user")
+                .userRole(UserRole.USER)
                 .password("password")
                 .profileImage(null)
                 .build();

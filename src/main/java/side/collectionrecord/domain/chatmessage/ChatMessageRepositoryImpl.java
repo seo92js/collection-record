@@ -1,7 +1,6 @@
 package side.collectionrecord.domain.chatmessage;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import side.collectionrecord.domain.user.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;

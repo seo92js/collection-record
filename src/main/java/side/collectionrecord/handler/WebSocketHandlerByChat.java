@@ -1,30 +1,22 @@
 package side.collectionrecord.handler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.ChatMessageService;
-import side.collectionrecord.service.ChatRoomService;
-import side.collectionrecord.service.NotificationService;
 import side.collectionrecord.service.UserChatRoomService;
 import side.collectionrecord.web.dto.ChatMessageAddRequestDto;
 import side.collectionrecord.web.dto.ChatMessageResponseDto;
-import side.collectionrecord.web.dto.NotificationAddRequestDto;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
