@@ -12,16 +12,11 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-//@Transactional
+@Transactional
 class ImageRepositoryTest {
 
     @Autowired
     ImageRepository imageRepository;
-
-    @AfterEach
-    public void cleanup(){
-        imageRepository.deleteAll();
-    }
 
     @Test
     public void save(){

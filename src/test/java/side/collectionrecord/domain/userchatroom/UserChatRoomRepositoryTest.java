@@ -1,9 +1,9 @@
 package side.collectionrecord.domain.userchatroom;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.chatroom.ChatRoomRepository;
 import side.collectionrecord.domain.user.User;
@@ -13,9 +13,9 @@ import side.collectionrecord.domain.user.UserRole;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class UserChatRoomRepositoryTest {
     @Autowired
     UserRepository userRepository;

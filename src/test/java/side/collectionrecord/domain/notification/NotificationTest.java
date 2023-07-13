@@ -1,14 +1,14 @@
-package side.collectionrecord.domain.chatmessage;
+package side.collectionrecord.domain.notification;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.user.User;
+import side.collectionrecord.domain.user.UserRole;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class ChatMessageTest {
+class NotificationTest {
     @Test
     public void 연관관계_세팅(){
         //given
@@ -16,29 +16,28 @@ class ChatMessageTest {
                 .username("sender")
                 .password("1")
                 .profileImage(null)
+                .userRole(UserRole.USER)
                 .build();
 
         User receiver = User.builder()
                 .username("receiver")
                 .password("1")
                 .profileImage(null)
+                .userRole(UserRole.USER)
                 .build();
 
-        ChatRoom chatRoom = new ChatRoom();
-
-        ChatMessage chatMessage = ChatMessage.builder()
-                .chatRoom(chatRoom)
+        Notification notification = Notification.builder()
                 .sender(sender)
                 .receiver(receiver)
                 .message("message")
+                .read(false)
+                .url("url")
                 .build();
 
         //when
         //then
-        assertThat(chatMessage.getSender()).isEqualTo(sender);
-        assertThat(chatMessage.getReceiver()).isEqualTo(receiver);
-        assertThat(sender.getSendMessage()).containsExactly(chatMessage);
-        assertThat(receiver.getReceiveMessage()).containsExactly(chatMessage);
+        assertThat(sender.getSendNotify().get(0).getMessage()).isEqualTo("message");
+        assertThat(receiver.getReceiveNotify().get(0).getMessage()).isEqualTo("message");
     }
 
     @Test
@@ -48,27 +47,27 @@ class ChatMessageTest {
                 .username("sender")
                 .password("1")
                 .profileImage(null)
+                .userRole(UserRole.USER)
                 .build();
 
         User receiver = User.builder()
                 .username("receiver")
                 .password("1")
                 .profileImage(null)
+                .userRole(UserRole.USER)
                 .build();
 
-        ChatRoom chatRoom = new ChatRoom();
-
-        ChatMessage chatMessage = ChatMessage.builder()
-                .chatRoom(chatRoom)
+        Notification notification = Notification.builder()
                 .sender(sender)
                 .receiver(receiver)
                 .message("message")
+                .read(false)
+                .url("url")
                 .build();
 
         //when
         //then
-        assertThat(chatMessage.getMessage()).isEqualTo("message");
-        assertThat(chatMessage.getSender()).isEqualTo(sender);
-        assertThat(chatMessage.getChatRoom()).isEqualTo(chatRoom);
+        assertThat(notification.getSender().getUsername()).isEqualTo("sender");
+        assertThat(notification.getReceiver().getUsername()).isEqualTo("receiver");
     }
 }

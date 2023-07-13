@@ -1,6 +1,5 @@
 package side.collectionrecord.service;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,12 +34,6 @@ class UserServiceTest {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
-    @AfterEach
-    public void cleanup(){
-        userRepository.deleteAll();
-        imageRepository.deleteAll();
-    }
 
     @Test
     public void 유저_회원가입() throws IOException {

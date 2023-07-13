@@ -1,6 +1,5 @@
 package side.collectionrecord.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,10 +9,7 @@ import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.web.dto.UserFollowingRequestDto;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

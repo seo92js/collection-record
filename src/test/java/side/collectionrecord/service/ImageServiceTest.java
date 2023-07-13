@@ -1,8 +1,5 @@
 package side.collectionrecord.service;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +11,6 @@ import side.collectionrecord.web.dto.ImageUploadRequestDto;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -24,11 +20,6 @@ class ImageServiceTest {
 
     @Autowired
     ImageRepository imageRepository;
-
-    @AfterEach
-    public void cleanup(){
-        imageRepository.deleteAll();
-    }
 
     @Test
     public void 이미지_업로드(){

@@ -1,6 +1,5 @@
 package side.collectionrecord.domain.follow;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,14 +31,6 @@ class FollowRepositoryTest {
 
     @Autowired
     FollowRepository followRepository;
-
-    @AfterEach
-    public void cleanup(){
-        postsRepository.deleteAll();
-        categoryRepository.deleteAll();
-        followRepository.deleteAll();
-        userRepository.deleteAll();
-    }
 
     @Test
     public void save(){
