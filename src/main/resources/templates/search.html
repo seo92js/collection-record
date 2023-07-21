@@ -4,53 +4,56 @@
   <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
 </head>
 <body>
-  <div th:replace="fragments/navigation :: navigation" />
+    <div th:replace="fragments/navigation :: navigation" />
 
-  <div class="container">
-    <h1>검색</h1>
+    <header class="screen-header">
+        <h1 class="screen-header__title">검색</h1>
+    </header>
 
-    <form>
-      <div>
-        <input id="search-text" type="text" placeholder="유저이름 혹은 해시태그" th:required="true">
-        <button type="submit" id="search-btn" class="btn btn-primary">검색</button>
-      </div>
-    </form>
+    <main>
+        <form>
+            <div>
+                <input id="search-text" type="text" placeholder="유저이름 혹은 해시태그" th:required="true">
+                <button type="submit" id="search-btn" class="btn btn-primary">검색</button>
+            </div>
+        </form>
 
-    <!--검색 결과-->
-    <div class="row">
-      <!--유저 리스트-->
-      <div class="col-md-6">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>이미지</th>
-            <th>유저 이름</th>
-          </tr>
-          </thead>
-          <tbody id="user-search-list">
-          <!--동적-->
-          </tbody>
-        </table>
-      </div>
-      <!--게시물 리스트-->
-      <div class="col-md-6">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>이미지</th>
-            <th>타이틀</th>
-          </tr>
-          </thead>
-          <tbody id="posts-search-list">
-          <!--동적-->
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <script src="/js/search.js"></script>
+        <!--검색 결과-->
+        <div class="row">
+            <!--유저 리스트-->
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>이미지</th>
+                            <th>유저 이름</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-search-list">
+                    <!--동적-->
+                    </tbody>
+                </table>
+              </div>
+              <!--게시물 리스트-->
+              <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>이미지</th>
+                            <th>타이틀</th>
+                        </tr>
+                    </thead>
+                    <tbody id="posts-search-list">
+                    <!--동적-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 
     <div th:replace="fragments/footer :: footer" />
 
-  </div>
+    <script src="/js/search.js"></script>
+
 </body>
 </html>

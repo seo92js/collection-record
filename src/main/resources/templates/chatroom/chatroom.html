@@ -6,28 +6,30 @@
 </head>
 <body>
 
-<div class="container">
-    <h1 th:text="|${username} 님|"></h1>
+    <header class="screen-header">
+        <h1 th:text="|${username} 님|" class="screen-header__title"></h1>
+    </header>
 
-    <div>
-        <input type="hidden" id="username" th:value="${loginUsername}">
-        <input type="text" id="input-chat" placeholder="내용" th:required="true">
-        <button type="button" th:onclick="send([[${loginUserId}]], [[${receiverId}]], [[${chatRoomId}]])">보내기</button>
-    </div>
-
-    <div id="message-container">
-        <!--이 전 메세지-->
-        <div th:each ="chatRoomMessage : ${chatRoomMessages}">
-            <span th:text="|${chatRoomMessage.createdTime} / |"></span>
-            <span th:text="|${chatRoomMessage.senderName} / |"></span>
-            <span th:text="${chatRoomMessage.message}"></span>
+    <main>
+        <div>
+            <input type="hidden" id="username" th:value="${loginUsername}">
+            <input type="text" id="input-chat" placeholder="내용" th:required="true">
+            <button type="button" th:onclick="send([[${loginUserId}]], [[${receiverId}]], [[${chatRoomId}]])">보내기</button>
         </div>
-    </div>
+
+        <div id="message-container">
+            <!--이 전 메세지-->
+            <div th:each ="chatRoomMessage : ${chatRoomMessages}">
+                <span th:text="|${chatRoomMessage.createdTime} / |"></span>
+                <span th:text="|${chatRoomMessage.senderName} / |"></span>
+                <span th:text="${chatRoomMessage.message}"></span>
+            </div>
+        </div>
+    </main>
 
     <div th:replace="fragments/footer :: footer" />
 
     <script src="/js/chat.js"></script>
-</div>
 
 </body>
 </html>

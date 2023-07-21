@@ -5,9 +5,12 @@
 <body>
     <div th:replace="fragments/navigation :: navigation" />
 
-    <div class="container">
+    <header class="screen-header">
         <!--게시물 내용-->
-        <a th:text="${username}" th:href="@{/user/{username}/home(username=${username})}"></a>
+        <a class="screen-header__title" th:text="${username}" th:href="@{/user/{username}/home(username=${username})}"></a>
+    </header>
+
+    <main>
         <div>
             <div th:text="${postsResponseDto.categoryName}"></div>
             <div th:text="${postsResponseDto.status}"></div>
@@ -46,11 +49,12 @@
                 </li>
             </ul>
         </div>
+    </main>
 
-        <script src="/js/commentAdd.js"></script>
-        <script src="/js/notificationPosts.js"></script>
+    <div th:replace="fragments/footer :: footer" />
 
-        <div th:replace="fragments/footer :: footer" />
-    </div>
+    <script src="/js/commentAdd.js"></script>
+    <script src="/js/notificationPosts.js"></script>
+
 </body>
 </html>

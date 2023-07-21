@@ -4,9 +4,11 @@
 <body>
     <div th:replace="fragments/navigation :: navigation" />
 
-    <div class="container">
-        <h1>프로필</h1>
+    <header class="screen-header">
+        <h1 class="screen-header__title">프로필</h1>
+    </header>
 
+    <main>
         <input type="hidden" id="userId" th:value="${loginUserId}" />
 
         <form th:object="${userProfileResponseDto}" id="user-profile-form">
@@ -25,10 +27,11 @@
 
             <button type="submit" class="btn btn-primary" id="user-update-btn">수정</button>
         </form>
+    </main>
 
-        <script src="/js/userUpdate.js"></script>
+    <div th:replace="fragments/footer :: footer" />
 
-        <div th:replace="fragments/footer :: footer" />
-    </div>
+    <script src="/js/userUpdate.js"></script>
+
 </body>
 </html>

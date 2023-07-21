@@ -3,57 +3,59 @@
 <head th:replace="fragments/header :: header" />
 <body>
 
-  <div th:replace="fragments/navigation :: navigation" />
+    <div th:replace="fragments/navigation :: navigation" />
 
-  <div class="container">
-    <h1>게시물 수정</h1>
+    <header class="screen-header">
+        <h1 class="screen-header__title">게시물 수정</h1>
+    </header>
 
-    <input type="hidden" name="loginUsername" th:value="${loginUsername}">
+    <main>
+        <input type="hidden" name="loginUsername" th:value="${loginUsername}">
 
-    <form th:object="${postsUpdateRequestDto}" id="posts-update-form">
+        <form th:object="${postsUpdateRequestDto}" id="posts-update-form">
 
-      <div>
-        <label>카테고리</label>
-        <select style="width:100px;height:22px" th:field="*{categoryName}">
-          <option th:each = "category : ${categories}" th:text="${category.name}" th:value="${category.name}"></option>
-        </select>
-      </div>
+            <div>
+                <label>카테고리</label>
+                <select style="width:100px;height:22px" th:field="*{categoryName}">
+                    <option th:each = "category : ${categories}" th:text="${category.name}" th:value="${category.name}"></option>
+                </select>
+            </div>
 
-      <div>
-        <label>상태</label>
-        <select style="width:100px;height:22px" th:field="*{status}">
-          <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>
-        </select>
-      </div>
+            <div>
+                <label>상태</label>
+                <select style="width:100px;height:22px" th:field="*{status}">
+                    <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>
+                </select>
+            </div>
 
-      <div>
-        <label>타이틀</label>
-        <input type="text" th:value="*{title}" th:field="*{title}" placeholder="타이틀" th:required="true">
-      </div>
+            <div>
+                <label>타이틀</label>
+                <input type="text" th:value="*{title}" th:field="*{title}" placeholder="타이틀" th:required="true">
+            </div>
 
-      <div>
-        <img th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
-        <input type="file" id="posts-rep-update-img" placeholder="이미지 선택">
-      </div>
+            <div>
+                <img th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
+                <input type="file" id="posts-rep-update-img" placeholder="이미지 선택">
+            </div>
 
-      <div>
-        <label>내용</label>
-        <input type="text" th:value="*{text}" th:field="*{text}" placeholder="내용" th:required="true">
-      </div>
+            <div>
+                <label>내용</label>
+                <input type="text" th:value="*{text}" th:field="*{text}" placeholder="내용" th:required="true">
+            </div>
 
-      <div>
-        <label>해시태그</label>
-        <input type="text" th:value="*{hashtags}" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)" th:required="true">
-      </div>
+            <div>
+                <label>해시태그</label>
+                <input type="text" th:value="*{hashtags}" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)" th:required="true">
+            </div>
 
-      <button type="submit" class="btn btn-primary" id="posts-update-btn" th:onclick="postsUpdate([[${postsId}]])">수정</button>
-      <button type="submit" class="btn btn-primary" id="posts-delete-btn" th:onclick="postsDelete([[${postsId}]])">삭제</button>
-    </form>
-
-    <script src="/js/postsUpdate.js"></script>
+            <button type="submit" class="btn btn-primary" id="posts-update-btn" th:onclick="postsUpdate([[${postsId}]])">수정</button>
+            <button type="submit" class="btn btn-primary" id="posts-delete-btn" th:onclick="postsDelete([[${postsId}]])">삭제</button>
+        </form>
+    </main>
 
     <div th:replace="fragments/footer :: footer" />
 
-  </div>
+    <script src="/js/postsUpdate.js"></script>
+
 </body>
 </html>

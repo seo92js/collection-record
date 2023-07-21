@@ -4,9 +4,11 @@
 <body>
     <div th:replace="fragments/navigation :: navigation" />
 
-    <div class="container">
-        <h1>로그인</h1>
+    <header class="screen-header">
+        <h1 class="screen-header__title">로그인</h1>
+    </header>
 
+    <main>
         <form action="/login" role="form" method="post">
             <div>
                 <label>이름</label>
@@ -19,8 +21,8 @@
             <button type="submit" class="btn btn-primary" id="login-btn">로그인</button>
             <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
         </form>
-    </div>
+    </main>
 
-<div th:replace="fragments/footer :: footer" />
+    <div th:replace="fragments/footer :: footer" />
 </body>
 </html>

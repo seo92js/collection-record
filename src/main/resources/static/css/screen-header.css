@@ -1,0 +1,9 @@
+.screen-header {
+    padding-top: 60px;
+}
+
+.screen-header__title {
+    font-size: 32px;
+    padding: 20px;
+    text-align: center;
+}

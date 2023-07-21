@@ -1,21 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<nav th:fragment="navigation">
+<nav th:fragment="navigation" class="nav">
 
-  <div sec:authorize="isAuthenticated()">
-    <a class="btn btn-info" href="/" >홈</a>
-    <a class="btn btn-info" href="/search">검색</a>
+    <ul class="nav__list">
+        <!-- 홈 -->
+        <li class="nav__btn" sec:authorize="isAuthenticated()">
+            <a class="nav__link" href="/" >
+                <i class="fas fa-home"></i>
+            </a>
+        </li>
+        <!-- 검색 -->
+        <li class="nav__btn" sec:authorize="isAuthenticated()">
+            <a class="nav__link" href="/search">
+                <i class="fas fa-search"></i>
+            </a>
+        </li>
+<!--        <li class="nav__img" sec:authorize="isAuthenticated()">
+            <span th:text="|${loginUsername} 님|"></span>
+        </li>-->
+        <!-- 마이홈 -->
+        <li class="nav__btn" sec:authorize="isAuthenticated()">
+            <a class="nav__link" th:href="@{/user/{loginUsername}/home(loginUsername=${loginUsername})}">
+                <i class="fas fa-user"></i>
+            </a>
+        </li>
+        <!-- 로그아웃 -->
+        <li class="nav__btn" sec:authorize="isAuthenticated()">
+            <a class="nab__link" href="/logout" id="logout-btn">LOGOUT</a>
+        </li>
+        <!-- 회원가입 -->
+        <li class="nav__btn" sec:authorize="isAnonymous()">
+            <a class="nav__link" href="/user/join">JOIN</a>
+        </li>
+        <!-- 로그인 -->
+        <li class="nav__btn" sec:authorize="isAnonymous()">
+            <a class="nav__link" href="/login">LOGIN</a>
+        </li>
+    </ul>
 
-    <span th:text="|${loginUsername} 님|"></span>
-    <a class="btn btn-info" th:href="@{/user/{loginUsername}/home(loginUsername=${loginUsername})}">마이홈</a>
-    <a class="btn btn-info" href="/logout" id="logout-btn">로그아웃</a>
-  </div>
-
-  <div sec:authorize="isAnonymous()">
-    <a class="btn btn-info" href="/user/join">회원 가입</a>
-    <a class="btn btn-info" href="/login">로그인</a>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </nav>

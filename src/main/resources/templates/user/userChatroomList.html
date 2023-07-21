@@ -3,20 +3,24 @@
 <head th:replace="fragments/header :: header" />
 
 <body>
-<div th:replace="fragments/navigation :: navigation" />
 
-<div class="container">
-    <h1>채팅방 리스트</h1>
+    <div th:replace="fragments/navigation :: navigation" />
 
-    <!-- 채팅방 리스트 -->
-    <div th:each="chatroom : ${chatrooms}">
-        <!-- 안읽은 메세지가 있으면 -->
-        <a th:if="${chatroom.read == false}" style="color:red;" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${chatroom.userId})}" th:text="${chatroom.username}" target="_blank"></a>
-        <!-- 안읽은 메세지가 없으면 -->
-        <a th:if="${chatroom.read == true}" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${chatroom.userId})}" th:text="${chatroom.username}" target="_blank"></a>
-    </div>
+    <header class="screen-header">
+        <h1 class="screen-header__title">채팅방 리스트</h1>
+    </header>
+
+    <main>
+        <!-- 채팅방 리스트 -->
+        <div th:each="chatroom : ${chatrooms}">
+            <!-- 안읽은 메세지가 있으면 -->
+            <a th:if="${chatroom.read == false}" style="color:red;" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${chatroom.userId})}" th:text="${chatroom.username}" target="_blank"></a>
+            <!-- 안읽은 메세지가 없으면 -->
+            <a th:if="${chatroom.read == true}" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${chatroom.userId})}" th:text="${chatroom.username}" target="_blank"></a>
+        </div>
+    </main>
 
     <div th:replace="fragments/footer :: footer" />
-</div>
+
 </body>
 </html>
