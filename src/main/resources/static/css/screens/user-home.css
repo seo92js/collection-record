@@ -7,17 +7,17 @@
     padding: 10px;
 }
 
-.user-home__title--image {
+.user-home__title-image {
     width:300px;
     height:300px;
 }
 
-.user-home__title--menu {
+.user-home__title-menu {
     display:flex;
     align-items: center;
     padding: 20px;
 }
 
-.user-home__title--submenu {
+.user-home__title-submenu {
     padding: 15px;
 }

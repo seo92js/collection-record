@@ -1,0 +1,17 @@
+.join {
+}
+
+.join__form {
+    display:flex;
+    justify-content: center;
+}
+
+.join__form-label {
+    padding: 10px;
+}
+
+.join__form-btn {
+    padding-top: 10px;
+    display:flex;
+    justify-content: center;
+}

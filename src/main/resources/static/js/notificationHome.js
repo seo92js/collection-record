@@ -1,9 +1,9 @@
-var notificationSocket = new WebSocket('ws://localhost:8080/notification');
+const notificationSocket = new WebSocket('ws://localhost:8080/notification');
 
 notificationSocket.onopen = function() {
 
-      var username = document.getElementById('loginUsername').value;
-      var message = {
+      const username = document.getElementById('loginUsername').value;
+      const message = {
         type: 'username',
         value: username
       };
@@ -12,7 +12,7 @@ notificationSocket.onopen = function() {
 };
 
 notificationSocket.onmessage = function(event) {
-    var notificationButton = document.getElementById('notification-btn');
+    const notificationButton = document.getElementById('notification-btn');
 
     notificationButton.classList.remove('btn-primary');
     notificationButton.classList.add('btn-warning');

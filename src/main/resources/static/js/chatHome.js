@@ -1,9 +1,9 @@
-var chatSocket = new WebSocket('ws://localhost:8080/chatroom');
+const chatSocket = new WebSocket('ws://localhost:8080/chatroom');
 
 chatSocket.onopen = function() {
 
-      var username = document.getElementById('loginUsername').value;
-      var message = {
+      const username = document.getElementById('loginUsername').value;
+      const message = {
         type: 'username',
         value: username
       };
@@ -12,7 +12,7 @@ chatSocket.onopen = function() {
 };
 
 chatSocket.onmessage = function(event) {
-    var chatroomList = document.getElementById('chatroom-list');
+    const chatroomList = document.getElementById('chatroom-list');
 
     chatroomList.classList.remove('btn-info');
     chatroomList.classList.add('btn-warning');

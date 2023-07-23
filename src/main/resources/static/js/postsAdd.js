@@ -34,7 +34,7 @@ function postsAdd(){
         return;
     }
 
-    var username=$('input[name=loginUsername]').val();
+    const username=$('input[name=loginUsername]').val();
 
     $.ajax({
         type: 'POST',

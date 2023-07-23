@@ -1,0 +1,17 @@
+.login {
+}
+
+.login__form {
+    display:flex;
+    justify-content: center;
+}
+
+.login__form-label {
+    padding: 10px;
+}
+
+.login__form-btn {
+    padding-top: 10px;
+    display:flex;
+    justify-content: center;
+}

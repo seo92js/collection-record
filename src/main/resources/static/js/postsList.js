@@ -1,10 +1,10 @@
-var page = 0;
-var isEnd = false;
-var id;
-var category;
+let page = 0;
+let isEnd = false;
+let id;
+let category;
 
 $(document).ready(function() {
-    var isCategoryClicked = false;
+    let isCategoryClicked = false;
 
     // 카테고리 클릭 이벤트 처리
     $('.category-link').on('click', function(event) {
@@ -46,12 +46,12 @@ function loadPostList(id, category, page) {
         }
 
         response.forEach(function(post) {
-            var row = $('<tr>');
-            var imageCell = $('<td>');
-            var imageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId);
+            const row = $('<tr>');
+            const imageCell = $('<td>');
+            const imageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId);
 
-            var titleCell = $('<td>');
-            var titleLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title);
+            const titleCell = $('<td>');
+            const titleLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title);
 
             imageCell.append(imageLink);
             titleCell.append(titleLink);

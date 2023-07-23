@@ -1,5 +1,5 @@
-var page = 0;
-var isEnd = false;
+let page = 0;
+let isEnd = false;
 
 window.addEventListener('scroll', function(){
     if ($(window).scrollTop() + $(window).height() == $(document).height() && !isEnd) {
@@ -21,21 +21,15 @@ function loadFollowPostsList(page){
         }
 
         response.forEach(function(post){
-            var row = $('<tr>');
-            var usernameCell = $('<td>');
-            var username = $('<a>').attr('href', '/user/' + post.username + '/home').text(post.username);
-            var imageCell = $('<td>');
-            var imageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId);
-            var titleCell = $('<td>');
-            var titleLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title);
+            const div = $('<div>').addClass('home__feed-post');
+            const username = $('<a>').attr('href', '/user/' + post.username + '/home').text(post.username).addClass('home__feed-post-username');
+            const imageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId).addClass('home__feed-post-image');
+            const titleLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title).addClass('home__feed-post-title');
+            div.append(username);
+            div.append(imageLink);
+            div.append(titleLink);
 
-            usernameCell.append(username);
-            imageCell.append(imageLink);
-            titleCell.append(titleLink);
-
-            row.append(usernameCell, imageCell, titleCell);
-
-            $('#follow-posts-list').append(row);
+            $('#follow-posts-list').append(div);
         });
     }).fail(function (error){
         alert(JSON.stringify(error));

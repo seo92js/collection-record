@@ -1,9 +1,9 @@
-var chatSocket = new WebSocket('ws://localhost:8080/chatroom');
+const chatSocket = new WebSocket('ws://localhost:8080/chatroom');
 
 chatSocket.onopen = function() {
 
-      var username = document.getElementById('loginUsername').value;
-      var message = {
+      const username = document.getElementById('loginUsername').value;
+      const message = {
         type: 'username',
         value: username
       };
@@ -11,20 +11,20 @@ chatSocket.onopen = function() {
 };
 
 chatSocket.onmessage = function(event) {
-    var json = event.data;
-    var chatMessageResponseDto = JSON.parse(json);
+    const json = event.data;
+    const chatMessageResponseDto = JSON.parse(json);
 
-    var messageContainer = document.getElementById('message-container');
+    const messageContainer = document.getElementById('message-container');
 
-    var div = document.createElement('div');
+    const div = document.createElement('div');
 
-    var createdTime = document.createElement('span');
+    const createdTime = document.createElement('span');
     createdTime.textContent = chatMessageResponseDto.createdTime + ' / ';
 
-    var username = document.createElement('span');
+    const username = document.createElement('span');
     username.textContent = chatMessageResponseDto.senderName + ' / ';
 
-    var message = document.createElement('span');
+    const message = document.createElement('span');
     message.textContent = chatMessageResponseDto.message;
 
     div.appendChild(createdTime);
@@ -48,7 +48,7 @@ chatSocket.onmessage = function(event) {
 }
 
 function send(senderId, receiverId, chatRoomId){
-    var message = document.getElementById("input-chat").value;
+    const message = document.getElementById("input-chat").value;
 
     const chatMessageAddRequestDto = {
         senderId: senderId,
@@ -58,7 +58,7 @@ function send(senderId, receiverId, chatRoomId){
         read: false
     }
 
-    var json = JSON.stringify(chatMessageAddRequestDto);
+    const json = JSON.stringify(chatMessageAddRequestDto);
 
     chatSocket.send(json);
 }

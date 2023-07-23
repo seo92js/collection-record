@@ -1,9 +1,9 @@
-var socket = new WebSocket('ws://localhost:8080/notification');
+const socket = new WebSocket('ws://localhost:8080/notification');
 
 socket.onopen = function() {
 
-      var username = document.getElementById('loginUsername').value;
-      var message = {
+      const username = document.getElementById('loginUsername').value;
+      const message = {
         type: 'username',
         value: username
       };
@@ -19,7 +19,7 @@ function notificationSend(senderName, receiverName, postsId){
         url: '/posts/' + postsId
     }
 
-    var json = JSON.stringify(notificationAddRequestDto);
+    const json = JSON.stringify(notificationAddRequestDto);
 
     socket.send(json);
 }
