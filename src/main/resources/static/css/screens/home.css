@@ -15,7 +15,7 @@
     padding: 10px;
     display:flex;
     flex-direction:column;
-    border-bottom: 0.1px solid #c0c0c0
+    border-bottom: 1px solid #c0c0c0
 }
 
 .home__feed-post-username {

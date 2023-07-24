@@ -1,0 +1,12 @@
+.category {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.category__form {
+    padding:15px;
+}
+
+.category__list {
+}

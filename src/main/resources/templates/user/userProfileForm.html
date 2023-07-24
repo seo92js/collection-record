@@ -8,24 +8,24 @@
         <h1 class="screen-header__title">프로필</h1>
     </header>
 
-    <main>
+    <main class="user-profile">
         <input type="hidden" id="userId" th:value="${loginUserId}" />
 
-        <form th:object="${userProfileResponseDto}" id="user-profile-form">
-            <div>
-                <img th:if="${imageId != null}" th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
-                <input type="file" id="user-profile-img" placeholder="이미지 선택">
-            </div>
-            <div>
+        <form class="user-profile__form" th:object="${userProfileResponseDto}" id="user-profile-form">
+            <div class="user-profile__form-username">
                 <label>이름</label>
                 <input type="text" th:value="*{username}" th:field="*{username}" placeholder="이름">
             </div>
-            <div>
+            <div class="user-profile__form-image">
+                <img th:if="${imageId != null}" th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
+                <input type="file" id="user-profile-img" placeholder="이미지 선택">
+            </div>
+            <div class="user-profile__form-password">
                 <label>비밀번호</label>
                 <input type="text" th:value="*{password}" th:field="*{password}" placeholder="비밀번호">
             </div>
 
-            <button type="submit" class="btn btn-primary" id="user-update-btn">수정</button>
+            <button type="submit" id="user-update-btn">수정</button>
         </form>
     </main>
 

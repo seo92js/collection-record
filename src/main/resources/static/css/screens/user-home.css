@@ -1,10 +1,14 @@
 .user-home {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 
 .user-home__title {
     display:flex;
     justify-content: center;
     padding: 10px;
+    border: 1px solid #c0c0c0
 }
 
 .user-home__title-image {
@@ -21,3 +25,30 @@
 .user-home__title-submenu {
     padding: 15px;
 }
+
+.user-home__category {
+    padding: 20px;
+}
+
+.user-home__category-li {
+    padding: 5px;
+    display: inline-block;
+}
+
+.user-home__post {
+}
+
+.user-home__post-post {
+    margin: 10px;
+    padding: 10px;
+    display:flex;
+    flex-direction:column;
+    border-bottom: 1px solid #c0c0c0
+}
+
+.user-home__post-image {
+    padding:5px;
+}
+
+.user-home__post-title {
+    padding:5px;}

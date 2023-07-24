@@ -46,18 +46,13 @@ function loadPostList(id, category, page) {
         }
 
         response.forEach(function(post) {
-            const row = $('<tr>');
-            const imageCell = $('<td>');
-            const imageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId);
+            const div = $('<div>').addClass('user-home__post-post');
+            const titleLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title).addClass('user-home__post-title');
+            const imageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId).addClass('user-home__post-image');
+            div.append(titleLink);
+            div.append(imageLink);
 
-            const titleCell = $('<td>');
-            const titleLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title);
-
-            imageCell.append(imageLink);
-            titleCell.append(titleLink);
-            row.append(imageCell, titleCell);
-
-            $('#postList').append(row);
+            $('#postList').append(div);
         });
     }).fail(function (error){
         alert(JSON.stringify(error));

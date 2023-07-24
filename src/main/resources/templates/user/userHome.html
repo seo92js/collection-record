@@ -11,8 +11,8 @@
 
     <main class="user-home">
 
+        <!-- 프로필 이미지, 메뉴 -->
         <div class="user-home__title">
-            <!--프로필 이미지-->
             <div class="user-home__title-menu">
                 <img class="user-home__title--image" th:if="${imageId != null}" th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
             </div>
@@ -28,31 +28,18 @@
             <button type="submit" id="following-btn" th:if="${isFollowing == false}" th:onclick="following([[${id}]])">팔로우</button>
         </div>
 
-        <div class="row">
-            <!--카테고리 목록-->
-            <nav class="col-md-3">
-                <ul>
-                    <li><a href="javascript:void(0)" th:data-id="${id}" th:data-category="all" class="category-link">전체</a></li>
-                    <li th:each="category : ${categories}">
-                        <a href="javascript:void(0)" th:text="${category.name}" th:data-id="${id}" th:data-category="${category.name}" class="category-link"></a>
-                    </li>
-                </ul>
-            </nav>
+        <!-- 카테고리 목록 -->
+        <div class="user-home__category">
+            <ul>
+                <li class="user-home__category-li"><a href="javascript:void(0)" th:data-id="${id}" th:data-category="all" class="category-link">전체</a></li>
+                <li class="user-home__category-li" th:each="category : ${categories}">
+                    <a href="javascript:void(0)" th:text="${category.name}" th:data-id="${id}" th:data-category="${category.name}" class="category-link"></a>
+                </li>
+            </ul>
+        </div>
 
-            <!--게시물 목록-->
-            <div class="col-md-9">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>이미지</th>
-                        <th>타이틀</th>
-                    </tr>
-                    </thead>
-                    <tbody id="postList">
-                    <!--동적-->
-                    </tbody>
-                </table>
-            </div>
+        <!-- 게시물 목록 -->
+        <div class="user-home__post" id="postList">
         </div>
     </main>
 

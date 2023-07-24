@@ -9,7 +9,27 @@
         <h1 class="screen-header__title">카테고리 관리</h1>
     </header>
 
-    <main>
+    <main class="category">
+        <div class="category__form" >
+            <form th:object="${categoryAddRequestDto}" id="category-add-form">
+                <div>
+                    <input type="hidden" th:field="*{userId}">
+                    <input type="text" th:field="*{name}" placeholder="카테고리 명" th:required="true">
+                    <button type="submit" id="category-add-btn">추가</button>
+                </div>
+            </form>
+        </div>
+
+        <div>
+            <div class="category__list" th:each="category : ${categories}">
+                <input type="text" th:value="${category.name}" th:id="'category-name-input-' + ${category.id}">
+                <a th:onclick="categoryUpdate([[${category.id}]])">수정</a>
+                <a th:onclick="categoryDelete([[${category.id}]])">삭제</a>
+            </div>
+        </div>
+    </main>
+
+<!--    <main>
         <form th:object="${categoryAddRequestDto}" id="category-add-form">
             <div>
                 <input type="hidden" th:field="*{userId}">
@@ -38,7 +58,7 @@
             </tr>
             </tbody>
         </table>
-    </main>
+    </main>-->
 
     <div th:replace="fragments/footer :: footer" />
 

@@ -7,47 +7,71 @@
 
     <header class="screen-header">
         <!--게시물 내용-->
-        <a class="screen-header__title" th:text="${username}" th:href="@{/user/{username}/home(username=${username})}"></a>
+        <h1 class="screen-header__title">
+            <a th:text="${username}" th:href="@{/user/{username}/home(username=${username})}"></a>
+        </h1>
     </header>
 
-    <main>
-        <div>
-            <div th:text="${postsResponseDto.categoryName}"></div>
-            <div th:text="${postsResponseDto.status}"></div>
-            <div th:text="${postsResponseDto.title}"></div>
-            <img th:src="@{/api/v1/image-view/{imageId}(imageId=${postsResponseDto.representativeImageId})}">
-            <div th:text="${postsResponseDto.text}"></div>
-            <div th:text="${postsResponseDto.hashtags}"></div>
-            <div th:if="${isMyPost}">
+    <main class="posts">
+        <div class="posts__left">
+            <!-- 카테고리 -->
+            <div class="posts__left-category">
+                <div th:text="${postsResponseDto.categoryName}"></div>
+            </div>
+            <div class="posts__left-title">
+                <!-- 상태 -->
+                <div th:text="${postsResponseDto.status}"></div>
+                <!-- 제목 -->
+                <div th:text="${postsResponseDto.title}"></div>
+            </div>
+            <!-- 이미지 -->
+            <div class="posts__left-image">
+                <img th:src="@{/api/v1/image-view/{imageId}(imageId=${postsResponseDto.representativeImageId})}">
+            </div>
+        </div>
+
+        <div class="posts__right">
+            <!-- 버튼 -->
+            <div class="posts__right-btn" th:if="${isMyPost}">
                 <a th:href="@{/posts/update/{id}(id=${postsResponseDto.id})}">수정</a>
             </div>
-            <div th:unless="${isMyPost}">
-                <a class="btn btn-primary" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${userId})}" target="_blank">채팅</a>
+            <div class="posts__right-btn" th:unless="${isMyPost}">
+                <a th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${userId})}" target="_blank">채팅</a>
             </div>
-        </div>
+            <!-- 내용 -->
+            <div class="posts__right-content">
+                <!-- 해시태그 -->
+                <div class="posts__right-content-hashtag" th:text="${postsResponseDto.hashtags}"></div>
+                <div class="posts__right-content-text" th:text="${postsResponseDto.text}"></div>
+            </div>
+            <!-- 댓글 -->
+            <div class="posts__right-comment">
+                <!--댓글 작성 form-->
+                <div class="posts__right-comment-form">
+                    <form th:object="${commentAddRequestDto}" id="comment-add-form">
+                        <div>
+                            <input type="hidden" th:value="${loginUsername}" id="loginUsername">
+                            <input type="hidden" th:field="*{userId}">
+                            <input type="hidden" th:field="*{postsId}">
 
-        <!--댓글 작성 form-->
-        <div>
-            <form th:object="${commentAddRequestDto}" id="comment-add-form">
-                <div>
-                    <input type="hidden" th:value="${loginUsername}" id="loginUsername">
-                    <input type="hidden" th:field="*{userId}">
-                    <input type="hidden" th:field="*{postsId}">
-
-                    <input type="text" th:field="*{text}" placeholder="내용" th:required="true">
-                    <button type="submit" class="btn btn-primary" id="comment-add-btn" th:onclick="commentAdd(); notificationSend([[${loginUsername}]],[[${username}]],[[*{postsId}]])">댓글 달기</button>
+                            <input type="text" th:field="*{text}" placeholder="내용" th:required="true">
+                            <button type="submit" id="comment-add-btn" th:onclick="commentAdd(); notificationSend([[${loginUsername}]],[[${username}]],[[*{postsId}]])">댓글 달기</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-
-        <!--댓글 목록-->
-        <div>
-            <h2>댓글</h2>
-            <ul>
-                <li th:each="comment : ${comments}">
-                    <span th:text="${comment.username}"></span> : <span th:text="${comment.text}"></span>
-                </li>
-            </ul>
+                <!--댓글 목록-->
+                <div>
+<!--                    <ul>
+                        <li th:each="comment : ${comments}">
+                            <span th:text="${comment.username}"></span> : <span th:text="${comment.text}"></span>
+                        </li>
+                    </ul>-->
+                    <div class="posts__right-comment-list" th:each="comment : ${comments}">
+                        <div class="posts__right-comment-list-username" th:text="${comment.username}"></div>
+                        <div class="posts__right-comment-list-text"th:text="${comment.text}"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
