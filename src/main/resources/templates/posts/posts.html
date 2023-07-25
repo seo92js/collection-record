@@ -62,9 +62,13 @@
                 <!--댓글 목록-->
                 <div>
                     <div class="posts__right-comment-list" th:each="comment : ${comments}">
-                        <div class="posts__right-comment-list-username" th:text="${comment.username}"></div>
-                        <div class="posts__right-comment-list-text"th:text="${comment.text}"></div>
-                        <div class="posts__right-comment-list-createdDate" th:text="${comment.createdDate}"></div>
+                        <div class="posts__right-comment-list-createdDate">
+                            <div th:text="${comment.createdDate}"></div>
+                        </div>
+                        <div class="posts__right-comment-list-content">
+                            <div class="posts__right-comment-list-content-username" th:text="${comment.username}"></div>
+                            <div class="posts__right-comment-list-content-text"th:text="${comment.text}"></div>
+                        </div>
                     </div>
                 </div>
             </div>

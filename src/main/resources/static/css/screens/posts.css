@@ -61,17 +61,25 @@
 
 .posts__right-comment-list{
     display:flex;
+    flex-direction:column;
     padding: 5px 0px 5px 10px;
 }
 
-.posts__right-comment-list-username{
+.posts__right-comment-list-createdDate{
+    font-size:7px;
+    float: left;
+    padding-bottom:5px;
+}
+
+.posts__right-comment-list-content {
+    display:flex;
+}
+
+.posts__right-comment-list-content-username{
     font-weight: bold;
     padding-right: 10px;
 }
 
-.posts__right-comment-list-text{
+.posts__right-comment-list-content-text{
 }
 
-.posts__right-comment-list-createdDate{
-    text-align:right;
-}

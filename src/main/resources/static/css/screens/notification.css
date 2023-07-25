@@ -1,0 +1,12 @@
+.notification {
+}
+
+.notification__list {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.notification__list-link {
+    padding:5px;
+}

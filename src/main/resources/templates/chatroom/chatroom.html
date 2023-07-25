@@ -10,19 +10,19 @@
         <h1 th:text="|${username} 님|" class="screen-header__title"></h1>
     </header>
 
-    <main>
-        <div>
+    <main class="chatroom">
+        <div class="chatroom__form">
             <input type="hidden" id="username" th:value="${loginUsername}">
             <input type="text" id="input-chat" placeholder="내용" th:required="true">
             <button type="button" th:onclick="send([[${loginUserId}]], [[${receiverId}]], [[${chatRoomId}]])">보내기</button>
         </div>
 
-        <div id="message-container">
+        <div class="chatroom__container" id="message-container">
             <!--이 전 메세지-->
-            <div th:each ="chatRoomMessage : ${chatRoomMessages}">
-                <span th:text="|${chatRoomMessage.createdTime} / |"></span>
-                <span th:text="|${chatRoomMessage.senderName} / |"></span>
-                <span th:text="${chatRoomMessage.message}"></span>
+            <div class="chatroom__container-message" th:each ="chatRoomMessage : ${chatRoomMessages}">
+                <span class="chatroom__container-message-createdDate" th:text="|${chatRoomMessage.createdTime} / |"></span>
+                <span class="chatroom__container-message-username" th:text="|${chatRoomMessage.senderName} / |"></span>
+                <span class="chatroom__container-message-message" th:text="${chatRoomMessage.message}"></span>
             </div>
         </div>
     </main>

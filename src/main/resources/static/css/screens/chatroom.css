@@ -1,0 +1,30 @@
+.chatroom {
+}
+
+.chatroom__form {
+    display:flex;
+    justify-content:center;
+}
+
+.chatroom__container {
+    padding-top: 10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.chatroom__container-message {
+    padding:10px;
+}
+
+.chatroom__container-message-createdDate {
+
+}
+
+.chatroom__container-message-username {
+
+}
+
+.chatroom__container-message-message {
+
+}
