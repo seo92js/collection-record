@@ -61,14 +61,10 @@
                 </div>
                 <!--댓글 목록-->
                 <div>
-<!--                    <ul>
-                        <li th:each="comment : ${comments}">
-                            <span th:text="${comment.username}"></span> : <span th:text="${comment.text}"></span>
-                        </li>
-                    </ul>-->
                     <div class="posts__right-comment-list" th:each="comment : ${comments}">
                         <div class="posts__right-comment-list-username" th:text="${comment.username}"></div>
                         <div class="posts__right-comment-list-text"th:text="${comment.text}"></div>
+                        <div class="posts__right-comment-list-createdDate" th:text="${comment.createdDate}"></div>
                     </div>
                 </div>
             </div>

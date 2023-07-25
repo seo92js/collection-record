@@ -46,11 +46,25 @@ function loadPostList(id, category, page) {
         }
 
         response.forEach(function(post) {
-            const div = $('<div>').addClass('user-home__post-post');
-            const titleLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title).addClass('user-home__post-title');
-            const imageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId).addClass('user-home__post-image');
-            div.append(titleLink);
-            div.append(imageLink);
+            const div = $('<div>').addClass('user-home__feed-post');
+
+            const createdDateDiv = $('<div>').addClass('user-home__feed-post-createdDate');
+            const createdDate = $('<div>').text(post.createdDate);
+            createdDateDiv.append(createdDate);
+
+            const titleDiv = $('<div>').addClass('user-home__feed-post-title');
+            const titleLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title).addClass('user-home__feed-post-title-title');
+            const status = $('<div>').text(post.status).addClass('user-home__feed-post-title-status');
+            titleDiv.append(titleLink);
+            titleDiv.append(status);
+
+            const imageDiv = $('<div>').addClass('user-home__feed-post-image');
+            const imageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId);
+            imageDiv.append(imageLink);
+
+            div.append(createdDateDiv);
+            div.append(titleDiv);
+            div.append(imageDiv);
 
             $('#postList').append(div);
         });

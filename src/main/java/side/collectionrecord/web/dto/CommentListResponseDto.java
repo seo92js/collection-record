@@ -9,9 +9,11 @@ import side.collectionrecord.domain.comment.Comment;
 public class CommentListResponseDto {
     String username;
     String text;
+    String createdDate;
 
     public CommentListResponseDto(Comment comment){
         this.username = comment.getUser().getUsername();
         this.text = comment.getText();
+        this.createdDate = comment.getCreatedDate();
     }
 }

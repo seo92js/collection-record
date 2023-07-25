@@ -35,20 +35,38 @@
     display: inline-block;
 }
 
-.user-home__post {
+.user-home__feed {
 }
 
-.user-home__post-post {
+.user-home__feed-post {
+    width:300px;
+    height:300px;
     margin: 10px;
     padding: 10px;
     display:flex;
     flex-direction:column;
-    border-bottom: 1px solid #c0c0c0
+    border: 1px solid #c0c0c0
 }
 
-.user-home__post-image {
+.user-home__feed-post-createdDate {
+    font-size:7px;
     padding:5px;
 }
 
-.user-home__post-title {
-    padding:5px;}
+.user-home__feed-post-title {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:5px;
+}
+
+.user-home__feed-post-title-title {
+}
+
+.user-home__feed-post-title-status {
+    font-size:7px;
+}
+
+.user-home__feed-post-image {
+    padding:5px;
+}

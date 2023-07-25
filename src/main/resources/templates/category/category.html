@@ -29,37 +29,6 @@
         </div>
     </main>
 
-<!--    <main>
-        <form th:object="${categoryAddRequestDto}" id="category-add-form">
-            <div>
-                <input type="hidden" th:field="*{userId}">
-                <input type="text" th:field="*{name}" placeholder="카테고리 명" th:required="true">
-                <button type="submit" class="btn btn-primary" id="category-add-btn">추가</button>
-            </div>
-        </form>
-
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>카테고리 명</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="category : ${categories}">
-                <td>
-                    <input type="text" th:value="${category.name}" th:id="'category-name-input-' + ${category.id}">
-                </td>
-                <td>
-                    <a class="btn btn-secondary" th:onclick="categoryUpdate([[${category.id}]])">수정</a>
-                </td>
-                <td>
-                    <a class="btn btn-secondary" th:onclick="categoryDelete([[${category.id}]])">삭제</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </main>-->
-
     <div th:replace="fragments/footer :: footer" />
 
     <script src="/js/categoryAdd.js"></script>

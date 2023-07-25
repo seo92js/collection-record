@@ -71,3 +71,7 @@
 
 .posts__right-comment-list-text{
 }
+
+.posts__right-comment-list-createdDate{
+    text-align:right;
+}

@@ -35,7 +35,7 @@ function searchList(page, text){
         }
 
         response.userSearchList.forEach(function(user){
-            const userRow = $('<tr>');
+/*            const userRow = $('<tr>');
             const userImageCell = $('<td>');
             const userImageLink = $('<img>').attr('src', '/api/v1/image-view/' + user.profileImageId);
 
@@ -43,12 +43,21 @@ function searchList(page, text){
             const userLink = $('<a>').attr('href', '/user/' + user.username + '/home').text(user.username);
             userImageCell.append(userImageLink);
             userCell.append(userLink);
-            userRow.append(userImageCell, userCell);
-            $('#user-search-list').append(userRow);
+            userRow.append(userImageCell, userCell);*/
+
+            const div = $('<div>').addClass('search__list-user-col');
+            const title = $('<div>유저</div>');
+            const userImageLink = $('<img>').attr('src', '/api/v1/image-view/' + user.profileImageId).addClass('search__list-user-col-image');
+            const userLink = $('<a>').attr('href', '/user/' + user.username + '/home').text(user.username).addClass('search__list-user-col-username');
+            div.append(title);
+            div.append(userImageLink);
+            div.append(userLink);
+
+            $('#user-search-list').append(div);
         });
 
        response.postsSearchList.forEach(function(post){
-            const postRow = $('<tr>');
+/*            const postRow = $('<tr>');
             const postImageCell = $('<td>').text(post.image);
             const postImageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId);
 
@@ -57,8 +66,17 @@ function searchList(page, text){
 
             postImageCell.append(postImageLink);
             postCell.append(postLink)
-            postRow.append(postImageCell, postCell);
-            $('#posts-search-list').append(postRow);
+            postRow.append(postImageCell, postCell);*/
+
+            const div = $('<div>').addClass('search__list-posts-col');
+            const title = $('<div>게시물</div>');
+            const postImageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId).addClass('search__list-posts-col-image');;
+            const postLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title).addClass('search__list-posts-col-title');;
+            div.append(title);
+            div.append(postImageLink);
+            div.append(postLink);
+
+            $('#posts-search-list').append(div);
         });
 
     }).fail(function (error){

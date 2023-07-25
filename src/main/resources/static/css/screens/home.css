@@ -11,21 +11,36 @@
 }
 
 .home__feed-post {
+    width: 300px;
     margin: 10px;
     padding: 10px;
     display:flex;
     flex-direction:column;
-    border-bottom: 1px solid #c0c0c0
+    border: 1px solid #c0c0c0
 }
 
-.home__feed-post-username {
-    padding:5px;
-}
-
-.home__feed-post-image {
+.home__feed-post-createdDate {
+    font-size:10px;
     padding:5px;
 }
 
 .home__feed-post-title {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:5px;
+}
+
+.home__feed-post-title-username {
+}
+
+.home__feed-post-title-title {
+}
+
+.home__feed-post-title-status {
+    font-size:7px;
+}
+
+.home__feed-post-image {
     padding:5px;
 }

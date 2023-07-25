@@ -9,44 +9,47 @@
         <h1 class="screen-header__title">글쓰기</h1>
     </header>
 
-    <main>
+    <main class="posts-add">
         <input type="hidden" name="loginUsername" th:value="${loginUsername}">
+        <div class="posts-add__form">
+            <form th:object="${postsAddRequestDto}" id="posts-add-form">
+                <div>
+                    <input type="hidden" th:field="*{userId}">
+                </div>
 
-        <form th:object="${postsAddRequestDto}" id="posts-add-form">
-            <div>
-                <input type="hidden" th:field="*{userId}">
-            </div>
+                <div class="posts-add__form-category">
+                    <select style="width:100px;height:22px" th:field="*{categoryName}">
+                        <option th:each = "category : ${categories}" th:text="${category.name}" th:value="${category.name}"></option>
+                    </select>
+                </div>
 
-            <div>
-                <select style="width:100px;height:22px" th:field="*{categoryName}">
-                    <option th:each = "category : ${categories}" th:text="${category.name}" th:value="${category.name}"></option>
-                </select>
-            </div>
+                <div class="posts-add__form-status">
+                    <select style="width:100px;height:22px" th:field="*{status}">
+                        <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>
+                    </select>
+                </div>
 
-            <div>
-                <select style="width:100px;height:22px" th:field="*{status}">
-                    <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>
-                </select>
-            </div>
+                <div class="posts-add__form-title">
+                    <input type="text" th:field="*{title}" placeholder="제목">
+                </div>
 
-            <div>
-                <input type="text" th:field="*{title}" placeholder="제목">
-            </div>
+                <div class="posts-add__form-image">
+                    <input type="file" id="posts-rep-add-img" placeholder="이미지 선택">
+                </div>
 
-            <div>
-                <input type="file" id="posts-rep-add-img" placeholder="이미지 선택">
-            </div>
+                <div class="posts-add__form-text">
+                    <input type="text" th:field="*{text}" placeholder="내용">
+                </div>
 
-            <div>
-                <input type="text" th:field="*{text}" placeholder="내용">
-            </div>
+                <div class="posts-add__form-hashtags">
+                    <input type="text" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)">
+                </div>
 
-            <div>
-                <input type="text" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)">
-            </div>
-
-            <button type="submit" class="btn btn-primary" id="posts-add-btn">추가</button>
-        </form>
+                <div class="posts-add__form-btn">
+                    <button type="submit" class="btn btn-primary" id="posts-add-btn">추가</button>
+                </div>
+            </form>
+        </div>
     </main>
 
     <div th:replace="fragments/footer :: footer" />
