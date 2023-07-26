@@ -12,8 +12,8 @@ import side.collectionrecord.service.ChatMessageService;
 public class ChatMessageApiController {
     private final ChatMessageService chatMessageService;
 
-    @PutMapping("/api/v1/chatmessage-udpate/{chatRoomId}")
-    public void updateRead(@PathVariable Long chatRoomId, @PathVariable Long userId, Model model){
+    @PutMapping("/api/v1/chatmessage-update/{chatRoomId}")
+    public void updateRead(@PathVariable Long chatRoomId, Model model){
         chatMessageService.updateRead(chatRoomId, (Long) model.getAttribute("loginUserId"));
     }
 }

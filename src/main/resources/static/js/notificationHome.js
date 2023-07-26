@@ -12,8 +12,7 @@ notificationSocket.onopen = function() {
 };
 
 notificationSocket.onmessage = function(event) {
-    const notificationButton = document.getElementById('notification-btn');
+    const notification = document.getElementById('notification');
 
-    notificationButton.classList.remove('btn-primary');
-    notificationButton.classList.add('btn-warning');
+    notification.classList.add('nav__badge');
 }

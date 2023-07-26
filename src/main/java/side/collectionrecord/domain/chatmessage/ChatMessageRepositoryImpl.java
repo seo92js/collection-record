@@ -29,7 +29,7 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepositoryCustom{
     public List<ChatMessage> findNotReadMessage(Long chatRoomId, Long userId){
 
         return queryFactory.selectFrom(chatMessage)
-                .where(chatMessage.receiver.id.eq(userId).and(chatMessage.read.eq(false)))
+                .where(chatMessage.chatRoom.id.eq(chatRoomId).and(chatMessage.receiver.id.eq(userId).and(chatMessage.read.eq(false))))
                 .fetch();
     }
 }

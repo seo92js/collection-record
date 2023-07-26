@@ -1,10 +1,8 @@
 package side.collectionrecord.domain.chatroom;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import javax.persistence.EntityManager;
-import java.util.List;
 
-import static side.collectionrecord.domain.chatroom.QChatRoom.chatRoom;
+import javax.persistence.EntityManager;
 
 public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom{
     private final EntityManager em;
@@ -13,18 +11,5 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom{
     public ChatRoomRepositoryImpl(EntityManager em) {
         this.em = em;
         this.queryFactory = new JPAQueryFactory(em);
-    }
-
-    @Override
-    public boolean readAllMessage(Long chatRoomId, Long receiverId) {
-        List<ChatRoom> fetch = queryFactory.selectFrom(chatRoom)
-                .join(chatRoom.chatMessages)
-                .where(chatRoom.chatMessages.any().receiver.id.eq(receiverId).and(chatRoom.chatMessages.any().read.eq(false)))
-                .fetch();
-
-        if (fetch.size() > 0)
-            return false;
-        else
-            return true;
     }
 }

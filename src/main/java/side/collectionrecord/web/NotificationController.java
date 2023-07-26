@@ -16,7 +16,6 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
-
     @GetMapping("/notification/{userId}")
     public String notification(@PathVariable("userId") Long userId, Model model){
 

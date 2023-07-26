@@ -18,3 +18,28 @@
 .nav__link {
     color: #2e363e;
 }
+
+@keyframes appearBtnAnimation {
+/*  from {
+  }
+  to {
+    transform: rotateZ(360deg);
+  }*/
+  0%{
+    scale:1;
+  }
+  50%{
+    scale:1.3;
+  }
+  100%{
+    scale:1;
+  }
+
+}
+
+.nav__badge {
+  position:fixed;
+  color:tomato;
+  animation: appearBtnAnimation 1.5s linear infinite;
+}
+

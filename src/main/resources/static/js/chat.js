@@ -11,40 +11,19 @@ chatSocket.onopen = function() {
 };
 
 chatSocket.onmessage = function(event) {
-    const json = event.data;
-    const chatMessageResponseDto = JSON.parse(json);
+    if (event.data != 'send'){
+        const json = event.data;
+        const chatMessageResponseDto = JSON.parse(json);
 
-    const messageContainer = document.getElementById('message-container');
-
-    const div = document.createElement('div');
-
-    const createdTime = document.createElement('span');
-    createdTime.textContent = chatMessageResponseDto.createdTime + ' / ';
-
-    const username = document.createElement('span');
-    username.textContent = chatMessageResponseDto.senderName + ' / ';
-
-    const message = document.createElement('span');
-    message.textContent = chatMessageResponseDto.message;
-
-    div.appendChild(createdTime);
-    div.appendChild(username);
-    div.appendChild(message);
-
-    messageContainer.appendChild(div);
-
-    $.ajax({
-        type: 'PUT',
-        url: '/api/v1/chatmessage-update/' + chatMessageResponseDto.chatRoomId,
-        data: formData,
-        processData: false,
-        contentType: false
-    }).done(function(){
-        alert('수정완료.');
-        location.reload();
-    }).fail(function (error){
-        alert(JSON.stringify(error));
-    });
+        $.ajax({
+            type: 'PUT',
+            url: '/api/v1/chatmessage-update/' + chatMessageResponseDto.chatRoomId,
+        }).done(function(){
+            location.reload();
+        }).fail(function (error){
+            alert(JSON.stringify(error));
+        });
+    }
 }
 
 function send(senderId, receiverId, chatRoomId){

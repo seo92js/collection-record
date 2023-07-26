@@ -35,15 +35,6 @@ function searchList(page, text){
         }
 
         response.userSearchList.forEach(function(user){
-/*            const userRow = $('<tr>');
-            const userImageCell = $('<td>');
-            const userImageLink = $('<img>').attr('src', '/api/v1/image-view/' + user.profileImageId);
-
-            const userCell = $('<td>');
-            const userLink = $('<a>').attr('href', '/user/' + user.username + '/home').text(user.username);
-            userImageCell.append(userImageLink);
-            userCell.append(userLink);
-            userRow.append(userImageCell, userCell);*/
 
             const div = $('<div>').addClass('search__list-user-col');
             const title = $('<div>유저</div>');
@@ -57,16 +48,6 @@ function searchList(page, text){
         });
 
        response.postsSearchList.forEach(function(post){
-/*            const postRow = $('<tr>');
-            const postImageCell = $('<td>').text(post.image);
-            const postImageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId);
-
-            const postCell = $('<td>');
-            const postLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title);
-
-            postImageCell.append(postImageLink);
-            postCell.append(postLink)
-            postRow.append(postImageCell, postCell);*/
 
             const div = $('<div>').addClass('search__list-posts-col');
             const title = $('<div>게시물</div>');

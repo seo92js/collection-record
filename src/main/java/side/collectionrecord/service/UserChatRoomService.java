@@ -4,12 +4,14 @@ import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import side.collectionrecord.domain.chatmessage.ChatMessage;
+import side.collectionrecord.domain.chatmessage.ChatMessageRepository;
 import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.chatroom.ChatRoomRepository;
-import side.collectionrecord.domain.chatroom.QChatRoom;
 import side.collectionrecord.domain.user.QUser;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.domain.userchatroom.QUserChatRoom;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
 import side.collectionrecord.domain.userchatroom.UserChatRoomRepository;
 import side.collectionrecord.web.dto.UserChatRoomListResponseDto;
@@ -23,6 +25,7 @@ public class UserChatRoomService {
     private final UserRepository userRepository;
     private final UserChatRoomRepository userChatRoomRepository;
     private final ChatRoomRepository chatRoomRepository;
+    private final ChatMessageRepository chatMessageRepository;
 
     @Transactional
     public UserChatRoom createChatRoom(Long user1Id, Long user2Id){
@@ -71,10 +74,14 @@ public class UserChatRoomService {
 
         for (Tuple tuple : userChatRoomList){
             User user = tuple.get(QUser.user);
-            Long chatRoomId = tuple.get(QChatRoom.chatRoom.id);
-            Boolean read = chatRoomRepository.readAllMessage(chatRoomId, userId);
+            Long chatRoomId = tuple.get(QUserChatRoom.userChatRoom.chatRoom.id);
+            List<ChatMessage> notReadMessage = chatMessageRepository.findNotReadMessage(chatRoomId, userId);
+            if(notReadMessage.size() > 0) {
+                responseDtoList.add(new UserChatRoomListResponseDto(user, false));
+            }else{
+                responseDtoList.add(new UserChatRoomListResponseDto(user, true));
+            }
 
-            responseDtoList.add(new UserChatRoomListResponseDto(user, read));
         }
 
         return responseDtoList;
@@ -85,9 +92,9 @@ public class UserChatRoomService {
         User user = userRepository.findById(userId).get();
 
         for ( UserChatRoom userChatRoom : user.getUserChatRooms()){
-            Boolean read = chatRoomRepository.readAllMessage(userChatRoom.getChatRoom().getId(), userId);
+            List<ChatMessage> notReadMessage = chatMessageRepository.findNotReadMessage(userChatRoom.getChatRoom().getId(), userId);
 
-            if (read == false)
+            if (notReadMessage.size() > 0)
                 return false;
         }
 

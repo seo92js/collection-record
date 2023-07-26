@@ -16,18 +16,27 @@
                 <i class="fas fa-search"></i>
             </a>
         </li>
-<!--        <li class="nav__img" sec:authorize="isAuthenticated()">
-            <span th:text="|${loginUsername} 님|"></span>
-        </li>-->
         <!-- 마이홈 -->
         <li class="nav__btn" sec:authorize="isAuthenticated()">
             <a class="nav__link" th:href="@{/user/{loginUsername}/home(loginUsername=${loginUsername})}">
                 <i class="fas fa-user"></i>
             </a>
         </li>
+        <!-- 채팅방 -->
+        <li class="nav__btn" sec:authorize="isAuthenticated()">
+            <a th:id="chatroom-list" th:href="@{/user/{loginUsername}/chatroomList(loginUsername=${loginUsername})}">
+                <i class="fas fa-comment"></i>
+            </a>
+        </li>
+        <!-- 알림 -->
+        <li class="nav__btn" sec:authorize="isAuthenticated()">
+            <a th:href="@{/notification/{id}(id=${loginUserId})}" id="notification">
+                <i class="fas fa-bell"></i>
+            </a>
+        </li>
         <!-- 로그아웃 -->
         <li class="nav__btn" sec:authorize="isAuthenticated()">
-            <a class="nab__link" href="/logout" id="logout-btn">LOGOUT</a>
+        <a class="nab__link" href="/logout" id="logout-btn">LOGOUT</a>
         </li>
         <!-- 회원가입 -->
         <li class="nav__btn" sec:authorize="isAnonymous()">
@@ -37,7 +46,11 @@
         <li class="nav__btn" sec:authorize="isAnonymous()">
             <a class="nav__link" href="/login">LOGIN</a>
         </li>
+
+        <input type="hidden" th:value="${loginUsername}" th:id="loginUsername">
     </ul>
 
+    <script src="/js/chatHome.js" sec:authorize="isAuthenticated()"></script>
+    <script src="/js/notificationHome.js" sec:authorize="isAuthenticated()"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </nav>

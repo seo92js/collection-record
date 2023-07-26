@@ -1,0 +1,17 @@
+.user-chatroom-list {
+    margin-top:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.user-chatroom-list__chatroom {
+    margin:10px;
+}
+
+.user-chatroom__not-read {
+    color:red;
+}
+
+.user-chatroom__read {
+}

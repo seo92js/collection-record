@@ -14,6 +14,5 @@ chatSocket.onopen = function() {
 chatSocket.onmessage = function(event) {
     const chatroomList = document.getElementById('chatroom-list');
 
-    chatroomList.classList.remove('btn-info');
-    chatroomList.classList.add('btn-warning');
+    chatroomList.classList.add('nav__badge');
 }

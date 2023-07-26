@@ -24,10 +24,6 @@ public class SearchApiController {
 
         List<PostsSearchResponseDto> postsSearchList = postsService.findContainsHashtags(text, page, 5);
 
-        //if (userSearchList.size() == 0 && postsSearchList.size() == 0){
-        //    return null;
-        //}else{
-            return new SearchResponseDto(userSearchList, postsSearchList);
-        //}
+        return new SearchResponseDto(userSearchList, postsSearchList);
     }
 }
