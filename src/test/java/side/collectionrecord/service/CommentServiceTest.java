@@ -176,7 +176,7 @@ class CommentServiceTest {
         commentService.addComment(commentAddRequestDto2);
 
         //when
-        List<CommentListResponseDto> comments = commentService.findComments(posts);
+        List<CommentListResponseDto> comments = commentService.findParentComments(posts);
 
         //then
         assertThat(comments.size()).isEqualTo(2);

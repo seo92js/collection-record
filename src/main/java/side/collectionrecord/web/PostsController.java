@@ -74,9 +74,18 @@ public class PostsController {
                         .text(null)
                 .build());
 
-        List<CommentListResponseDto> comments = commentService.findComments(posts);
+        model.addAttribute("commentChildAddRequestDto", CommentChildAddRequestDto.builder()
+                .userId(userId)
+                .postsId(id)
+                .parentCommentId(null)
+                .text(null)
+                .build());
 
-        model.addAttribute("comments", comments);
+        List<CommentListResponseDto> parentComments = commentService.findParentComments(posts);
+        model.addAttribute("parentComments", parentComments);
+
+        List<CommentListResponseDto> childComments = commentService.findChildComments(posts);
+        model.addAttribute("childComments", childComments);
 
         return "posts/posts";
     }

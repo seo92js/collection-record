@@ -10,6 +10,7 @@ import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.CommentAddRequestDto;
+import side.collectionrecord.web.dto.CommentChildAddRequestDto;
 import side.collectionrecord.web.dto.CommentListResponseDto;
 
 import java.util.List;
@@ -31,7 +32,23 @@ public class CommentService {
         return commentRepository.save(Comment.builder()
                         .user(user)
                         .posts(posts)
+                        .parentComment(null)
                         .text(commentAddRequestDto.getText())
+                        .build())
+                        .getId();
+    }
+
+    @Transactional
+    public Long addCommentChild(CommentChildAddRequestDto commentChildAddRequestDto){
+        User user = userRepository.findById(commentChildAddRequestDto.getUserId()).get();
+        Posts posts = postsRepository.findById(commentChildAddRequestDto.getPostsId()).get();
+        Comment parentComment = commentRepository.findById(commentChildAddRequestDto.getParentCommentId()).get();
+
+        return commentRepository.save(Comment.builder()
+                        .user(user)
+                        .posts(posts)
+                        .text(commentChildAddRequestDto.getText())
+                        .parentComment(parentComment)
                         .build())
                         .getId();
     }
@@ -44,9 +61,17 @@ public class CommentService {
     }
 
     @Transactional
-    public List<CommentListResponseDto> findComments(Posts posts){
+    public List<CommentListResponseDto> findParentComments(Posts posts){
 
-        return commentRepository.findAllComments(posts).stream()
+        return commentRepository.findAllParentComments(posts).stream()
+                .map(CommentListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<CommentListResponseDto> findChildComments(Posts posts){
+
+        return commentRepository.findAllChildComments(posts).stream()
                 .map(CommentListResponseDto::new)
                 .collect(Collectors.toList());
     }

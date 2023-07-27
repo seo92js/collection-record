@@ -19,10 +19,18 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom{
     }
 
     @Override
-    public List<Comment> findAllComments(Posts posts){
+    public List<Comment> findAllParentComments(Posts posts){
         return queryFactory.selectFrom(comment)
-                .where(comment.posts.eq(posts))
-                .orderBy(comment.createdDate.desc())
+                .where(comment.posts.eq(posts).and(comment.parentComment.isNull()))
+                .orderBy(comment.createdDate.asc())
+                .fetch();
+    }
+
+    @Override
+    public List<Comment> findAllChildComments(Posts posts){
+        return queryFactory.selectFrom(comment)
+                .where(comment.posts.eq(posts).and(comment.parentComment.isNotNull()))
+                .orderBy(comment.createdDate.asc())
                 .fetch();
     }
 }

@@ -46,11 +46,12 @@
             </div>
             <!-- 댓글 -->
             <div class="posts__right-comment">
+                <input type="hidden" th:value="${loginUsername}" id="loginUsername">
+
                 <!--댓글 작성 form-->
                 <div class="posts__right-comment-form">
                     <form th:object="${commentAddRequestDto}" id="comment-add-form">
                         <div>
-                            <input type="hidden" th:value="${loginUsername}" id="loginUsername">
                             <input type="hidden" th:field="*{userId}">
                             <input type="hidden" th:field="*{postsId}">
 
@@ -58,17 +59,48 @@
                             <button type="submit" id="comment-add-btn" th:onclick="commentAdd(); notificationSend([[${loginUsername}]],[[${username}]],[[*{postsId}]])">댓글 달기</button>
                         </div>
                     </form>
+                    <!-- else 위에 div 클래스가 child 이면 -->
+                    <form class="hidden" th:object="${commentChildAddRequestDto}" id="comment-child-add-form">
+                        <div>
+                            <input type="hidden" th:field="*{userId}">
+                            <input type="hidden" th:field="*{postsId}">
+                            <input type="hidden" th:field="*{parentCommentId}" id="parentCommentId">
+
+                            <input type="text" th:field="*{text}" placeholder="내용" th:required="true">
+                            <button type="submit" id="comment-child-add-btn" th:onclick="commentChildAdd(); notificationSend([[${loginUsername}]],[[${username}]],[[*{postsId}]])">답글 달기</button>
+                            <button type="button" th:onclick="switchParentForm()">X</button>
+                        </div>
+                    </form>
+
                 </div>
+
                 <!--댓글 목록-->
                 <div>
-                    <div class="posts__right-comment-list" th:each="comment : ${comments}">
+                    <div class="posts__right-comment-list" th:each="parentComment : ${parentComments}">
                         <div class="posts__right-comment-list-createdDate">
-                            <div th:text="${comment.createdDate}"></div>
+                            <div th:text="${parentComment.createdDate}"></div>
                         </div>
                         <div class="posts__right-comment-list-content">
-                            <div class="posts__right-comment-list-content-username" th:text="${comment.username}"></div>
-                            <div class="posts__right-comment-list-content-text"th:text="${comment.text}"></div>
+                            <div class="posts__right-comment-list-content-username" th:text="${parentComment.username}"></div>
+                            <div class="posts__right-comment-list-content-text"th:text="${parentComment.text}"></div>
                         </div>
+                        <div>
+                            <button class="posts__right-comment-form-btn" type="button" th:onclick="switchChildForm([[${parentComment.id}]])">답글 달기</button>
+                        </div>
+
+                        <!-- 답글 목록-->
+                        <div>
+                            <div class="posts__right-comment-child-list" th:each="childComment : ${childComments}" th:if="${childComment.parentId==parentComment.id}">
+                                <div class="posts__right-comment-list-createdDate">
+                                    <div th:text="${childComment.createdDate}"></div>
+                                </div>
+                                <div class="posts__right-comment-list-content">
+                                    <div class="posts__right-comment-list-content-username" th:text="${childComment.username}"></div>
+                                    <div class="posts__right-comment-list-content-text"th:text="${childComment.text}"></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

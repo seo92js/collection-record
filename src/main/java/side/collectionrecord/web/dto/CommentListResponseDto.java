@@ -7,11 +7,16 @@ import side.collectionrecord.domain.comment.Comment;
 @Getter
 @NoArgsConstructor
 public class CommentListResponseDto {
+    Long id;
+    Long parentId;
     String username;
     String text;
     String createdDate;
 
     public CommentListResponseDto(Comment comment){
+        this.id = comment.getId();
+        if (comment.getParentComment() != null)
+            this.parentId = comment.getParentComment().getId();
         this.username = comment.getUser().getUsername();
         this.text = comment.getText();
         this.createdDate = comment.getCreatedDate();

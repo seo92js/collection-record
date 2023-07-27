@@ -59,6 +59,13 @@
     padding: 10px 0px 10px 10px;
 }
 
+.posts__right-comment-form-btn{
+    border:none;
+    background-color:transparent;
+    font-size: 10px;
+    color: #808080;
+}
+
 .posts__right-comment-list{
     display:flex;
     flex-direction:column;
@@ -69,6 +76,7 @@
     font-size:7px;
     float: left;
     padding-bottom:5px;
+    color:blue;
 }
 
 .posts__right-comment-list-content {
@@ -83,3 +91,13 @@
 .posts__right-comment-list-content-text{
 }
 
+.posts__right-comment-child-list {
+    display:flex;
+    flex-direction:column;
+    margin-left:50px;
+    padding: 5px 0px 5px 10px;
+}
+
+.hidden {
+    display:none;
+}

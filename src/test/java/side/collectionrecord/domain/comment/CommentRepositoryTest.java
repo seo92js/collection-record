@@ -134,7 +134,7 @@ class CommentRepositoryTest {
         commentRepository.save(comment2);
 
         //when
-        List<Comment> allComments = commentRepository.findAllComments(posts);
+        List<Comment> allComments = commentRepository.findAllParentComments(posts);
 
         //then
         assertThat(allComments.size()).isEqualTo(2);
