@@ -9,6 +9,12 @@
         <h1 class="screen-header__title">회원 가입</h1>
     </header>
 
+    <div th:if="${error}">
+        <script th:inline="javascript">
+            alert([[${error}]]);
+        </script>
+    </div>
+
     <main class="join">
         <div class="join__form">
             <form action="/user/join" role="form" method="post" th:object="${userJoinRequestDto}" id="user-join-form">

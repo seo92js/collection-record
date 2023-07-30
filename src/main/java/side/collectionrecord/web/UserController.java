@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.CategoryService;
@@ -16,6 +19,7 @@ import side.collectionrecord.web.dto.UserChatRoomListResponseDto;
 import side.collectionrecord.web.dto.UserJoinRequestDto;
 import side.collectionrecord.web.dto.UserProfileResponseDto;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -43,12 +47,18 @@ public class UserController {
     }
 
     @PostMapping("/user/join")
-    public String joinUserForm(@ModelAttribute UserJoinRequestDto userJoinRequestDto) throws IOException {
-        userJoinRequestDto.encodePassword(passwordEncoder);
+    public String joinUserForm(@Valid @ModelAttribute UserJoinRequestDto userJoinRequestDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws IOException {
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("error", bindingResult.getFieldError().getDefaultMessage());
 
-        userService.join(userJoinRequestDto);
+            return "redirect:/user/join";
+        }else {
+            userJoinRequestDto.encodePassword(passwordEncoder);
 
-        return "redirect:/";
+            userService.join(userJoinRequestDto);
+
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/user/{username}/home")
