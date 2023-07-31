@@ -47,9 +47,7 @@ public class PostsApiController {
 
         postsAddRequestDto.setRepresentativeImage(images);
 
-        Long postsId = postsService.addPosts(postsAddRequestDto);
-
-        return postsId;
+        return postsService.addPosts(postsAddRequestDto);
     }
 
     @GetMapping("/api/v1/posts/{id}/{categoryName}/{page}")
@@ -66,8 +64,6 @@ public class PostsApiController {
         Posts posts = postsService.findPosts(id);
 
         if (imageFiles != null){
-
-
             for (MultipartFile imageFile : imageFiles){
                 byte[] image = imageFile.getBytes();
 
@@ -83,9 +79,7 @@ public class PostsApiController {
                 Image image = imageService.findImage(imageId);
                 images.add(image);
             }
-
         }else{
-            //Long imageId = imageService.findImage(posts.getRepresentativeImage().getId()).getId();
             images = posts.getRepresentativeImage();
         }
 

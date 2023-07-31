@@ -19,7 +19,8 @@ public class FollowPostsListResponseDto {
         this.username = posts.getUser().getUsername();
         this.id = posts.getId();
         this.title = posts.getTitle();
-        this.representativeImageId = posts.getRepresentativeImage().getId();
+        // 일단 맨 앞 사진?
+        this.representativeImageId = posts.getRepresentativeImage().get(0).getId();
         this.createdDate = posts.getCreatedDate();
         this.status = posts.getStatus();
     }

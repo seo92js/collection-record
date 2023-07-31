@@ -13,7 +13,8 @@ public class PostsSearchResponseDto {
 
     public PostsSearchResponseDto(Posts posts){
         this.id = posts.getId();
-        this.representativeImageId = posts.getRepresentativeImage().getId();
+        // 일단 맨 앞 사진?
+        this.representativeImageId = posts.getRepresentativeImage().get(0).getId();
         this.title = posts.getTitle();
     }
 }

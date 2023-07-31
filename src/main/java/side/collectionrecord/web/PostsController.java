@@ -61,7 +61,7 @@ public class PostsController {
 
         Long userId = (Long)model.getAttribute("loginUserId");
 
-        if (posts.getUser().getId() == userId){
+        if (posts.getUser().getId().equals(userId)){
             model.addAttribute("isMyPost", true);
         } else{
             model.addAttribute("isMyPost", false);
@@ -114,7 +114,8 @@ public class PostsController {
 
         model.addAttribute("statuses", statuses);
 
-        model.addAttribute("imageId", posts.getRepresentativeImage().getId());
+        // 일단은 첫번쨰 이미지만?
+        model.addAttribute("imageId", posts.getRepresentativeImage().get(0).getId());
 
         model.addAttribute("postsId", id);
 

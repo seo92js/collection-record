@@ -21,7 +21,8 @@ public class PostsResponseDto {
         this.id = posts.getId();
         this.categoryName = posts.getCategory().getName();
         this.title = posts.getTitle();
-        this.representativeImageId = posts.getRepresentativeImage().getId();
+        // 일단 맨 앞 사진?
+        this.representativeImageId = posts.getRepresentativeImage().get(0).getId();
         this.text = posts.getText();
         this.hashtags = posts.getHashtags();
         this.status = posts.getStatus();

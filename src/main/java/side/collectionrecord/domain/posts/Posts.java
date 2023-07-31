@@ -24,9 +24,9 @@ public class Posts extends BaseTimeEntity {
     private String title;
     private String text;
 
-    @OneToOne
-    @JoinColumn(name = "image_id")
-    private List<Image> representativeImage;
+    @OneToMany
+    @JoinColumn(name = "posts_id")
+    private List<Image> representativeImage = new ArrayList<>();
 
     private String hashtags;
 
