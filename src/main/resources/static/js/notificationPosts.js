@@ -12,6 +12,10 @@ socket.onopen = function() {
 };
 
 function notificationSend(senderName, receiverName, postsId){
+
+    if (senderName == receiverName)
+        return;
+
     const notificationAddRequestDto = {
         senderName: senderName,
         receiverName: receiverName,

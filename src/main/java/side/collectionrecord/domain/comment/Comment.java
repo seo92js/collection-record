@@ -33,7 +33,7 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "parent_comment_id", referencedColumnName = "comment_id")
     private Comment parentComment;
 
-    @OneToMany(mappedBy = "parentComment", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parentComment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> childComments = new ArrayList<>();
 
     public void setUser(User user){

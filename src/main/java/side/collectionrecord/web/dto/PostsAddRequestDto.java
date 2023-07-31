@@ -7,6 +7,8 @@ import lombok.Setter;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.posts.PostsStatus;
 
+import java.util.List;
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -14,14 +16,14 @@ public class PostsAddRequestDto {
     private Long userId;
     private String categoryName;
     private String title;
-    private Image representativeImage;
+    private List<Image> representativeImage;
     private String text;
 
     private String hashtags;
     private PostsStatus status;
 
     @Builder
-    public PostsAddRequestDto(Long userId, String categoryName, String title, Image representativeImage, String text, String hashtags, PostsStatus status){
+    public PostsAddRequestDto(Long userId, String categoryName, String title, List<Image> representativeImage, String text, String hashtags, PostsStatus status){
         this.userId = userId;
         this.categoryName = categoryName;
         this.title = title;

@@ -3,6 +3,7 @@ package side.collectionrecord.web;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.service.ImageService;
 import side.collectionrecord.service.PostsService;
@@ -12,6 +13,7 @@ import side.collectionrecord.web.dto.PostsListResponseDto;
 import side.collectionrecord.web.dto.PostsUpdateRequestDto;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,16 +24,28 @@ public class PostsApiController {
     private final ImageService imageService;
 
     @PostMapping("/api/v1/posts")
-    public Long save(@RequestPart(value = "postsAddRequestDto") PostsAddRequestDto postsAddRequestDto, @RequestPart(value = "imageFile", required = true)MultipartFile imageFile) throws IOException {
+    public Long save(@RequestPart(value = "postsAddRequestDto") PostsAddRequestDto postsAddRequestDto, @RequestPart(value = "imageFile", required = true) List<MultipartFile> imageFiles) throws IOException {
 
-        byte[] image = imageFile.getBytes();
+        List<Long> imageIds = new ArrayList<>();
 
-        Long imageId = imageService.upload(ImageUploadRequestDto.builder()
-                .filename(imageFile.getOriginalFilename())
-                .data(image)
-                .build());
+        for (MultipartFile imageFile : imageFiles){
+            byte[] image = imageFile.getBytes();
+            Long imageId = imageService.upload(ImageUploadRequestDto.builder()
+                    .filename(imageFile.getOriginalFilename())
+                    .data(image)
+                    .build());
 
-        postsAddRequestDto.setRepresentativeImage(imageService.findImage(imageId));
+            imageIds.add(imageId);
+        }
+
+        List<Image> images = new ArrayList<>();
+
+        for (Long imageId : imageIds){
+            Image image = imageService.findImage(imageId);
+            images.add(image);
+        }
+
+        postsAddRequestDto.setRepresentativeImage(images);
 
         Long postsId = postsService.addPosts(postsAddRequestDto);
 
@@ -44,23 +58,38 @@ public class PostsApiController {
     }
 
     @PutMapping("/api/v1/posts-update/{id}")
-    public Long update(@PathVariable Long id, @RequestPart(value = "postsUpdateRequestDto") PostsUpdateRequestDto postsUpdateRequestDto, @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {
-        Long imageId;
+    public Long update(@PathVariable Long id, @RequestPart(value = "postsUpdateRequestDto") PostsUpdateRequestDto postsUpdateRequestDto, @RequestPart(value = "imageFile", required = false) List<MultipartFile> imageFiles) throws IOException {
+        //Long imageId;
+        List<Long> imageIds = new ArrayList<>();
+        List<Image> images = new ArrayList<>();
 
         Posts posts = postsService.findPosts(id);
 
-        if (imageFile != null){
-            byte[] image = imageFile.getBytes();
+        if (imageFiles != null){
 
-            imageId = imageService.upload(ImageUploadRequestDto.builder()
-                    .filename(imageFile.getOriginalFilename())
-                    .data(image)
-                    .build());
+
+            for (MultipartFile imageFile : imageFiles){
+                byte[] image = imageFile.getBytes();
+
+                Long imageId = imageService.upload(ImageUploadRequestDto.builder()
+                        .filename(imageFile.getOriginalFilename())
+                        .data(image)
+                        .build());
+
+                imageIds.add(imageId);
+            }
+
+            for (Long imageId : imageIds){
+                Image image = imageService.findImage(imageId);
+                images.add(image);
+            }
+
         }else{
-            imageId = imageService.findImage(posts.getRepresentativeImage().getId()).getId();
+            //Long imageId = imageService.findImage(posts.getRepresentativeImage().getId()).getId();
+            images = posts.getRepresentativeImage();
         }
 
-        postsUpdateRequestDto.setRepresentativeImage(imageService.findImage(imageId));
+        postsUpdateRequestDto.setRepresentativeImage(images);
 
         Long userId = posts.getUser().getId();
 

@@ -67,13 +67,12 @@ public class UserChatRoomService {
 
     @Transactional
     public List<UserChatRoomListResponseDto> findUserChatRoomList(Long userId){
-
         List<Tuple> userChatRoomList = userChatRoomRepository.findUserChatRoomList(userId);
 
         List<UserChatRoomListResponseDto> responseDtoList = new ArrayList<>();
 
         for (Tuple tuple : userChatRoomList){
-            User user = tuple.get(QUser.user);
+            User user = tuple.get(QUserChatRoom.userChatRoom.user);
             Long chatRoomId = tuple.get(QUserChatRoom.userChatRoom.chatRoom.id);
             List<ChatMessage> notReadMessage = chatMessageRepository.findNotReadMessage(chatRoomId, userId);
             if(notReadMessage.size() > 0) {
@@ -81,7 +80,6 @@ public class UserChatRoomService {
             }else{
                 responseDtoList.add(new UserChatRoomListResponseDto(user, true));
             }
-
         }
 
         return responseDtoList;

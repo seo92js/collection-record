@@ -49,13 +49,12 @@ public class UserChatRoomRepositoryImpl implements UserChatRoomRepositoryCustom{
 
     @Override
     public List<Tuple> findUserChatRoomList(Long userId) {
-
-        List<Tuple> users = queryFactory.select(user, userChatRoom.chatRoom.id)
+        List<Tuple> users = queryFactory.select(userChatRoom.user, userChatRoom.chatRoom.id)
                 .from(userChatRoom)
                 .where(userChatRoom.chatRoom.id.in(
-                        JPAExpressions.select(userChatRoom.chatRoom.id)
-                                .from(userChatRoom)
-                                .where(userChatRoom.user.id.eq(userId)))
+                                JPAExpressions.select(userChatRoom.chatRoom.id)
+                                        .from(userChatRoom)
+                                        .where(userChatRoom.user.id.eq(userId)))
                         .and(userChatRoom.user.id.ne(userId)))
                 .fetch();
 

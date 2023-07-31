@@ -86,6 +86,7 @@
                         </div>
                         <div>
                             <button class="posts__right-comment-form-btn" type="button" th:onclick="switchChildForm([[${parentComment.id}]])">답글 달기</button>
+                            <button th:if="${parentComment.username == loginUsername}" class="posts__right-comment-form-btn" type="button" th:onclick="commentDelete([[${parentComment.id}]])">삭제</button>
                         </div>
 
                         <!-- 답글 목록-->
@@ -97,6 +98,9 @@
                                 <div class="posts__right-comment-list-content">
                                     <div class="posts__right-comment-list-content-username" th:text="${childComment.username}"></div>
                                     <div class="posts__right-comment-list-content-text"th:text="${childComment.text}"></div>
+                                </div>
+                                <div>
+                                    <button th:if="${childComment.username == loginUsername}" class="posts__right-comment-form-btn" type="button" th:onclick="commentDelete([[${childComment.id}]])">삭제</button>
                                 </div>
                             </div>
                         </div>
@@ -110,6 +114,7 @@
     <div th:replace="fragments/footer :: footer" />
 
     <script src="/js/commentAdd.js"></script>
+    <script src="/js/commentDelete.js"></script>
     <script src="/js/notificationPosts.js"></script>
 
 </body>
