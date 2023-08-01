@@ -53,8 +53,7 @@ public class PostsService {
 
     @Transactional
     public Long addPosts(PostsAddRequestDto postsAddRequestDto){
-
-        Category category = categoryRepository.findByName(postsAddRequestDto.getUserId(), postsAddRequestDto.getCategoryName());
+        Category category = categoryRepository.findById(postsAddRequestDto.getCategoryId()).get();
 
         return postsRepository.save(Posts.builder()
                         .title(postsAddRequestDto.getTitle())
@@ -74,7 +73,7 @@ public class PostsService {
 
         List<Image> prevImage = posts.getRepresentativeImage();
 
-        Category category = categoryRepository.findByName(userId, postsUpdateRequestDto.getCategoryName());
+        Category category = categoryRepository.findById(postsUpdateRequestDto.getCategoryId()).get();
 
         posts.update(category, postsUpdateRequestDto.getTitle(), postsUpdateRequestDto.getRepresentativeImage(), postsUpdateRequestDto.getText(), postsUpdateRequestDto.getHashtags(), postsUpdateRequestDto.getStatus());
 

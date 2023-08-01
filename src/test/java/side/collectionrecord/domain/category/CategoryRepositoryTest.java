@@ -40,7 +40,7 @@ class CategoryRepositoryTest {
         categoryRepository.save(category);
 
         //when
-        List<Category> allCategory = categoryRepository.findAllCategory(user.getId());
+        List<Category> allCategory = categoryRepository.findAllParentCategory(user.getId());
 
         //then
         assertThat(allCategory.get(0).getName()).isEqualTo("test");
@@ -106,7 +106,7 @@ class CategoryRepositoryTest {
         categoryRepository.save(category2);
 
         //when
-        List<Category> allCategory = categoryRepository.findAllCategory(user.getId());
+        List<Category> allCategory = categoryRepository.findAllParentCategory(user.getId());
 
         //then
         assertThat(allCategory.size()).isEqualTo(2);

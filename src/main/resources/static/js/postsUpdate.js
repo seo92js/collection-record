@@ -14,7 +14,7 @@ function postsUpdate(id){
     const imageFileInput = document.getElementById('posts-rep-update-img');
 
     const postsUpdateRequestDto = {
-        categoryName: formData.get('categoryName'),
+        categoryId: formData.get('categoryId'),
         title: formData.get('title'),
         text: formData.get('text'),
         hashtags: formData.get('hashtags'),
@@ -25,8 +25,9 @@ function postsUpdate(id){
 
     //이미지 파일 선택 확인
     if (imageFileInput.files.length > 0){
-        const imageFile = imageFileInput.files[0];
-        formData.append('imageFile', imageFile);
+         for (const file of imageFileInput.files) {
+            formData.append('imageFile', file);
+         }
     }
 
     if(!checkRequiredValue(postsUpdateRequestDto))
@@ -47,7 +48,7 @@ function postsUpdate(id){
 }
 
 function checkRequiredValue(value){
-    if (!value.categoryName || !value.title || !value.text || !value.hashtags || !value.status) {
+    if (!value.categoryId || !value.title || !value.text || !value.hashtags || !value.status) {
         alert('필수 값을 입력하시오');
         return false;
     }else{

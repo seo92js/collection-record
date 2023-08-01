@@ -32,8 +32,13 @@
         <div class="user-home__category">
             <ul>
                 <li class="user-home__category-li"><a href="javascript:void(0)" th:data-id="${id}" th:data-category="all" class="category-link">전체</a></li>
-                <li class="user-home__category-li" th:each="category : ${categories}">
-                    <a href="javascript:void(0)" th:text="${category.name}" th:data-id="${id}" th:data-category="${category.name}" class="category-link"></a>
+                <li class="user-home__category-li" th:each="parentCategory : ${parentCategories}">
+                    <a href="javascript:void(0)" th:text="${parentCategory.name}" th:data-id="${id}" th:data-category="${parentCategory.name}" class="category-link"></a>
+                    <ul>
+                        <li th:each="childCategory : ${childCategories}">
+                            <a th:if="${childCategory.parentCategoryId == parentCategory.id}" href="javascript:void(0)" th:text="${childCategory.name}" th:data-id="${id}" th:data-category="${childCategory.name}" class="category-link"></a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

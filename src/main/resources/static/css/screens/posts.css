@@ -25,6 +25,10 @@
     padding: 10px 0px 10px 0px;
 }
 
+.posts__left-image-content {
+    display: none;
+}
+
 .posts__right {
     width: 30%;
 }

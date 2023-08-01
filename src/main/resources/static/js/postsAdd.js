@@ -13,7 +13,7 @@ function postsAdd(){
 
     const postsAddRequestDto = {
         userId: formData.get('userId'),
-        categoryName: formData.get('categoryName'),
+        categoryId: formData.get('categoryId'),
         title: formData.get('title'),
         text: formData.get('text'),
         hashtags: formData.get('hashtags'),
@@ -27,8 +27,9 @@ function postsAdd(){
 
     //이미지 파일 선택 확인
     if (imageFileInput.files.length > 0){
-        const imageFile = imageFileInput.files[0];
-        formData.append('imageFile', imageFile);
+        for (const file of imageFileInput.files) {
+            formData.append('imageFile', file);
+        }
     } else{
         alert('대표이미지를 선택하세요.');
         return;
@@ -52,7 +53,7 @@ function postsAdd(){
 }
 
 function checkRequiredValue(value){
-    if (!value.categoryName || !value.title || !value.text || !value.status) {
+    if (!value.categoryId || !value.title || !value.text || !value.status) {
         alert('필수 값을 입력하시오');
         return false;
     }else{

@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 public class PostsAddRequestDto {
     private Long userId;
-    private String categoryName;
+    private Long categoryId;
     private String title;
     private List<Image> representativeImage;
     private String text;
@@ -23,9 +23,9 @@ public class PostsAddRequestDto {
     private PostsStatus status;
 
     @Builder
-    public PostsAddRequestDto(Long userId, String categoryName, String title, List<Image> representativeImage, String text, String hashtags, PostsStatus status){
+    public PostsAddRequestDto(Long userId, Long categoryId, String title, List<Image> representativeImage, String text, String hashtags, PostsStatus status){
         this.userId = userId;
-        this.categoryName = categoryName;
+        this.categoryId = categoryId;
         this.title = title;
         this.representativeImage = representativeImage;
         this.text = text;

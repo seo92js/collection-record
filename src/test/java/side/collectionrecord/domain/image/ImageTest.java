@@ -7,6 +7,9 @@ import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -35,18 +38,21 @@ class ImageTest {
                 .data(null)
                 .build();
 
+        List<Image> images = new ArrayList<>();
+        images.add(representativeImage);
+
         Posts posts = Posts.builder()
                 .category(category)
                 .title("title")
                 .text("text")
-                .representativeImage(representativeImage)
+                .representativeImage(images)
                 .hashtags("hashtags")
                 .status(PostsStatus.SALE)
                 .build();
         //when
         //then
         assertThat(user.getProfileImage().getId()).isEqualTo(profileImage.getId());
-        assertThat(posts.getRepresentativeImage().getId()).isEqualTo(representativeImage.getId());
+        assertThat(posts.getRepresentativeImage().get(0).getId()).isEqualTo(representativeImage.getId());
     }
 
     @Test

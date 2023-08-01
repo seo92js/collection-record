@@ -24,6 +24,13 @@ public class Category {
 
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_category_id", referencedColumnName = "category_id")
+    private Category parentCategory;
+
+    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Category> childCategory = new ArrayList<>();
+
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Posts> posts = new ArrayList<>();
 
@@ -33,9 +40,16 @@ public class Category {
         user.addCategory(this);
     }
 
+    public void setParentCategory(Category parentCategory){
+        this.parentCategory = parentCategory;
+        parentCategory.getChildCategory().add(this);
+    }
+
     @Builder
-    public Category(User user, String name){
+    public Category(User user, String name, Category parentCategory){
         setUser(user);
+        if(parentCategory != null)
+            setParentCategory(parentCategory);
         this.name = name;
     }
 

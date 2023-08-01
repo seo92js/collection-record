@@ -8,10 +8,13 @@ import side.collectionrecord.domain.category.Category;
 @NoArgsConstructor
 public class CategoryListResponseDto {
     private Long id;
+    private Long parentCategoryId;
     private String name;
 
     public CategoryListResponseDto(Category category){
         this.id = category.getId();
+        if (category.getParentCategory() != null)
+            this.parentCategoryId = category.getParentCategory().getId();
         this.name = category.getName();
     }
 }

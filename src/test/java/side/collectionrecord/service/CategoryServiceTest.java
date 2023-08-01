@@ -51,7 +51,7 @@ class CategoryServiceTest {
         em.clear();
 
         //when
-        List<CategoryListResponseDto> categories = categoryService.findCategories(user.getId());
+        List<CategoryListResponseDto> categories = categoryService.findParentCategories(user.getId());
 
         //then
         assertThat(categories.get(0).getName()).isEqualTo("test");
@@ -89,7 +89,7 @@ class CategoryServiceTest {
         categoryService.addCategory(categoryAddRequestDto3);
 
         //when
-        List<CategoryListResponseDto> categories = categoryService.findCategories(user.getId());
+        List<CategoryListResponseDto> categories = categoryService.findParentCategories(user.getId());
 
         //then
         assertThat(categories.get(0).getName()).isEqualTo(categoryAddRequestDto1.getName());
@@ -126,7 +126,7 @@ class CategoryServiceTest {
         categoryService.update(id, categoryUpdateRequestDto);
 
         //then
-        List<CategoryListResponseDto> categories = categoryService.findCategories(user.getId());
+        List<CategoryListResponseDto> categories = categoryService.findParentCategories(user.getId());
 
         assertThat(categories.get(0).getName()).isEqualTo(expectedName);
     }
@@ -156,13 +156,13 @@ class CategoryServiceTest {
         categoryService.addCategory(categoryAddRequestDto1);
         categoryService.addCategory(categoryAddRequestDto2);
 
-        List<CategoryListResponseDto> categories = categoryService.findCategories(user.getId());
+        List<CategoryListResponseDto> categories = categoryService.findParentCategories(user.getId());
 
         //when
         categoryService.delete(categories.get(0).getId());
 
         //then
-        categories = categoryService.findCategories(user.getId());
+        categories = categoryService.findParentCategories(user.getId());
 
         assertThat(categories.size()).isEqualTo(1);
     }

@@ -30,6 +30,29 @@ function categoryAdd(){
     });
 }
 
+function categoryChildAdd(userId, parentCategoryId){
+    const name = document.getElementById("category-child-add-input").value;
+
+    const categoryChildAddRequestDto = {
+        userId: userId,
+        parentCategoryId: parentCategoryId,
+        name: name
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/v1/category-child-add',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(categoryChildAddRequestDto)
+    }).done(function(){
+        alert('카테고리 추가 완료.');
+        window.location.href = '/category';
+    }).fail(function (error){
+        alert(JSON.stringify(error));
+    });
+}
+
 function checkRequiredValue(value){
     if (!value.name) {
         alert('필수 값을 입력하시오');

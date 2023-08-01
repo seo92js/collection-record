@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-public class ChatRoom extends BaseTimeEntity {
+public class ChatRoom {
     @Id @GeneratedValue
     @Column(name = "chatroom_id")
     private Long id;

@@ -25,9 +25,17 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
     }
 
     @Override
-    public List<Category> findAllCategory(Long userId){
+    public List<Category> findAllParentCategory(Long userId){
         return queryFactory.selectFrom(category)
-                .where(category.user.id.eq(userId))
+                .where(category.user.id.eq(userId).and(category.parentCategory.isNull()))
+                .orderBy(category.name.asc())
+                .fetch();
+    }
+
+    @Override
+    public List<Category> findAllChildCategory(Long userId){
+        return queryFactory.selectFrom(category)
+                .where(category.user.id.eq(userId).and(category.parentCategory.isNotNull()))
                 .orderBy(category.name.asc())
                 .fetch();
     }

@@ -68,9 +68,11 @@ public class UserController {
 
         Long userId = user.getId();
 
-        List<CategoryListResponseDto> categories = categoryService.findCategories(userId);
+        List<CategoryListResponseDto> parentCategories = categoryService.findParentCategories(userId);
+        model.addAttribute("parentCategories", parentCategories);
 
-        model.addAttribute("categories", categories);
+        List<CategoryListResponseDto> childCategories = categoryService.findChildCategories(userId);
+        model.addAttribute("childCategories", childCategories);
 
         Long loginUserId = (Long) model.getAttribute("loginUserId");
 

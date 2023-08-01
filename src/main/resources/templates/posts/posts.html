@@ -26,7 +26,13 @@
             </div>
             <!-- 이미지 -->
             <div class="posts__left-image">
-                <img th:src="@{/api/v1/image-view/{imageId}(imageId=${postsResponseDto.representativeImageId})}">
+                <div th:each="imageId : ${postsResponseDto.representativeImageId}">
+                    <img class="posts__left-image-content" th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
+                </div>
+            </div>
+            <div>
+                <button id="image-prev-btn">이전</button>
+                <button id="image-next-btn">다음</button>
             </div>
         </div>
 
@@ -113,6 +119,7 @@
 
     <div th:replace="fragments/footer :: footer" />
 
+    <script src="/js/postsImage.js"></script>
     <script src="/js/commentAdd.js"></script>
     <script src="/js/commentDelete.js"></script>
     <script src="/js/notificationPosts.js"></script>

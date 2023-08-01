@@ -21,10 +21,20 @@
         </div>
 
         <div>
-            <div class="category__list" th:each="category : ${categories}">
-                <input type="text" th:value="${category.name}" th:id="'category-name-input-' + ${category.id}">
-                <a th:onclick="categoryUpdate([[${category.id}]])">수정</a>
-                <a th:onclick="categoryDelete([[${category.id}]])">삭제</a>
+            <div class="category__list" th:each="parentCategory : ${parentCategories}">
+                <input type="text" th:value="${parentCategory.name}" th:id="'category-name-input-' + ${parentCategory.id}">
+                <a th:onclick="categoryUpdate([[${parentCategory.id}]])">수정</a>
+                <a th:onclick="categoryDelete([[${parentCategory.id}]])">삭제</a>
+                <input type="text" id="category-child-add-input">
+                <button type="button" th:onclick="categoryChildAdd([[${loginUserId}]], [[${parentCategory.id}]])">추가</button>
+                <!-- child 카테고리 리스트 -->
+                <div class="category__list-child" th:each="childCategory : ${childCategories}">
+                    <div th:if="${childCategory.parentCategoryId == parentCategory.id}">
+                        <input type="text" th:value="${childCategory.name}">
+                        <a>수정</a>
+                        <a>삭제</a>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

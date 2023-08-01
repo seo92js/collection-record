@@ -11,3 +11,7 @@
 .category__list {
     padding:10px;
 }
+
+.category__list-child {
+    margin-left:250px;
+}

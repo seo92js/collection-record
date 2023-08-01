@@ -17,6 +17,7 @@ import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.web.dto.PostsAddRequestDto;
 import side.collectionrecord.web.dto.PostsUpdateRequestDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -67,11 +68,14 @@ class PostsServiceTest {
 
         imageRepository.save(image);
 
+        List<Image> images = new ArrayList<>();
+        images.add(image);
+
         PostsAddRequestDto postsAddRequestDto = PostsAddRequestDto.builder()
                 .userId(user.getId())
-                .categoryName(category.getName())
+                .categoryId(category.getId())
                 .title("title")
-                .representativeImage(image)
+                .representativeImage(images)
                 .text("text")
                 .status(PostsStatus.SALE)
                 .build();
@@ -86,7 +90,7 @@ class PostsServiceTest {
         assertThat(posts.getUser()).isEqualTo(user);
         assertThat(posts.getCategory()).isEqualTo(category);
         assertThat(posts.getTitle()).isEqualTo("title");
-        assertThat(posts.getRepresentativeImage().getFilename()).isEqualTo("image");
+        assertThat(posts.getRepresentativeImage().get(0).getFilename()).isEqualTo("image");
         assertThat(posts.getText()).isEqualTo("text");
         assertThat(posts.getStatus()).isEqualTo(PostsStatus.SALE);
     }
@@ -119,20 +123,23 @@ class PostsServiceTest {
 
         imageRepository.save(image);
 
+        List<Image> images = new ArrayList<>();
+        images.add(image);
+
         PostsAddRequestDto postsAddRequestDto1 = PostsAddRequestDto.builder()
                 .userId(user.getId())
-                .categoryName(category.getName())
+                .categoryId(category.getId())
                 .title("title2")
-                .representativeImage(image)
+                .representativeImage(images)
                 .status(PostsStatus.SALE)
                 .text("text2")
                 .build();
 
         PostsAddRequestDto postsAddRequestDto2 = PostsAddRequestDto.builder()
                 .userId(user.getId())
-                .categoryName(category.getName())
+                .categoryId(category.getId())
                 .title("title2")
-                .representativeImage(image)
+                .representativeImage(images)
                 .status(PostsStatus.SALE)
                 .text("text2")
                 .build();
@@ -181,11 +188,14 @@ class PostsServiceTest {
 
         imageRepository.save(image);
 
+        List<Image> images = new ArrayList<>();
+        images.add(image);
+
         PostsAddRequestDto postsAddRequestDto1 = PostsAddRequestDto.builder()
                 .userId(user.getId())
-                .categoryName(category.getName())
+                .categoryId(category.getId())
                 .title("title")
-                .representativeImage(image)
+                .representativeImage(images)
                 .status(PostsStatus.SALE)
                 .text("text")
                 .build();
@@ -212,10 +222,13 @@ class PostsServiceTest {
 
         imageRepository.save(expectedImage);
 
+        List<Image> expectedImages = new ArrayList<>();
+        expectedImages.add(expectedImage);
+
         PostsUpdateRequestDto postsUpdateRequestDto = PostsUpdateRequestDto.builder()
-                .categoryName(expectedCategory.getName())
+                .categoryId(expectedCategory.getId())
                 .title(expectedTitle)
-                .representativeImage(expectedImage)
+                .representativeImage(expectedImages)
                 .status(expectedStatus)
                 .text(expectedText)
                 .build();
@@ -228,7 +241,7 @@ class PostsServiceTest {
         assertThat(posts.getCategory()).isEqualTo(expectedCategory);
         assertThat(posts.getCategory()).isNotEqualTo(category);
         assertThat(posts.getTitle()).isEqualTo(expectedTitle);
-        assertThat(posts.getRepresentativeImage().getFilename()).isEqualTo("expectedImage");
+        assertThat(posts.getRepresentativeImage().get(0).getFilename()).isEqualTo("expectedImage");
         assertThat(posts.getText()).isEqualTo(expectedText);
         assertThat(posts.getStatus()).isEqualTo(expectedStatus);
     }

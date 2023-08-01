@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class PostsUpdateRequestDto {
-    private String categoryName;
+    private Long categoryId;
     private String title;
     private List<Image> representativeImage;
     private String text;
@@ -21,8 +21,8 @@ public class PostsUpdateRequestDto {
     private PostsStatus status;
 
     @Builder
-    public PostsUpdateRequestDto(String categoryName, String title, List<Image> representativeImage, String text, String hashtags, PostsStatus status){
-        this.categoryName = categoryName;
+    public PostsUpdateRequestDto(Long categoryId, String title, List<Image> representativeImage, String text, String hashtags, PostsStatus status){
+        this.categoryId = categoryId;
         this.title = title;
         this.representativeImage = representativeImage;
         this.text = text;

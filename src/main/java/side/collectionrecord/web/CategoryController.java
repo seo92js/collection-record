@@ -20,14 +20,17 @@ public class CategoryController {
     public String categories(Model model){
         Long userId = (Long)model.getAttribute("loginUserId");
 
-        List<CategoryListResponseDto> categories = categoryService.findCategories(userId);
 
         model.addAttribute("categoryAddRequestDto", CategoryAddRequestDto.builder()
                         .userId(userId)
                         .name(null)
                         .build());
 
-        model.addAttribute("categories", categories);
+        List<CategoryListResponseDto> parentCategories = categoryService.findParentCategories(userId);
+        model.addAttribute("parentCategories", parentCategories);
+
+        List<CategoryListResponseDto> childCategories = categoryService.findChildCategories(userId);
+        model.addAttribute("childCategories", childCategories);
 
         return "category/category";
     }

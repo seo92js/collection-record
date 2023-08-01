@@ -12,6 +12,7 @@ import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.CategoryAddRequestDto;
+import side.collectionrecord.web.dto.CategoryChildAddRequestDto;
 import side.collectionrecord.web.dto.CategoryListResponseDto;
 import side.collectionrecord.web.dto.CategoryUpdateRequestDto;
 
@@ -36,6 +37,7 @@ public class CategoryService {
 
         Category category = Category.builder()
                 .user(findUser)
+                .parentCategory(null)
                 .name(categoryAddRequestDto.getName())
                 .build();
 
@@ -45,8 +47,34 @@ public class CategoryService {
     }
 
     @Transactional
-    public List<CategoryListResponseDto> findCategories(Long userId){
-        return categoryRepository.findAllCategory(userId).stream()
+    public Long addCategoryChild(CategoryChildAddRequestDto categoryChildAddRequestDto){
+        Long userId = categoryChildAddRequestDto.getUserId();
+
+        User findUser = userRepository.findById(userId).orElse(null);
+
+        Category parentCategory = categoryRepository.findById(categoryChildAddRequestDto.getParentCategoryId()).get();
+
+        Category category = Category.builder()
+                .user(findUser)
+                .parentCategory(parentCategory)
+                .name(categoryChildAddRequestDto.getName())
+                .build();
+
+        categoryRepository.save(category);
+
+        return category.getId();
+    }
+
+    @Transactional
+    public List<CategoryListResponseDto> findParentCategories(Long userId){
+        return categoryRepository.findAllParentCategory(userId).stream()
+                .map(CategoryListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<CategoryListResponseDto> findChildCategories(Long userId){
+        return categoryRepository.findAllChildCategory(userId).stream()
                 .map(CategoryListResponseDto::new)
                 .collect(Collectors.toList());
     }
