@@ -8,7 +8,6 @@ import side.collectionrecord.domain.chatmessage.ChatMessage;
 import side.collectionrecord.domain.chatmessage.ChatMessageRepository;
 import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.chatroom.ChatRoomRepository;
-import side.collectionrecord.domain.user.QUser;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.userchatroom.QUserChatRoom;

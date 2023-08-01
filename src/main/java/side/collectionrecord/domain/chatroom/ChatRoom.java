@@ -2,7 +2,6 @@ package side.collectionrecord.domain.chatroom;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import side.collectionrecord.domain.BaseTimeEntity;
 import side.collectionrecord.domain.chatmessage.ChatMessage;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
 

@@ -11,7 +11,10 @@ import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
-import side.collectionrecord.web.dto.*;
+import side.collectionrecord.web.dto.PostsAddRequestDto;
+import side.collectionrecord.web.dto.PostsListResponseDto;
+import side.collectionrecord.web.dto.PostsSearchResponseDto;
+import side.collectionrecord.web.dto.PostsUpdateRequestDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

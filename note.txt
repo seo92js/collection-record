@@ -57,6 +57,7 @@ todo
 
 
 
+- 코드 통일 너무 안되어있다.
 - Exception 전부 정리
 - css BEM방식으로 다시 정리
 - 게시물 text 스크롤

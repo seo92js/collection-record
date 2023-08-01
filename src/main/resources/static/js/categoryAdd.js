@@ -31,7 +31,7 @@ function categoryAdd(){
 }
 
 function categoryChildAdd(userId, parentCategoryId){
-    const name = document.getElementById("category-child-add-input").value;
+    const name = document.getElementById("category-child-add-input-" + parentCategoryId).value;
 
     const categoryChildAddRequestDto = {
         userId: userId,

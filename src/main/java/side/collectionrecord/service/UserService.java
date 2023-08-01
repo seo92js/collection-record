@@ -1,7 +1,6 @@
 package side.collectionrecord.service;
 
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,7 +11,10 @@ import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
-import side.collectionrecord.web.dto.*;
+import side.collectionrecord.web.dto.UserJoinRequestDto;
+import side.collectionrecord.web.dto.UserProfileResponseDto;
+import side.collectionrecord.web.dto.UserSearchResponseDto;
+import side.collectionrecord.web.dto.UserUpdateRequestDto;
 
 import java.io.File;
 import java.io.IOException;
