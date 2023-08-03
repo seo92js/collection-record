@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
     private final ImageRepository imageRepository;
 
     @Transactional
-    public Long join(UserJoinRequestDto userJoinRequestDto) throws IOException {
+    public Long createUser(UserJoinRequestDto userJoinRequestDto) throws IOException {
 
         validateDuplicateUser(userJoinRequestDto.getUsername());
 
@@ -49,17 +49,18 @@ public class UserService implements UserDetailsService {
                 .username(userJoinRequestDto.getUsername())
                 .password(userJoinRequestDto.getPassword())
                 .profileImage(image)
+                .profileText(null)
                 .userRole(UserRole.USER)
                 .build()).getId();
     }
 
     @Transactional
-    public Long update(Long id, UserUpdateRequestDto userUpdateRequestDto) throws IOException {
+    public Long updateUser(Long id, UserUpdateRequestDto userUpdateRequestDto) throws IOException {
         User findUser = userRepository.findById(id).orElse(null);
 
         Image prevImage = findUser.getProfileImage();
 
-        findUser.update(userUpdateRequestDto.getUsername(), userUpdateRequestDto.getPassword(), userUpdateRequestDto.getProfileImage());
+        findUser.update(userUpdateRequestDto.getUsername(), userUpdateRequestDto.getProfileImage(), userUpdateRequestDto.getProfileText());
 
         if (prevImage != null && prevImage.getId() != userUpdateRequestDto.getProfileImage().getId()){
             imageRepository.delete(prevImage);
@@ -69,17 +70,17 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public UserProfileResponseDto findById (Long id){
+    public UserProfileResponseDto getUserById (Long id){
         User user = userRepository.findById(id).orElse(null);
 
         return new UserProfileResponseDto(user);
     }
 
     @Transactional
-    public List<UserSearchResponseDto> findContainsUsername(String username, int page, int size){
+    public List<UserSearchResponseDto> getAllUserByUsernameContains(String username, int page, int size){
         int offset = page * size;
 
-        return userRepository.findContainsUsername(username, offset, size).stream()
+        return userRepository.findByUsernameContains(username, offset, size).stream()
                 .map(UserSearchResponseDto::new)
                 .collect(Collectors.toList());
     }

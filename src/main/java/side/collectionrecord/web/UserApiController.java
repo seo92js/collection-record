@@ -51,9 +51,9 @@ public class UserApiController {
         }
 
         userUpdateRequestDto.setProfileImage(profileImage);
-        userUpdateRequestDto.encodePassword(passwordEncoder);
+        //userUpdateRequestDto.encodePassword(passwordEncoder);
 
-        userService.update(id, userUpdateRequestDto);
+        userService.updateUser(id, userUpdateRequestDto);
 
         // 변경된 사용자 정보를 다시 로드하여 Spring Security에 반영
         UserDetails updatedUserDetails = userService.loadUserByUsername(userUpdateRequestDto.getUsername());

@@ -56,7 +56,7 @@ public class PostsController {
     @GetMapping("/posts/{id}")
     public String postsView(@PathVariable Long id, Model model){
 
-        Posts posts = postsService.findPosts(id);
+        Posts posts = postsService.getPostsById(id);
 
         model.addAttribute("username", posts.getUser().getUsername());
 
@@ -96,7 +96,7 @@ public class PostsController {
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model){
 
-        Posts posts = postsService.findPosts(id);
+        Posts posts = postsService.getPostsById(id);
 
         model.addAttribute("postsUpdateRequestDto", PostsUpdateRequestDto.builder()
                         .categoryId(posts.getCategory().getId())

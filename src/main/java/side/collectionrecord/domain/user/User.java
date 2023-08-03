@@ -29,6 +29,8 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String password;
 
+    private String profileText;
+
     @OneToOne
     @JoinColumn(name = "image_id")
     private Image profileImage;
@@ -111,16 +113,17 @@ public class User extends BaseTimeEntity {
     }
 
     @Builder
-    public User(String username, String password, Image profileImage, UserRole userRole){
+    public User(String username, String password, Image profileImage, String profileText, UserRole userRole){
         this.username = username;
         this.password = password;
         this.profileImage = profileImage;
+        this.profileText = profileText;
         this.userRole = userRole;
     }
 
-    public void update(String username, String password, Image profileImage){
+    public void update(String username, Image profileImage, String profileText){
         this.username = username;
-        this.password = password;
         this.profileImage = profileImage;
+        this.profileText = profileText;
     }
 }

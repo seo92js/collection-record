@@ -85,7 +85,7 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
 
             User users = userRepository.findByUsername(username).get();
 
-            boolean readAllMessage = userChatRoomService.readAllMessage(users.getId());
+            boolean readAllMessage = userChatRoomService.checkNotReadMessage(users.getId());
 
             // 안읽은 메세지가 있으면 본인에게 send
             if (readAllMessage == false)

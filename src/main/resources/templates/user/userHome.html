@@ -15,6 +15,7 @@
         <div class="user-home__title">
             <div class="user-home__title-menu">
                 <img class="user-home__title--image" th:if="${imageId != null}" th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
+                <div th:text="${profileText}"></div>
             </div>
             <div class="user-home__title-menu">
                 <a class="user-home__title-submenu" th:if="${isFollowing == null}" href="/user/profile">내 정보</a>
@@ -51,8 +52,8 @@
     <div th:replace="fragments/footer :: footer" />
 
     <script src="/js/postsList.js"></script>
-    <script src="/js/following.js"></script>
-    <script src="/js/unfollowing.js"></script>
+    <script src="/js/follow-create.js"></script>
+    <script src="/js/follow-delete.js"></script>
 
 </body>
 </html>

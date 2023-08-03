@@ -19,7 +19,7 @@ public class UserChatRoomRepositoryImpl implements UserChatRoomRepositoryCustom{
     }
 
     @Override
-    public UserChatRoom findUserChatRoom(Long user1Id, Long user2Id) {
+    public UserChatRoom findByUserIds(Long user1Id, Long user2Id) {
 
 /*        QUserChatRoom qUserChatRoom2 = new QUserChatRoom("userChatRoom2");
 
@@ -48,7 +48,7 @@ public class UserChatRoomRepositoryImpl implements UserChatRoomRepositoryCustom{
 
 
     @Override
-    public List<Tuple> findUserChatRoomList(Long userId) {
+    public List<Tuple> findUserAndChatroomIdByUserId(Long userId) {
         List<Tuple> users = queryFactory.select(userChatRoom.user, userChatRoom.chatRoom.id)
                 .from(userChatRoom)
                 .where(userChatRoom.chatRoom.id.in(

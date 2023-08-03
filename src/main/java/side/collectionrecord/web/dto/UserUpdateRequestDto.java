@@ -12,17 +12,17 @@ import side.collectionrecord.domain.image.Image;
 @NoArgsConstructor
 public class UserUpdateRequestDto {
     private String username;
-    private String password;
     private Image profileImage;
+    private String profileText;
 
     @Builder
-    public UserUpdateRequestDto(String username, String password, Image profileImage){
+    public UserUpdateRequestDto(String username, Image profileImage, String profileText){
         this.username = username;
-        this.password = password;
         this.profileImage = profileImage;
+        this.profileText = profileText;
     }
 
-    public void encodePassword(PasswordEncoder passwordEncoder){
+/*    public void encodePassword(PasswordEncoder passwordEncoder){
         this.password = passwordEncoder.encode(this.password);
-    }
+    }*/
 }

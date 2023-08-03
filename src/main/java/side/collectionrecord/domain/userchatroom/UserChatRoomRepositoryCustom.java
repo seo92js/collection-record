@@ -5,7 +5,7 @@ import com.querydsl.core.Tuple;
 import java.util.List;
 
 public interface UserChatRoomRepositoryCustom {
-    UserChatRoom findUserChatRoom(Long user1Id, Long user2Id);
+    UserChatRoom findByUserIds(Long user1Id, Long user2Id);
 
-    List<Tuple> findUserChatRoomList(Long userId);
+    List<Tuple> findUserAndChatroomIdByUserId(Long userId);
 }

@@ -8,17 +8,18 @@ import side.collectionrecord.domain.user.User;
 @NoArgsConstructor
 public class UserProfileResponseDto {
     private String username;
-    private String password;
     private byte[] profileImage;
+    private String profileText;
 
     public UserProfileResponseDto(User user){
         this.username = user.getUsername();
-        this.password = user.getPassword();
 
         if (user.getProfileImage() != null){
             this.profileImage = user.getProfileImage().getData();
         }else{
             this.profileImage = null;
         }
+
+        this.profileText = user.getProfileText();
     }
 }

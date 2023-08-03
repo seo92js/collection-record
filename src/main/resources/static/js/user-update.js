@@ -14,7 +14,7 @@ function userUpdate(){
 
     const userUpdateRequestDto = {
         username: formData.get('username'),
-        password: formData.get('password')
+        profileText: formData.get('profileText')
     }
 
     formData.append('userUpdateRequestDto', new Blob([JSON.stringify(userUpdateRequestDto)] , {type: "application/json"}));
@@ -43,7 +43,7 @@ function userUpdate(){
 }
 
 function checkRequiredValue(value){
-    if (!value.username || !value.password ) {
+    if (!value.username) {
         alert('필수 값을 입력하시오');
         return false;
     }else{

@@ -45,7 +45,7 @@ class UserServiceTest {
 
         userJoinRequestDto.encodePassword(passwordEncoder);
 
-        Long id = userService.join(userJoinRequestDto);
+        Long id = userService.createUser(userJoinRequestDto);
 
         //when
         User findUser = userRepository.findById(id).orElse(null);
@@ -79,20 +79,20 @@ class UserServiceTest {
 
         UserUpdateRequestDto userUpdateRequestDto = UserUpdateRequestDto.builder()
                 .username(expectedName)
-                .password("test")
                 .profileImage(image)
+                .profileText("text")
                 .build();
 
-        userUpdateRequestDto.encodePassword(passwordEncoder);
+        //userUpdateRequestDto.encodePassword(passwordEncoder);
 
-        userService.update(user.getId(), userUpdateRequestDto);
+        userService.updateUser(user.getId(), userUpdateRequestDto);
 
         //when
         User findUser = userRepository.findAll().get(0);
 
         //then
         assertThat(findUser.getUsername()).isEqualTo(expectedName);
-        assertThat(passwordEncoder.matches(findUser.getPassword(), userUpdateRequestDto.getPassword()));
+        //assertThat(passwordEncoder.matches(findUser.getPassword(), userUpdateRequestDto.getPassword()));
         assertThat(findUser.getProfileImage().getFilename()).isEqualTo("expectedImage");
     }
 
@@ -110,7 +110,7 @@ class UserServiceTest {
         userRepository.save(user);
 
         //when
-        UserProfileResponseDto userProfileResponseDto = userService.findById(user.getId());
+        UserProfileResponseDto userProfileResponseDto = userService.getUserById(user.getId());
 
         //then
         assertThat(userProfileResponseDto.getUsername()).isEqualTo(user.getUsername());
@@ -157,7 +157,7 @@ class UserServiceTest {
         userRepository.save(user3);
 
         //when
-        List<UserSearchResponseDto> containsUsername = userService.findContainsUsername(username, 0, 5);
+        List<UserSearchResponseDto> containsUsername = userService.getAllUserByUsernameContains(username, 0, 5);
 
         //then
         assertThat(containsUsername.size()).isEqualTo(3);

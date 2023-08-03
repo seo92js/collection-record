@@ -26,7 +26,7 @@ public class ChatRoomController {
     @GetMapping("/chatroom/{user1Id}/{user2Id}")
     public String chat(@PathVariable("user1Id") Long user1Id, @PathVariable("user2Id") Long user2Id, Model model) {
 
-        UserChatRoom userChatRoom = userChatRoomService.createChatRoom(user1Id, user2Id);
+        UserChatRoom userChatRoom = userChatRoomService.createUserChatRoom(user1Id, user2Id);
 
         User user = userRepository.findById(user2Id).get();
 

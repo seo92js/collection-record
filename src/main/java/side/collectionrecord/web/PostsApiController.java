@@ -47,12 +47,12 @@ public class PostsApiController {
 
         postsAddRequestDto.setRepresentativeImage(images);
 
-        return postsService.addPosts(postsAddRequestDto);
+        return postsService.createPosts(postsAddRequestDto);
     }
 
     @GetMapping("/api/v1/posts/{id}/{categoryName}/{page}")
     public List<PostsListResponseDto> findPostsList(@PathVariable Long id, @PathVariable String categoryName, @PathVariable int page){
-        return postsService.findPostsList(id, categoryName, page, 5);
+        return postsService.getAllPostsByCategoryName(id, categoryName, page, 5);
     }
 
     @PutMapping("/api/v1/posts-update/{id}")
@@ -61,7 +61,7 @@ public class PostsApiController {
         List<Long> imageIds = new ArrayList<>();
         List<Image> images = new ArrayList<>();
 
-        Posts posts = postsService.findPosts(id);
+        Posts posts = postsService.getPostsById(id);
 
         if (imageFiles != null){
             for (MultipartFile imageFile : imageFiles){
@@ -87,12 +87,12 @@ public class PostsApiController {
 
         Long userId = posts.getUser().getId();
 
-        return postsService.update(userId, id, postsUpdateRequestDto);
+        return postsService.updatePosts(userId, id, postsUpdateRequestDto);
     }
 
     @DeleteMapping("/api/v1/posts-delete/{id}")
     public Long delete(@PathVariable Long id){
-        postsService.delete(id);
+        postsService.deletePosts(id);
 
         return id;
     }

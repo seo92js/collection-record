@@ -20,9 +20,9 @@
                 <img th:if="${imageId != null}" th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
                 <input type="file" id="user-profile-img" placeholder="이미지 선택">
             </div>
-            <div class="user-profile__form-password">
-                <label>비밀번호</label>
-                <input type="text" th:value="*{password}" th:field="*{password}" placeholder="비밀번호">
+            <div class="user-profile__form-text">
+                <label>소개</label>
+                <input type="text" th:value="*{profileText}" th:field="*{profileText}" placeholder="소개">
             </div>
 
             <button type="submit" id="user-update-btn">수정</button>
@@ -31,7 +31,7 @@
 
     <div th:replace="fragments/footer :: footer" />
 
-    <script src="/js/userUpdate.js"></script>
+    <script src="/js/user-update.js"></script>
 
 </body>
 </html>

@@ -27,9 +27,9 @@ public class UserChatRoomService {
     private final ChatMessageRepository chatMessageRepository;
 
     @Transactional
-    public UserChatRoom createChatRoom(Long user1Id, Long user2Id){
+    public UserChatRoom createUserChatRoom(Long user1Id, Long user2Id){
 
-        UserChatRoom userChatRoom = findUserChatRoom(user1Id, user2Id);
+        UserChatRoom userChatRoom = getUserChatroom(user1Id, user2Id);
 
         if (userChatRoom == null){
             User user1 = userRepository.findById(user1Id).get();
@@ -59,14 +59,14 @@ public class UserChatRoomService {
     }
 
     @Transactional
-    public UserChatRoom findUserChatRoom(Long user1Id, Long user2Id){
+    public UserChatRoom getUserChatroom(Long user1Id, Long user2Id){
 
-        return userChatRoomRepository.findUserChatRoom(user1Id, user2Id);
+        return userChatRoomRepository.findByUserIds(user1Id, user2Id);
     }
 
     @Transactional
-    public List<UserChatRoomListResponseDto> findUserChatRoomList(Long userId){
-        List<Tuple> userChatRoomList = userChatRoomRepository.findUserChatRoomList(userId);
+    public List<UserChatRoomListResponseDto> getAllUserChatroomByUserId(Long userId){
+        List<Tuple> userChatRoomList = userChatRoomRepository.findUserAndChatroomIdByUserId(userId);
 
         List<UserChatRoomListResponseDto> responseDtoList = new ArrayList<>();
 
@@ -85,7 +85,7 @@ public class UserChatRoomService {
     }
 
     @Transactional
-    public boolean readAllMessage(Long userId){
+    public boolean checkNotReadMessage(Long userId){
         User user = userRepository.findById(userId).get();
 
         for ( UserChatRoom userChatRoom : user.getUserChatRooms()){

@@ -31,12 +31,12 @@ public class PostsService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public Posts findPosts(Long id){
+    public Posts getPostsById(Long id){
         return postsRepository.findById(id).get();
     }
 
     @Transactional
-    public List<PostsListResponseDto> findPostsList(Long userId, String categoryName, int page, int size){
+    public List<PostsListResponseDto> getAllPostsByCategoryName(Long userId, String categoryName, int page, int size){
 
         int offset = page * size;
 
@@ -46,7 +46,7 @@ public class PostsService {
     }
 
     @Transactional
-    public List<PostsSearchResponseDto> findContainsHashtags(String hashtags, int page, int size){
+    public List<PostsSearchResponseDto> getAllPostsByHashtagsContains(String hashtags, int page, int size){
         int offset = page * size;
 
         return postsRepository.findContainsHashtag(hashtags, offset, size).stream()
@@ -55,7 +55,7 @@ public class PostsService {
     }
 
     @Transactional
-    public Long addPosts(PostsAddRequestDto postsAddRequestDto){
+    public Long createPosts(PostsAddRequestDto postsAddRequestDto){
         Category category = categoryRepository.findById(postsAddRequestDto.getCategoryId()).get();
 
         return postsRepository.save(Posts.builder()
@@ -71,7 +71,7 @@ public class PostsService {
     }
 
     @Transactional
-    public Long update(Long userId, Long postsId, PostsUpdateRequestDto postsUpdateRequestDto){
+    public Long updatePosts(Long userId, Long postsId, PostsUpdateRequestDto postsUpdateRequestDto){
         Posts posts = postsRepository.findById(postsId).orElse(null);
 
         List<Image> prevImage = posts.getRepresentativeImage();
@@ -90,7 +90,7 @@ public class PostsService {
     }
 
     @Transactional
-    public void delete(Long id){
+    public void deletePosts(Long id){
         Posts posts = postsRepository.findById(id).orElse(null);
 
         List<Comment> comments = posts.getComments();

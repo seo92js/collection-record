@@ -49,7 +49,7 @@ class UserChatRoomServiceTest {
         userRepository.save(user2);
 
         //when
-        UserChatRoom chatRoom = userChatRoomService.createChatRoom(user1.getId(), user2.getId());
+        UserChatRoom chatRoom = userChatRoomService.createUserChatRoom(user1.getId(), user2.getId());
 
         List<UserChatRoom> all = userChatRoomRepository.findAll();
 

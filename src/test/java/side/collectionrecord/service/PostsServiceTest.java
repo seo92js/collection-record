@@ -81,7 +81,7 @@ class PostsServiceTest {
                 .build();
 
 
-        Long id = postsService.addPosts(postsAddRequestDto);
+        Long id = postsService.createPosts(postsAddRequestDto);
 
         //when
         Posts posts = postsRepository.findById(id).get();
@@ -144,16 +144,16 @@ class PostsServiceTest {
                 .text("text2")
                 .build();
 
-        postsService.addPosts(postsAddRequestDto1);
+        postsService.createPosts(postsAddRequestDto1);
 
-        Long id = postsService.addPosts(postsAddRequestDto2);
+        Long id = postsService.createPosts(postsAddRequestDto2);
 
         List<Posts> all = postsRepository.findAll();
 
         assertThat(all.size()).isEqualTo(2);
 
         //when
-        postsService.delete(id);
+        postsService.deletePosts(id);
 
         //then
         all = postsRepository.findAll();
@@ -200,7 +200,7 @@ class PostsServiceTest {
                 .text("text")
                 .build();
 
-        Long id = postsService.addPosts(postsAddRequestDto1);
+        Long id = postsService.createPosts(postsAddRequestDto1);
 
         String expectedCategoryName = "category2";
         String expectedTitle = "title2";
@@ -233,7 +233,7 @@ class PostsServiceTest {
                 .text(expectedText)
                 .build();
 
-        postsService.update(user.getId(), id, postsUpdateRequestDto);
+        postsService.updatePosts(user.getId(), id, postsUpdateRequestDto);
 
         //then
         Posts posts = postsRepository.findById(id).orElse(null);

@@ -20,9 +20,9 @@ public class SearchApiController {
     @GetMapping("/api/v1/search/{text}/{page}")
     public SearchResponseDto search(@PathVariable String text, @PathVariable int page){
 
-        List<UserSearchResponseDto> userSearchList = userService.findContainsUsername(text, page, 5);
+        List<UserSearchResponseDto> userSearchList = userService.getAllUserByUsernameContains(text, page, 5);
 
-        List<PostsSearchResponseDto> postsSearchList = postsService.findContainsHashtags(text, page, 5);
+        List<PostsSearchResponseDto> postsSearchList = postsService.getAllPostsByHashtagsContains(text, page, 5);
 
         return new SearchResponseDto(userSearchList, postsSearchList);
     }

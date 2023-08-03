@@ -55,7 +55,7 @@ public class UserController {
         }else {
             userJoinRequestDto.encodePassword(passwordEncoder);
 
-            userService.join(userJoinRequestDto);
+            userService.createUser(userJoinRequestDto);
 
             return "redirect:/";
         }
@@ -90,6 +90,7 @@ public class UserController {
 
         model.addAttribute("id", userId);
         model.addAttribute("username", username);
+        model.addAttribute("profileText", user.getProfileText());
 
         return "user/userHome";
     }
@@ -99,7 +100,7 @@ public class UserController {
 
         Long loginUserId = (Long) model.getAttribute("loginUserId");
 
-        List<UserChatRoomListResponseDto> userChatRoomListResponseDtos = userChatRoomService.findUserChatRoomList(loginUserId);
+        List<UserChatRoomListResponseDto> userChatRoomListResponseDtos = userChatRoomService.getAllUserChatroomByUserId(loginUserId);
 
         model.addAttribute("chatrooms", userChatRoomListResponseDtos);
 
@@ -110,7 +111,7 @@ public class UserController {
     public String userProfile(Model model){
         Long userId = (Long)model.getAttribute("loginUserId");
 
-        UserProfileResponseDto userProfileResponseDto = userService.findById(userId);
+        UserProfileResponseDto userProfileResponseDto = userService.getUserById(userId);
 
         model.addAttribute("userProfileResponseDto", userProfileResponseDto);
 
