@@ -67,7 +67,7 @@ class ChatMessageRepositoryTest {
         chatMessageRepository.save(chatMessage2);
 
         //when
-        List<ChatMessage> allMessageByChatRoom = chatMessageRepository.findAllMessageByChatRoom(chatRoom.getId());
+        List<ChatMessage> allMessageByChatRoom = chatMessageRepository.findByChatRoomId(chatRoom.getId());
 
         //then
         Assertions.assertThat(allMessageByChatRoom.size()).isEqualTo(2);

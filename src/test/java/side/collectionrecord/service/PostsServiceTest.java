@@ -14,8 +14,8 @@ import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
-import side.collectionrecord.web.dto.PostsAddRequestDto;
-import side.collectionrecord.web.dto.PostsUpdateRequestDto;
+import side.collectionrecord.web.dto.CreatePostsRequestDto;
+import side.collectionrecord.web.dto.UpdatePostsRequestDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +71,7 @@ class PostsServiceTest {
         List<Image> images = new ArrayList<>();
         images.add(image);
 
-        PostsAddRequestDto postsAddRequestDto = PostsAddRequestDto.builder()
+        CreatePostsRequestDto createPostsRequestDto = CreatePostsRequestDto.builder()
                 .userId(user.getId())
                 .categoryId(category.getId())
                 .title("title")
@@ -81,7 +81,7 @@ class PostsServiceTest {
                 .build();
 
 
-        Long id = postsService.createPosts(postsAddRequestDto);
+        Long id = postsService.createPosts(createPostsRequestDto);
 
         //when
         Posts posts = postsRepository.findById(id).get();
@@ -126,7 +126,7 @@ class PostsServiceTest {
         List<Image> images = new ArrayList<>();
         images.add(image);
 
-        PostsAddRequestDto postsAddRequestDto1 = PostsAddRequestDto.builder()
+        CreatePostsRequestDto createPostsRequestDto1 = CreatePostsRequestDto.builder()
                 .userId(user.getId())
                 .categoryId(category.getId())
                 .title("title2")
@@ -135,7 +135,7 @@ class PostsServiceTest {
                 .text("text2")
                 .build();
 
-        PostsAddRequestDto postsAddRequestDto2 = PostsAddRequestDto.builder()
+        CreatePostsRequestDto createPostsRequestDto2 = CreatePostsRequestDto.builder()
                 .userId(user.getId())
                 .categoryId(category.getId())
                 .title("title2")
@@ -144,9 +144,9 @@ class PostsServiceTest {
                 .text("text2")
                 .build();
 
-        postsService.createPosts(postsAddRequestDto1);
+        postsService.createPosts(createPostsRequestDto1);
 
-        Long id = postsService.createPosts(postsAddRequestDto2);
+        Long id = postsService.createPosts(createPostsRequestDto2);
 
         List<Posts> all = postsRepository.findAll();
 
@@ -191,7 +191,7 @@ class PostsServiceTest {
         List<Image> images = new ArrayList<>();
         images.add(image);
 
-        PostsAddRequestDto postsAddRequestDto1 = PostsAddRequestDto.builder()
+        CreatePostsRequestDto createPostsRequestDto1 = CreatePostsRequestDto.builder()
                 .userId(user.getId())
                 .categoryId(category.getId())
                 .title("title")
@@ -200,7 +200,7 @@ class PostsServiceTest {
                 .text("text")
                 .build();
 
-        Long id = postsService.createPosts(postsAddRequestDto1);
+        Long id = postsService.createPosts(createPostsRequestDto1);
 
         String expectedCategoryName = "category2";
         String expectedTitle = "title2";
@@ -215,25 +215,14 @@ class PostsServiceTest {
         categoryRepository.save(expectedCategory);
 
         //when
-        Image expectedImage = Image.builder()
-                .filename("expectedImage")
-                .data(data)
-                .build();
-
-        imageRepository.save(expectedImage);
-
-        List<Image> expectedImages = new ArrayList<>();
-        expectedImages.add(expectedImage);
-
-        PostsUpdateRequestDto postsUpdateRequestDto = PostsUpdateRequestDto.builder()
+        UpdatePostsRequestDto updatePostsRequestDto = UpdatePostsRequestDto.builder()
                 .categoryId(expectedCategory.getId())
                 .title(expectedTitle)
-                .representativeImage(expectedImages)
                 .status(expectedStatus)
                 .text(expectedText)
                 .build();
 
-        postsService.updatePosts(user.getId(), id, postsUpdateRequestDto);
+        postsService.updatePosts(user.getId(), id, updatePostsRequestDto);
 
         //then
         Posts posts = postsRepository.findById(id).orElse(null);
@@ -241,7 +230,6 @@ class PostsServiceTest {
         assertThat(posts.getCategory()).isEqualTo(expectedCategory);
         assertThat(posts.getCategory()).isNotEqualTo(category);
         assertThat(posts.getTitle()).isEqualTo(expectedTitle);
-        assertThat(posts.getRepresentativeImage().get(0).getFilename()).isEqualTo("expectedImage");
         assertThat(posts.getText()).isEqualTo(expectedText);
         assertThat(posts.getStatus()).isEqualTo(expectedStatus);
     }

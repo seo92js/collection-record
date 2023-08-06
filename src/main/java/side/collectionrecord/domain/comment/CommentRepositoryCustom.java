@@ -5,6 +5,6 @@ import side.collectionrecord.domain.posts.Posts;
 import java.util.List;
 
 public interface CommentRepositoryCustom {
-    public List<Comment> findAllParentComments(Posts posts);
-    public List<Comment> findAllChildComments(Posts posts);
+    public List<Comment> findParentCommentByPosts(Posts posts);
+    public List<Comment> findChildCommentByPosts(Posts posts);
 }

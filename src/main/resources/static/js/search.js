@@ -8,7 +8,7 @@ window.addEventListener('scroll', function(){
     }
 })
 
-document.getElementById("search-btn").addEventListener('click', function(event){
+function search(){
     isEnd = false;
 
     page = 0;
@@ -20,7 +20,7 @@ document.getElementById("search-btn").addEventListener('click', function(event){
         event.preventDefault();
         searchList(page, $('#search-text').val());
     }
-})
+}
 
 function searchList(page, text){
 
@@ -38,7 +38,7 @@ function searchList(page, text){
 
             const div = $('<div>').addClass('search__list-user-col');
             const title = $('<div>유저</div>');
-            const userImageLink = $('<img>').attr('src', '/api/v1/image-view/' + user.profileImageId).addClass('search__list-user-col-image');
+            const userImageLink = $('<img>').attr('src', '/api/v1/image/' + user.profileImageId).addClass('search__list-user-col-image');
             const userLink = $('<a>').attr('href', '/user/' + user.username + '/home').text(user.username).addClass('search__list-user-col-username');
             div.append(title);
             div.append(userImageLink);
@@ -51,7 +51,7 @@ function searchList(page, text){
 
             const div = $('<div>').addClass('search__list-posts-col');
             const title = $('<div>게시물</div>');
-            const postImageLink = $('<img>').attr('src', '/api/v1/image-view/' + post.representativeImageId).addClass('search__list-posts-col-image');;
+            const postImageLink = $('<img>').attr('src', '/api/v1/image/' + post.representativeImageId).addClass('search__list-posts-col-image');;
             const postLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title).addClass('search__list-posts-col-title');;
             div.append(title);
             div.append(postImageLink);

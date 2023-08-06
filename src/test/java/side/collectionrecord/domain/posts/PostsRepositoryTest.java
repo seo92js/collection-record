@@ -100,7 +100,7 @@ class PostsRepositoryTest {
         postsRepository.save(post2);
 
         //when
-        List<Posts> postsList = postsRepository.findPostsList(user.getId(), category.getName(), 0, 5);
+        List<Posts> postsList = postsRepository.findByUserIdAndCategory(user.getId(), category.getName(), 0, 5);
 
         //then
         assertThat(postsList.size()).isEqualTo(2);
@@ -147,7 +147,7 @@ class PostsRepositoryTest {
         postsRepository.save(post2);
 
         //when
-        List<Posts> hashtags = postsRepository.findContainsHashtag("hashtags", 0, 5);
+        List<Posts> hashtags = postsRepository.findByHashtagContains("hashtags", 0, 5);
 
         //then
         assertThat(hashtags.size()).isEqualTo(2);

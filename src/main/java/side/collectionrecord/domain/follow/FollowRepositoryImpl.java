@@ -20,7 +20,7 @@ public class FollowRepositoryImpl implements FollowRepositoryCustom{
     }
 
     @Override
-    public List<Posts> findFollowPosts(Long userId, int offset, int size) {
+    public List<Posts> findPostsByUserIdEqFollowingId(Long userId, int offset, int size) {
 /*        List<Long> followUserId = queryFactory
                 .select(follow.follower.id)
                 .from(follow)

@@ -90,7 +90,7 @@ class NotificationRepositoryTest {
         notificationRepository.save(notification);
 
         //when
-        List<Notification> notReadNotification = notificationRepository.findNotReadNotification(receiver.getId());
+        List<Notification> notReadNotification = notificationRepository.findByUserIdReadFalse(receiver.getId());
 
         //when
         assertThat(notReadNotification.size()).isEqualTo(1);
@@ -99,7 +99,7 @@ class NotificationRepositoryTest {
 
         notification1.setRead();
 
-        List<Notification> notReadNotification1 = notificationRepository.findNotReadNotification(receiver.getId());
+        List<Notification> notReadNotification1 = notificationRepository.findByUserIdReadFalse(receiver.getId());
 
         assertThat(notReadNotification1.size()).isEqualTo(0);
     }

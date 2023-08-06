@@ -1,6 +1,5 @@
 package side.collectionrecord.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,8 +9,8 @@ import side.collectionrecord.domain.notification.NotificationRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
-import side.collectionrecord.web.dto.NotificationAddRequestDto;
-import side.collectionrecord.web.dto.NotificationResponseDto;
+import side.collectionrecord.web.dto.CreateNotificationRequestDto;
+import side.collectionrecord.web.dto.GetNotificationResponseDto;
 
 import java.util.List;
 
@@ -50,7 +49,7 @@ class NotificationServiceTest {
 
         userRepository.save(receiver);
 
-        NotificationAddRequestDto notificationAddRequestDto = NotificationAddRequestDto.builder()
+        CreateNotificationRequestDto createNotificationRequestDto = CreateNotificationRequestDto.builder()
                 .senderName(sender.getUsername())
                 .receiverName(receiver.getUsername())
                 .text("text")
@@ -58,7 +57,7 @@ class NotificationServiceTest {
                 .build();
 
         //when
-        notificationService.save(notificationAddRequestDto);
+        notificationService.createNotification(createNotificationRequestDto);
 
         //then
         List<Notification> all = notificationRepository.findAll();
@@ -87,7 +86,7 @@ class NotificationServiceTest {
 
         userRepository.save(receiver);
 
-        NotificationAddRequestDto notificationAddRequestDto = NotificationAddRequestDto.builder()
+        CreateNotificationRequestDto createNotificationRequestDto = CreateNotificationRequestDto.builder()
                 .senderName(sender.getUsername())
                 .receiverName(receiver.getUsername())
                 .text("text")
@@ -95,9 +94,9 @@ class NotificationServiceTest {
                 .build();
 
         //when
-        Long id = notificationService.save(notificationAddRequestDto);
+        Long id = notificationService.createNotification(createNotificationRequestDto);
 
-        notificationService.read(id);
+        notificationService.updateNotification(id);
 
         User user = userRepository.findById(receiver.getId()).get();
 
@@ -125,17 +124,17 @@ class NotificationServiceTest {
 
         userRepository.save(receiver);
 
-        NotificationAddRequestDto notificationAddRequestDto = NotificationAddRequestDto.builder()
+        CreateNotificationRequestDto createNotificationRequestDto = CreateNotificationRequestDto.builder()
                 .senderName(sender.getUsername())
                 .receiverName(receiver.getUsername())
                 .text("text")
                 .url("url")
                 .build();
 
-        Long id = notificationService.save(notificationAddRequestDto);
+        Long id = notificationService.createNotification(createNotificationRequestDto);
 
         //when
-        List<NotificationResponseDto> notReadNotification = notificationService.findNotReadNotification(receiver.getId());
+        List<GetNotificationResponseDto> notReadNotification = notificationService.getAllNotificationByUserIdReadFalse(receiver.getId());
 
         //then
         assertThat(notReadNotification.size()).isEqualTo(1);

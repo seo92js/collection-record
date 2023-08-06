@@ -7,14 +7,13 @@ import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.category.CategoryRepository;
 import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.comment.CommentRepository;
-import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
-import side.collectionrecord.web.dto.PostsAddRequestDto;
-import side.collectionrecord.web.dto.PostsListResponseDto;
-import side.collectionrecord.web.dto.PostsSearchResponseDto;
-import side.collectionrecord.web.dto.PostsUpdateRequestDto;
+import side.collectionrecord.web.dto.CreatePostsRequestDto;
+import side.collectionrecord.web.dto.GetCategoryPostsResponseDto;
+import side.collectionrecord.web.dto.GetSearchPostsResponseDto;
+import side.collectionrecord.web.dto.UpdatePostsRequestDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,55 +35,47 @@ public class PostsService {
     }
 
     @Transactional
-    public List<PostsListResponseDto> getAllPostsByCategoryName(Long userId, String categoryName, int page, int size){
+    public List<GetCategoryPostsResponseDto> getAllPostsByCategoryName(Long userId, String categoryName, int page, int size){
 
         int offset = page * size;
 
-        return postsRepository.findPostsList(userId, categoryName, offset, size).stream()
-                .map(PostsListResponseDto::new)
+        return postsRepository.findByUserIdAndCategory(userId, categoryName, offset, size).stream()
+                .map(GetCategoryPostsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<PostsSearchResponseDto> getAllPostsByHashtagsContains(String hashtags, int page, int size){
+    public List<GetSearchPostsResponseDto> getAllPostsByHashtagsContains(String hashtags, int page, int size){
         int offset = page * size;
 
-        return postsRepository.findContainsHashtag(hashtags, offset, size).stream()
-                .map(PostsSearchResponseDto::new)
+        return postsRepository.findByHashtagContains(hashtags, offset, size).stream()
+                .map(GetSearchPostsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public Long createPosts(PostsAddRequestDto postsAddRequestDto){
-        Category category = categoryRepository.findById(postsAddRequestDto.getCategoryId()).get();
+    public Long createPosts(CreatePostsRequestDto createPostsRequestDto){
+        Category category = categoryRepository.findById(createPostsRequestDto.getCategoryId()).get();
 
         return postsRepository.save(Posts.builder()
-                        .title(postsAddRequestDto.getTitle())
-                        .representativeImage(postsAddRequestDto.getRepresentativeImage())
-                        .text(postsAddRequestDto.getText())
-                        .hashtags(postsAddRequestDto.getHashtags())
+                        .title(createPostsRequestDto.getTitle())
+                        .representativeImage(createPostsRequestDto.getRepresentativeImage())
+                        .text(createPostsRequestDto.getText())
+                        .hashtags(createPostsRequestDto.getHashtags())
                         .category(category)
                         .user(category.getUser())
-                        .status(postsAddRequestDto.getStatus())
+                        .status(createPostsRequestDto.getStatus())
                         .build())
                         .getId();
     }
 
     @Transactional
-    public Long updatePosts(Long userId, Long postsId, PostsUpdateRequestDto postsUpdateRequestDto){
+    public Long updatePosts(Long userId, Long postsId, UpdatePostsRequestDto updatePostsRequestDto){
         Posts posts = postsRepository.findById(postsId).orElse(null);
 
-        List<Image> prevImage = posts.getRepresentativeImage();
+        Category category = categoryRepository.findById(updatePostsRequestDto.getCategoryId()).get();
 
-        Category category = categoryRepository.findById(postsUpdateRequestDto.getCategoryId()).get();
-
-        posts.update(category, postsUpdateRequestDto.getTitle(), postsUpdateRequestDto.getRepresentativeImage(), postsUpdateRequestDto.getText(), postsUpdateRequestDto.getHashtags(), postsUpdateRequestDto.getStatus());
-
-        if (prevImage != postsUpdateRequestDto.getRepresentativeImage()){
-            for (Image image : prevImage){
-                imageRepository.delete(image);
-            }
-        }
+        posts.update(category, updatePostsRequestDto.getTitle(), updatePostsRequestDto.getText(), updatePostsRequestDto.getHashtags(), updatePostsRequestDto.getStatus());
 
         return postsId;
     }

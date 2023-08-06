@@ -11,10 +11,10 @@ import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
-import side.collectionrecord.web.dto.UserJoinRequestDto;
-import side.collectionrecord.web.dto.UserProfileResponseDto;
-import side.collectionrecord.web.dto.UserSearchResponseDto;
-import side.collectionrecord.web.dto.UserUpdateRequestDto;
+import side.collectionrecord.web.dto.CreateUserRequestDto;
+import side.collectionrecord.web.dto.GetSearchUserResponseDto;
+import side.collectionrecord.web.dto.GetUserProfileResponseDto;
+import side.collectionrecord.web.dto.UpdateUserRequestDto;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,9 +32,9 @@ public class UserService implements UserDetailsService {
     private final ImageRepository imageRepository;
 
     @Transactional
-    public Long createUser(UserJoinRequestDto userJoinRequestDto) throws IOException {
+    public Long createUser(CreateUserRequestDto createUserRequestDto) throws IOException {
 
-        validateDuplicateUser(userJoinRequestDto.getUsername());
+        validateDuplicateUser(createUserRequestDto.getUsername());
 
         File file = new File("src/main/resources/static/img/default.jpg");
 
@@ -46,8 +46,8 @@ public class UserService implements UserDetailsService {
         imageRepository.save(image);
 
         return userRepository.save(User.builder()
-                .username(userJoinRequestDto.getUsername())
-                .password(userJoinRequestDto.getPassword())
+                .username(createUserRequestDto.getUsername())
+                .password(createUserRequestDto.getPassword())
                 .profileImage(image)
                 .profileText(null)
                 .userRole(UserRole.USER)
@@ -55,14 +55,14 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public Long updateUser(Long id, UserUpdateRequestDto userUpdateRequestDto) throws IOException {
+    public Long updateUser(Long id, UpdateUserRequestDto updateUserRequestDto) throws IOException {
         User findUser = userRepository.findById(id).orElse(null);
 
         Image prevImage = findUser.getProfileImage();
 
-        findUser.update(userUpdateRequestDto.getUsername(), userUpdateRequestDto.getProfileImage(), userUpdateRequestDto.getProfileText());
+        findUser.update(updateUserRequestDto.getUsername(), updateUserRequestDto.getProfileImage(), updateUserRequestDto.getProfileText());
 
-        if (prevImage != null && prevImage.getId() != userUpdateRequestDto.getProfileImage().getId()){
+        if (prevImage != null && prevImage.getId() != updateUserRequestDto.getProfileImage().getId()){
             imageRepository.delete(prevImage);
         }
 
@@ -70,18 +70,18 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public UserProfileResponseDto getUserById (Long id){
+    public GetUserProfileResponseDto getUserById (Long id){
         User user = userRepository.findById(id).orElse(null);
 
-        return new UserProfileResponseDto(user);
+        return new GetUserProfileResponseDto(user);
     }
 
     @Transactional
-    public List<UserSearchResponseDto> getAllUserByUsernameContains(String username, int page, int size){
+    public List<GetSearchUserResponseDto> getAllUserByUsernameContains(String username, int page, int size){
         int offset = page * size;
 
         return userRepository.findByUsernameContains(username, offset, size).stream()
-                .map(UserSearchResponseDto::new)
+                .map(GetSearchUserResponseDto::new)
                 .collect(Collectors.toList());
     }
 

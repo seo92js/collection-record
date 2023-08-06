@@ -19,7 +19,7 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom{
     }
 
     @Override
-    public List<Posts> findPostsList(Long userId, String categoryName, int offset, int size){
+    public List<Posts> findByUserIdAndCategory(Long userId, String categoryName, int offset, int size){
 
         if (Objects.equals(categoryName, "all")){
             return queryFactory.selectFrom(posts)
@@ -39,7 +39,7 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom{
     }
 
     @Override
-    public List<Posts> findContainsHashtag(String hashtag, int offset, int size) {
+    public List<Posts> findByHashtagContains(String hashtag, int offset, int size) {
         return queryFactory.selectFrom(posts)
                 .where(posts.hashtags.contains(hashtag))
                 .orderBy(posts.createdDate.desc())

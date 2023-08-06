@@ -10,7 +10,7 @@ import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
 import side.collectionrecord.service.ChatMessageService;
 import side.collectionrecord.service.UserChatRoomService;
-import side.collectionrecord.web.dto.ChatMessageResponseDto;
+import side.collectionrecord.web.dto.GetChatMessageResponseDto;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class ChatRoomController {
     private final UserChatRoomService userChatRoomService;
 
     @GetMapping("/chatroom/{user1Id}/{user2Id}")
-    public String chat(@PathVariable("user1Id") Long user1Id, @PathVariable("user2Id") Long user2Id, Model model) {
+    public String getChatRoom(@PathVariable("user1Id") Long user1Id, @PathVariable("user2Id") Long user2Id, Model model) {
 
         UserChatRoom userChatRoom = userChatRoomService.createUserChatRoom(user1Id, user2Id);
 
@@ -36,12 +36,12 @@ public class ChatRoomController {
 
         model.addAttribute("chatRoomId", userChatRoom.getChatRoom().getId());
 
-        List<ChatMessageResponseDto> chatRoomMessage = chatMessageService.findChatRoomMessage(userChatRoom.getChatRoom().getId());
+        List<GetChatMessageResponseDto> chatRoomMessage = chatMessageService.getChatMessageByChatRoomId(userChatRoom.getChatRoom().getId());
 
         model.addAttribute("chatRoomMessages", chatRoomMessage);
 
         // 안 읽은 메세지 읽음으로 처리
-        chatMessageService.updateRead(userChatRoom.getChatRoom().getId(), user1Id);
+        chatMessageService.updateChatMessage(userChatRoom.getChatRoom().getId(), user1Id);
 
         return "/chatroom/chatroom";
     }

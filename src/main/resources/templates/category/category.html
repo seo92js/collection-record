@@ -11,11 +11,10 @@
 
     <main class="category">
         <div class="category__form" >
-            <form th:object="${categoryAddRequestDto}" id="category-add-form">
+            <form th:object="${createParentCategoryRequestDto}" id="create-parent-category-form">
                 <div>
-                    <input type="hidden" th:field="*{userId}">
-                    <input type="text" th:field="*{name}" placeholder="카테고리 명" th:required="true">
-                    <button type="submit" id="category-add-btn">추가</button>
+                    <input type="text" th:field="*{name}" placeholder="카테고리 명" required>
+                    <button type="submit" id="create-parent-category-btn" th:onclick="createParentCategory([[${loginUserId}]])">추가</button>
                 </div>
             </form>
         </div>
@@ -23,18 +22,24 @@
         <div>
             <!-- parent 카테고리 리스트 -->
             <div class="category__list" th:each="parentCategory : ${parentCategories}">
-                <input type="text" th:value="${parentCategory.name}" th:id="'category-name-input-' + ${parentCategory.id}">
-                <a th:onclick="categoryUpdate([[${parentCategory.id}]])">수정</a>
-                <a th:onclick="categoryDelete([[${parentCategory.id}]])">삭제</a>
-                <input type="text" th:id="'category-child-add-input-' + ${parentCategory.id}">
-                <button type="button" th:onclick="categoryChildAdd([[${loginUserId}]], [[${parentCategory.id}]])">추가</button>
+                <div>
+                    <input type="text" th:value="${parentCategory.name}" th:id="'update-parent-category-name-' + ${parentCategory.id}">
+                    <a th:onclick="updateParentCategory([[${parentCategory.id}]])">수정</a>
+                    <a th:onclick="deleteCategory([[${parentCategory.id}]])">삭제</a>
+                    <form>
+                        <div>
+                            <input type="text" th:id="'create-child-category-name-' + ${parentCategory.id}" placeholder="카테고리 명" required>
+                            <button type="submit" th:onclick="createChildCategory([[${loginUserId}]], [[${parentCategory.id}]])">추가</button>
+                        </div>
+                    </form>
+                </div>
 
                 <!-- child 카테고리 리스트 -->
                 <div class="category__list-child" th:each="childCategory : ${childCategories}">
                     <div th:if="${childCategory.parentCategoryId == parentCategory.id}">
-                        <input type="text" th:value="${childCategory.name}" th:id="'category-child-name-input-' + ${childCategory.id}">
-                        <a th:onclick="categoryChildUpdate([[${childCategory.id}]])">수정</a>
-                        <a th:onclick="categoryDelete([[${childCategory.id}]])">삭제</a>
+                        <input type="text" th:value="${childCategory.name}" th:id="'update-child-category-name-' + ${childCategory.id}">
+                        <a th:onclick="updateChildCategory([[${childCategory.id}]])">수정</a>
+                        <a th:onclick="deleteCategory([[${childCategory.id}]])">삭제</a>
                     </div>
                 </div>
 
@@ -44,9 +49,10 @@
 
     <div th:replace="fragments/footer :: footer" />
 
-    <script src="/js/category-create.js"></script>
-    <script src="/js/category-delete.js"></script>
-    <script src="/js/category-update.js"></script>
-
+    <script src="/js/create-parent-category.js"></script>
+    <script src="/js/create-child-category.js"></script>
+    <script src="/js/delete-category.js"></script>
+    <script src="/js/update-parent-category.js"></script>
+    <script src="/js/update-child-category.js"></script>
 </body>
 </html>

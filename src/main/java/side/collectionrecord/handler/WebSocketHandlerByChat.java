@@ -12,8 +12,8 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.ChatMessageService;
 import side.collectionrecord.service.UserChatRoomService;
-import side.collectionrecord.web.dto.ChatMessageAddRequestDto;
-import side.collectionrecord.web.dto.ChatMessageResponseDto;
+import side.collectionrecord.web.dto.CreateChatMessageRequestDto;
+import side.collectionrecord.web.dto.GetChatMessageResponseDto;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -42,16 +42,16 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
             return;
 
         // 일반 메세지
-        ChatMessageAddRequestDto chatMessageAddRequestDto = objectMapper.readValue(payload, ChatMessageAddRequestDto.class);
-        Long id = chatMessageService.addMessage(chatMessageAddRequestDto);
-        ChatMessageResponseDto chatMessageResponseDto = chatMessageService.findById(id);
+        CreateChatMessageRequestDto createChatMessageRequestDto = objectMapper.readValue(payload, CreateChatMessageRequestDto.class);
+        Long id = chatMessageService.createChatMessage(createChatMessageRequestDto);
+        GetChatMessageResponseDto getChatMessageResponseDto = chatMessageService.getChatMessageById(id);
 
         // 자신에게 Send
-        sendToClient(session, chatMessageResponseDto);
+        sendToClient(session, getChatMessageResponseDto);
 
         // 상대에게 Send
-        WebSocketSession sessionByUsername = findSessionByUsername(chatMessageResponseDto.getReceiverName());
-        sendToClient(sessionByUsername, chatMessageResponseDto);
+        WebSocketSession sessionByUsername = findSessionByUsername(getChatMessageResponseDto.getReceiverName());
+        sendToClient(sessionByUsername, getChatMessageResponseDto);
     }
 
     // 클라이언트 연결 성립 시 처리
@@ -85,7 +85,7 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
 
             User users = userRepository.findByUsername(username).get();
 
-            boolean readAllMessage = userChatRoomService.checkNotReadMessage(users.getId());
+            boolean readAllMessage = userChatRoomService.checkReadFalseMessage(users.getId());
 
             // 안읽은 메세지가 있으면 본인에게 send
             if (readAllMessage == false)
@@ -116,11 +116,11 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
         return usernameToRemove;
     }
 
-    private void sendToClient(WebSocketSession session, ChatMessageResponseDto chatMessageResponseDto) throws IOException {
-        if( chatMessageResponseDto != null){
+    private void sendToClient(WebSocketSession session, GetChatMessageResponseDto getChatMessageResponseDto) throws IOException {
+        if( getChatMessageResponseDto != null){
             ObjectMapper objectMapper = new ObjectMapper();
 
-            String json = objectMapper.writeValueAsString(chatMessageResponseDto);
+            String json = objectMapper.writeValueAsString(getChatMessageResponseDto);
 
             // 연결 중일 때
             if (session != null)

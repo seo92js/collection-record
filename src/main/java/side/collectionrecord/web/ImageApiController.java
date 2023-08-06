@@ -16,9 +16,9 @@ import side.collectionrecord.service.ImageService;
 public class ImageApiController {
     private final ImageService imageService;
 
-    @GetMapping("/api/v1/image-view/{id}")
-    public ResponseEntity<byte[]> imageView(@PathVariable Long id){
-        Image findImage = imageService.findImage(id);
+    @GetMapping("/api/v1/image/{id}")
+    public ResponseEntity<byte[]> getImageById(@PathVariable Long id){
+        Image findImage = imageService.getImageById(id);
 
         byte[] image = findImage.getData();
 

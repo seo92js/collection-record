@@ -16,30 +16,30 @@
         <div class="posts__left">
             <!-- 카테고리 -->
             <div class="posts__left-category">
-                <div th:text="${postsResponseDto.categoryName}"></div>
+                <div th:text="${getPostsResponseDto.categoryName}"></div>
             </div>
             <div class="posts__left-title">
                 <!-- 상태 -->
-                <div th:text="${postsResponseDto.status}"></div>
+                <div th:text="${getPostsResponseDto.status}"></div>
                 <!-- 제목 -->
-                <div th:text="${postsResponseDto.title}"></div>
+                <div th:text="${getPostsResponseDto.title}"></div>
             </div>
             <!-- 이미지 -->
             <div class="posts__left-image">
-                <div th:each="imageId : ${postsResponseDto.representativeImageId}">
-                    <img class="posts__left-image-content" th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
+                <div th:each="imageId : ${getPostsResponseDto.representativeImageId}">
+                    <img class="posts__left-image-content" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
                 </div>
             </div>
             <div>
-                <button id="image-prev-btn">이전</button>
-                <button id="image-next-btn">다음</button>
+                <button th:onclick="showPrevImage()">이전</button>
+                <button th:onclick="showNextImage()">다음</button>
             </div>
         </div>
 
         <div class="posts__right">
             <!-- 버튼 -->
             <div class="posts__right-btn" th:if="${isMyPost}">
-                <a th:href="@{/posts/update/{id}(id=${postsResponseDto.id})}">수정</a>
+                <a th:href="@{/posts/update/{id}(id=${getPostsResponseDto.id})}">수정</a>
             </div>
             <div class="posts__right-btn" th:unless="${isMyPost}">
                 <a th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${userId})}" target="_blank">채팅</a>
@@ -47,8 +47,8 @@
             <!-- 내용 -->
             <div class="posts__right-content">
                 <!-- 해시태그 -->
-                <div class="posts__right-content-hashtag" th:text="${postsResponseDto.hashtags}"></div>
-                <div class="posts__right-content-text" th:text="${postsResponseDto.text}"></div>
+                <div class="posts__right-content-hashtag" th:text="${getPostsResponseDto.hashtags}"></div>
+                <div class="posts__right-content-text" th:text="${getPostsResponseDto.text}"></div>
             </div>
             <!-- 댓글 -->
             <div class="posts__right-comment">
@@ -56,24 +56,19 @@
 
                 <!--댓글 작성 form-->
                 <div class="posts__right-comment-form">
-                    <form th:object="${commentAddRequestDto}" id="comment-add-form">
+                    <form th:object="${createParentCommentRequestDto}" id="create-parent-comment-form">
                         <div>
-                            <input type="hidden" th:field="*{userId}">
-                            <input type="hidden" th:field="*{postsId}">
-
-                            <input type="text" th:field="*{text}" placeholder="내용" th:required="true">
-                            <button type="submit" id="comment-add-btn" th:onclick="commentAdd(); notificationSend([[${loginUsername}]],[[${username}]],[[*{postsId}]])">댓글 달기</button>
+                            <input type="text" th:field="*{text}" placeholder="내용" required>
+                            <button type="submit" th:onclick="createParentComment([[*{userId}]], [[*{postsId}]]); notificationSend([[${loginUsername}]],[[${username}]],[[*{postsId}]])">댓글 달기</button>
                         </div>
                     </form>
                     <!-- else 위에 div 클래스가 child 이면 -->
-                    <form class="hidden" th:object="${commentChildAddRequestDto}" id="comment-child-add-form">
+                    <form class="hidden" th:object="${createChildCommentRequestDto}" id="create-child-comment-form">
                         <div>
-                            <input type="hidden" th:field="*{userId}">
-                            <input type="hidden" th:field="*{postsId}">
                             <input type="hidden" th:field="*{parentCommentId}" id="parentCommentId">
 
-                            <input type="text" th:field="*{text}" placeholder="내용" th:required="true">
-                            <button type="submit" id="comment-child-add-btn" th:onclick="commentChildAdd(); notificationSend([[${loginUsername}]],[[${username}]],[[*{postsId}]])">답글 달기</button>
+                            <input type="text" th:field="*{text}" placeholder="내용" required>
+                            <button type="submit" th:onclick="createChildComment([[*{userId}]], [[*{postsId}]]); sendNotification([[${loginUsername}]],[[${username}]],[[*{postsId}]])">답글 달기</button>
                             <button type="button" th:onclick="switchParentForm()">X</button>
                         </div>
                     </form>
@@ -92,7 +87,7 @@
                         </div>
                         <div>
                             <button class="posts__right-comment-form-btn" type="button" th:onclick="switchChildForm([[${parentComment.id}]])">답글 달기</button>
-                            <button th:if="${parentComment.username == loginUsername}" class="posts__right-comment-form-btn" type="button" th:onclick="commentDelete([[${parentComment.id}]])">삭제</button>
+                            <button th:if="${parentComment.username == loginUsername}" class="posts__right-comment-form-btn" type="button" th:onclick="deleteComment([[${parentComment.id}]])">삭제</button>
                         </div>
 
                         <!-- 답글 목록-->
@@ -106,7 +101,7 @@
                                     <div class="posts__right-comment-list-content-text"th:text="${childComment.text}"></div>
                                 </div>
                                 <div>
-                                    <button th:if="${childComment.username == loginUsername}" class="posts__right-comment-form-btn" type="button" th:onclick="commentDelete([[${childComment.id}]])">삭제</button>
+                                    <button th:if="${childComment.username == loginUsername}" class="posts__right-comment-form-btn" type="button" th:onclick="deleteComment([[${childComment.id}]])">삭제</button>
                                 </div>
                             </div>
                         </div>
@@ -119,10 +114,11 @@
 
     <div th:replace="fragments/footer :: footer" />
 
-    <script src="/js/postsImage.js"></script>
-    <script src="/js/comment-create.js"></script>
-    <script src="/js/comment-delete.js"></script>
-    <script src="/js/notificationPosts.js"></script>
+    <script src="/js/show-posts-image.js"></script>
+    <script src="/js/create-parent-comment.js"></script>
+    <script src="/js/create-child-comment.js"></script>
+    <script src="/js/delete-comment.js"></script>
+    <script src="/js/send-notification-comment.js"></script>
 
 </body>
 </html>

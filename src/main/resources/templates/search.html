@@ -14,8 +14,8 @@
         <div class="search__form">
             <form>
                 <div>
-                    <input id="search-text" type="text" placeholder="유저이름 혹은 해시태그" th:required="true">
-                    <button type="submit" id="search-btn" class="btn btn-primary">검색</button>
+                    <input id="search-text" type="text" placeholder="유저이름 혹은 해시태그" required>
+                    <button type="submit" th:onclick="search()" id="search-btn">검색</button>
                 </div>
             </form>
         </div>

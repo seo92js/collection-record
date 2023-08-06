@@ -11,8 +11,8 @@ import side.collectionrecord.service.NotificationService;
 public class NotificationApiController {
     private final NotificationService notificationService;
 
-    @PutMapping("/api/v1/notification-read/{id}")
-    public Long read(@PathVariable Long id){
-        return notificationService.read(id);
+    @PutMapping("/api/v1/notification/{id}")
+    public Long updateNotification(@PathVariable Long id){
+        return notificationService.updateNotification(id);
     }
 }

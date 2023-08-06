@@ -7,8 +7,8 @@ import side.collectionrecord.domain.follow.Follow;
 import side.collectionrecord.domain.follow.FollowRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.FollowPostsListResponseDto;
-import side.collectionrecord.web.dto.UserFollowingRequestDto;
+import side.collectionrecord.web.dto.CreateFollowRequestDto;
+import side.collectionrecord.web.dto.GetFollowPostsResponseDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,9 +21,9 @@ public class FollowService {
     private final FollowRepository followRepository;
 
     @Transactional
-    public void following(UserFollowingRequestDto userFollowingRequestDto){
-        User user = userRepository.findById(userFollowingRequestDto.getUserId()).get();
-        User followingUser = userRepository.findById(userFollowingRequestDto.getFollowingUserId()).get();
+    public void createFollow(CreateFollowRequestDto createFollowRequestDto){
+        User user = userRepository.findById(createFollowRequestDto.getUserId()).get();
+        User followingUser = userRepository.findById(createFollowRequestDto.getFollowingUserId()).get();
 
         Follow follow = Follow.builder()
                 .following(user)
@@ -34,11 +34,11 @@ public class FollowService {
     }
 
     @Transactional
-    public void unfollowing(UserFollowingRequestDto userFollowingRequestDto){
-        User user = userRepository.findById(userFollowingRequestDto.getUserId()).get();
-        User unfollowingUser = userRepository.findById(userFollowingRequestDto.getFollowingUserId()).get();
+    public void deleteFollow(CreateFollowRequestDto createFollowRequestDto){
+        User user = userRepository.findById(createFollowRequestDto.getUserId()).get();
+        User unfollowingUser = userRepository.findById(createFollowRequestDto.getFollowingUserId()).get();
 
-        Follow follow = user.findFollowByUser(unfollowingUser);
+        Follow follow = user.getFollowByUser(unfollowingUser);
 
         if (follow != null) {
             follow.deleteFollowing(user, unfollowingUser);
@@ -47,11 +47,11 @@ public class FollowService {
     }
 
     @Transactional
-    public boolean isFollowingUser(Long userId, Long followingUserId){
+    public boolean checkFollow(Long userId, Long followingUserId){
         User user = userRepository.findById(userId).get();
         User followingUser = userRepository.findById(followingUserId).get();
 
-        if (user.findFollowByUser(followingUser) == null){
+        if (user.getFollowByUser(followingUser) == null){
             return false;
         }else{
             return true;
@@ -59,12 +59,12 @@ public class FollowService {
     }
 
     @Transactional
-    public List<FollowPostsListResponseDto> findFollowPosts(Long userId, int page, int size){
+    public List<GetFollowPostsResponseDto> getAllPostsByUserIdEqFollowingId(Long userId, int page, int size){
 
         int offset = page * size;
 
-        return followRepository.findFollowPosts(userId, offset, size).stream()
-                .map(FollowPostsListResponseDto::new)
+        return followRepository.findPostsByUserIdEqFollowingId(userId, offset, size).stream()
+                .map(GetFollowPostsResponseDto::new)
                 .collect(Collectors.toList());
     }
 }

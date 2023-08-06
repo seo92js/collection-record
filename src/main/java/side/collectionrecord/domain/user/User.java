@@ -83,7 +83,7 @@ public class User extends BaseTimeEntity {
         user.follower.remove(follow);
     }
 
-    public Follow findFollowByUser(User user){
+    public Follow getFollowByUser(User user){
         for (Follow follow : following) {
             if (follow.getFollower().equals(user)){
                 return follow;

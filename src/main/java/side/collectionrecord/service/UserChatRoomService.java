@@ -13,7 +13,7 @@ import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.userchatroom.QUserChatRoom;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
 import side.collectionrecord.domain.userchatroom.UserChatRoomRepository;
-import side.collectionrecord.web.dto.UserChatRoomListResponseDto;
+import side.collectionrecord.web.dto.GetUserChatRoomResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,19 +65,19 @@ public class UserChatRoomService {
     }
 
     @Transactional
-    public List<UserChatRoomListResponseDto> getAllUserChatroomByUserId(Long userId){
+    public List<GetUserChatRoomResponseDto> getAllUserChatroomByUserId(Long userId){
         List<Tuple> userChatRoomList = userChatRoomRepository.findUserAndChatroomIdByUserId(userId);
 
-        List<UserChatRoomListResponseDto> responseDtoList = new ArrayList<>();
+        List<GetUserChatRoomResponseDto> responseDtoList = new ArrayList<>();
 
         for (Tuple tuple : userChatRoomList){
             User user = tuple.get(QUserChatRoom.userChatRoom.user);
             Long chatRoomId = tuple.get(QUserChatRoom.userChatRoom.chatRoom.id);
-            List<ChatMessage> notReadMessage = chatMessageRepository.findNotReadMessage(chatRoomId, userId);
-            if(notReadMessage.size() > 0) {
-                responseDtoList.add(new UserChatRoomListResponseDto(user, false));
+            List<ChatMessage> readFalseMessage = chatMessageRepository.findByChatroomIdAndUserIdReadFalse(chatRoomId, userId);
+            if(readFalseMessage.size() > 0) {
+                responseDtoList.add(new GetUserChatRoomResponseDto(user, false));
             }else{
-                responseDtoList.add(new UserChatRoomListResponseDto(user, true));
+                responseDtoList.add(new GetUserChatRoomResponseDto(user, true));
             }
         }
 
@@ -85,13 +85,13 @@ public class UserChatRoomService {
     }
 
     @Transactional
-    public boolean checkNotReadMessage(Long userId){
+    public boolean checkReadFalseMessage(Long userId){
         User user = userRepository.findById(userId).get();
 
         for ( UserChatRoom userChatRoom : user.getUserChatRooms()){
-            List<ChatMessage> notReadMessage = chatMessageRepository.findNotReadMessage(userChatRoom.getChatRoom().getId(), userId);
+            List<ChatMessage> readFalseMessage = chatMessageRepository.findByChatroomIdAndUserIdReadFalse(userChatRoom.getChatRoom().getId(), userId);
 
-            if (notReadMessage.size() > 0)
+            if (readFalseMessage.size() > 0)
                 return false;
         }
 

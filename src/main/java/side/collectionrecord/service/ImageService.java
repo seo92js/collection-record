@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
-import side.collectionrecord.web.dto.ImageUploadRequestDto;
+import side.collectionrecord.web.dto.CreateImageRequestDto;
 
 @Getter
 @RequiredArgsConstructor
@@ -15,18 +15,18 @@ public class ImageService {
     private final ImageRepository imageRepository;
 
     @Transactional
-    public Long upload(ImageUploadRequestDto imageUploadRequestDto){
+    public Long createImage(CreateImageRequestDto createImageRequestDto){
 
         Image image = Image.builder()
-                .filename(imageUploadRequestDto.getFilename())
-                .data(imageUploadRequestDto.getData())
+                .filename(createImageRequestDto.getFilename())
+                .data(createImageRequestDto.getData())
                 .build();
 
         return imageRepository.save(image).getId();
     }
 
     @Transactional
-    public Image findImage(Long id){
+    public Image getImageById(Long id){
         return imageRepository.findById(id).get();
     }
 }

@@ -11,10 +11,10 @@ import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.CategoryAddRequestDto;
-import side.collectionrecord.web.dto.CategoryChildAddRequestDto;
-import side.collectionrecord.web.dto.CategoryListResponseDto;
-import side.collectionrecord.web.dto.CategoryUpdateRequestDto;
+import side.collectionrecord.web.dto.CreateChildCategoryRequestDto;
+import side.collectionrecord.web.dto.CreateParentCategoryRequestDto;
+import side.collectionrecord.web.dto.GetCategoryResponseDto;
+import side.collectionrecord.web.dto.UpdateCategoryRequestDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,15 +30,15 @@ public class CategoryService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public Long addCategory(CategoryAddRequestDto categoryAddRequestDto){
-        Long userId = categoryAddRequestDto.getUserId();
+    public Long createParentCategory(CreateParentCategoryRequestDto createParentCategoryRequestDto){
+        Long userId = createParentCategoryRequestDto.getUserId();
 
         User findUser = userRepository.findById(userId).orElse(null);
 
         Category category = Category.builder()
                 .user(findUser)
                 .parentCategory(null)
-                .name(categoryAddRequestDto.getName())
+                .name(createParentCategoryRequestDto.getName())
                 .build();
 
         categoryRepository.save(category);
@@ -47,17 +47,17 @@ public class CategoryService {
     }
 
     @Transactional
-    public Long addCategoryChild(CategoryChildAddRequestDto categoryChildAddRequestDto){
-        Long userId = categoryChildAddRequestDto.getUserId();
+    public Long createChildCategory(CreateChildCategoryRequestDto createChildCategoryRequestDto){
+        Long userId = createChildCategoryRequestDto.getUserId();
 
         User findUser = userRepository.findById(userId).orElse(null);
 
-        Category parentCategory = categoryRepository.findById(categoryChildAddRequestDto.getParentCategoryId()).get();
+        Category parentCategory = categoryRepository.findById(createChildCategoryRequestDto.getParentCategoryId()).get();
 
         Category category = Category.builder()
                 .user(findUser)
                 .parentCategory(parentCategory)
-                .name(categoryChildAddRequestDto.getName())
+                .name(createChildCategoryRequestDto.getName())
                 .build();
 
         categoryRepository.save(category);
@@ -66,29 +66,29 @@ public class CategoryService {
     }
 
     @Transactional
-    public List<CategoryListResponseDto> findParentCategories(Long userId){
+    public List<GetCategoryResponseDto> getAllParentCategoryByUserId(Long userId){
         return categoryRepository.findAllParentCategory(userId).stream()
-                .map(CategoryListResponseDto::new)
+                .map(GetCategoryResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<CategoryListResponseDto> findChildCategories(Long userId){
+    public List<GetCategoryResponseDto> getAllChildCategoryByUserId(Long userId){
         return categoryRepository.findAllChildCategory(userId).stream()
-                .map(CategoryListResponseDto::new)
+                .map(GetCategoryResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public Long update(Long id, CategoryUpdateRequestDto categoryUpdateRequestDto){
+    public Long updateCategory(Long id, UpdateCategoryRequestDto updateCategoryRequestDto){
         Category category = categoryRepository.findById(id).orElse(null);
-        category.update(categoryUpdateRequestDto.getName());
+        category.update(updateCategoryRequestDto.getName());
 
         return id;
     }
 
     @Transactional
-    public void delete(Long id){
+    public void deleteCategory(Long id){
         Category category = categoryRepository.findById(id).orElse(null);
 
         List<Posts> posts = category.getPosts();

@@ -3,30 +3,30 @@ package side.collectionrecord.web;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import side.collectionrecord.service.CommentService;
-import side.collectionrecord.web.dto.CommentAddRequestDto;
-import side.collectionrecord.web.dto.CommentChildAddRequestDto;
+import side.collectionrecord.web.dto.CreateChildCommentRequestDto;
+import side.collectionrecord.web.dto.CreateParentCommentRequestDto;
 
 @RequiredArgsConstructor
 @RestController
 public class CommentApiController {
     private final CommentService commentService;
 
-    @PostMapping("/api/v1/comment-add")
-    public Long save(@RequestBody CommentAddRequestDto commentAddRequestDto){
-        Long id = commentService.addComment(commentAddRequestDto);
+    @PostMapping("/api/v1/parent-comment")
+    public Long createParentComment(@RequestBody CreateParentCommentRequestDto createParentCommentRequestDto){
+        Long id = commentService.createParentComment(createParentCommentRequestDto);
 
         return id;
     }
 
-    @PostMapping("/api/v1/comment-child-add")
-    public Long childSave(@RequestBody CommentChildAddRequestDto commentChildAddRequestDto){
-        Long id = commentService.addCommentChild(commentChildAddRequestDto);
+    @PostMapping("/api/v1/child-comment")
+    public Long createChildComment(@RequestBody CreateChildCommentRequestDto createChildCommentRequestDto){
+        Long id = commentService.createChildComment(createChildCommentRequestDto);
 
         return id;
     }
 
-    @DeleteMapping("/api/v1/comment-delete/{id}")
-    public Long delete(@PathVariable Long id){
+    @DeleteMapping("/api/v1/comment/{id}")
+    public Long deleteComment(@PathVariable Long id){
         commentService.deleteComment(id);
 
         return id;

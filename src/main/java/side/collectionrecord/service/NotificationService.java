@@ -7,8 +7,8 @@ import side.collectionrecord.domain.notification.Notification;
 import side.collectionrecord.domain.notification.NotificationRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.NotificationAddRequestDto;
-import side.collectionrecord.web.dto.NotificationResponseDto;
+import side.collectionrecord.web.dto.CreateNotificationRequestDto;
+import side.collectionrecord.web.dto.GetNotificationResponseDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,23 +21,23 @@ public class NotificationService {
     private final NotificationRepository notificationRepository;
 
     @Transactional
-    public Long save(NotificationAddRequestDto notificationAddRequestDto){
-        User sender = userRepository.findByUsername(notificationAddRequestDto.getSenderName()).get();
-        User receiver = userRepository.findByUsername(notificationAddRequestDto.getReceiverName()).get();
+    public Long createNotification(CreateNotificationRequestDto createNotificationRequestDto){
+        User sender = userRepository.findByUsername(createNotificationRequestDto.getSenderName()).get();
+        User receiver = userRepository.findByUsername(createNotificationRequestDto.getReceiverName()).get();
 
         Notification notification = Notification.builder()
                 .sender(sender)
                 .receiver(receiver)
-                .message(notificationAddRequestDto.getText())
+                .message(createNotificationRequestDto.getText())
                 .read(false)
-                .url(notificationAddRequestDto.getUrl())
+                .url(createNotificationRequestDto.getUrl())
                 .build();
 
         return notificationRepository.save(notification).getId();
     }
 
     @Transactional
-    public Long read(Long id){
+    public Long updateNotification(Long id){
         Notification notification = notificationRepository.findById(id).get();
 
         notification.setRead();
@@ -46,8 +46,8 @@ public class NotificationService {
     }
 
     @Transactional
-    public List<NotificationResponseDto> findNotReadNotification(Long userId){
-        return notificationRepository.findNotReadNotification(userId).stream()
-                .map(NotificationResponseDto::new).collect(Collectors.toList());
+    public List<GetNotificationResponseDto> getAllNotificationByUserIdReadFalse(Long userId){
+        return notificationRepository.findByUserIdReadFalse(userId).stream()
+                .map(GetNotificationResponseDto::new).collect(Collectors.toList());
     }
 }

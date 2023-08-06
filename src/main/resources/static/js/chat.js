@@ -13,11 +13,11 @@ chatSocket.onopen = function() {
 chatSocket.onmessage = function(event) {
     if (event.data != 'send'){
         const json = event.data;
-        const chatMessageResponseDto = JSON.parse(json);
+        const getChatMessageResponseDto = JSON.parse(json);
 
         $.ajax({
             type: 'PUT',
-            url: '/api/v1/chatmessage-update/' + chatMessageResponseDto.chatRoomId,
+            url: '/api/v1/chat-message/' + getChatMessageResponseDto.chatRoomId,
         }).done(function(){
             location.reload();
         }).fail(function (error){
@@ -29,7 +29,7 @@ chatSocket.onmessage = function(event) {
 function send(senderId, receiverId, chatRoomId){
     const message = document.getElementById("input-chat").value;
 
-    const chatMessageAddRequestDto = {
+    const createChatMessageRequestDto = {
         senderId: senderId,
         receiverId: receiverId,
         chatRoomId: chatRoomId,
@@ -37,7 +37,7 @@ function send(senderId, receiverId, chatRoomId){
         read: false
     }
 
-    const json = JSON.stringify(chatMessageAddRequestDto);
+    const json = JSON.stringify(createChatMessageRequestDto);
 
     chatSocket.send(json);
 }

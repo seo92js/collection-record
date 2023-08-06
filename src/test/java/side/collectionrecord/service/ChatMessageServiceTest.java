@@ -11,8 +11,8 @@ import side.collectionrecord.domain.chatroom.ChatRoomRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
-import side.collectionrecord.web.dto.ChatMessageAddRequestDto;
-import side.collectionrecord.web.dto.ChatMessageResponseDto;
+import side.collectionrecord.web.dto.CreateChatMessageRequestDto;
+import side.collectionrecord.web.dto.GetChatMessageResponseDto;
 
 import java.util.List;
 
@@ -65,11 +65,11 @@ class ChatMessageServiceTest {
 
         chatMessageRepository.save(chatMessage);
 
-        ChatMessageResponseDto chatMessageResponseDto = chatMessageService.findById(chatMessage.getId());
+        GetChatMessageResponseDto getChatMessageResponseDto = chatMessageService.getChatMessageById(chatMessage.getId());
 
-        assertThat(chatMessageResponseDto.getMessage()).isEqualTo("message");
-        assertThat(chatMessageResponseDto.getSenderName()).isEqualTo(sender.getUsername());
-        assertThat(chatMessageResponseDto.getReceiverName()).isEqualTo(receiver.getUsername());
+        assertThat(getChatMessageResponseDto.getMessage()).isEqualTo("message");
+        assertThat(getChatMessageResponseDto.getSenderName()).isEqualTo(sender.getUsername());
+        assertThat(getChatMessageResponseDto.getReceiverName()).isEqualTo(receiver.getUsername());
     }
 
     @Test
@@ -96,7 +96,7 @@ class ChatMessageServiceTest {
 
         chatRoomRepository.save(chatRoom);
 
-        ChatMessageAddRequestDto chatMessageAddRequestDto = ChatMessageAddRequestDto.builder()
+        CreateChatMessageRequestDto createChatMessageRequestDto = CreateChatMessageRequestDto.builder()
                 .senderId(sender.getId())
                 .receiverId(receiver.getId())
                 .chatRoomId(chatRoom.getId())
@@ -105,7 +105,7 @@ class ChatMessageServiceTest {
                 .build();
 
         //when
-        chatMessageService.addMessage(chatMessageAddRequestDto);
+        chatMessageService.createChatMessage(createChatMessageRequestDto);
 
         List<ChatMessage> all = chatMessageRepository.findAll();
 
@@ -137,7 +137,7 @@ class ChatMessageServiceTest {
 
         chatRoomRepository.save(chatRoom);
 
-        ChatMessageAddRequestDto chatMessageAddRequestDto = ChatMessageAddRequestDto.builder()
+        CreateChatMessageRequestDto createChatMessageRequestDto = CreateChatMessageRequestDto.builder()
                 .senderId(sender.getId())
                 .receiverId(receiver.getId())
                 .chatRoomId(chatRoom.getId())
@@ -145,13 +145,13 @@ class ChatMessageServiceTest {
                 .read(false)
                 .build();
 
-        chatMessageService.addMessage(chatMessageAddRequestDto);
+        chatMessageService.createChatMessage(createChatMessageRequestDto);
 
         //when
-        List<ChatMessageResponseDto> chatRoomMessage = chatMessageService.findChatRoomMessage(chatRoom.getId());
+        List<GetChatMessageResponseDto> getChatMessageResponseDto = chatMessageService.getChatMessageByChatRoomId(chatRoom.getId());
 
         //then
-        assertThat(chatRoomMessage.size()).isEqualTo(1);
-        assertThat(chatRoomMessage.get(0).getMessage()).isEqualTo("message");
+        assertThat(getChatMessageResponseDto.size()).isEqualTo(1);
+        assertThat(getChatMessageResponseDto.get(0).getMessage()).isEqualTo("message");
     }
 }

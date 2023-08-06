@@ -11,8 +11,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.NotificationService;
-import side.collectionrecord.web.dto.NotificationAddRequestDto;
-import side.collectionrecord.web.dto.NotificationResponseDto;
+import side.collectionrecord.web.dto.CreateNotificationRequestDto;
+import side.collectionrecord.web.dto.GetNotificationResponseDto;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -39,11 +39,11 @@ public class WebSocketHandlerByNotification extends TextWebSocketHandler {
             return;
 
         // 일반 알림
-        NotificationAddRequestDto notificationAddRequestDto = objectMapper.readValue(payload, NotificationAddRequestDto.class);
-        Long id = notificationService.save(notificationAddRequestDto);
+        CreateNotificationRequestDto createNotificationRequestDto = objectMapper.readValue(payload, CreateNotificationRequestDto.class);
+        Long id = notificationService.createNotification(createNotificationRequestDto);
 
         // 상대한테 send
-        WebSocketSession sessionByUsername = findSessionByUsername(notificationAddRequestDto.getReceiverName());
+        WebSocketSession sessionByUsername = findSessionByUsername(createNotificationRequestDto.getReceiverName());
         sendToClient(sessionByUsername);
     }
 
@@ -78,7 +78,7 @@ public class WebSocketHandlerByNotification extends TextWebSocketHandler {
 
             User user = userRepository.findByUsername(username).get();
 
-            List<NotificationResponseDto> notReadNotification = notificationService.findNotReadNotification(user.getId());
+            List<GetNotificationResponseDto> notReadNotification = notificationService.getAllNotificationByUserIdReadFalse(user.getId());
 
             // 안읽은 알림이 있으면 본인에게 send
             if (notReadNotification.size() > 0)

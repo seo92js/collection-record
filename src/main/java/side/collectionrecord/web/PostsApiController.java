@@ -7,10 +7,10 @@ import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.service.ImageService;
 import side.collectionrecord.service.PostsService;
-import side.collectionrecord.web.dto.ImageUploadRequestDto;
-import side.collectionrecord.web.dto.PostsAddRequestDto;
-import side.collectionrecord.web.dto.PostsListResponseDto;
-import side.collectionrecord.web.dto.PostsUpdateRequestDto;
+import side.collectionrecord.web.dto.CreateImageRequestDto;
+import side.collectionrecord.web.dto.CreatePostsRequestDto;
+import side.collectionrecord.web.dto.GetCategoryPostsResponseDto;
+import side.collectionrecord.web.dto.UpdatePostsRequestDto;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,13 +24,13 @@ public class PostsApiController {
     private final ImageService imageService;
 
     @PostMapping("/api/v1/posts")
-    public Long save(@RequestPart(value = "postsAddRequestDto") PostsAddRequestDto postsAddRequestDto, @RequestPart(value = "imageFile", required = true) List<MultipartFile> imageFiles) throws IOException {
+    public Long createPosts(@RequestPart(value = "createPostsRequestDto") CreatePostsRequestDto createPostsRequestDto, @RequestPart(value = "imageFile", required = true) List<MultipartFile> imageFiles) throws IOException {
 
         List<Long> imageIds = new ArrayList<>();
 
         for (MultipartFile imageFile : imageFiles){
             byte[] image = imageFile.getBytes();
-            Long imageId = imageService.upload(ImageUploadRequestDto.builder()
+            Long imageId = imageService.createImage(CreateImageRequestDto.builder()
                     .filename(imageFile.getOriginalFilename())
                     .data(image)
                     .build());
@@ -41,57 +41,31 @@ public class PostsApiController {
         List<Image> images = new ArrayList<>();
 
         for (Long imageId : imageIds){
-            Image image = imageService.findImage(imageId);
+            Image image = imageService.getImageById(imageId);
             images.add(image);
         }
 
-        postsAddRequestDto.setRepresentativeImage(images);
+        createPostsRequestDto.setRepresentativeImage(images);
 
-        return postsService.createPosts(postsAddRequestDto);
+        return postsService.createPosts(createPostsRequestDto);
     }
 
     @GetMapping("/api/v1/posts/{id}/{categoryName}/{page}")
-    public List<PostsListResponseDto> findPostsList(@PathVariable Long id, @PathVariable String categoryName, @PathVariable int page){
+    public List<GetCategoryPostsResponseDto> getAllPostsByCategoryName(@PathVariable Long id, @PathVariable String categoryName, @PathVariable int page){
         return postsService.getAllPostsByCategoryName(id, categoryName, page, 5);
     }
 
-    @PutMapping("/api/v1/posts-update/{id}")
-    public Long update(@PathVariable Long id, @RequestPart(value = "postsUpdateRequestDto") PostsUpdateRequestDto postsUpdateRequestDto, @RequestPart(value = "imageFile", required = false) List<MultipartFile> imageFiles) throws IOException {
-        //Long imageId;
-        List<Long> imageIds = new ArrayList<>();
-        List<Image> images = new ArrayList<>();
-
+    @PutMapping("/api/v1/posts/{id}")
+    public Long updatePosts(@PathVariable Long id, @RequestBody UpdatePostsRequestDto updatePostsRequestDto) {
         Posts posts = postsService.getPostsById(id);
-
-        if (imageFiles != null){
-            for (MultipartFile imageFile : imageFiles){
-                byte[] image = imageFile.getBytes();
-
-                Long imageId = imageService.upload(ImageUploadRequestDto.builder()
-                        .filename(imageFile.getOriginalFilename())
-                        .data(image)
-                        .build());
-
-                imageIds.add(imageId);
-            }
-
-            for (Long imageId : imageIds){
-                Image image = imageService.findImage(imageId);
-                images.add(image);
-            }
-        }else{
-            images = posts.getRepresentativeImage();
-        }
-
-        postsUpdateRequestDto.setRepresentativeImage(images);
 
         Long userId = posts.getUser().getId();
 
-        return postsService.updatePosts(userId, id, postsUpdateRequestDto);
+        return postsService.updatePosts(userId, id, updatePostsRequestDto);
     }
 
-    @DeleteMapping("/api/v1/posts-delete/{id}")
-    public Long delete(@PathVariable Long id){
+    @DeleteMapping("/api/v1/posts/{id}")
+    public Long deletePosts(@PathVariable Long id){
         postsService.deletePosts(id);
 
         return id;

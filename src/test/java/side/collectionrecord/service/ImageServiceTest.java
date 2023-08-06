@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
-import side.collectionrecord.web.dto.ImageUploadRequestDto;
+import side.collectionrecord.web.dto.CreateImageRequestDto;
 
 import java.util.List;
 
@@ -24,12 +24,12 @@ class ImageServiceTest {
     @Test
     public void 이미지_업로드(){
         //given
-        ImageUploadRequestDto imageUploadRequestDto = ImageUploadRequestDto.builder()
+        CreateImageRequestDto createImageRequestDto = CreateImageRequestDto.builder()
                 .filename("image")
                 .data(null)
                 .build();
 
-        imageService.upload(imageUploadRequestDto);
+        imageService.createImage(createImageRequestDto);
 
         //when
         List<Image> all = imageRepository.findAll();
@@ -42,14 +42,14 @@ class ImageServiceTest {
     public void 이미지_찾기(){
 
         //given
-        ImageUploadRequestDto imageUploadRequestDto = ImageUploadRequestDto.builder()
+        CreateImageRequestDto createImageRequestDto = CreateImageRequestDto.builder()
                 .filename("image")
                 .data(null)
                 .build();
 
-        Long id = imageService.upload(imageUploadRequestDto);
+        Long id = imageService.createImage(createImageRequestDto);
 
-        Image findImage = imageService.findImage(id);
+        Image findImage = imageService.getImageById(id);
 
         assertThat(findImage.getFilename()).isEqualTo("image");
     }

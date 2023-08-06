@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
-import side.collectionrecord.web.dto.UserFollowingRequestDto;
+import side.collectionrecord.web.dto.CreateFollowRequestDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,12 +41,12 @@ class FollowServiceTest {
 
         userRepository.save(user2);
 
-        UserFollowingRequestDto userFollowingRequestDto = UserFollowingRequestDto.builder()
+        CreateFollowRequestDto createFollowRequestDto = CreateFollowRequestDto.builder()
                 .followingUserId(user1.getId())
                 .userId(user2.getId())
                 .build();
 
-        followService.following(userFollowingRequestDto);
+        followService.createFollow(createFollowRequestDto);
 
         assertThat(user1.getFollower().get(0).getFollowing()).isEqualTo(user2);
         assertThat(user2.getFollowing().get(0).getFollower()).isEqualTo(user1);

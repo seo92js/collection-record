@@ -17,7 +17,7 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepositoryCustom{
     }
 
     @Override
-    public List<ChatMessage> findAllMessageByChatRoom(Long chatRoomId) {
+    public List<ChatMessage> findByChatRoomId(Long chatRoomId) {
 
         return queryFactory.selectFrom(chatMessage)
                 .where(chatMessage.chatRoom.id.eq(chatRoomId))
@@ -26,7 +26,7 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepositoryCustom{
     }
 
     @Override
-    public List<ChatMessage> findNotReadMessage(Long chatRoomId, Long userId){
+    public List<ChatMessage> findByChatroomIdAndUserIdReadFalse(Long chatRoomId, Long userId){
 
         return queryFactory.selectFrom(chatMessage)
                 .where(chatMessage.chatRoom.id.eq(chatRoomId).and(chatMessage.receiver.id.eq(userId).and(chatMessage.read.eq(false))))

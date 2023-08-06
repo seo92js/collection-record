@@ -10,10 +10,10 @@ import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
-import side.collectionrecord.web.dto.UserJoinRequestDto;
-import side.collectionrecord.web.dto.UserProfileResponseDto;
-import side.collectionrecord.web.dto.UserSearchResponseDto;
-import side.collectionrecord.web.dto.UserUpdateRequestDto;
+import side.collectionrecord.web.dto.CreateUserRequestDto;
+import side.collectionrecord.web.dto.GetSearchUserResponseDto;
+import side.collectionrecord.web.dto.GetUserProfileResponseDto;
+import side.collectionrecord.web.dto.UpdateUserRequestDto;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,22 +38,22 @@ class UserServiceTest {
     @Test
     public void 유저_회원가입() throws IOException {
         //given
-        UserJoinRequestDto userJoinRequestDto = UserJoinRequestDto.builder()
+        CreateUserRequestDto createUserRequestDto = CreateUserRequestDto.builder()
                 .username("test")
                 .password("test")
                 .build();
 
-        userJoinRequestDto.encodePassword(passwordEncoder);
+        createUserRequestDto.encodePassword(passwordEncoder);
 
-        Long id = userService.createUser(userJoinRequestDto);
+        Long id = userService.createUser(createUserRequestDto);
 
         //when
         User findUser = userRepository.findById(id).orElse(null);
 
         //then
-        assertThat(findUser.getUsername()).isEqualTo(userJoinRequestDto.getUsername());
+        assertThat(findUser.getUsername()).isEqualTo(createUserRequestDto.getUsername());
         //assertThat(findUser.getPassword()).isEqualTo(passwordEncoder.encode(userJoinRequestDto.getPassword()));
-        assertThat(passwordEncoder.matches(findUser.getPassword(), userJoinRequestDto.getPassword()));
+        assertThat(passwordEncoder.matches(findUser.getPassword(), createUserRequestDto.getPassword()));
     }
 
     @Test
@@ -77,7 +77,7 @@ class UserServiceTest {
 
         imageRepository.save(image);
 
-        UserUpdateRequestDto userUpdateRequestDto = UserUpdateRequestDto.builder()
+        UpdateUserRequestDto updateUserRequestDto = UpdateUserRequestDto.builder()
                 .username(expectedName)
                 .profileImage(image)
                 .profileText("text")
@@ -85,7 +85,7 @@ class UserServiceTest {
 
         //userUpdateRequestDto.encodePassword(passwordEncoder);
 
-        userService.updateUser(user.getId(), userUpdateRequestDto);
+        userService.updateUser(user.getId(), updateUserRequestDto);
 
         //when
         User findUser = userRepository.findAll().get(0);
@@ -110,11 +110,11 @@ class UserServiceTest {
         userRepository.save(user);
 
         //when
-        UserProfileResponseDto userProfileResponseDto = userService.getUserById(user.getId());
+        GetUserProfileResponseDto getUserProfileResponseDto = userService.getUserById(user.getId());
 
         //then
-        assertThat(userProfileResponseDto.getUsername()).isEqualTo(user.getUsername());
-        assertThat(userProfileResponseDto.getProfileImage()).isEqualTo(user.getProfileImage());
+        assertThat(getUserProfileResponseDto.getUsername()).isEqualTo(user.getUsername());
+        assertThat(getUserProfileResponseDto.getProfileImage()).isEqualTo(user.getProfileImage());
     }
 
     @Test
@@ -157,7 +157,7 @@ class UserServiceTest {
         userRepository.save(user3);
 
         //when
-        List<UserSearchResponseDto> containsUsername = userService.getAllUserByUsernameContains(username, 0, 5);
+        List<GetSearchUserResponseDto> containsUsername = userService.getAllUserByUsernameContains(username, 0, 5);
 
         //then
         assertThat(containsUsername.size()).isEqualTo(3);

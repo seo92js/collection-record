@@ -30,7 +30,7 @@ public class PostsController {
         Long userId = (Long) model.getAttribute("loginUserId");
 
 
-        model.addAttribute("postsAddRequestDto", PostsAddRequestDto.builder()
+        model.addAttribute("createPostsRequestDto", CreatePostsRequestDto.builder()
                         .userId(userId)
                         .categoryId(null)
                         .title(null)
@@ -40,10 +40,10 @@ public class PostsController {
                         .status(null)
                         .build());
 
-        List<CategoryListResponseDto> parentCategories = categoryService.findParentCategories(userId);
+        List<GetCategoryResponseDto> parentCategories = categoryService.getAllParentCategoryByUserId(userId);
         model.addAttribute("parentCategories", parentCategories);
 
-        List<CategoryListResponseDto> childCategories = categoryService.findChildCategories(userId);
+        List<GetCategoryResponseDto> childCategories = categoryService.getAllChildCategoryByUserId(userId);
         model.addAttribute("childCategories", childCategories);
 
         List<PostsStatus> statuses = Arrays.asList(PostsStatus.values());
@@ -60,7 +60,7 @@ public class PostsController {
 
         model.addAttribute("username", posts.getUser().getUsername());
 
-        model.addAttribute("postsResponseDto", new PostsResponseDto(posts));
+        model.addAttribute("getPostsResponseDto", new GetPostsResponseDto(posts));
 
         Long userId = (Long)model.getAttribute("loginUserId");
 
@@ -71,23 +71,23 @@ public class PostsController {
             model.addAttribute("userId", posts.getUser().getId());
         }
 
-        model.addAttribute("commentAddRequestDto", CommentAddRequestDto.builder()
+        model.addAttribute("createParentCommentRequestDto", CreateParentCommentRequestDto.builder()
                         .userId(userId)
                         .postsId(id)
                         .text(null)
                 .build());
 
-        model.addAttribute("commentChildAddRequestDto", CommentChildAddRequestDto.builder()
+        model.addAttribute("createChildCommentRequestDto", CreateChildCommentRequestDto.builder()
                 .userId(userId)
                 .postsId(id)
                 .parentCommentId(null)
                 .text(null)
                 .build());
 
-        List<CommentListResponseDto> parentComments = commentService.findParentComments(posts);
+        List<GetCommentResponseDto> parentComments = commentService.getAllParentCommentsByPosts(posts);
         model.addAttribute("parentComments", parentComments);
 
-        List<CommentListResponseDto> childComments = commentService.findChildComments(posts);
+        List<GetCommentResponseDto> childComments = commentService.getAllChildCommentsByPosts(posts);
         model.addAttribute("childComments", childComments);
 
         return "posts/posts";
@@ -98,21 +98,20 @@ public class PostsController {
 
         Posts posts = postsService.getPostsById(id);
 
-        model.addAttribute("postsUpdateRequestDto", PostsUpdateRequestDto.builder()
+        model.addAttribute("updatePostsRequestDto", UpdatePostsRequestDto.builder()
                         .categoryId(posts.getCategory().getId())
                         .title(posts.getTitle())
                         .text(posts.getText())
-                        .representativeImage(posts.getRepresentativeImage())
                         .hashtags(posts.getHashtags())
                         .status(posts.getStatus())
                         .build());
 
         Long userId = (Long) model.getAttribute("loginUserId");
 
-        List<CategoryListResponseDto> parentCategories = categoryService.findParentCategories(userId);
+        List<GetCategoryResponseDto> parentCategories = categoryService.getAllParentCategoryByUserId(userId);
         model.addAttribute("parentCategories", parentCategories);
 
-        List<CategoryListResponseDto> childCategories = categoryService.findChildCategories(userId);
+        List<GetCategoryResponseDto> childCategories = categoryService.getAllChildCategoryByUserId(userId);
         model.addAttribute("childCategories", childCategories);
 
         List<PostsStatus> statuses = Arrays.asList(PostsStatus.values());

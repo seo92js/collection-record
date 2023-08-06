@@ -14,7 +14,7 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
 
     @Transactional
-    public Long addChatRoom(){
+    public Long createChatRoom(){
         ChatRoom chatRoom = new ChatRoom();
 
         return chatRoomRepository.save(chatRoom).getId();

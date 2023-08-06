@@ -9,8 +9,8 @@ import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.chatroom.ChatRoomRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.ChatMessageAddRequestDto;
-import side.collectionrecord.web.dto.ChatMessageResponseDto;
+import side.collectionrecord.web.dto.CreateChatMessageRequestDto;
+import side.collectionrecord.web.dto.GetChatMessageResponseDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,26 +25,26 @@ public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
 
     @Transactional
-    public ChatMessageResponseDto findById(Long id){
+    public GetChatMessageResponseDto getChatMessageById(Long id){
         ChatMessage chatMessage = chatMessageRepository.findById(id).get();
 
-        ChatMessageResponseDto chatMessageResponseDto = new ChatMessageResponseDto(chatMessage);
+        GetChatMessageResponseDto getChatMessageResponseDto = new GetChatMessageResponseDto(chatMessage);
 
-        return chatMessageResponseDto;
+        return getChatMessageResponseDto;
     }
 
     @Transactional
-    public Long addMessage(ChatMessageAddRequestDto chatMessageAddRequestDto){
-        User sender = userRepository.findById(chatMessageAddRequestDto.getSenderId()).get();
-        User receiver = userRepository.findById(chatMessageAddRequestDto.getReceiverId()).get();
+    public Long createChatMessage(CreateChatMessageRequestDto createChatMessageRequestDto){
+        User sender = userRepository.findById(createChatMessageRequestDto.getSenderId()).get();
+        User receiver = userRepository.findById(createChatMessageRequestDto.getReceiverId()).get();
 
-        ChatRoom chatRoom = chatRoomRepository.findById(chatMessageAddRequestDto.getChatRoomId()).get();
+        ChatRoom chatRoom = chatRoomRepository.findById(createChatMessageRequestDto.getChatRoomId()).get();
 
         ChatMessage chatMessage = ChatMessage.builder()
                 .sender(sender)
                 .receiver(receiver)
                 .chatRoom(chatRoom)
-                .message(chatMessageAddRequestDto.getMessage())
+                .message(createChatMessageRequestDto.getMessage())
                 .read(false)
                 .build();
 
@@ -52,19 +52,19 @@ public class ChatMessageService {
     }
 
     @Transactional
-    public List<ChatMessageResponseDto> findChatRoomMessage(Long chatRoomId){
+    public List<GetChatMessageResponseDto> getChatMessageByChatRoomId(Long chatRoomId){
 
-        return chatMessageRepository.findAllMessageByChatRoom(chatRoomId).stream()
-                .map(ChatMessageResponseDto::new)
+        return chatMessageRepository.findByChatRoomId(chatRoomId).stream()
+                .map(GetChatMessageResponseDto::new)
                 .collect(Collectors.toList());
 
     }
 
     @Transactional
-    public void updateRead(Long chatRoomId, Long userId){
-        List<ChatMessage> notReadMessage = chatMessageRepository.findNotReadMessage(chatRoomId, userId);
+    public void updateChatMessage(Long chatRoomId, Long userId){
+        List<ChatMessage> readFalseChatMessage = chatMessageRepository.findByChatroomIdAndUserIdReadFalse(chatRoomId, userId);
 
-        for (ChatMessage chatMessage : notReadMessage)
-            chatMessage.updateRead();
+        for (ChatMessage chatMessage : readFalseChatMessage)
+            chatMessage.setRead();
     }
 }

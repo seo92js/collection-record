@@ -5,8 +5,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
@@ -14,10 +16,10 @@ import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.FollowService;
 import side.collectionrecord.service.UserChatRoomService;
 import side.collectionrecord.service.UserService;
-import side.collectionrecord.web.dto.CategoryListResponseDto;
-import side.collectionrecord.web.dto.UserChatRoomListResponseDto;
-import side.collectionrecord.web.dto.UserJoinRequestDto;
-import side.collectionrecord.web.dto.UserProfileResponseDto;
+import side.collectionrecord.web.dto.CreateUserRequestDto;
+import side.collectionrecord.web.dto.GetCategoryResponseDto;
+import side.collectionrecord.web.dto.GetUserChatRoomResponseDto;
+import side.collectionrecord.web.dto.GetUserProfileResponseDto;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -41,21 +43,21 @@ public class UserController {
 
     @GetMapping("/user/join")
     public String joinUserForm(Model model) {
-        model.addAttribute("userJoinRequestDto", new UserJoinRequestDto());
+        model.addAttribute("createUserRequestDto", new CreateUserRequestDto());
 
         return "user/userJoinForm";
     }
 
     @PostMapping("/user/join")
-    public String joinUserForm(@Valid @ModelAttribute UserJoinRequestDto userJoinRequestDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws IOException {
+    public String joinUserForm(@Valid @ModelAttribute CreateUserRequestDto createUserRequestDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws IOException {
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("error", bindingResult.getFieldError().getDefaultMessage());
 
             return "redirect:/user/join";
         }else {
-            userJoinRequestDto.encodePassword(passwordEncoder);
+            createUserRequestDto.encodePassword(passwordEncoder);
 
-            userService.createUser(userJoinRequestDto);
+            userService.createUser(createUserRequestDto);
 
             return "redirect:/";
         }
@@ -68,16 +70,16 @@ public class UserController {
 
         Long userId = user.getId();
 
-        List<CategoryListResponseDto> parentCategories = categoryService.findParentCategories(userId);
+        List<GetCategoryResponseDto> parentCategories = categoryService.getAllParentCategoryByUserId(userId);
         model.addAttribute("parentCategories", parentCategories);
 
-        List<CategoryListResponseDto> childCategories = categoryService.findChildCategories(userId);
+        List<GetCategoryResponseDto> childCategories = categoryService.getAllChildCategoryByUserId(userId);
         model.addAttribute("childCategories", childCategories);
 
         Long loginUserId = (Long) model.getAttribute("loginUserId");
 
         if (loginUserId != userId) {
-            if (followService.isFollowingUser(loginUserId, userId) == false) {
+            if (followService.checkFollow(loginUserId, userId) == false) {
                 model.addAttribute("isFollowing", false);
             } else {
                 model.addAttribute("isFollowing", true);
@@ -100,9 +102,9 @@ public class UserController {
 
         Long loginUserId = (Long) model.getAttribute("loginUserId");
 
-        List<UserChatRoomListResponseDto> userChatRoomListResponseDtos = userChatRoomService.getAllUserChatroomByUserId(loginUserId);
+        List<GetUserChatRoomResponseDto> getUserChatRoomResponseDtos = userChatRoomService.getAllUserChatroomByUserId(loginUserId);
 
-        model.addAttribute("chatrooms", userChatRoomListResponseDtos);
+        model.addAttribute("chatrooms", getUserChatRoomResponseDtos);
 
         return "user/userChatroomList";
     }
@@ -111,11 +113,11 @@ public class UserController {
     public String userProfile(Model model){
         Long userId = (Long)model.getAttribute("loginUserId");
 
-        UserProfileResponseDto userProfileResponseDto = userService.getUserById(userId);
+        GetUserProfileResponseDto getUserProfileResponseDto = userService.getUserById(userId);
 
-        model.addAttribute("userProfileResponseDto", userProfileResponseDto);
+        model.addAttribute("getUserProfileResponseDto", getUserProfileResponseDto);
 
-        if (userProfileResponseDto.getProfileImage() != null){
+        if (getUserProfileResponseDto.getProfileImage() != null){
             User user = userRepository.findById(userId).get();
             model.addAttribute("imageId", user.getProfileImage().getId());
         }

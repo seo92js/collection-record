@@ -14,8 +14,8 @@ import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
-import side.collectionrecord.web.dto.CommentAddRequestDto;
-import side.collectionrecord.web.dto.CommentListResponseDto;
+import side.collectionrecord.web.dto.CreateParentCommentRequestDto;
+import side.collectionrecord.web.dto.GetCommentResponseDto;
 
 import java.util.List;
 
@@ -68,14 +68,14 @@ class CommentServiceTest {
 
         postsRepository.save(posts);
 
-        CommentAddRequestDto commentAddRequestDto = CommentAddRequestDto.builder()
+        CreateParentCommentRequestDto createParentCommentRequestDto = CreateParentCommentRequestDto.builder()
                 .userId(user.getId())
                 .text("comment")
                 .postsId(posts.getId())
                 .build();
 
         //when
-        commentService.addComment(commentAddRequestDto);
+        commentService.createParentComment(createParentCommentRequestDto);
 
         //then
         List<Comment> all = commentRepository.findAll();
@@ -113,13 +113,13 @@ class CommentServiceTest {
 
         postsRepository.save(posts);
 
-        CommentAddRequestDto commentAddRequestDto = CommentAddRequestDto.builder()
+        CreateParentCommentRequestDto createParentCommentRequestDto = CreateParentCommentRequestDto.builder()
                 .userId(user.getId())
                 .text("comment")
                 .postsId(posts.getId())
                 .build();
 
-        Long id = commentService.addComment(commentAddRequestDto);
+        Long id = commentService.createParentComment(createParentCommentRequestDto);
 
         //when
         commentService.deleteComment(id);
@@ -160,23 +160,23 @@ class CommentServiceTest {
 
         postsRepository.save(posts);
 
-        CommentAddRequestDto commentAddRequestDto1 = CommentAddRequestDto.builder()
+        CreateParentCommentRequestDto createParentCommentRequestDto1 = CreateParentCommentRequestDto.builder()
                 .userId(user.getId())
                 .text("comment1")
                 .postsId(posts.getId())
                 .build();
 
-        CommentAddRequestDto commentAddRequestDto2 = CommentAddRequestDto.builder()
+        CreateParentCommentRequestDto createParentCommentRequestDto2 = CreateParentCommentRequestDto.builder()
                 .userId(user.getId())
                 .text("comment2")
                 .postsId(posts.getId())
                 .build();
 
-        commentService.addComment(commentAddRequestDto1);
-        commentService.addComment(commentAddRequestDto2);
+        commentService.createParentComment(createParentCommentRequestDto1);
+        commentService.createParentComment(createParentCommentRequestDto2);
 
         //when
-        List<CommentListResponseDto> comments = commentService.findParentComments(posts);
+        List<GetCommentResponseDto> comments = commentService.getAllParentCommentsByPosts(posts);
 
         //then
         assertThat(comments.size()).isEqualTo(2);

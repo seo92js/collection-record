@@ -23,8 +23,8 @@ class ChatRoomServiceTest {
     public void 챗룸_추가(){
         //given
         //when
-        chatRoomService.addChatRoom();
-        chatRoomService.addChatRoom();
+        chatRoomService.createChatRoom();
+        chatRoomService.createChatRoom();
 
         List<ChatRoom> all = chatRoomRepository.findAll();
 

@@ -17,7 +17,7 @@
 
     <main class="join">
         <div class="join__form">
-            <form action="/user/join" role="form" method="post" th:object="${userJoinRequestDto}" id="user-join-form">
+            <form action="/user/join" role="form" method="post" th:object="${createUserRequestDto}" id="user-join-form">
                 <div class="join__form-label">
                     <input type="text" th:field="*{username}" placeholder="이름" th:required="true">
                 </div>

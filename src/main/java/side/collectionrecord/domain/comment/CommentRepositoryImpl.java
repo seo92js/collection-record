@@ -19,7 +19,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom{
     }
 
     @Override
-    public List<Comment> findAllParentComments(Posts posts){
+    public List<Comment> findParentCommentByPosts(Posts posts){
         return queryFactory.selectFrom(comment)
                 .where(comment.posts.eq(posts).and(comment.parentComment.isNull()))
                 .orderBy(comment.createdDate.asc())
@@ -27,7 +27,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom{
     }
 
     @Override
-    public List<Comment> findAllChildComments(Posts posts){
+    public List<Comment> findChildCommentByPosts(Posts posts){
         return queryFactory.selectFrom(comment)
                 .where(comment.posts.eq(posts).and(comment.parentComment.isNotNull()))
                 .orderBy(comment.createdDate.asc())

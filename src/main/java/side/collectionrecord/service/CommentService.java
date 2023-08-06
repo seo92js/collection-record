@@ -9,9 +9,9 @@ import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.CommentAddRequestDto;
-import side.collectionrecord.web.dto.CommentChildAddRequestDto;
-import side.collectionrecord.web.dto.CommentListResponseDto;
+import side.collectionrecord.web.dto.CreateChildCommentRequestDto;
+import side.collectionrecord.web.dto.CreateParentCommentRequestDto;
+import side.collectionrecord.web.dto.GetCommentResponseDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,30 +24,30 @@ public class CommentService {
     private final PostsRepository postsRepository;
 
     @Transactional
-    public Long addComment(CommentAddRequestDto commentAddRequestDto){
+    public Long createParentComment(CreateParentCommentRequestDto createParentCommentRequestDto){
 
-        User user = userRepository.findById(commentAddRequestDto.getUserId()).get();
-        Posts posts = postsRepository.findById(commentAddRequestDto.getPostsId()).get();
+        User user = userRepository.findById(createParentCommentRequestDto.getUserId()).get();
+        Posts posts = postsRepository.findById(createParentCommentRequestDto.getPostsId()).get();
 
         return commentRepository.save(Comment.builder()
                         .user(user)
                         .posts(posts)
                         .parentComment(null)
-                        .text(commentAddRequestDto.getText())
+                        .text(createParentCommentRequestDto.getText())
                         .build())
                         .getId();
     }
 
     @Transactional
-    public Long addCommentChild(CommentChildAddRequestDto commentChildAddRequestDto){
-        User user = userRepository.findById(commentChildAddRequestDto.getUserId()).get();
-        Posts posts = postsRepository.findById(commentChildAddRequestDto.getPostsId()).get();
-        Comment parentComment = commentRepository.findById(commentChildAddRequestDto.getParentCommentId()).get();
+    public Long createChildComment(CreateChildCommentRequestDto createChildCommentRequestDto){
+        User user = userRepository.findById(createChildCommentRequestDto.getUserId()).get();
+        Posts posts = postsRepository.findById(createChildCommentRequestDto.getPostsId()).get();
+        Comment parentComment = commentRepository.findById(createChildCommentRequestDto.getParentCommentId()).get();
 
         return commentRepository.save(Comment.builder()
                         .user(user)
                         .posts(posts)
-                        .text(commentChildAddRequestDto.getText())
+                        .text(createChildCommentRequestDto.getText())
                         .parentComment(parentComment)
                         .build())
                         .getId();
@@ -61,18 +61,18 @@ public class CommentService {
     }
 
     @Transactional
-    public List<CommentListResponseDto> findParentComments(Posts posts){
+    public List<GetCommentResponseDto> getAllParentCommentsByPosts(Posts posts){
 
-        return commentRepository.findAllParentComments(posts).stream()
-                .map(CommentListResponseDto::new)
+        return commentRepository.findParentCommentByPosts(posts).stream()
+                .map(GetCommentResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<CommentListResponseDto> findChildComments(Posts posts){
+    public List<GetCommentResponseDto> getAllChildCommentsByPosts(Posts posts){
 
-        return commentRepository.findAllChildComments(posts).stream()
-                .map(CommentListResponseDto::new)
+        return commentRepository.findChildCommentByPosts(posts).stream()
+                .map(GetCommentResponseDto::new)
                 .collect(Collectors.toList());
     }
 }

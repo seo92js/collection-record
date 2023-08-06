@@ -14,7 +14,7 @@
         <!-- 프로필 이미지, 메뉴 -->
         <div class="user-home__title">
             <div class="user-home__title-menu">
-                <img class="user-home__title--image" th:if="${imageId != null}" th:src="@{/api/v1/image-view/{imageId}(imageId=${imageId})}">
+                <img class="user-home__title--image" th:if="${imageId != null}" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
                 <div th:text="${profileText}"></div>
             </div>
             <div class="user-home__title-menu">
@@ -25,8 +25,8 @@
                 <a class="user-home__title-submenu" th:if="${isFollowing != null}" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${id})}" target="_blank">채팅</a>
             </div>
 
-            <button type="submit" id="unfollowing-btn" th:if="${isFollowing == true}" th:onclick="unfollowing([[${id}]])">팔로우 취소</button>
-            <button type="submit" id="following-btn" th:if="${isFollowing == false}" th:onclick="following([[${id}]])">팔로우</button>
+            <button type="button" th:if="${isFollowing == true}" th:onclick="deleteFollow([[${id}]])">팔로우 취소</button>
+            <button type="button" th:if="${isFollowing == false}" th:onclick="createFollow([[${id}]]); sendNotification([[${loginUsername}]], [[${username}]])">팔로우</button>
         </div>
 
         <!-- 카테고리 목록 -->
@@ -45,15 +45,16 @@
         </div>
 
         <!-- 게시물 목록 -->
-        <div class="user-home__post" id="postList">
+        <div class="user-home__post" id="category-posts-list">
         </div>
     </main>
 
     <div th:replace="fragments/footer :: footer" />
 
-    <script src="/js/postsList.js"></script>
-    <script src="/js/follow-create.js"></script>
-    <script src="/js/follow-delete.js"></script>
+    <script src="/js/show-category-posts.js"></script>
+    <script src="/js/create-follow.js"></script>
+    <script src="/js/delete-follow.js"></script>
+    <script src="/js/send-notification-follow.js"></script>
 
 </body>
 </html>

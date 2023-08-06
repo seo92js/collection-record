@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import side.collectionrecord.service.CategoryService;
-import side.collectionrecord.web.dto.CategoryAddRequestDto;
-import side.collectionrecord.web.dto.CategoryListResponseDto;
+import side.collectionrecord.web.dto.CreateParentCategoryRequestDto;
+import side.collectionrecord.web.dto.GetCategoryResponseDto;
 
 import java.util.List;
 
@@ -17,19 +17,19 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("/category")
-    public String categories(Model model){
+    public String getAllCategory(Model model){
         Long userId = (Long)model.getAttribute("loginUserId");
 
 
-        model.addAttribute("categoryAddRequestDto", CategoryAddRequestDto.builder()
+        model.addAttribute("createParentCategoryRequestDto", CreateParentCategoryRequestDto.builder()
                         .userId(userId)
                         .name(null)
                         .build());
 
-        List<CategoryListResponseDto> parentCategories = categoryService.findParentCategories(userId);
+        List<GetCategoryResponseDto> parentCategories = categoryService.getAllParentCategoryByUserId(userId);
         model.addAttribute("parentCategories", parentCategories);
 
-        List<CategoryListResponseDto> childCategories = categoryService.findChildCategories(userId);
+        List<GetCategoryResponseDto> childCategories = categoryService.getAllChildCategoryByUserId(userId);
         model.addAttribute("childCategories", childCategories);
 
         return "category/category";

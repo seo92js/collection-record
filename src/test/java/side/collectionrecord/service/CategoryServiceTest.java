@@ -7,9 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
-import side.collectionrecord.web.dto.CategoryAddRequestDto;
-import side.collectionrecord.web.dto.CategoryListResponseDto;
-import side.collectionrecord.web.dto.CategoryUpdateRequestDto;
+import side.collectionrecord.web.dto.CreateParentCategoryRequestDto;
+import side.collectionrecord.web.dto.GetCategoryResponseDto;
+import side.collectionrecord.web.dto.UpdateCategoryRequestDto;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -40,18 +40,18 @@ class CategoryServiceTest {
 
         userRepository.save(user);
 
-        CategoryAddRequestDto categoryAddRequestDto = CategoryAddRequestDto.builder()
+        CreateParentCategoryRequestDto createParentCategoryRequestDto = CreateParentCategoryRequestDto.builder()
                 .userId(user.getId())
                 .name("test")
                 .build();
 
-        Long categoryId = categoryService.addCategory(categoryAddRequestDto);
+        Long categoryId = categoryService.createParentCategory(createParentCategoryRequestDto);
 
         em.flush();
         em.clear();
 
         //when
-        List<CategoryListResponseDto> categories = categoryService.findParentCategories(user.getId());
+        List<GetCategoryResponseDto> categories = categoryService.getAllParentCategoryByUserId(user.getId());
 
         //then
         assertThat(categories.get(0).getName()).isEqualTo("test");
@@ -69,32 +69,32 @@ class CategoryServiceTest {
 
         userRepository.save(user);
 
-        CategoryAddRequestDto categoryAddRequestDto1 = CategoryAddRequestDto.builder()
+        CreateParentCategoryRequestDto createParentCategoryRequestDto1 = CreateParentCategoryRequestDto.builder()
                 .userId(user.getId())
                 .name("category1")
                 .build();
 
-        CategoryAddRequestDto categoryAddRequestDto2 = CategoryAddRequestDto.builder()
+        CreateParentCategoryRequestDto createParentCategoryRequestDto2= CreateParentCategoryRequestDto.builder()
                 .userId(user.getId())
                 .name("category2")
                 .build();
 
-        CategoryAddRequestDto categoryAddRequestDto3 = CategoryAddRequestDto.builder()
+        CreateParentCategoryRequestDto createParentCategoryRequestDto3 = CreateParentCategoryRequestDto.builder()
                 .userId(user.getId())
                 .name("category3")
                 .build();
 
-        categoryService.addCategory(categoryAddRequestDto1);
-        categoryService.addCategory(categoryAddRequestDto2);
-        categoryService.addCategory(categoryAddRequestDto3);
+        categoryService.createParentCategory(createParentCategoryRequestDto1);
+        categoryService.createParentCategory(createParentCategoryRequestDto2);
+        categoryService.createParentCategory(createParentCategoryRequestDto3);
 
         //when
-        List<CategoryListResponseDto> categories = categoryService.findParentCategories(user.getId());
+        List<GetCategoryResponseDto> categories = categoryService.getAllParentCategoryByUserId(user.getId());
 
         //then
-        assertThat(categories.get(0).getName()).isEqualTo(categoryAddRequestDto1.getName());
-        assertThat(categories.get(1).getName()).isEqualTo(categoryAddRequestDto2.getName());
-        assertThat(categories.get(2).getName()).isEqualTo(categoryAddRequestDto3.getName());
+        assertThat(categories.get(0).getName()).isEqualTo(createParentCategoryRequestDto1.getName());
+        assertThat(categories.get(1).getName()).isEqualTo(createParentCategoryRequestDto2.getName());
+        assertThat(categories.get(2).getName()).isEqualTo(createParentCategoryRequestDto3.getName());
     }
 
     @Test
@@ -109,24 +109,24 @@ class CategoryServiceTest {
 
         userRepository.save(user);
 
-        CategoryAddRequestDto categoryAddRequestDto = CategoryAddRequestDto.builder()
+        CreateParentCategoryRequestDto createParentCategoryRequestDto = CreateParentCategoryRequestDto.builder()
                 .userId(user.getId())
                 .name("category1")
                 .build();
 
-        Long id = categoryService.addCategory(categoryAddRequestDto);
+        Long id = categoryService.createParentCategory(createParentCategoryRequestDto);
 
         String expectedName = "category2";
 
-        CategoryUpdateRequestDto categoryUpdateRequestDto = CategoryUpdateRequestDto.builder()
+        UpdateCategoryRequestDto updateCategoryRequestDto = UpdateCategoryRequestDto.builder()
                 .name(expectedName)
                 .build();
 
         //when
-        categoryService.update(id, categoryUpdateRequestDto);
+        categoryService.updateCategory(id, updateCategoryRequestDto);
 
         //then
-        List<CategoryListResponseDto> categories = categoryService.findParentCategories(user.getId());
+        List<GetCategoryResponseDto> categories = categoryService.getAllParentCategoryByUserId(user.getId());
 
         assertThat(categories.get(0).getName()).isEqualTo(expectedName);
     }
@@ -143,26 +143,26 @@ class CategoryServiceTest {
 
         userRepository.save(user);
 
-        CategoryAddRequestDto categoryAddRequestDto1 = CategoryAddRequestDto.builder()
+        CreateParentCategoryRequestDto createParentCategoryRequestDto1 = CreateParentCategoryRequestDto.builder()
                 .userId(user.getId())
                 .name("category1")
                 .build();
 
-        CategoryAddRequestDto categoryAddRequestDto2 = CategoryAddRequestDto.builder()
+        CreateParentCategoryRequestDto createParentCategoryRequestDto2 = CreateParentCategoryRequestDto.builder()
                 .userId(user.getId())
                 .name("category2")
                 .build();
 
-        categoryService.addCategory(categoryAddRequestDto1);
-        categoryService.addCategory(categoryAddRequestDto2);
+        categoryService.createParentCategory(createParentCategoryRequestDto1);
+        categoryService.createParentCategory(createParentCategoryRequestDto2);
 
-        List<CategoryListResponseDto> categories = categoryService.findParentCategories(user.getId());
+        List<GetCategoryResponseDto> categories = categoryService.getAllParentCategoryByUserId(user.getId());
 
         //when
-        categoryService.delete(categories.get(0).getId());
+        categoryService.deleteCategory(categories.get(0).getId());
 
         //then
-        categories = categoryService.findParentCategories(user.getId());
+        categories = categoryService.getAllParentCategoryByUserId(user.getId());
 
         assertThat(categories.size()).isEqualTo(1);
     }
