@@ -11,6 +11,7 @@ import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
+import side.collectionrecord.exception.UserDuplicationException;
 import side.collectionrecord.web.dto.CreateUserRequestDto;
 import side.collectionrecord.web.dto.GetSearchUserResponseDto;
 import side.collectionrecord.web.dto.GetUserProfileResponseDto;
@@ -88,8 +89,8 @@ public class UserService implements UserDetailsService {
     private void validateDuplicateUser(String username){
         Optional<User> findUser = userRepository.findByUsername(username);
 
-        if(!findUser.isEmpty()){
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        if(findUser.isPresent()){
+            throw new UserDuplicationException("이미 존재하는 회원입니다.");
         }
     }
 
