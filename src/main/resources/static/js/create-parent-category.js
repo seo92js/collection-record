@@ -11,13 +11,15 @@ function createParentCategory(userId){
     if (!createParentCategoryRequestDto.name)
         return;
 
+    event.preventDefault();  // 이벤트의 기본 동작 중단
+
     $.ajax({
         type: 'POST',
         url: '/api/v1/parent-category',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(createParentCategoryRequestDto)
-    }).done(function(){
+    }).done(function(event){
         alert('카테고리 추가 완료');
         location.reload();
     }).fail(function (error){

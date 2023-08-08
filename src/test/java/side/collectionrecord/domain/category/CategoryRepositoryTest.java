@@ -72,8 +72,8 @@ class CategoryRepositoryTest {
         categoryRepository.save(category2);
 
         //when
-        Category findCategory1 = categoryRepository.findByName(user.getId(), "category1");
-        Category findCategory2 = categoryRepository.findByName(user.getId(), "category2");
+        Category findCategory1 = categoryRepository.findByName(user.getId(), "category1").orElse(null);
+        Category findCategory2 = categoryRepository.findByName(user.getId(), "category2").orElse(null);
 
         //then
         assertThat(findCategory1).isNotNull();

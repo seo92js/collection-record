@@ -11,12 +11,15 @@ import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.exception.CustomException;
+import side.collectionrecord.exception.ErrorCode;
 import side.collectionrecord.web.dto.CreateChildCategoryRequestDto;
 import side.collectionrecord.web.dto.CreateParentCategoryRequestDto;
 import side.collectionrecord.web.dto.GetCategoryResponseDto;
 import side.collectionrecord.web.dto.UpdateCategoryRequestDto;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -32,6 +35,8 @@ public class CategoryService {
     @Transactional
     public Long createParentCategory(CreateParentCategoryRequestDto createParentCategoryRequestDto){
         Long userId = createParentCategoryRequestDto.getUserId();
+
+        validateDuplicateParentCategory(userId, createParentCategoryRequestDto.getName());
 
         User findUser = userRepository.findById(userId).orElse(null);
 
@@ -49,6 +54,8 @@ public class CategoryService {
     @Transactional
     public Long createChildCategory(CreateChildCategoryRequestDto createChildCategoryRequestDto){
         Long userId = createChildCategoryRequestDto.getUserId();
+
+        validateDuplicateChildCategory(userId, createChildCategoryRequestDto.getName());
 
         User findUser = userRepository.findById(userId).orElse(null);
 
@@ -103,5 +110,22 @@ public class CategoryService {
         }
 
         categoryRepository.delete(category);
+    }
+
+    private void validateDuplicateParentCategory(Long userId, String parentCategoryName){
+        Optional<Category> category = categoryRepository.findByName(userId, parentCategoryName);
+
+        if(category.isPresent()){
+            throw new CustomException(ErrorCode.CATEGORY_DUPLICATE);
+        }
+    }
+
+    private void validateDuplicateChildCategory(Long userId, String childCategoryName){
+        List<Category> allChildCategory = categoryRepository.findAllChildCategory(userId);
+
+        for (Category category : allChildCategory){
+            if (category.getName().equals(childCategoryName))
+                throw new CustomException(ErrorCode.CATEGORY_DUPLICATE);
+        }
     }
 }

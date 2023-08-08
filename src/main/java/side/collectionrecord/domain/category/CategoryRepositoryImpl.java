@@ -4,6 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 import static side.collectionrecord.domain.category.QCategory.category;
 
@@ -18,10 +19,10 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom{
     }
 
     @Override
-    public Category findByName(Long userId, String name){
-        return queryFactory.selectFrom(category)
+    public Optional<Category> findByName(Long userId, String name){
+        return Optional.ofNullable(queryFactory.selectFrom(category)
                 .where(category.user.id.eq(userId).and(category.name.eq(name)))
-                .fetchOne();
+                .fetchOne());
     }
 
     @Override

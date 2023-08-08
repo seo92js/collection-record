@@ -20,6 +20,8 @@ function createParentComment(userId, postsId){
     if(!createParentCommentRequestDto.text)
         return;
 
+    event.preventDefault();  // 이벤트의 기본 동작 중단
+
     $.ajax({
         type: 'POST',
         url: '/api/v1/parent-comment',

@@ -11,7 +11,8 @@ import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
-import side.collectionrecord.exception.UserDuplicationException;
+import side.collectionrecord.exception.CustomException;
+import side.collectionrecord.exception.ErrorCode;
 import side.collectionrecord.web.dto.CreateUserRequestDto;
 import side.collectionrecord.web.dto.GetSearchUserResponseDto;
 import side.collectionrecord.web.dto.GetUserProfileResponseDto;
@@ -56,7 +57,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public Long updateUser(Long id, UpdateUserRequestDto updateUserRequestDto) throws IOException {
+    public Long updateUser(Long id, UpdateUserRequestDto updateUserRequestDto) {
         User findUser = userRepository.findById(id).orElse(null);
 
         Image prevImage = findUser.getProfileImage();
@@ -90,7 +91,7 @@ public class UserService implements UserDetailsService {
         Optional<User> findUser = userRepository.findByUsername(username);
 
         if(findUser.isPresent()){
-            throw new UserDuplicationException("이미 존재하는 회원입니다.");
+            throw new CustomException(ErrorCode.USER_DUPLICATE);
         }
     }
 
