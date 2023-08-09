@@ -16,10 +16,7 @@ import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.FollowService;
 import side.collectionrecord.service.UserChatRoomService;
 import side.collectionrecord.service.UserService;
-import side.collectionrecord.web.dto.CreateUserRequestDto;
-import side.collectionrecord.web.dto.GetCategoryResponseDto;
-import side.collectionrecord.web.dto.GetUserChatRoomResponseDto;
-import side.collectionrecord.web.dto.GetUserProfileResponseDto;
+import side.collectionrecord.web.dto.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -123,5 +120,12 @@ public class UserController {
         }
 
         return "user/userProfileForm";
+    }
+
+    @GetMapping("user/profile/password")
+    public String userPassword(Model model){
+        model.addAttribute("userPasswordUpdateRequestDto", new UpdateUserPasswordRequestDto());
+
+        return "user/userPasswordForm";
     }
 }

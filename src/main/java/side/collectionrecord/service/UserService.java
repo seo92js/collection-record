@@ -1,9 +1,7 @@
 package side.collectionrecord.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
@@ -13,10 +11,7 @@ import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.exception.CustomException;
 import side.collectionrecord.exception.ErrorCode;
-import side.collectionrecord.web.dto.CreateUserRequestDto;
-import side.collectionrecord.web.dto.GetSearchUserResponseDto;
-import side.collectionrecord.web.dto.GetUserProfileResponseDto;
-import side.collectionrecord.web.dto.UpdateUserRequestDto;
+import side.collectionrecord.web.dto.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,11 +22,13 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
     private final UserRepository userRepository;
 
     private final ImageRepository imageRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public Long createUser(CreateUserRequestDto createUserRequestDto) throws IOException {
@@ -72,6 +69,17 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
+    public Long updateUserPassword(Long id, UpdateUserPasswordRequestDto updateUserPasswordRequestDto){
+        User findUser = userRepository.findById(id).orElse(null);
+
+        validatePassword(updateUserPasswordRequestDto.getOldPassword(), findUser.getPassword());
+
+        findUser.updatePassword(passwordEncoder.encode(updateUserPasswordRequestDto.getNewPassword()));
+
+        return id;
+    }
+
+    @Transactional
     public GetUserProfileResponseDto getUserById (Long id){
         User user = userRepository.findById(id).orElse(null);
 
@@ -95,15 +103,8 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).orElse(null);
-
-        //UserDetails 의 User 객체
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .roles(user.getUserRole().toString())
-                .build();
+    private void validatePassword(String newPassword, String oldPassword){
+        if (!passwordEncoder.matches(newPassword, oldPassword))
+            throw new CustomException(ErrorCode.USER_DIFFERENT_PASSWORD);
     }
 }

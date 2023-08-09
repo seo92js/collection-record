@@ -75,26 +75,31 @@ class PostsRepositoryTest {
         Category category = Category.builder()
                 .user(user)
                 .name("category")
+                .parentCategory(null)
                 .build();
 
         categoryRepository.save(category);
 
         Posts post1 = Posts.builder()
+                .user(user)
                 .title("title1")
                 .representativeImage(null)
                 .text("text1")
                 .category(category)
                 .hashtags("hashtags")
+                .status(PostsStatus.SALE)
                 .build();
 
         postsRepository.save(post1);
 
         Posts post2 = Posts.builder()
+                .user(user)
                 .title("title2")
                 .representativeImage(null)
                 .text("text2")
                 .category(category)
                 .hashtags("hashtags")
+                .status(PostsStatus.SALE)
                 .build();
 
         postsRepository.save(post2);
@@ -127,6 +132,7 @@ class PostsRepositoryTest {
         categoryRepository.save(category);
 
         Posts post1 = Posts.builder()
+                .user(user)
                 .title("title1")
                 .representativeImage(null)
                 .text("text1")
@@ -137,6 +143,7 @@ class PostsRepositoryTest {
         postsRepository.save(post1);
 
         Posts post2 = Posts.builder()
+                .user(user)
                 .title("title2")
                 .representativeImage(null)
                 .text("text2")

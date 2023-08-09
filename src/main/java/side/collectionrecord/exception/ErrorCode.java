@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ErrorCode {
     USER_DUPLICATE(HttpStatus.BAD_REQUEST, "이미 가입된 회원이 있습니다"),
+    USER_DIFFERENT_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 다릅니다"),
     CATEGORY_DUPLICATE(HttpStatus.BAD_REQUEST, "이미 등록된 카테고리가 있습니다");
 
     private final HttpStatus httpStatus;
