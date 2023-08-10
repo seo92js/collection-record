@@ -5,9 +5,9 @@
 <body>
     <div th:replace="fragments/navigation :: navigation" />
 
-    <header class="screen-header">
+    <header class="header">
         <!--게시물 내용-->
-        <h1 class="screen-header__title">
+        <h1 class="header__title">
             <a th:text="${username}" th:href="@{/user/{username}/home(username=${username})}"></a>
         </h1>
     </header>

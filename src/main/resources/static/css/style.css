@@ -1,6 +1,10 @@
 @import "reset.css";
 @import "navigation.css";
-@import "screen-header.css";
+
+/* component */
+@import "component/header.css";
+
+/* screen */
 @import "screens/user-home.css";
 @import "screens/join.css";
 @import "screens/login.css";
