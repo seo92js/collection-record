@@ -12,7 +12,7 @@ chatSocket.onopen = function() {
 };
 
 chatSocket.onmessage = function(event) {
-    const chatroomList = document.getElementById('chatroom-list');
+    const chat = document.getElementById('chat');
 
-    chatroomList.classList.add('nav__badge');
+    chatroomList.classList.add('nav__li--red');
 }

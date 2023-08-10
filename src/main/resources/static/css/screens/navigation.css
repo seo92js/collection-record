@@ -1,30 +1,20 @@
 .nav {
     position: fixed;
-    background-color: #ffffe0;
+    background-color: #f0f0f1;
     width:100%;
     padding: 20px 0px 20px 0px;
-    box-sizing: border-box;
-    border-bottom: 1px solid rgba(121, 121, 121, 0.3);
 }
 
-.nav__list {
+.nav__ul {
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
 }
 
-.nav__btn {
-}
-
-.nav__link {
-    color: #2e363e;
+.nav__li {
 }
 
 @keyframes appearBtnAnimation {
-/*  from {
-  }
-  to {
-    transform: rotateZ(360deg);
-  }*/
   0%{
     scale:1;
   }
@@ -34,12 +24,11 @@
   100%{
     scale:1;
   }
-
 }
 
-.nav__badge {
-  position:fixed;
+.nav__li--red {
   color:tomato;
   animation: appearBtnAnimation 1.5s linear infinite;
 }
+
 

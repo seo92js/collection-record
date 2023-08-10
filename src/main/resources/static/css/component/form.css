@@ -1,0 +1,15 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.form__input {
+    height: 50px;
+    border: none;
+}
+
+.form__btn {
+    height: 50px;
+    border: none;
+}

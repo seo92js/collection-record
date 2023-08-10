@@ -14,5 +14,5 @@ notificationSocket.onopen = function() {
 notificationSocket.onmessage = function(event) {
     const notification = document.getElementById('notification');
 
-    notification.classList.add('nav__badge');
+    notification.classList.add('nav__li--red');
 }
