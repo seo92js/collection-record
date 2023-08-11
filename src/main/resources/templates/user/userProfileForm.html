@@ -9,24 +9,52 @@
     </header>
 
     <main class="user-profile">
-        <form class="user-profile__form" th:object="${getUserProfileResponseDto}" id="user-profile-form">
-            <div class="user-profile__form-username">
-                <label>이름</label>
-                <input type="text" th:value="*{username}" th:field="*{username}" placeholder="이름" required>
-            </div>
-            <div class="user-profile__form-image">
-                <img th:if="${imageId != null}" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
-                <input type="file" id="user-profile-img" placeholder="이미지 선택">
-            </div>
-            <div class="user-profile__form-text">
-                <label>소개</label>
-                <input type="text" th:value="*{profileText}" th:field="*{profileText}" placeholder="소개">
-            </div>
+        <div>
             <div>
-                <button type="submit" th:onclick="updateUser([[${loginUserId}]])">수정</button>
+                <div>
+                    <div>
+                        <label for="user-profile-img">이미지 업로드</label>
+                    </div>
+                    <div>
+                        <a href="/user/profile/password">비밀번호 변경</a>
+                    </div>
+                </div>
+                <div>
+                    <img th:if="${imageId != null}" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
+                </div>
             </div>
+        </div>
+
+
+        <form class="form" th:object="${getUserProfileResponseDto}" id="user-profile-form">
+
+            <input class="form__input form__input--hidden" type="file" id="user-profile-img" placeholder="이미지 선택">
+
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">이름</label>
+                </div>
+                <div class="form__col form__col--70">
+                    <input class="form__input" type="text" th:value="*{username}" th:field="*{username}" placeholder="이름" required/>
+                </div>
+            </div>
+
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">소개</label>
+                </div>
+                <div class="form__col form__col--70">
+                    <input class="form__input" type="text" th:value="*{profileText}" th:field="*{profileText}" placeholder="소개">
+                </div>
+            </div>
+
+            <div class="form__row">
+                <div class="form__col">
+                    <button class="form__btn" type="submit" th:onclick="updateUser([[${loginUserId}]])">수정</button>
+                </div>
+            </div>
+
         </form>
-        <a href="/user/profile/password">비밀번호 변경</a>
     </main>
 
     <div th:replace="fragments/footer :: footer" />

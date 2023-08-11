@@ -11,6 +11,8 @@ function updateUser(id){
     if(!updateUserRequestDto.username)
         return;
 
+    event.preventDefault();  // 이벤트의 기본 동작 중단
+
     formData.append('updateUserRequestDto', new Blob([JSON.stringify(updateUserRequestDto)] , {type: "application/json"}));
 
     const imageFileInput = document.getElementById('user-profile-img');
@@ -28,6 +30,7 @@ function updateUser(id){
         processData: false,
         contentType: false
     }).done(function(){
+        alert('수정 완료');
         location.reload();
     }).fail(function (error){
         alert(JSON.stringify(error));
