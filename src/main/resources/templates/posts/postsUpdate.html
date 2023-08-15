@@ -9,57 +9,83 @@
         <h1 class="header__title">게시물 수정</h1>
     </header>
 
-    <main>
+    <main class="posts-update">
         <input type="hidden" name="loginUsername" th:value="${loginUsername}">
 
-        <form th:object="${updatePostsRequestDto}" id="update-posts-form">
+        <form class="form" th:object="${updatePostsRequestDto}" id="update-posts-form">
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">카테고리</label>
+                </div>
+                <div class="form__col form__col--70">
+                    <select class="form__select" th:field="*{categoryId}">
+                        <div th:each = "parentCategory : ${parentCategories}">
+                            <!-- parent 카테고리 리스트 -->
+                            <option th:text="${parentCategory.name}" th:value="${parentCategory.id}"></option>
 
-            <div>
-                <label>카테고리</label>
-
-                <select style="width:100px;height:22px" th:field="*{categoryId}">
-                    <div th:each = "parentCategory : ${parentCategories}">
-
-                        <!-- parent 카테고리 리스트 -->
-                        <option th:text="${parentCategory.name}" th:value="${parentCategory.id}"></option>
-
-                        <!-- child 카테고리 리스트 -->
-                        <div th:if="${childCategory.parentCategoryId == parentCategory.id}" th:each = "childCategory : ${childCategories}">
-                            <option th:text="|${parentCategory.name} - ${childCategory.name}|" th:value="${childCategory.id}"></option>
+                            <!-- child 카테고리 리스트 -->
+                            <div th:if="${childCategory.parentCategoryId == parentCategory.id}" th:each = "childCategory : ${childCategories}">
+                                <option th:text="|${parentCategory.name} - ${childCategory.name}|" th:value="${childCategory.id}"></option>
+                            </div>
                         </div>
-
-                    </div>
-                </select>
+                    </select>
+                </div>
             </div>
 
-            <div>
-                <label>상태</label>
-                <select style="width:100px;height:22px" th:field="*{status}">
-                    <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>
-                </select>
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">게시물 상태</label>
+                </div>
+                <div class="form__col form__col--70">
+                    <select class="form__select" th:field="*{status}" required>
+                        <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>
+                    </select>
+                </div>
             </div>
 
-            <div>
-                <label>타이틀</label>
-                <input type="text" th:value="*{title}" th:field="*{title}" placeholder="타이틀" required>
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">제목</label>
+                </div>
+                <div class="form__col form__col--70">
+                    <input class="form__input" type="text" th:value="*{title}" th:field="*{title}" placeholder="제목" required>
+                </div>
             </div>
 
-            <div>
-                <img th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
+            <div class="form__row form__row--long">
+                <div class="form__col form__col--30">
+                </div>
+                <div class="form__col form__col--70">
+                    <img class="form__img" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
+                </div>
             </div>
 
-            <div>
-                <label>내용</label>
-                <input type="text" th:value="*{text}" th:field="*{text}" placeholder="내용">
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">내용</label>
+                </div>
+                <div class="form__col form__col--70">
+                    <input class="form__input" type="text" th:value="*{text}" th:field="*{text}" placeholder="내용">
+                </div>
             </div>
 
-            <div>
-                <label>해시태그</label>
-                <input type="text" th:value="*{hashtags}" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)">
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">해시태그</label>
+                </div>
+                <div class="form__col form__col--70">
+                    <input class="form__input" type="text" th:value="*{hashtags}" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)">
+                </div>
             </div>
 
-            <button type="submit" th:onclick="updatePosts([[${postsId}]])">수정</button>
-            <button type="submit" th:onclick="deletePosts([[${postsId}]])">삭제</button>
+            <div class="form__row">
+                <div class="form__col">
+                    <button class="form__btn" type="submit" th:onclick="updatePosts([[${postsId}]])">수정</button>
+                </div>
+                <div class="form__col">
+                    <button class="form__btn" type="submit" th:onclick="deletePosts([[${postsId}]])">삭제</button>
+                </div>
+            </div>
         </form>
     </main>
 

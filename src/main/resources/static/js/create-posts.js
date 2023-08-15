@@ -17,6 +17,8 @@ function createPosts(userId){
     if(!createPostsRequestDto.title)
         return;
 
+    event.preventDefault();  // 이벤트의 기본 동작 중단
+
     formData.append('createPostsRequestDto', new Blob([JSON.stringify(createPostsRequestDto)] , {type: "application/json"}));
 
     //이미지 파일 선택 확인

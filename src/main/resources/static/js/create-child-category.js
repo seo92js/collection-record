@@ -1,3 +1,13 @@
+function showCreateChildForm(parentCategoryId) {
+    $('#create-child-category-name-'  + parentCategoryId).attr("required");
+    $('#create-child-category-form-'  + parentCategoryId).removeClass('category__add--hidden');
+}
+
+function hiddenCreateChildForm(parentCategoryId){
+    $('#create-child-category-name-'  + parentCategoryId).removeAttr("required");
+    $('#create-child-category-form-'  + parentCategoryId).addClass('category__add--hidden');
+}
+
 function createChildCategory(userId, parentCategoryId){
     const name = document.getElementById("create-child-category-name-" + parentCategoryId).value;
 

@@ -3,35 +3,3 @@
     flex-direction:column;
     align-items:center;
 }
-
-.posts-add__form {
-    text-align:center;
-}
-
-.posts-add__form-category {
-    padding: 10px;
-}
-
-.posts-add__form-status {
-    padding: 10px;
-}
-
-.posts-add__form-title {
-    padding: 10px;
-}
-
-.posts-add__form-image {
-    padding: 10px;
-}
-
-.posts-add__form-text {
-    padding: 10px;
-}
-
-.posts-add__form-hashtags {
-    padding: 10px;
-}
-
-.posts-add__form-btn {
-    padding:10px;
-}

@@ -1,7 +1,11 @@
 .form {
     display: flex;
     flex-direction: column;
-    width: var(--form-size);
+    width: 400px;
+}
+
+.form--small {
+    width: 300px;
 }
 
 .form__row {
@@ -13,6 +17,10 @@
     margin: 5px;
 }
 
+.form__row--long {
+    height: 250px;
+}
+
 .form__col {
     width: 100%;
     height: 100%;
@@ -20,6 +28,10 @@
     display: flex;
     flex-direction : column;
     justify-content:center;
+}
+
+.form__col--15 {
+    width: 15%;
 }
 
 .form__col--30 {
@@ -35,6 +47,10 @@
 
 .form__label--bold {
     font-weight: bold;
+}
+
+.form__label--blue {
+    color: blue;
 }
 
 .form__input {
@@ -53,4 +69,15 @@
     height: 100%;
     box-sizing: border-box;
     border: none;
+}
+
+.form__select{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: none;
+}
+
+.form__img {
+    object-fit: cover;
 }

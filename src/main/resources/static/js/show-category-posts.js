@@ -3,39 +3,31 @@ let isEnd = false;
 let id;
 let category;
 
-$(document).ready(function() {
-    let isCategoryClicked = false;
-
-    // 카테고리 클릭 이벤트 처리
-    $('.category-link').on('click', function(event) {
-        id = $(this).data('id');
-        category = $(this).data('category');
-
-        $('#category-posts-list').empty();
-        page = 0;
-
-        isCategoryClicked = true;
-
-        event.preventDefault();
-
-        getCategoryPosts(id, category, page);
-        isEnd = false;
-    });
-
-    $(window).on('scroll', function(){
-        if ($(window).scrollTop() + $(window).height() == $(document).height() && !isEnd &&!isCategoryClicked) {
-              page = page + 1;
-              getCategoryPosts(id, category, page);
-        }
-        isCategoryClicked = false;
-    })
-
-    id = $('.category-link[data-category="all"]').data('id');
-    $('.category-link[data-id="' + id + '"][data-category="all"]').click();
+$('#category-all-btn').on('click', function() {
+    page = 0;
+    $('#category-posts-list').empty();
+    isEnd = false;
 });
 
+$('.user-home__link').on('click', function() {
+    page = 0;
+    $('#category-posts-list').empty();
+    isEnd = false;
+});
 
-function getCategoryPosts(id, category, page) {
+$('#category-all-btn').click();
+
+$(window).on('scroll', function(){
+    if ($(window).scrollTop() + $(window).height() == $(document).height() && !isEnd) {
+          page = page + 1;
+          getCategoryPosts(this.id, this.category);
+    }
+})
+
+function getCategoryPosts(id, category) {
+    this.id = id;
+    this.category = category;
+
     $.ajax({
         type: 'GET',
         url: '/api/v1/posts/' + id + '/' + category + '/' + page,
@@ -45,30 +37,55 @@ function getCategoryPosts(id, category, page) {
             return;
         }
 
-        response.forEach(function(post) {
-            const div = $('<div>').addClass('user-home__feed-post');
+       let num = 0;
 
-            const createdDateDiv = $('<div>').addClass('user-home__feed-post-createdDate');
-            const createdDate = $('<div>').text(post.createdDate);
-            createdDateDiv.append(createdDate);
+       let container = $('<div>').addClass('user-home__row-wrapper');
 
-            const titleDiv = $('<div>').addClass('user-home__feed-post-title');
-            const titleLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title).addClass('user-home__feed-post-title-title');
-            const status = $('<div>').text(post.status).addClass('user-home__feed-post-title-status');
-            titleDiv.append(titleLink);
-            titleDiv.append(status);
+        response.forEach(function(post, index) {
+            const div = $('<div>').addClass('user-home__posts');
 
-            const imageDiv = $('<div>').addClass('user-home__feed-post-image');
-            const imageLink = $('<img>').attr('src', '/api/v1/image/' + post.representativeImageId);
-            imageDiv.append(imageLink);
+            //첫줄
+            const firstRow = $('<div>').addClass('user-home__row');
+            let col = ($('<div>').addClass('user-home__col').addClass('user-home__col--left'));
+            col.append($('<div>').text(post.createdDate).addClass('user-home__created-date'));
+            firstRow.append(col);
 
-            div.append(createdDateDiv);
-            div.append(titleDiv);
-            div.append(imageDiv);
+            //두번째 줄
+            const secondRow = $('<div>').addClass('user-home__row');
+            col = $('<div>').addClass('user-home__col').addClass('user-home__col--left');
+            col.append($('<a>').attr('href', '/posts/' + post.id).text(post.title).addClass('user-home__title'));
+            secondRow.append(col);
+            col = $('<div>').addClass('user-home__col').addClass('user-home__col--right');
+            col.append($('<div>').text(post.status).addClass('user-home__status'));
+            secondRow.append(col);
 
-            $('#category-posts-list').append(div);
+            //세번째 줄
+            const thirdRow = $('<div>').addClass('user-home__row').addClass('user-home__row--long');
+            col = $('<div>').addClass('user-home__col');
+            a = $('<a>').attr('href', '/posts/' + post.id).addClass('user-home__link');
+            a.append($('<img>').attr('src', '/api/v1/image/' + post.representativeImageId).addClass('user-home__img'));
+            col.append(a);
+            thirdRow.append(col);
+
+            div.append(firstRow);
+            div.append(secondRow);
+            div.append(thirdRow);
+
+            container.append(div);
+
+            num++;
+
+            if (num === 3 || index === response.length - 1) {
+                $('#category-posts-list').append(container); // 3개마다 또는 마지막 게시물일 때 컨테이너를 추가
+                container = $('<div>').addClass('user-home__row-wrapper'); // 다음 컨테이너 생성
+                num = 0;
+            }
+
+/*            $('#category-posts-list').append(div);*/
+
         });
     }).fail(function (error){
         alert(JSON.stringify(error));
     });
 }
+

@@ -4,6 +4,7 @@
 /* component */
 @import "component/header.css";
 @import "component/form.css";
+@import "component/user-main.css";
 
 /* screen */
 @import "screens/navigation.css";
@@ -12,6 +13,7 @@
 @import "screens/home.css";
 @import "screens/user-home.css";
 @import "screens/posts.css";
+@import "screens/posts-update.css";
 @import "screens/user-profile.css";
 @import "screens/category.css";
 @import "screens/posts-add.css";

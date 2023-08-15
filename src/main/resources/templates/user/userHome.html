@@ -12,40 +12,56 @@
     <main class="user-home">
 
         <!-- 프로필 이미지, 메뉴 -->
-        <div class="user-home__title">
-            <div class="user-home__title-menu">
-                <img class="user-home__title--image" th:if="${imageId != null}" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
-                <div th:text="${profileText}"></div>
+        <div class="user-main">
+            <div class="user-main__row user-main__row--80">
+                <div class="user-main__col user-main__col--70">
+                    <img class="user-main__img" th:if="${imageId != null}" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
+                </div>
+                <div class="user-main__col user-main__col--30">
+                    <div class="user-main__row user-main__row--small" th:if="${isFollowing == null}">
+                        <a class="user-main__link user-main__link--blue"  href="/user/profile">내 정보</a>
+                    </div>
+                    <div class="user-main__row user-main__row--small" th:if="${isFollowing == null}">
+                        <a class="user-main__link user-main__link--blue"  href="/category">카테고리 관리</a>
+                    </div>
+                    <div class="user-main__row user-main__row--small" th:if="${isFollowing == null}">
+                        <a class="user-main__link user-main__link--blue" href="/posts/add">글쓰기</a>
+                    </div>
+                    <div class="user-main__row user-main__row--small" th:if="${isFollowing != null}">
+                        <a class="user-main__link user-main__link--blue" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${id})}" target="_blank">채팅</a>
+                    </div>
+                    <div class="user-main__row user-main__row--small" th:if="${isFollowing == true}">
+                        <button class="user-main__btn user-main__btn--red" type="button" th:onclick="deleteFollow([[${id}]])">팔로우 취소</button>
+                    </div>
+                    <div class="user-main__row user-main__row--small" th:if="${isFollowing == false}">
+                        <button class="user-main__btn" type="button" th:onclick="createFollow([[${id}]]); sendNotification([[${loginUsername}]], [[${username}]])">팔로우</button>
+                    </div>
+                </div>
             </div>
-            <div class="user-home__title-menu">
-                <a class="user-home__title-submenu" th:if="${isFollowing == null}" href="/user/profile">내 정보</a>
-                <a class="user-home__title-submenu" th:if="${isFollowing == null}" href="/category">카테고리 관리</a>
-                <a class="user-home__title-submenu" th:if="${isFollowing == null}" href="/posts/add">글쓰기</a>
-
-                <a class="user-home__title-submenu" th:if="${isFollowing != null}" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${id})}" target="_blank">채팅</a>
+            <div class="user-main__row user-main__row--20">
+                <div class="user-main__col">
+                    <div th:text="${profileText}"></div>
+                </div>
             </div>
-
-            <button type="button" th:if="${isFollowing == true}" th:onclick="deleteFollow([[${id}]])">팔로우 취소</button>
-            <button type="button" th:if="${isFollowing == false}" th:onclick="createFollow([[${id}]]); sendNotification([[${loginUsername}]], [[${username}]])">팔로우</button>
         </div>
 
-        <!-- 카테고리 목록 -->
-        <div class="user-home__category">
-            <ul>
-                <li class="user-home__category-li"><a href="javascript:void(0)" th:data-id="${id}" th:data-category="all" class="category-link">전체</a></li>
-                <li class="user-home__category-li" th:each="parentCategory : ${parentCategories}">
-                    <a href="javascript:void(0)" th:text="${parentCategory.name}" th:data-id="${id}" th:data-category="${parentCategory.name}" class="category-link"></a>
-                    <ul>
-                        <li th:each="childCategory : ${childCategories}">
-                            <a th:if="${childCategory.parentCategoryId == parentCategory.id}" href="javascript:void(0)" th:text="${childCategory.name}" th:data-id="${id}" th:data-category="${childCategory.name}" class="category-link"></a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+        <div class="user-home__content">
+            <!-- 카테고리 목록 -->
+            <div class="user-home__category-list">
+                <div class="user-home__category">
+                    <a id="category-all-btn" th:onclick="getCategoryPosts([[${id}]], 'all')">전체</a>
+                </div>
+                <div class="user-home__category" th:each="parentCategory : ${parentCategories}">
+                    <a class="user-home__link" th:text="${parentCategory.name}" th:onclick="getCategoryPosts([[${id}]], [[${parentCategory.name}]])"></a>
+                    <div class="user-home__category user-home__category--child" th:each="childCategory : ${childCategories}" th:if="${childCategory.parentCategoryId == parentCategory.id}">
+                        <a class="user-home__link" th:text="| - ${childCategory.name}|" th:onclick="getCategoryPosts([[${id}]], [[${childCategory.name}]])"></a>
+                    </div>
+                </div>
+            </div>
 
-        <!-- 게시물 목록 -->
-        <div class="user-home__post" id="category-posts-list">
+            <!-- 게시물 목록 -->
+            <div class="user-home__posts-list" id="category-posts-list">
+            </div>
         </div>
     </main>
 

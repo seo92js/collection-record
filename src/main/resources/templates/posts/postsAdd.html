@@ -12,12 +12,14 @@
     <main class="posts-add">
         <input type="hidden" name="loginUsername" th:value="${loginUsername}">
 
-        <div class="posts-add__form">
-            <form th:object="${createPostsRequestDto}" id="create-posts-form">
-                <div class="posts-add__form-category">
-                    <select style="width:100px;height:22px" th:field="*{categoryId}">
+        <form class="form" th:object="${createPostsRequestDto}" id="create-posts-form">
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">카테고리</label>
+                </div>
+                <div class="form__col form__col--70">
+                    <select class="form__select" th:field="*{categoryId}" required>
                         <div th:each = "parentCategory : ${parentCategories}">
-
                             <!-- parent 카테고리 리스트 -->
                             <option th:text="${parentCategory.name}" th:value="${parentCategory.id}"></option>
 
@@ -25,38 +27,66 @@
                             <div th:if="${childCategory.parentCategoryId == parentCategory.id}" th:each = "childCategory : ${childCategories}">
                                 <option th:text="|${parentCategory.name} - ${childCategory.name}|" th:value="${childCategory.id}"></option>
                             </div>
-
                         </div>
                     </select>
                 </div>
+            </div>
 
-                <div class="posts-add__form-status">
-                    <select style="width:100px;height:22px" th:field="*{status}">
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">게시물 상태</label>
+                </div>
+                <div class="form__col form__col--70">
+                    <select class="form__select" th:field="*{status}" required>
                         <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>
                     </select>
                 </div>
+            </div>
 
-                <div class="posts-add__form-title">
-                    <input type="text" th:field="*{title}" placeholder="제목" required>
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">제목</label>
                 </div>
+                <div class="form__col form__col--70">
+                    <input class="form__input" type="text" th:field="*{title}" placeholder="제목" required>
+                </div>
+            </div>
 
-                <div class="posts-add__form-image">
-                    <input type="file" id="posts-img-input" multiple="multiple" placeholder="이미지 선택">
+            <div class="form__row form__row--long">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--blue" for="posts-img-input">이미지 업로드</label>
+                    <input class="form__input form__input--hidden" type="file" id="posts-img-input" multiple="multiple">
                 </div>
+                <div class="form__col form__col--70">
+                    <!-- 이미지 넣자 -->
+                </div>
+            </div>
 
-                <div class="posts-add__form-text">
-                    <input type="text" th:field="*{text}" placeholder="내용">
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">내용</label>
                 </div>
+                <div class="form__col form__col--70">
+                    <input class="form__input" type="text" th:field="*{text}" placeholder="내용">
+                </div>
+            </div>
 
-                <div class="posts-add__form-hashtags">
-                    <input type="text" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)">
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">해시태그</label>
                 </div>
+                <div class="form__col form__col--70">
+                    <input class="form__input" type="text" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)">
+                </div>
+            </div>
 
-                <div class="posts-add__form-btn">
-                    <button type="submit" th:onclick="createPosts([[*{userId}]])">추가</button>
+            <div class="form__row">
+                <div class="form__col">
+                    <button class="form__btn" type="submit" th:onclick="createPosts([[*{userId}]])">추가</button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
+
     </main>
 
     <div th:replace="fragments/footer :: footer" />

@@ -1,5 +1,4 @@
 function switchParentForm(commentId){
-
     $('#create-parent-comment-form').removeClass('hidden');
     $('#create-child-comment-form').addClass('hidden');
 }

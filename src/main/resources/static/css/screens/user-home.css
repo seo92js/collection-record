@@ -1,72 +1,107 @@
 .user-home {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-.user-home__title {
-    display:flex;
-    justify-content: center;
-    padding: 10px;
-    border: 1px solid #c0c0c0
-}
-
-.user-home__title-image {
-    width:300px;
-    height:300px;
-}
-
-.user-home__title-menu {
-    display:flex;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 20px;
 }
 
-.user-home__title-submenu {
-    padding: 15px;
+.user-home__content {
+    width: 100%;
+    display: flex;
+}
+
+.user-home__category-list {
+    display:flex;
+    flex-direction: column;
+    width: 20vw;
+    height: 100vh;
+    margin-top: 15px;
+    padding:40px 0px 40px 40px;
+    background-color: whitesmoke;
 }
 
 .user-home__category {
-    padding: 20px;
+    width: 100%;
+    margin-bottom:20px;
+    font-size: 18px;
+    font-weight: 600;
 }
 
-.user-home__category-li {
-    padding: 5px;
-    display: inline-block;
+.user-home__category--child {
+    font-weight: normal;
+    margin-top: 15px;
+    margin-left: 20px;
+    font-size: 16px;
 }
 
-.user-home__feed {
+.user-home__posts-list {
+    width: 80vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px 0px 20px;
 }
 
-.user-home__feed-post {
-    width:300px;
-    height:300px;
-    margin: 10px;
-    padding: 10px;
+.user-home__row-wrapper {
+    width: 100%;
+    height: 32%;
+    display: flex;
+}
+
+.user-home__posts {
+    width: 32%;
+    border: 1px solid gainsboro;
+    margin: 5px;
+}
+
+.user-home__row {
     display:flex;
-    flex-direction:column;
-    border: 1px solid #c0c0c0
+    height: 10%;
 }
 
-.user-home__feed-post-createdDate {
-    font-size:7px;
-    padding:5px;
+.user-home__row--long{
+    height: 80%;
 }
 
-.user-home__feed-post-title {
+.user-home__col {
     display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:5px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0px 15px 0px 15px;
 }
 
-.user-home__feed-post-title-title {
+.user-home__col--left {
+    justify-content: left;
 }
 
-.user-home__feed-post-title-status {
-    font-size:7px;
+.user-home__col--right {
+    justify-content: right;
 }
 
-.user-home__feed-post-image {
-    padding:5px;
+.user-home__created-date {
+    font-size: 11px;
+    color: blue;
+}
+
+.user-home__title {
+    display:block;
+    font-weight: 600;
+}
+
+.user-home__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-home__status {
+    color: red;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.user-home__link {
+    width:100%;
+    height:100%;
 }
