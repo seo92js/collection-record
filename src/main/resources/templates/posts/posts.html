@@ -34,16 +34,25 @@
                         </div>
                     </div>
                     <div class="posts__row posts__row--short">
+                        <div class="posts__col posts__col--short">
+                            <div class="posts__index">Category</div>
+                        </div>
                         <div class="posts__col">
                             <div class="posts__category" th:text="${getPostsResponseDto.categoryName}"></div>
                         </div>
                     </div>
                     <div class="posts__row posts__row--short">
-                        <div class="posts__col col--50">
+                        <div class="posts__col posts__col--short">
+                            <div class="posts__index">Title</div>
+                        </div>
+                        <div class="posts__col">
                             <div class="posts__title" th:text="${getPostsResponseDto.title}"></div>
                         </div>
                     </div>
                     <div class="posts__row posts__row--short">
+                        <div class="posts__col posts__col--short">
+                            <div class="posts__index">Hashtags</div>
+                        </div>
                         <div class="posts__col">
                             <div class="posts__hashtags" th:text="${getPostsResponseDto.hashtags}"></div>
                         </div>
@@ -63,7 +72,7 @@
                                     <input class="posts__comment-input" type="text" th:field="*{text}" placeholder="내용" required>
                                 </div>
                                 <div class="posts__col posts__col--short">
-                                    <button class="posts__comment-btn" type="submit" th:onclick="createParentComment([[*{userId}]], [[*{postsId}]]); notificationSend([[${loginUsername}]],[[${username}]],[[*{postsId}]])">댓글 달기</button>
+                                    <button class="posts__btn" type="submit" th:onclick="createParentComment([[*{userId}]], [[*{postsId}]]); notificationSend([[${loginUsername}]],[[${username}]],[[*{postsId}]])">댓글달기</button>
                                 </div>
                         </form>
                         <!-- else 위에 div 클래스가 child 이면 -->
@@ -73,10 +82,10 @@
                                 <input class="posts__comment-input" type="text" th:field="*{text}" placeholder="내용" required>
                             </div>
                             <div class="posts__col posts__col--short">
-                                <button class="posts__comment-btn" type="submit" th:onclick="createChildComment([[*{userId}]], [[*{postsId}]]); sendNotification([[${loginUsername}]],[[${username}]],[[*{postsId}]])">답글 달기</button>
+                                <button class="posts__btn" type="submit" th:onclick="createChildComment([[*{userId}]], [[*{postsId}]]); sendNotification([[${loginUsername}]],[[${username}]],[[*{postsId}]])">답글달기</button>
                             </div>
                             <div class="posts__col posts__col--short">
-                                <button class="posts__comment-btn" type="button" th:onclick="switchParentForm()">X</button>
+                                <button class="posts__btn" type="button" th:onclick="switchParentForm()">X</button>
                             </div>
                         </form>
                     </div>
@@ -86,34 +95,34 @@
                         <div class="posts__comment-list" th:each="parentComment : ${parentComments}">
                             <div class="posts__parent-comment">
                                 <div>
-                                    <div class="posts__created-date" th:text="${parentComment.createdDate}"></div>
+                                    <div class="posts__comment-created-date" th:text="${parentComment.createdDate}"></div>
                                 </div>
                                 <div>
-                                    <div class="posts__username" th:text="${parentComment.username}"></div>
+                                    <div class="posts__comment-username" th:text="${parentComment.username}"></div>
                                 </div>
                                 <div>
                                     <div class="posts__comment-text" th:text="${parentComment.text}"></div>
                                 </div>
                                 <div class>
-                                    <button class="posts__btn" type="button" th:onclick="switchChildForm([[${parentComment.id}]])">답글 달기</button>
+                                    <button class="posts__comment-btn" type="button" th:onclick="switchChildForm([[${parentComment.id}]])">답글 달기</button>
                                 </div>
                                 <div>
-                                    <button class="posts__btn" th:if="${parentComment.username == loginUsername}" type="button" th:onclick="deleteComment([[${parentComment.id}]])">삭제</button>
+                                    <button class="posts__comment-btn" th:if="${parentComment.username == loginUsername}" type="button" th:onclick="deleteComment([[${parentComment.id}]])">삭제</button>
                                 </div>
                             </div>
 
                             <div class="posts__child-comment" th:each="childComment : ${childComments}" th:if="${childComment.parentId==parentComment.id}">
                                 <div>
-                                    <div class="posts__created-date" th:text="${childComment.createdDate}"></div>
+                                    <div class="posts__comment-created-date" th:text="| ㄴ ${childComment.createdDate}|"></div>
                                 </div>
                                 <div>
-                                    <div class="posts__username" th:text="${childComment.username}"></div>
+                                    <div class="posts__comment-username" th:text="${childComment.username}"></div>
                                 </div>
                                 <div>
-                                    <div class="posts__text" th:text="${childComment.text}"></div>
+                                    <div class="posts__comment-text" th:text="${childComment.text}"></div>
                                 </div>
                                 <div>
-                                    <button class="posts__btn" th:if="${childComment.username == loginUsername}" type="button" th:onclick="deleteComment([[${childComment.id}]])">삭제</button>
+                                    <button class="posts__comment-btn" th:if="${childComment.username == loginUsername}" type="button" th:onclick="deleteComment([[${childComment.id}]])">삭제</button>
                                 </div>
                             </div>
                         </div>

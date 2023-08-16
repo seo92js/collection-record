@@ -5,8 +5,8 @@
 }
 
 .posts__frame {
-    width:70vw;
-    height:70vh;
+    width:1100px;
+    height:700px;
     border: 1px solid gainsboro;
 }
 
@@ -38,12 +38,8 @@
 .posts__row--comment-list {
     display: flex;
     flex-direction: column;
+    justify-content: start;
     overflow: auto;
-}
-
-
-.posts__row--no-border {
-    border: none;
 }
 
 .posts__col{
@@ -60,8 +56,15 @@
     width: 80px;
 }
 
+.posts__index {
+    font-size:12px;
+    color: gray;
+}
+
 .posts__comment-form {
     display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
 }
@@ -72,10 +75,11 @@
     box-sizing: border-box;
 }
 
-.posts__comment-btn {
+.posts__btn {
     width: 100%;
     height: 100%;
     font-size: 12px;
+    background-color: transparent;
     border: none;
     box-sizing: border-box;
 }
@@ -87,30 +91,40 @@
 }
 
 .posts__parent-comment {
-    width: 100%;
     display: flex;
+    align-items:center;
+    margin-bottom: 20px;
 }
 
 .posts__child-comment {
-    width: 100%;
     display: flex;
-    margin-left: 30px;
+    align-items:center;
+    padding-left: 30px;
+    margin-bottom: 20px;
 }
 
-.posts__created-date {
+.posts__comment-username {
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.posts__comment-created-date {
     font-size: 11px;
     color: blue;
     margin-right: 10px;
 }
 
-.posts__username {
-    font-size: 15px;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
 .posts__comment-text {
     margin-right: 10px;
+    font-size: 15px;
+}
+
+.posts__comment-btn {
+    font-size: 11px;
+    background-color: transparent;
+    border: none;
+    color: gray;
 }
 
 .posts__title {
@@ -121,9 +135,6 @@
 .posts__category {
     font-size: 13px;
     font-weight: bold;
-}
-
-.posts__text {
 }
 
 .posts__modify {
@@ -138,8 +149,7 @@
 
 .posts__hashtags {
     font-size: 13px;
-
-    color: gray;
+    font-weight: bold;
 }
 
 .posts__img {
@@ -149,14 +159,14 @@
 .posts__prev {
     position: absolute;
     top: 50%;
-    left: 15px;
+    left: 20px;
     color: gray;
 }
 
 .posts__next {
     position: absolute;
     top: 50%;
-    right: 15px;
+    right: 20px;
     color: gray;
 }
 
