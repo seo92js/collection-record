@@ -1,60 +1,83 @@
 .posts {
-    width:70vw;
-    height:70vh;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.posts__frame {
+    width:70vw;
+    height:70vh;
+    border: 1px solid gainsboro;
+}
+
 .posts__row {
     display:flex;
+    justify-content: center;
     width: 100%;
     height: 100%;
-
-    border: 1px solid blue;
+    box-sizing: border-box;
+    padding: 5px;
 }
 
-.posts__row--10 {
-    height: 10%;
-
-    border: 1px solid red;
+.posts__row--long {
+    height: 300px;
+    overflow: auto;
+    border-bottom: 1px solid gainsboro;
 }
 
-.posts__row--30 {
-    height: 30%;
-
-    border: 1px solid red;
+.posts__row--short {
+    height: 70px;
+    border-bottom: 1px solid gainsboro;
 }
 
-.posts__row--40 {
-    height: 40%;
+.posts__row--comment-input {
+    height: 30px;
+    border: none;
+}
 
-    border: 1px solid pink;
+.posts__row--comment-list {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
 }
 
 
-.posts__row--90 {
-    height: 90%;
-
-    border: 1px solid green;
-
+.posts__row--no-border {
+    border: none;
 }
 
 .posts__col{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
     width: 100%;
     height: 100%;
-
-    border: 1px solid orange;
+    box-sizing: border-box;
 }
 
-.posts__col--50{
-    width: 50%;
-
-    border: 1px solid orange;
+.posts__col--short{
+    width: 80px;
 }
 
 .posts__comment-form {
     display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.posts__comment-input {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.posts__comment-btn {
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+    border: none;
+    box-sizing: border-box;
 }
 
 .posts__comment-list {
@@ -86,8 +109,55 @@
     margin-right: 10px;
 }
 
-.posts__text {
+.posts__comment-text {
     margin-right: 10px;
+}
+
+.posts__title {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.posts__category {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.posts__text {
+}
+
+.posts__modify {
+    font-size: 13px;
+    color: blue;
+}
+
+.posts__chat{
+    font-size: 13px;
+    color: blue;
+}
+
+.posts__hashtags {
+    font-size: 13px;
+
+    color: gray;
+}
+
+.posts__img {
+    object-fit: contain;
+}
+
+.posts__prev {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    color: gray;
+}
+
+.posts__next {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    color: gray;
 }
 
 .hidden {
