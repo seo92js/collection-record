@@ -26,9 +26,6 @@ class CommentServiceTest {
     UserRepository userRepository;
 
     @Autowired
-    CategoryRepository categoryRepository;
-
-    @Autowired
     PostsRepository postsRepository;
 
     @Autowired

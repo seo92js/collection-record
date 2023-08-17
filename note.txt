@@ -59,12 +59,16 @@ todo
 - 비밀번호 변경 개선 (완료)
 - PostsRepository 테스트 오류 해결하기 (완료)
 - 댓글 창 overflow 해결 (완료)
+- posts 추가, 변경 textarea (완료)
+- user profile text textarea (완료)
+- itunes api 사용해서 앨범 정보 가져오기 (완료)
 
 
 
 
-- posts 추가, 변경 textarea
-- user profile text textarea
+
+- 이미지 등록 미리보기
+- 이미지 등록 순서
 - Exception 전부 정리
 - css BEM방식으로 다시 정리
 - csrf 해결하기
@@ -79,4 +83,3 @@ todo
 - 게시물 text 스크롤
 - MariaDB
 - 배포
-- discogs api 사용해서 음반 정보 가져오기, 최종

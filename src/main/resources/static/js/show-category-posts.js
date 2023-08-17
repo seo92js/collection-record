@@ -42,7 +42,47 @@ function getCategoryPosts(id, category) {
 
             const firstRow = $('<div>').addClass('user-home__row');
 
-            //카테고리
+            //col 1 날짜, 인덱스
+            var col = $('<div>').addClass('user-home__col').addClass('user-home__col--short');
+            var row1 = $('<div>').addClass('user-home__row').addClass('user-home__row--short');
+            row1.append($('<div>').text(post.createdDate).addClass('user-home__posts-created-date'));
+            var row2 = $('<div>').addClass('user-home__row');
+            row2.append($('<div>').text("#" + index).addClass('user-home__posts-index'))
+            col.append(row1);
+            col.append(row2);
+            firstRow.append(col);
+
+            //col 2 앨범아트
+            col = $('<div>').addClass('user-home__col').addClass('user-home__col--img');
+            var a = $('<a>').attr('href', '/posts/' + post.id).addClass('user-home__link');
+            a.append($('<img>').attr("src", post.albumArt).addClass('user-home__posts-album-art'));
+            col.append(a);
+            firstRow.append(col);
+
+            //col 3 아티스트, 앨범, 장르
+            col = $('<div>').addClass('user-home__col').addClass('user-home__col--flex1');
+            row1 = $('<div>').addClass('user-home__row');
+            row2 = $('<div>').addClass('user-home__row');
+            var row3 = $('<div>').addClass('user-home__row');
+            row1.append($('<div>').text(post.artist).addClass('user-home__posts-artist'));
+            row2.append($('<div>').text(post.album).addClass('user-home__posts-album'));
+            row3.append($('<div>').text(post.genre).addClass('user-home__posts-genre'));
+            col.append(row1);
+            col.append(row2);
+            col.append(row3);
+            firstRow.append(col);
+
+            //col 4 카테고리
+            col = $('<div>').addClass('user-home__col').addClass('user-home__col--short');
+            col.append($('<div>').text(post.category).addClass('user-home__posts-category'));
+            firstRow.append(col);
+
+            //col 5 상태
+            col = $('<div>').addClass('user-home__col').addClass('user-home__col--short');
+            col.append($('<div>').text(post.status).addClass('user-home__posts-status'));
+            firstRow.append(col);
+
+           /* //카테고리
             const col0 = $('<div>').addClass('user-home__col');
             col0.append($('<div>').text("#" + index).addClass('user-home__posts-index'));
             firstRow.append(col0);
@@ -78,6 +118,7 @@ function getCategoryPosts(id, category) {
             col6.append(a);
             firstRow.append(col6);
 
+            div.append(firstRow);*/
             div.append(firstRow);
             $('#category-posts-list').append(div)
         });

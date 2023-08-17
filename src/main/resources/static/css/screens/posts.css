@@ -23,22 +23,26 @@
     height: 400px;
     overflow: auto;
     border-bottom: 1px solid gainsboro;
+    padding-left: 15px;
 }
 
 .posts__row--short {
     height: 70px;
     border-bottom: 1px solid gainsboro;
+    padding-left: 15px;
 }
 
 .posts__row--comment-input {
     height: 30px;
     border: none;
+    padding-left: 15px;
 }
 
 .posts__row--comment-list {
     display: flex;
     flex-direction: column;
     justify-content: start;
+    padding-left: 15px;
     overflow: auto;
 }
 
@@ -127,14 +131,14 @@
     color: gray;
 }
 
-.posts__title {
+.posts__artist {
     font-size: 15px;
-    font-weight: bold;
 }
 
 .posts__category {
     font-size: 13px;
     font-weight: bold;
+    color: blue;
 }
 
 .posts__modify {
@@ -147,9 +151,12 @@
     color: blue;
 }
 
-.posts__hashtags {
+.posts__album {
     font-size: 13px;
-    font-weight: bold;
+}
+
+.posts__genre {
+    font-size: 13px;
 }
 
 .posts__status {

@@ -45,9 +45,6 @@ class UserControllerTest {
     private UserService userService;
 
     @MockBean
-    private CategoryService categoryService;
-
-    @MockBean
     private FollowService followService;
 
     @MockBean

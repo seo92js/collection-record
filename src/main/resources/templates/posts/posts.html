@@ -35,23 +35,15 @@
                     </div>
                     <div class="posts__row posts__row--short">
                         <div class="posts__col posts__col--short">
-                            <div class="posts__index">Category</div>
+                            <div class="posts__index">카테고리</div>
                         </div>
                         <div class="posts__col">
-                            <div class="posts__category" th:text="${getPostsResponseDto.categoryName}"></div>
+                            <div class="posts__category" th:text="${getPostsResponseDto.category}"></div>
                         </div>
                     </div>
                     <div class="posts__row posts__row--short">
                         <div class="posts__col posts__col--short">
-                            <div class="posts__index">Title</div>
-                        </div>
-                        <div class="posts__col">
-                            <div class="posts__title" th:text="${getPostsResponseDto.title}"></div>
-                        </div>
-                    </div>
-                    <div class="posts__row posts__row--short">
-                        <div class="posts__col posts__col--short">
-                            <div class="posts__index">Status</div>
+                            <div class="posts__index">상태</div>
                         </div>
                         <div class="posts__col">
                             <div class="posts__status" th:text="${getPostsResponseDto.status}"></div>
@@ -59,10 +51,26 @@
                     </div>
                     <div class="posts__row posts__row--short">
                         <div class="posts__col posts__col--short">
-                            <div class="posts__index">Hashtags</div>
+                            <div class="posts__index">아티스트</div>
                         </div>
                         <div class="posts__col">
-                            <div class="posts__hashtags" th:text="${getPostsResponseDto.hashtags}"></div>
+                            <div class="posts__artist" th:text="${getPostsResponseDto.artist}"></div>
+                        </div>
+                    </div>
+                    <div class="posts__row posts__row--short">
+                        <div class="posts__col posts__col--short">
+                            <div class="posts__index">앨범</div>
+                        </div>
+                        <div class="posts__col">
+                            <div class="posts__album" th:text="${getPostsResponseDto.album}"></div>
+                        </div>
+                    </div>
+                    <div class="posts__row posts__row--short">
+                        <div class="posts__col posts__col--short">
+                            <div class="posts__index">장르</div>
+                        </div>
+                        <div class="posts__col">
+                            <div class="posts__genre" th:text="${getPostsResponseDto.genre}"></div>
                         </div>
                     </div>
 
