@@ -21,21 +21,21 @@ public class Posts extends BaseTimeEntity {
     @Column(name = "posts_id")
     private Long id;
 
-    private String title;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    private String artist;
+    private String album;
+    private String albumArt;
+    private String genre;
     private String text;
 
     @OneToMany
     @JoinColumn(name = "posts_id")
     private List<Image> representativeImage = new ArrayList<>();
 
-    private String hashtags;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @Enumerated(EnumType.STRING)
@@ -44,10 +44,9 @@ public class Posts extends BaseTimeEntity {
     @OneToMany(mappedBy = "posts")
     private List<Comment> comments = new ArrayList<>();
 
-    // 연관관계 편의
-    public void setCategory(Category category){
-        this.category = category;
-        category.addPosts(this);
+    public void setUser(User user){
+        this.user = user;
+        user.addPosts(this);
     }
 
     public void addComment(Comment comment){
@@ -55,21 +54,25 @@ public class Posts extends BaseTimeEntity {
     }
 
     @Builder
-    public Posts(User user, Category category, String title, List<Image> representativeImage, String text, String hashtags, PostsStatus status){
-        setCategory(category);
+    public Posts(User user, String artist, String album, String genre, String albumArt, Category category, List<Image> representativeImage, String text, PostsStatus status){
         this.user = user;
-        this.title = title;
+        this.artist = artist;
+        this.album = album;
+        this.genre = genre;
+        this.albumArt = albumArt;
+        this.category = category;
         this.representativeImage = representativeImage;
         this.text = text;
-        this.hashtags = hashtags;
         this.status = status;
     }
 
-    public void update(Category category, String title, String text, String hashtags, PostsStatus status){
+    public void update(Category category, String artist, String album, String genre, String albumArt, String text, PostsStatus status){
+        this.artist = artist;
+        this.album = album;
+        this.genre = genre;
+        this.albumArt = albumArt;
         this.category = category;
-        this.title = title;
         this.text = text;
-        this.hashtags = hashtags;
         this.status = status;
     }
 }

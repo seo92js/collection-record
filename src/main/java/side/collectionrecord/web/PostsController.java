@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsStatus;
-import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.CommentService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.web.dto.*;
@@ -19,8 +19,6 @@ import java.util.List;
 public class PostsController {
     @Autowired
     PostsService postsService;
-    @Autowired
-    CategoryService categoryService;
 
     @Autowired
     CommentService commentService;
@@ -29,25 +27,22 @@ public class PostsController {
     public String posts(Model model){
         Long userId = (Long) model.getAttribute("loginUserId");
 
-
         model.addAttribute("createPostsRequestDto", CreatePostsRequestDto.builder()
                         .userId(userId)
-                        .categoryId(null)
-                        .title(null)
+                        .category(null)
+                        .artist(null)
+                        .album(null)
+                        .genre(null)
+                        .albumArt(null)
                         .representativeImage(null)
                         .text(null)
-                        .hashtags(null)
                         .status(null)
                         .build());
 
-        List<GetCategoryResponseDto> parentCategories = categoryService.getAllParentCategoryByUserId(userId);
-        model.addAttribute("parentCategories", parentCategories);
-
-        List<GetCategoryResponseDto> childCategories = categoryService.getAllChildCategoryByUserId(userId);
-        model.addAttribute("childCategories", childCategories);
+        List<Category> categories = Arrays.asList(Category.values());
+        model.addAttribute("categories", categories);
 
         List<PostsStatus> statuses = Arrays.asList(PostsStatus.values());
-
         model.addAttribute("statuses", statuses);
 
         return "posts/postsAdd";
@@ -99,23 +94,21 @@ public class PostsController {
         Posts posts = postsService.getPostsById(id);
 
         model.addAttribute("updatePostsRequestDto", UpdatePostsRequestDto.builder()
-                        .categoryId(posts.getCategory().getId())
-                        .title(posts.getTitle())
+                        .category(posts.getCategory())
+                        .artist(posts.getArtist())
+                        .album(posts.getAlbum())
+                        .genre(posts.getGenre())
+                        .albumArt(posts.getAlbumArt())
                         .text(posts.getText())
-                        .hashtags(posts.getHashtags())
                         .status(posts.getStatus())
                         .build());
 
         Long userId = (Long) model.getAttribute("loginUserId");
 
-        List<GetCategoryResponseDto> parentCategories = categoryService.getAllParentCategoryByUserId(userId);
-        model.addAttribute("parentCategories", parentCategories);
-
-        List<GetCategoryResponseDto> childCategories = categoryService.getAllChildCategoryByUserId(userId);
-        model.addAttribute("childCategories", childCategories);
+        List<Category> categories = Arrays.asList(Category.values());
+        model.addAttribute("categories", categories);
 
         List<PostsStatus> statuses = Arrays.asList(PostsStatus.values());
-
         model.addAttribute("statuses", statuses);
 
         // 일단은 첫번쨰 이미지만?

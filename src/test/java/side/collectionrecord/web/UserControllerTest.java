@@ -21,7 +21,6 @@ import side.collectionrecord.config.auth.SecurityConfig;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
-import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.FollowService;
 import side.collectionrecord.service.UserChatRoomService;
 import side.collectionrecord.service.UserService;

@@ -37,7 +37,52 @@ function getCategoryPosts(id, category) {
             return;
         }
 
-       let num = 0;
+        response.forEach(function(post, index) {
+            const div = $('<div>').addClass('user-home__posts');
+
+            const firstRow = $('<div>').addClass('user-home__row');
+
+            //카테고리
+            const col0 = $('<div>').addClass('user-home__col');
+            col0.append($('<div>').text("#" + index).addClass('user-home__posts-index'));
+            firstRow.append(col0);
+
+            const col1 = $('<div>').addClass('user-home__col');
+            col1.append($('<div>').text(post.category).addClass('user-home__posts-category'));
+            firstRow.append(col1);
+            //게시물 상태
+            const col2 = $('<div>').addClass('user-home__col');
+            col2.append($('<div>').text(post.status).addClass('user-home__posts-status'));
+            firstRow.append(col2);
+
+            //아티스트
+            const col3 = $('<div>').addClass('user-home__col');
+            col3.append($('<div>').text(post.artist).addClass('user-home__posts-artist'));
+            firstRow.append(col3);
+
+            //앨범
+            const col4 = $('<div>').addClass('user-home__col');
+            col4.append($('<div>').text(post.album).addClass('user-home__posts-album'));
+            firstRow.append(col4);
+
+            //장르
+            const col5 = $('<div>').addClass('user-home__col');
+            col5.append($('<div>').text(post.genre).addClass('user-home__posts-genre'));
+            firstRow.append(col5);
+
+            //앨범아트
+            const col6 = $('<div>').addClass('user-home__col');
+
+            a = $('<a>').attr('href', '/posts/' + post.id).addClass('user-home__link');
+            a.append($('<img>').attr("src", post.albumArt));
+            col6.append(a);
+            firstRow.append(col6);
+
+            div.append(firstRow);
+            $('#category-posts-list').append(div)
+        });
+
+      /* let num = 0;
 
        let container = $('<div>').addClass('user-home__row-wrapper');
 
@@ -75,15 +120,16 @@ function getCategoryPosts(id, category) {
 
             num++;
 
+            console.log(num);
+
             if (num === 3 || index === response.length - 1) {
+*//*            if (num === 3) {*//*
                 $('#category-posts-list').append(container); // 3개마다 또는 마지막 게시물일 때 컨테이너를 추가
                 container = $('<div>').addClass('user-home__row-wrapper'); // 다음 컨테이너 생성
                 num = 0;
             }
+        });*/
 
-/*            $('#category-posts-list').append(div);*/
-
-        });
     }).fail(function (error){
         alert(JSON.stringify(error));
     });

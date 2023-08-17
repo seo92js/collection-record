@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.service.CategoryService;
 import side.collectionrecord.service.FollowService;
 import side.collectionrecord.service.UserChatRoomService;
 import side.collectionrecord.service.UserService;
@@ -20,6 +20,7 @@ import side.collectionrecord.web.dto.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -29,8 +30,6 @@ public class UserController {
     private final UserRepository userRepository;
 
     private final UserService userService;
-
-    private final CategoryService categoryService;
 
     private final FollowService followService;
 
@@ -67,11 +66,8 @@ public class UserController {
 
         Long userId = user.getId();
 
-        List<GetCategoryResponseDto> parentCategories = categoryService.getAllParentCategoryByUserId(userId);
-        model.addAttribute("parentCategories", parentCategories);
-
-        List<GetCategoryResponseDto> childCategories = categoryService.getAllChildCategoryByUserId(userId);
-        model.addAttribute("childCategories", childCategories);
+        List<Category> categories = Arrays.asList(Category.values());
+        model.addAttribute("categories", categories);
 
         Long loginUserId = (Long) model.getAttribute("loginUserId");
 

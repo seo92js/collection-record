@@ -58,11 +58,13 @@ todo
 - ExceptionManager(RestControllerAdvice) 로 관리 (완료)
 - 비밀번호 변경 개선 (완료)
 - PostsRepository 테스트 오류 해결하기 (완료)
+- 댓글 창 overflow 해결 (완료)
 
 
 
 
-- 댓글 창 overflow 해결
+- posts 추가, 변경 textarea
+- user profile text textarea
 - Exception 전부 정리
 - css BEM방식으로 다시 정리
 - csrf 해결하기

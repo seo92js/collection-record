@@ -7,10 +7,7 @@ import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.service.ImageService;
 import side.collectionrecord.service.PostsService;
-import side.collectionrecord.web.dto.CreateImageRequestDto;
-import side.collectionrecord.web.dto.CreatePostsRequestDto;
-import side.collectionrecord.web.dto.GetCategoryPostsResponseDto;
-import side.collectionrecord.web.dto.UpdatePostsRequestDto;
+import side.collectionrecord.web.dto.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,9 +47,9 @@ public class PostsApiController {
         return postsService.createPosts(createPostsRequestDto);
     }
 
-    @GetMapping("/api/v1/posts/{id}/{categoryName}/{page}")
-    public List<GetCategoryPostsResponseDto> getAllPostsByCategoryName(@PathVariable Long id, @PathVariable String categoryName, @PathVariable int page){
-        return postsService.getAllPostsByCategoryName(id, categoryName, page, 5);
+    @GetMapping("/api/v1/posts/{id}/{category}/{page}")
+    public List<GetCategoryPostsResponseDto> getAllPostsByCategoryName(@PathVariable Long id, @PathVariable String category, @PathVariable int page){
+        return postsService.getAllPostsByCategory(id, category, page, 9);
     }
 
     @PutMapping("/api/v1/posts/{id}")

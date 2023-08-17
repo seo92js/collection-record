@@ -20,7 +20,7 @@
 }
 
 .posts__row--long {
-    height: 300px;
+    height: 400px;
     overflow: auto;
     border-bottom: 1px solid gainsboro;
 }
@@ -150,6 +150,12 @@
 .posts__hashtags {
     font-size: 13px;
     font-weight: bold;
+}
+
+.posts__status {
+    font-size: 13px;
+    font-weight: bold;
+    color: red;
 }
 
 .posts__img {

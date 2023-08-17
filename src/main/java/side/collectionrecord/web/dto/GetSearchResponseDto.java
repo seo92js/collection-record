@@ -9,10 +9,9 @@ import java.util.List;
 @NoArgsConstructor
 public class GetSearchResponseDto {
     private List<GetSearchUserResponseDto> userSearchList;
-    private List<GetSearchPostsResponseDto> postsSearchList;
+/*    private List<GetSearchPostsResponseDto> postsSearchList;*/
 
-    public GetSearchResponseDto(List<GetSearchUserResponseDto> userSearchList, List<GetSearchPostsResponseDto> postsSearchList){
+    public GetSearchResponseDto(List<GetSearchUserResponseDto> userSearchList){
         this.userSearchList = userSearchList;
-        this.postsSearchList = postsSearchList;
     }
 }

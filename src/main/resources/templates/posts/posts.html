@@ -51,6 +51,14 @@
                     </div>
                     <div class="posts__row posts__row--short">
                         <div class="posts__col posts__col--short">
+                            <div class="posts__index">Status</div>
+                        </div>
+                        <div class="posts__col">
+                            <div class="posts__status" th:text="${getPostsResponseDto.status}"></div>
+                        </div>
+                    </div>
+                    <div class="posts__row posts__row--short">
+                        <div class="posts__col posts__col--short">
                             <div class="posts__index">Hashtags</div>
                         </div>
                         <div class="posts__col">
@@ -60,7 +68,7 @@
 
                     <div class="posts__row posts__row--long">
                         <div class="posts__col">
-                            <div class="posts__text" th:text="${getPostsResponseDto.text}"></div>
+                            <pre class="posts__text" th:text="${getPostsResponseDto.text}"></pre>
                         </div>
                     </div>
 

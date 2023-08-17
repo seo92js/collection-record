@@ -13,16 +13,13 @@
 
         <!-- 프로필 이미지, 메뉴 -->
         <div class="user-main">
-            <div class="user-main__row user-main__row--80">
+            <div class="user-main__row user-main__row--70">
                 <div class="user-main__col user-main__col--70">
                     <img class="user-main__img" th:if="${imageId != null}" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
                 </div>
                 <div class="user-main__col user-main__col--30">
                     <div class="user-main__row user-main__row--small" th:if="${isFollowing == null}">
                         <a class="user-main__link user-main__link--blue"  href="/user/profile">내 정보</a>
-                    </div>
-                    <div class="user-main__row user-main__row--small" th:if="${isFollowing == null}">
-                        <a class="user-main__link user-main__link--blue"  href="/category">카테고리 관리</a>
                     </div>
                     <div class="user-main__row user-main__row--small" th:if="${isFollowing == null}">
                         <a class="user-main__link user-main__link--blue" href="/posts/add">글쓰기</a>
@@ -38,9 +35,9 @@
                     </div>
                 </div>
             </div>
-            <div class="user-main__row user-main__row--20">
+            <div class="user-main__row user-main__row--30">
                 <div class="user-main__col">
-                    <div th:text="${profileText}"></div>
+                    <pre class="user-main__profile-text" th:text="${profileText}"></pre>
                 </div>
             </div>
         </div>
@@ -51,11 +48,8 @@
                 <div class="user-home__category">
                     <a id="category-all-btn" th:onclick="getCategoryPosts([[${id}]], 'all')">전체</a>
                 </div>
-                <div class="user-home__category" th:each="parentCategory : ${parentCategories}">
-                    <a class="user-home__link" th:text="${parentCategory.name}" th:onclick="getCategoryPosts([[${id}]], [[${parentCategory.name}]])"></a>
-                    <div class="user-home__category user-home__category--child" th:each="childCategory : ${childCategories}" th:if="${childCategory.parentCategoryId == parentCategory.id}">
-                        <a class="user-home__link" th:text="| - ${childCategory.name}|" th:onclick="getCategoryPosts([[${id}]], [[${childCategory.name}]])"></a>
-                    </div>
+                <div class="user-home__category" th:each="category : ${categories}">
+                    <a class="user-home__link" th:text="${category}" th:onclick="getCategoryPosts([[${id}]], [[${category}]])"></a>
                 </div>
             </div>
 

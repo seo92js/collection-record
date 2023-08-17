@@ -2,7 +2,6 @@ package side.collectionrecord.domain.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsStatus;

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.posts.PostsStatus;
 
@@ -14,22 +15,25 @@ import java.util.List;
 @Setter
 public class CreatePostsRequestDto {
     private Long userId;
-    private Long categoryId;
-    private String title;
+    private Category category;
+    private String artist;
+    private String album;
+    private String genre;
+    private String albumArt;
     private List<Image> representativeImage;
     private String text;
-
-    private String hashtags;
     private PostsStatus status;
 
     @Builder
-    public CreatePostsRequestDto(Long userId, Long categoryId, String title, List<Image> representativeImage, String text, String hashtags, PostsStatus status){
+    public CreatePostsRequestDto(Long userId, Category category, String artist, String album, String genre, String albumArt, List<Image> representativeImage, String text, PostsStatus status){
         this.userId = userId;
-        this.categoryId = categoryId;
-        this.title = title;
+        this.category = category;
+        this.artist = artist;
+        this.album = album;
+        this.genre = genre;
+        this.albumArt = albumArt;
         this.representativeImage = representativeImage;
         this.text = text;
-        this.hashtags = hashtags;
         this.status = status;
     }
 }

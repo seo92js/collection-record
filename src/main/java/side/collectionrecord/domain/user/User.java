@@ -4,12 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.BaseTimeEntity;
-import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.chatmessage.ChatMessage;
 import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.follow.Follow;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.notification.Notification;
+import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
 
 import javax.persistence.*;
@@ -35,11 +35,14 @@ public class User extends BaseTimeEntity {
     @JoinColumn(name = "image_id")
     private Image profileImage;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Category> categories = new ArrayList<>();
+/*    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Category> categories = new ArrayList<>();*/
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Posts> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "following", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Follow> following = new ArrayList<>();
@@ -65,8 +68,12 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private UserRole userRole;
 
-    public void addCategory(Category category){
+/*    public void addCategory(Category category){
         this.categories.add(category);
+    }*/
+
+    public void addPosts(Posts posts){
+        this.posts.add(posts);
     }
 
     public void addComment(Comment comment){

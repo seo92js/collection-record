@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import side.collectionrecord.domain.category.Category;
-import side.collectionrecord.domain.category.CategoryRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
@@ -105,7 +103,7 @@ class PostsRepositoryTest {
         postsRepository.save(post2);
 
         //when
-        List<Posts> postsList = postsRepository.findByUserIdAndCategory(user.getId(), category.getName(), 0, 5);
+        List<Posts> postsList = postsRepository.findByUserIdAndCategory(user.getId(), category.getName(), 0, 9);
 
         //then
         assertThat(postsList.size()).isEqualTo(2);

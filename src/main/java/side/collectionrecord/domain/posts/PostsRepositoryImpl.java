@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Objects;
 
-import static side.collectionrecord.domain.category.QCategory.category;
 import static side.collectionrecord.domain.posts.QPosts.posts;
 
 public class PostsRepositoryImpl implements PostsRepositoryCustom{
@@ -19,9 +18,8 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom{
     }
 
     @Override
-    public List<Posts> findByUserIdAndCategory(Long userId, String categoryName, int offset, int size){
-
-        if (Objects.equals(categoryName, "all")){
+    public List<Posts> findByUserIdAndArtist(Long userId, String artist, int offset, int size){
+        if (Objects.equals(artist, "all")){
             return queryFactory.selectFrom(posts)
                     .where(posts.user.id.eq(userId))
                     .orderBy(posts.createdDate.desc())
@@ -30,7 +28,7 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom{
                     .fetch();
         }else{
             return queryFactory.selectFrom(posts)
-                    .where(posts.user.id.eq(userId).and(category.name.eq(categoryName)))
+                    .where(posts.user.id.eq(userId).and(posts.artist.eq(artist)))
                     .orderBy(posts.createdDate.desc())
                     .offset(offset)
                     .limit(size)
@@ -39,12 +37,21 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom{
     }
 
     @Override
-    public List<Posts> findByHashtagContains(String hashtag, int offset, int size) {
-        return queryFactory.selectFrom(posts)
-                .where(posts.hashtags.contains(hashtag))
-                .orderBy(posts.createdDate.desc())
-                .offset(offset)
-                .limit(size)
-                .fetch();
+    public List<Posts> findByUserIdAndCategory(Long userId, String category, int offset, int size){
+        if (Objects.equals(category, "all")){
+            return queryFactory.selectFrom(posts)
+                    .where(posts.user.id.eq(userId))
+                    .orderBy(posts.createdDate.desc())
+                    .offset(offset)
+                    .limit(size)
+                    .fetch();
+        }else{
+            return queryFactory.selectFrom(posts)
+                    .where(posts.user.id.eq(userId).and(posts.category.stringValue().eq(category)))
+                    .orderBy(posts.createdDate.desc())
+                    .offset(offset)
+                    .limit(size)
+                    .fetch();
+        }
     }
 }

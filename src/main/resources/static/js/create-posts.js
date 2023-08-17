@@ -7,14 +7,16 @@ function createPosts(userId){
 
     const createPostsRequestDto = {
         userId: userId,
-        categoryId: formData.get('categoryId'),
-        title: formData.get('title'),
+        category: formData.get('category'),
+        artist: formData.get('artist'),
+        album: formData.get('album'),
+        genre: formData.get('genre'),
+        albumArt: formData.get('albumArt'),
         text: formData.get('text'),
-        hashtags: formData.get('hashtags'),
         status: formData.get('status')
     };
 
-    if(!createPostsRequestDto.title)
+    if(!createPostsRequestDto.artist)
         return;
 
     event.preventDefault();  // 이벤트의 기본 동작 중단
