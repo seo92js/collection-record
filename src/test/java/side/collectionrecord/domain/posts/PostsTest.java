@@ -2,6 +2,7 @@ package side.collectionrecord.domain.posts;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.user.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,28 +19,23 @@ class PostsTest {
                 .profileImage(null)
                 .build();
 
-        Category category = Category.builder()
-                .user(user)
-                .name("category1")
-                .build();
-
         //when
         //생성자에 setCategory 함수 포함 되어있음.
         Posts posts = Posts.builder()
-                .title("title")
+                .user(user)
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.CD)
                 .representativeImage(null)
                 .text("text")
                 .status(PostsStatus.SALE)
-                .category(category)
                 .build();
 
         //then
-        assertThat(user).isEqualTo(category.getUser());
-        assertThat(user.getCategories()).containsExactly(category);
-        assertThat(category).isEqualTo(posts.getCategory());
-        assertThat(category.getPosts()).containsExactly(posts);
-        assertThat(category.getPosts()).containsExactly(posts);
-        assertThat(category.getPosts().get(0).getStatus()).isEqualTo(PostsStatus.SALE);
+        assertThat(posts.getCategory()).isEqualTo("CD");
+        assertThat(posts.getStatus()).isEqualTo(PostsStatus.SALE);
     }
 
     @Test
@@ -48,19 +44,19 @@ class PostsTest {
         String title = "title";
         String text = "text";
 
-        Category category = new Category();
-
         //when
         Posts posts = Posts.builder()
-                .title(title)
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.CD)
                 .representativeImage(null)
                 .text(text)
-                .category(category)
                 .status(PostsStatus.SALE)
                 .build();
 
         //then
-        assertThat(posts.getTitle()).isEqualTo(title);
         assertThat(posts.getText()).isEqualTo(text);
         assertThat(posts.getRepresentativeImage()).isNull();
         assertThat(posts.getStatus()).isEqualTo(PostsStatus.SALE);

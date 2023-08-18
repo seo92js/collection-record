@@ -16,34 +16,40 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    padding: 5px;
 }
 
 .posts__row--long {
     height: 400px;
     overflow: auto;
     border-bottom: 1px solid gainsboro;
-    padding-left: 15px;
+    padding-left: 30px;
+    padding-bottom: 5px;
 }
 
 .posts__row--short {
-    height: 70px;
-    border-bottom: 1px solid gainsboro;
-    padding-left: 15px;
+    height: 100px;
+    padding-right: 30px;
+    text-align: right;
+}
+
+.posts__row--list {
+    padding-left: 0px;
 }
 
 .posts__row--comment-input {
-    height: 30px;
+    height: 70px;
     border: none;
-    padding-left: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: 10px 0px 0px 0px;
 }
 
 .posts__row--comment-list {
     display: flex;
     flex-direction: column;
     justify-content: start;
-    padding-left: 15px;
     overflow: auto;
+    padding-left: 30px;
 }
 
 .posts__col{
@@ -58,6 +64,10 @@
 
 .posts__col--short{
     width: 80px;
+}
+
+.posts__col--album-art{
+    width: 200px;
 }
 
 .posts__index {
@@ -77,6 +87,8 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+    border: none;
+    background-color: whitesmoke;
 }
 
 .posts__btn {
@@ -86,6 +98,7 @@
     background-color: transparent;
     border: none;
     box-sizing: border-box;
+    font-weight: bold;
 }
 
 .posts__comment-list {
@@ -94,34 +107,47 @@
     flex-direction: column;
 }
 
+
+.posts__comment--col {
+    margin-right: 15px;
+}
+
+.posts__comment--col-img {
+    width: 30px;
+    height: 30px;
+}
+
 .posts__parent-comment {
     display: flex;
     align-items:center;
-    margin-bottom: 20px;
+    margin: 15px 0px 0px 0px;
 }
 
 .posts__child-comment {
     display: flex;
     align-items:center;
-    padding-left: 30px;
-    margin-bottom: 20px;
+    margin: 15px 0px 0px 30px;
+}
+
+.posts__comment-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
 }
 
 .posts__comment-username {
     font-size: 13px;
     font-weight: bold;
-    margin-right: 10px;
 }
 
 .posts__comment-created-date {
-    font-size: 11px;
+    font-size: 10px;
     color: blue;
-    margin-right: 10px;
 }
 
 .posts__comment-text {
-    margin-right: 10px;
-    font-size: 15px;
+    font-size: 13px;
 }
 
 .posts__comment-btn {
@@ -142,11 +168,13 @@
 }
 
 .posts__modify {
+    font-weight: bold;
     font-size: 13px;
     color: blue;
 }
 
 .posts__chat{
+    font-weight: bold;
     font-size: 13px;
     color: blue;
 }
@@ -163,6 +191,10 @@
     font-size: 13px;
     font-weight: bold;
     color: red;
+}
+
+.posts__album-art {
+    padding: 20px;
 }
 
 .posts__img {

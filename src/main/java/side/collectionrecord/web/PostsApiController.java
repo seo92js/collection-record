@@ -47,9 +47,14 @@ public class PostsApiController {
         return postsService.createPosts(createPostsRequestDto);
     }
 
-    @GetMapping("/api/v1/posts/{id}/{category}/{page}")
+    @GetMapping("/api/v1/posts/category/{id}/{category}/{page}")
     public List<GetCategoryPostsResponseDto> getAllPostsByCategoryName(@PathVariable Long id, @PathVariable String category, @PathVariable int page){
         return postsService.getAllPostsByCategory(id, category, page, 9);
+    }
+
+    @GetMapping("/api/v1/posts/artist/{id}/{artist}/{page}")
+    public List<GetArtistPostsResponseDto> getAllPostsByArtist(@PathVariable Long id, @PathVariable String artist, @PathVariable int page){
+        return postsService.getAllPostsByArtist(id, artist, page, 9);
     }
 
     @PutMapping("/api/v1/posts/{id}")

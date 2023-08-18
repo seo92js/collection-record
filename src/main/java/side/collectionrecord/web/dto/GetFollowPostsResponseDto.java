@@ -2,6 +2,7 @@ package side.collectionrecord.web.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsStatus;
 
@@ -15,7 +16,7 @@ public class GetFollowPostsResponseDto {
     private String album;
     private String genre;
     private String albumArt;
-    private String title;
+    private Category category;
     //private Long representativeImageId;
     private PostsStatus status;
 
@@ -27,6 +28,7 @@ public class GetFollowPostsResponseDto {
         this.album = posts.getAlbum();
         this.genre = posts.getGenre();
         this.albumArt = posts.getAlbumArt();
+        this.category = posts.getCategory();
         // 일단 맨 앞 사진?
         //this.representativeImageId = posts.getRepresentativeImage().get(0).getId();
         this.status = posts.getStatus();

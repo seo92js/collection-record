@@ -18,11 +18,8 @@
                     <label class="form__label form__label--bold">카테고리</label>
                 </div>
                 <div class="form__col form__col--70">
-                    <select class="form__select" th:field="*{category}">
-                        <div th:each = "category : ${categories}">
-                            <!-- 카테고리 리스트 -->
-                            <option th:text="${category}" th:value="${category}"></option>
-                        </div>
+                    <select class="form__select" th:field="*{category}" required>
+                        <option th:each = "category : ${categories}" th:text="${category}" th:value="${category}"></option>
                     </select>
                 </div>
             </div>
@@ -40,15 +37,44 @@
 
             <div class="form__row">
                 <div class="form__col form__col--30">
-                    <label class="form__label form__label--bold">제목</label>
+                    <label class="form__label form__label--bold">아티스트</label>
                 </div>
                 <div class="form__col form__col--70">
-                    <input class="form__input" type="text" th:value="*{title}" th:field="*{title}" placeholder="제목" required>
+                    <input class="form__input" type="text" th:value="*{artist}" th:field="*{artist}" readonly required>
+                </div>
+            </div>
+
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">앨범</label>
+                </div>
+                <div class="form__col form__col--70">
+                    <input class="form__input" type="text" th:value="*{album}" th:field="*{album}" readonly required>
+                </div>
+            </div>
+
+            <div class="form__row">
+                <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">장르</label>
+                </div>
+                <div class="form__col form__col--70">
+                    <input class="form__input" type="text" th:value="*{genre}" th:field="*{genre}" readonly required>
                 </div>
             </div>
 
             <div class="form__row form__row--long">
                 <div class="form__col form__col--30">
+                    <label class="form__label form__label--bold">앨범아트</label>
+                </div>
+                <div class="form__col form__col--70">
+                    <input class="form__input form__input--hidden" type="text" th:field="*{albumArt}" placeholder="아티스트를 검색하세요" id="album-art" readonly required>
+                    <img class="posts-add__album-art" id="album-art-img" th:src="*{albumArt}">
+                </div>
+            </div>
+
+            <div class="form__row form__row--long">
+                <div class="form__col form__col--30">
+                    <label>이미지</label>
                 </div>
                 <div class="form__col form__col--70">
                     <img class="form__img" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
@@ -61,15 +87,6 @@
                 </div>
                 <div class="form__col form__col--70">
                     <textarea class="form__textarea" th:value="*{text}" th:field="*{text}" placeholder="내용"></textarea>
-                </div>
-            </div>
-
-            <div class="form__row">
-                <div class="form__col form__col--30">
-                    <label class="form__label form__label--bold">해시태그</label>
-                </div>
-                <div class="form__col form__col--70">
-                    <input class="form__input" type="text" th:value="*{hashtags}" th:field="*{hashtags}" placeholder="해시태그 (#로 구분)">
                 </div>
             </div>
 

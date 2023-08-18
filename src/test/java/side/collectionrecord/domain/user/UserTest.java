@@ -2,6 +2,7 @@ package side.collectionrecord.domain.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsStatus;
@@ -20,15 +21,13 @@ class UserTest {
                 .profileImage(null)
                 .build();
 
-        Category category = Category.builder()
-                .user(user)
-                .name("test")
-                .build();
-
         Posts posts = Posts.builder()
                 .user(user)
-                .category(category)
-                .title("test")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.CD)
                 .representativeImage(null)
                 .text("text")
                 .status(PostsStatus.SALE)
@@ -42,14 +41,8 @@ class UserTest {
 
         //when
         //then
-        assertThat(user.getCategories()).containsExactly(category);
-        assertThat(user).isEqualTo(category.getUser());
-
         assertThat(user.getComments()).containsExactly(comment);
         assertThat(user).isEqualTo(comment.getUser());
-
-        assertThat(category.getPosts()).containsExactly(posts);
-        assertThat(category).isEqualTo(posts.getCategory());
 
         assertThat(posts.getComments()).containsExactly(comment);
         assertThat(posts).isEqualTo(comment.getPosts());

@@ -33,47 +33,57 @@
                             <a class="posts__chat" th:unless="${isMyPost}" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${userId})}" target="_blank">채팅</a>
                         </div>
                     </div>
-                    <div class="posts__row posts__row--short">
-                        <div class="posts__col posts__col--short">
-                            <div class="posts__index">카테고리</div>
-                        </div>
-                        <div class="posts__col">
-                            <div class="posts__category" th:text="${getPostsResponseDto.category}"></div>
-                        </div>
-                    </div>
-                    <div class="posts__row posts__row--short">
-                        <div class="posts__col posts__col--short">
-                            <div class="posts__index">상태</div>
-                        </div>
-                        <div class="posts__col">
-                            <div class="posts__status" th:text="${getPostsResponseDto.status}"></div>
-                        </div>
-                    </div>
-                    <div class="posts__row posts__row--short">
-                        <div class="posts__col posts__col--short">
-                            <div class="posts__index">아티스트</div>
-                        </div>
-                        <div class="posts__col">
-                            <div class="posts__artist" th:text="${getPostsResponseDto.artist}"></div>
-                        </div>
-                    </div>
-                    <div class="posts__row posts__row--short">
-                        <div class="posts__col posts__col--short">
-                            <div class="posts__index">앨범</div>
-                        </div>
-                        <div class="posts__col">
-                            <div class="posts__album" th:text="${getPostsResponseDto.album}"></div>
-                        </div>
-                    </div>
-                    <div class="posts__row posts__row--short">
-                        <div class="posts__col posts__col--short">
-                            <div class="posts__index">장르</div>
-                        </div>
-                        <div class="posts__col">
-                            <div class="posts__genre" th:text="${getPostsResponseDto.genre}"></div>
-                        </div>
-                    </div>
 
+                    <div class="posts__row posts__row--long">
+                        <div class="posts__col">
+                            <div class="posts__row posts__row--list">
+                                <div class="posts__col posts__col--short">
+                                    <div class="posts__index">카테고리</div>
+                                </div>
+                                <div class="posts__col">
+                                    <div class="posts__category" th:text="${getPostsResponseDto.category}"></div>
+                                </div>
+                            </div>
+                            <div class="posts__row posts__row--list">
+                                <div class="posts__col posts__col--short">
+                                    <div class="posts__index">상태</div>
+                                </div>
+                                <div class="posts__col">
+                                    <div class="posts__status" th:text="${getPostsResponseDto.status}"></div>
+                                </div>
+                            </div>
+                            <div class="posts__row posts__row--list">
+                                <div class="posts__col posts__col--short">
+                                    <div class="posts__index">아티스트</div>
+                                </div>
+                                <div class="posts__col">
+                                    <div class="posts__artist" th:text="${getPostsResponseDto.artist}"></div>
+                                </div>
+                            </div>
+                            <div class="posts__row posts__row--list">
+                                <div class="posts__col posts__col--short">
+                                    <div class="posts__index">앨범</div>
+                                </div>
+                                <div class="posts__col">
+                                    <div class="posts__album" th:text="${getPostsResponseDto.album}"></div>
+                                </div>
+                            </div>
+                            <div class="posts__row posts__row--list">
+                                <div class="posts__col posts__col--short">
+                                    <div class="posts__index">장르</div>
+                                </div>
+                                <div class="posts__col">
+                                    <div class="posts__genre" th:text="${getPostsResponseDto.genre}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="posts__col posts__col--album-art">
+                            <!-- 앨범 자켓 -->
+                            <div class="posts__row">
+                                <img class="posts__album-art" th:src="${getPostsResponseDto.albumArt}">
+                            </div>
+                        </div>
+                    </div>
                     <div class="posts__row posts__row--long">
                         <div class="posts__col">
                             <pre class="posts__text" th:text="${getPostsResponseDto.text}"></pre>
@@ -85,17 +95,17 @@
                         <input type="hidden" th:value="${loginUsername}" id="loginUsername">
                         <form class="posts__comment-form" th:object="${createParentCommentRequestDto}" id="create-parent-comment-form">
                                 <div class="posts__col">
-                                    <input class="posts__comment-input" type="text" th:field="*{text}" placeholder="내용" required>
+                                    <input class="posts__comment-input" type="text" th:field="*{text}" placeholder="댓글 입력" required>
                                 </div>
                                 <div class="posts__col posts__col--short">
-                                    <button class="posts__btn" type="submit" th:onclick="createParentComment([[*{userId}]], [[*{postsId}]]); notificationSend([[${loginUsername}]],[[${username}]],[[*{postsId}]])">댓글달기</button>
+                                    <button class="posts__btn" type="submit" th:onclick="createParentComment([[*{userId}]], [[*{postsId}]]); sendNotification([[${loginUsername}]],[[${username}]],[[*{postsId}]])">댓글달기</button>
                                 </div>
                         </form>
                         <!-- else 위에 div 클래스가 child 이면 -->
                         <form class="posts__comment-form hidden" th:object="${createChildCommentRequestDto}" id="create-child-comment-form">
                             <input type="hidden" th:field="*{parentCommentId}" id="parentCommentId">
                             <div class="posts__col">
-                                <input class="posts__comment-input" type="text" th:field="*{text}" placeholder="내용" required>
+                                <input class="posts__comment-input" type="text" th:field="*{text}" placeholder="답글 입력" required>
                             </div>
                             <div class="posts__col posts__col--short">
                                 <button class="posts__btn" type="submit" th:onclick="createChildComment([[*{userId}]], [[*{postsId}]]); sendNotification([[${loginUsername}]],[[${username}]],[[*{postsId}]])">답글달기</button>
@@ -110,34 +120,43 @@
                     <div class="posts__row posts__row--comment-list">
                         <div class="posts__comment-list" th:each="parentComment : ${parentComments}">
                             <div class="posts__parent-comment">
-                                <div>
-                                    <div class="posts__comment-created-date" th:text="${parentComment.createdDate}"></div>
+                                <div class="posts__comment--col posts__comment--col-img">
+                                    <img class="posts__comment-img" th:src="@{/api/v1/image/{imageId}(imageId=${parentComment.profileImageId})}">
                                 </div>
-                                <div>
+                                <div class="posts__comment--col">
                                     <div class="posts__comment-username" th:text="${parentComment.username}"></div>
                                 </div>
-                                <div>
+                                <div class="posts__comment--col">
                                     <div class="posts__comment-text" th:text="${parentComment.text}"></div>
                                 </div>
-                                <div class>
+                                <div class="posts__comment--col">
+                                    <div class="posts__comment-created-date" th:text="${parentComment.createdDate}"></div>
+                                </div>
+                                <div class="posts__comment--col">
                                     <button class="posts__comment-btn" type="button" th:onclick="switchChildForm([[${parentComment.id}]])">답글 달기</button>
                                 </div>
-                                <div>
+                                <div class="posts__comment--col">
                                     <button class="posts__comment-btn" th:if="${parentComment.username == loginUsername}" type="button" th:onclick="deleteComment([[${parentComment.id}]])">삭제</button>
                                 </div>
                             </div>
 
                             <div class="posts__child-comment" th:each="childComment : ${childComments}" th:if="${childComment.parentId==parentComment.id}">
-                                <div>
-                                    <div class="posts__comment-created-date" th:text="| ㄴ ${childComment.createdDate}|"></div>
+                                <div class="posts__comment--col">
+                                    <div> └ </div>
                                 </div>
-                                <div>
+                                <div class="posts__comment--col posts__comment--col-img">
+                                    <img class="posts__comment-img" th:src="@{/api/v1/image/{imageId}(imageId=${parentComment.profileImageId})}">
+                                </div>
+                                <div class="posts__comment--col">
                                     <div class="posts__comment-username" th:text="${childComment.username}"></div>
                                 </div>
-                                <div>
+                                <div class="posts__comment--col">
                                     <div class="posts__comment-text" th:text="${childComment.text}"></div>
                                 </div>
-                                <div>
+                                <div class="posts__comment--col">
+                                    <div class="posts__comment-created-date" th:text="${childComment.createdDate}"></div>
+                                </div>
+                                <div class="posts__comment--col">
                                     <button class="posts__comment-btn" th:if="${childComment.username == loginUsername}" type="button" th:onclick="deleteComment([[${childComment.id}]])">삭제</button>
                                 </div>
                             </div>

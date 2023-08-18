@@ -54,4 +54,13 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom{
                     .fetch();
         }
     }
+
+    @Override
+    public List<String> findArtistByUserId(Long userId){
+        return queryFactory.selectDistinct(posts.artist)
+                .from(posts)
+                .where(posts.user.id.eq(userId))
+                .orderBy(posts.artist.asc())
+                .fetch();
+    }
 }

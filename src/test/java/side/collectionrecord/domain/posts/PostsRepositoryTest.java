@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.user.UserRole;
@@ -22,9 +23,6 @@ class PostsRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
     @Test
     public void save(){
         User user = User.builder()
@@ -36,19 +34,15 @@ class PostsRepositoryTest {
 
         userRepository.save(user);
 
-        Category category = Category.builder()
-                .user(user)
-                .name("category")
-                .build();
-
-        categoryRepository.save(category);
-
         Posts posts = Posts.builder()
-                .title("title")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.TAPE)
                 .representativeImage(null)
                 .text("text")
-                .category(category)
-                .hashtags("hashtags")
+                .category(Category.CD)
                 .build();
 
         postsRepository.save(posts);
@@ -70,21 +64,15 @@ class PostsRepositoryTest {
 
         userRepository.save(user);
 
-        Category category = Category.builder()
-                .user(user)
-                .name("category")
-                .parentCategory(null)
-                .build();
-
-        categoryRepository.save(category);
-
         Posts post1 = Posts.builder()
                 .user(user)
-                .title("title1")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.TAPE)
                 .representativeImage(null)
                 .text("text1")
-                .category(category)
-                .hashtags("hashtags")
                 .status(PostsStatus.SALE)
                 .build();
 
@@ -92,18 +80,20 @@ class PostsRepositoryTest {
 
         Posts post2 = Posts.builder()
                 .user(user)
-                .title("title2")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.TAPE)
                 .representativeImage(null)
                 .text("text2")
-                .category(category)
-                .hashtags("hashtags")
                 .status(PostsStatus.SALE)
                 .build();
 
         postsRepository.save(post2);
 
         //when
-        List<Posts> postsList = postsRepository.findByUserIdAndCategory(user.getId(), category.getName(), 0, 9);
+        List<Posts> postsList = postsRepository.findByUserIdAndCategory(user.getId(), "TAPE", 0, 9);
 
         //then
         assertThat(postsList.size()).isEqualTo(2);
@@ -111,7 +101,7 @@ class PostsRepositoryTest {
     }
 
     @Test
-    public void 해시태그로_찾기(){
+    public void 카테고리로_찾기(){
         //given
         User user = User.builder()
                 .username("user")
@@ -122,37 +112,34 @@ class PostsRepositoryTest {
 
         userRepository.save(user);
 
-        Category category = Category.builder()
-                .user(user)
-                .name("category")
-                .build();
-
-        categoryRepository.save(category);
-
         Posts post1 = Posts.builder()
                 .user(user)
-                .title("title1")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.TAPE)
                 .representativeImage(null)
                 .text("text1")
-                .category(category)
-                .hashtags("hashtags")
                 .build();
 
         postsRepository.save(post1);
 
         Posts post2 = Posts.builder()
                 .user(user)
-                .title("title2")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.TAPE)
                 .representativeImage(null)
                 .text("text2")
-                .category(category)
-                .hashtags("hashtags")
                 .build();
 
         postsRepository.save(post2);
 
         //when
-        List<Posts> hashtags = postsRepository.findByHashtagContains("hashtags", 0, 5);
+        List<Posts> hashtags = postsRepository.findByUserIdAndCategory(user.getId(), "TAPE", 0, 5);
 
         //then
         assertThat(hashtags.size()).isEqualTo(2);

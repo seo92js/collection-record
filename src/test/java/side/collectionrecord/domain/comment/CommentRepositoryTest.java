@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
@@ -23,9 +24,6 @@ class CommentRepositoryTest {
     private UserRepository userRepository;
 
     @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
     private PostsRepository postsRepository;
 
     @Autowired
@@ -35,7 +33,6 @@ class CommentRepositoryTest {
     public void cleanup(){
         commentRepository.deleteAll();
         postsRepository.deleteAll();
-        categoryRepository.deleteAll();
         userRepository.deleteAll();
     }
 
@@ -51,19 +48,15 @@ class CommentRepositoryTest {
 
         userRepository.save(user);
 
-        Category category = Category.builder()
-                .user(user)
-                .name("category")
-                .build();
-
-        categoryRepository.save(category);
-
         Posts posts = Posts.builder()
+                .artist("artist")
+                .album("album")
+                .genre("kpop")
+                .albumArt("albumArt")
                 .text("text")
                 .representativeImage(null)
-                .title("title")
                 .user(user)
-                .category(category)
+                .category(Category.CD)
                 .status(PostsStatus.SALE)
                 .build();
 
@@ -97,19 +90,15 @@ class CommentRepositoryTest {
 
         userRepository.save(user);
 
-        Category category = Category.builder()
-                .user(user)
-                .name("category")
-                .build();
-
-        categoryRepository.save(category);
-
         Posts posts = Posts.builder()
                 .text("text")
                 .representativeImage(null)
-                .title("title")
+                .artist("artist")
+                .album("album")
+                .genre("kpop")
+                .albumArt("albumArt")
                 .user(user)
-                .category(category)
+                .category(Category.TAPE)
                 .status(PostsStatus.SALE)
                 .build();
 

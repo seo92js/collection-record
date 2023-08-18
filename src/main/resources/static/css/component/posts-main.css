@@ -1,0 +1,98 @@
+.posts-main__posts {
+    width: 80%;
+    width: 900px;
+    height: 200px;
+    border: 1px solid gainsboro;
+}
+
+.posts-main__row {
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.posts-main__row--short {
+    height:30%;
+}
+
+.posts-main__col {
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.posts-main__col--short {
+    width: 150px;
+}
+
+.posts-main__col--album-art {
+    width: 200px;
+
+    padding: 20px;
+}
+
+.posts-main__col--flex1 {
+    flex: 1;
+}
+
+.posts-main__created-date {
+    font-size: 11px;
+    color: blue;
+}
+
+.posts-main__index {
+    font-weight: bold;
+}
+
+.posts-main__username {
+    font-weight: bold;
+}
+
+.posts-main__album-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.posts-main__link {
+    width:100%;
+    height:100%;
+}
+
+.posts-main__artist {
+    font-weight: bold;
+    font-size: 13px;
+}
+.posts-main__album {
+    font-size: 13px;
+}
+
+.posts-main__genre{
+    font-size: 13px;
+    color: gray;
+}
+
+.posts-main__category {
+    color: blue;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.posts-main__status {
+    color: red;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+
+
+
+
+

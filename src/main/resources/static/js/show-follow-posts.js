@@ -21,27 +21,51 @@ function getFollowPosts(page){
         }
 
         response.forEach(function(post){
-            const div = $('<div>').addClass('home__feed-post');
+            const div = $('<div>').addClass('posts-main__posts');
 
-            const createdDateDiv = $('<div>').addClass('home__feed-post-createdDate');
-            const createdDate = $('<div>').text(post.createdDate);
-            createdDateDiv.append(createdDate);
+            const firstRow = $('<div>').addClass('posts-main__row');
 
-            const titleDiv = $('<div>').addClass('home__feed-post-title');
-            const username = $('<a>').attr('href', '/user/' + post.username + '/home').text(post.username).addClass('home__feed-post-title-username');
-            const titleLink = $('<a>').attr('href', '/posts/' + post.id).text(post.title).addClass('home__feed-post-title-title');
-            const status = $('<div>').text(post.status).addClass('home__feed-post-title-status');
-            titleDiv.append(username);
-            titleDiv.append(titleLink);
-            titleDiv.append(status);
+            //col 1 날짜, 인덱스
+            var col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--short');
+            var row1 = $('<div>').addClass('posts-main__row').addClass('posts-main__row--short');
+            row1.append($('<div>').text(post.createdDate).addClass('posts-main__created-date'));
+            var row2 = $('<div>').addClass('posts-main__row');
+            row2.append($('<a>').text(post.username).attr('href', '/user/' + post.username + '/home').addClass('posts-main__username'));
+            col.append(row1);
+            col.append(row2);
+            firstRow.append(col);
 
-            const imageDiv = $('<div>').addClass('home__feed-post-image');
-            const imageLink = $('<img>').attr('src', '/api/v1/image/' + post.representativeImageId);
-            imageDiv.append(imageLink);
+            //col 2 앨범아트
+            col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--album-art');
+            var a = $('<a>').attr('href', '/posts/' + post.id).addClass('posts-main__link');
+            a.append($('<img>').attr("src", post.albumArt).addClass('posts-main__album-art'));
+            col.append(a);
+            firstRow.append(col);
 
-            div.append(createdDateDiv);
-            div.append(titleDiv);
-            div.append(imageDiv);
+            //col 3 아티스트, 앨범, 장르
+            col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--flex1');
+            row1 = $('<div>').addClass('posts-main__row');
+            row2 = $('<div>').addClass('posts-main__row');
+            var row3 = $('<div>').addClass('posts-main__row');
+            row1.append($('<div>').text(post.artist).addClass('posts-main__artist'));
+            row2.append($('<div>').text(post.album).addClass('posts-main__album'));
+            row3.append($('<div>').text(post.genre).addClass('posts-main__genre'));
+            col.append(row1);
+            col.append(row2);
+            col.append(row3);
+            firstRow.append(col);
+
+            //col 4 카테고리
+            col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--short');
+            col.append($('<div>').text(post.category).addClass('posts-main__category'));
+            firstRow.append(col);
+
+            //col 5 상태
+            col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--short');
+            col.append($('<div>').text(post.status).addClass('posts-main__status'));
+            firstRow.append(col);
+
+            div.append(firstRow);
 
             $('#follow-posts-list').append(div);
         });

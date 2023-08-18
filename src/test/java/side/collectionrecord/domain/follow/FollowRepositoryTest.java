@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
@@ -20,9 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FollowRepositoryTest {
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    CategoryRepository categoryRepository;
 
     @Autowired
     PostsRepository postsRepository;
@@ -89,17 +87,13 @@ class FollowRepositoryTest {
 
         userRepository.save(user2);
 
-        Category category = Category.builder()
-                .user(user2)
-                .name("category")
-                .build();
-
-        categoryRepository.save(category);
-
         Posts posts1 = Posts.builder()
                 .user(user2)
-                .category(category)
-                .title("title1")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.TAPE)
                 .representativeImage(null)
                 .text("text1")
                 .status(PostsStatus.SALE)
@@ -109,8 +103,11 @@ class FollowRepositoryTest {
 
         Posts posts2 = Posts.builder()
                 .user(user2)
-                .category(category)
-                .title("title2")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.TAPE)
                 .representativeImage(null)
                 .text("text2")
                 .status(PostsStatus.SALE)

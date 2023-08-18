@@ -53,6 +53,11 @@ public class PostsService {
     }
 
     @Transactional
+    public List<String> getAllArtistByUserId(Long userId){
+        return postsRepository.findArtistByUserId(userId);
+    }
+
+    @Transactional
     public Long createPosts(CreatePostsRequestDto createPostsRequestDto){
         User user = userRepository.findById(createPostsRequestDto.getUserId()).orElse(null);
 

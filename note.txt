@@ -62,11 +62,13 @@ todo
 - posts 추가, 변경 textarea (완료)
 - user profile text textarea (완료)
 - itunes api 사용해서 앨범 정보 가져오기 (완료)
+- 게시물 text 스크롤 (완료)
 
 
 
 
-
+- 게시물 필터링 조건 넣기 (장르)
+- 게시물 필터링 조건 넣기 (Status)
 - 이미지 등록 미리보기
 - 이미지 등록 순서
 - Exception 전부 정리
@@ -80,6 +82,5 @@ todo
 - ui 설계서
 - 카테고리 선택 하이라이트
 - 채팅, 알림 페이징
-- 게시물 text 스크롤
 - MariaDB
 - 배포

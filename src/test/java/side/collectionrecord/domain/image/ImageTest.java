@@ -2,6 +2,7 @@ package side.collectionrecord.domain.image;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
@@ -27,11 +28,6 @@ class ImageTest {
                 .profileImage(profileImage)
                 .build();
 
-        Category category = Category.builder()
-                .name("category")
-                .user(user)
-                .build();
-
         Image representativeImage = Image.builder()
                 .filename("representative")
                 .data(null)
@@ -41,11 +37,13 @@ class ImageTest {
         images.add(representativeImage);
 
         Posts posts = Posts.builder()
-                .category(category)
-                .title("title")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.CD)
                 .text("text")
                 .representativeImage(images)
-                .hashtags("hashtags")
                 .status(PostsStatus.SALE)
                 .build();
         //when

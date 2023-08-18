@@ -14,6 +14,7 @@ import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.FollowService;
+import side.collectionrecord.service.PostsService;
 import side.collectionrecord.service.UserChatRoomService;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.*;
@@ -32,6 +33,8 @@ public class UserController {
     private final UserService userService;
 
     private final FollowService followService;
+
+    private final PostsService postsService;
 
     private final UserChatRoomService userChatRoomService;
 
@@ -86,6 +89,9 @@ public class UserController {
         model.addAttribute("id", userId);
         model.addAttribute("username", username);
         model.addAttribute("profileText", user.getProfileText());
+
+        List<String> artists = postsService.getAllArtistByUserId(userId);
+        model.addAttribute("artists", artists);
 
         return "user/userHome";
     }

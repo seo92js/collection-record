@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.posts.Posts;
@@ -47,13 +48,6 @@ class PostsServiceTest {
 
         userRepository.save(user);
 
-        Category category = Category.builder()
-                .user(user)
-                .name("category1")
-                .build();
-
-        categoryRepository.save(category);
-
         byte[] data = {0,0};
 
         Image image = Image.builder()
@@ -68,8 +62,11 @@ class PostsServiceTest {
 
         CreatePostsRequestDto createPostsRequestDto = CreatePostsRequestDto.builder()
                 .userId(user.getId())
-                .categoryId(category.getId())
-                .title("title")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.CD)
                 .representativeImage(images)
                 .text("text")
                 .status(PostsStatus.SALE)
@@ -83,8 +80,7 @@ class PostsServiceTest {
 
         //then
         assertThat(posts.getUser()).isEqualTo(user);
-        assertThat(posts.getCategory()).isEqualTo(category);
-        assertThat(posts.getTitle()).isEqualTo("title");
+        assertThat(posts.getCategory()).isEqualTo("CD");
         assertThat(posts.getRepresentativeImage().get(0).getFilename()).isEqualTo("image");
         assertThat(posts.getText()).isEqualTo("text");
         assertThat(posts.getStatus()).isEqualTo(PostsStatus.SALE);
@@ -102,13 +98,6 @@ class PostsServiceTest {
 
         userRepository.save(user);
 
-        Category category = Category.builder()
-                .user(user)
-                .name("category1")
-                .build();
-
-        categoryRepository.save(category);
-
         byte[] data = {0,0};
 
         Image image = Image.builder()
@@ -123,8 +112,11 @@ class PostsServiceTest {
 
         CreatePostsRequestDto createPostsRequestDto1 = CreatePostsRequestDto.builder()
                 .userId(user.getId())
-                .categoryId(category.getId())
-                .title("title2")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.CD)
                 .representativeImage(images)
                 .status(PostsStatus.SALE)
                 .text("text2")
@@ -132,8 +124,11 @@ class PostsServiceTest {
 
         CreatePostsRequestDto createPostsRequestDto2 = CreatePostsRequestDto.builder()
                 .userId(user.getId())
-                .categoryId(category.getId())
-                .title("title2")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.CD)
                 .representativeImage(images)
                 .status(PostsStatus.SALE)
                 .text("text2")
@@ -167,13 +162,6 @@ class PostsServiceTest {
 
         userRepository.save(user);
 
-        Category category = Category.builder()
-                .user(user)
-                .name("category1")
-                .build();
-
-        categoryRepository.save(category);
-
         byte[] data = {0,};
 
         Image image = Image.builder()
@@ -188,8 +176,11 @@ class PostsServiceTest {
 
         CreatePostsRequestDto createPostsRequestDto1 = CreatePostsRequestDto.builder()
                 .userId(user.getId())
-                .categoryId(category.getId())
-                .title("title")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.CD)
                 .representativeImage(images)
                 .status(PostsStatus.SALE)
                 .text("text")
@@ -197,22 +188,17 @@ class PostsServiceTest {
 
         Long id = postsService.createPosts(createPostsRequestDto1);
 
-        String expectedCategoryName = "category2";
         String expectedTitle = "title2";
         String expectedText = "text2";
         PostsStatus expectedStatus = PostsStatus.SOLD_OUT;
 
-        Category expectedCategory = Category.builder()
-                .user(user)
-                .name(expectedCategoryName)
-                .build();
-
-        categoryRepository.save(expectedCategory);
-
         //when
         UpdatePostsRequestDto updatePostsRequestDto = UpdatePostsRequestDto.builder()
-                .categoryId(expectedCategory.getId())
-                .title(expectedTitle)
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.VINYL)
                 .status(expectedStatus)
                 .text(expectedText)
                 .build();
@@ -222,9 +208,7 @@ class PostsServiceTest {
         //then
         Posts posts = postsRepository.findById(id).orElse(null);
 
-        assertThat(posts.getCategory()).isEqualTo(expectedCategory);
-        assertThat(posts.getCategory()).isNotEqualTo(category);
-        assertThat(posts.getTitle()).isEqualTo(expectedTitle);
+        assertThat(posts.getCategory()).isEqualTo("VINYL");
         assertThat(posts.getText()).isEqualTo(expectedText);
         assertThat(posts.getStatus()).isEqualTo(expectedStatus);
     }

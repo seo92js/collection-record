@@ -51,6 +51,10 @@
                 <div class="user-home__category" th:each="category : ${categories}">
                     <a class="user-home__link" th:text="${category}" th:onclick="getCategoryPosts([[${id}]], [[${category}]])"></a>
                 </div>
+
+                <div class="user-home__artist" th:each="artist : ${artists}">
+                    <a class="user-home__link" th:text="${artist}" th:onclick="getArtistPosts([[${id}]], [[${artist}]])"></a>
+                </div>
             </div>
 
             <!-- 게시물 목록 -->
@@ -62,6 +66,7 @@
     <div th:replace="fragments/footer :: footer" />
 
     <script src="/js/show-category-posts.js"></script>
+    <script src="/js/show-artist-posts.js"></script>
     <script src="/js/create-follow.js"></script>
     <script src="/js/delete-follow.js"></script>
     <script src="/js/send-notification-follow.js"></script>

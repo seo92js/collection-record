@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.comment.CommentRepository;
 import side.collectionrecord.domain.posts.Posts;
@@ -46,19 +47,15 @@ class CommentServiceTest {
 
         userRepository.save(user);
 
-        Category category = Category.builder()
-                .user(user)
-                .name("category")
-                .build();
-
-        categoryRepository.save(category);
-
         Posts posts = Posts.builder()
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.CD)
                 .text("text")
                 .representativeImage(null)
-                .title("title")
                 .user(user)
-                .category(category)
                 .build();
 
         postsRepository.save(posts);
@@ -91,19 +88,15 @@ class CommentServiceTest {
 
         userRepository.save(user);
 
-        Category category = Category.builder()
-                .user(user)
-                .name("category")
-                .build();
-
-        categoryRepository.save(category);
-
         Posts posts = Posts.builder()
                 .text("text")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.CD)
                 .representativeImage(null)
-                .title("title")
                 .user(user)
-                .category(category)
                 .build();
 
         postsRepository.save(posts);
@@ -137,19 +130,15 @@ class CommentServiceTest {
 
         userRepository.save(user);
 
-        Category category = Category.builder()
-                .user(user)
-                .name("category")
-                .build();
-
-        categoryRepository.save(category);
-
         Posts posts = Posts.builder()
                 .text("text")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("albumArt")
+                .category(Category.CD)
                 .representativeImage(null)
-                .title("title")
                 .user(user)
-                .category(category)
                 .status(PostsStatus.SALE)
                 .build();
 

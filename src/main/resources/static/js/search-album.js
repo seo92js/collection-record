@@ -7,21 +7,12 @@ const albumArt = $("#album-art");
 const albumArtImg = $("#album-art-img");
 
 $("#artist-select").on("change", function (){
-
     var selectedOption = artistSelect.find(":selected");
 
-/*    artist.text(selectedOption.attr("artist"));*/
     artist.attr("value", selectedOption.attr("artist"));
-
-/*    album.text(selectedOption.attr("album"));*/
     album.attr("value", selectedOption.attr("album"));
-
-/*    genre.text(selectedOption.attr("genre"));*/
     genre.attr("value", selectedOption.attr("genre"));
-
-/*    albumArt.text(selectedOption.attr("albumArt"));*/
     albumArt.attr("value", selectedOption.attr("albumArt"));
-
     albumArtImg.attr("src", selectedOption.attr("albumArt"));
 })
 

@@ -4,14 +4,16 @@ function updatePosts(id){
     const formData = new FormData(updatePostsForm);
 
     const updatePostsRequestDto = {
-        categoryId: formData.get('categoryId'),
-        title: formData.get('title'),
-        text: formData.get('text'),
-        hashtags: formData.get('hashtags'),
-        status: formData.get('status')
+        category: formData.get('category'),
+        status: formData.get('status'),
+        artist: formData.get('artist'),
+        album: formData.get('album'),
+        genre: formData.get('genre'),
+        albumArt: formData.get('albumArt'),
+        text: formData.get('text')
     };
 
-    if(!updatePostsRequestDto.title)
+    if(!updatePostsRequestDto.artist)
         return;
 
     $.ajax({

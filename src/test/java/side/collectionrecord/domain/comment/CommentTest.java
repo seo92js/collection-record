@@ -2,6 +2,7 @@ package side.collectionrecord.domain.comment;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
@@ -20,12 +21,13 @@ class CommentTest {
                 .profileImage(null)
                 .build();
 
-        Category category = new Category();
-
         Posts posts = Posts.builder()
                 .user(user)
-                .category(category)
-                .title("test")
+                .artist("artist")
+                .album("album")
+                .genre("genre")
+                .albumArt("art")
+                .category(Category.CD)
                 .representativeImage(null)
                 .text("text")
                 .status(PostsStatus.SALE)
