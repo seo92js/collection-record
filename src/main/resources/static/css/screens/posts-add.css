@@ -9,3 +9,16 @@
     height: 60%;
     border: none;
 }
+
+#preview {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    overflow: auto;
+}
+
+.posts-add__preview{
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+}

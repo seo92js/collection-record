@@ -1,8 +1,8 @@
 .posts-main__posts {
-    width: 80%;
     width: 900px;
     height: 200px;
     border: 1px solid gainsboro;
+    margin-bottom: 10px;
 }
 
 .posts-main__row {

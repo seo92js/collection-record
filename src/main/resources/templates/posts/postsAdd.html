@@ -96,10 +96,10 @@
             <div class="form__row form__row--long">
                 <div class="form__col form__col--30">
                     <label class="form__label form__label--blue" for="posts-img-input">이미지 업로드</label>
-                    <input class="form__input form__input--hidden" type="file" id="posts-img-input" multiple="multiple">
+<!--                    <input class="form__input form__input&#45;&#45;hidden" type="file" id="posts-img-input" multiple="multiple">-->
+                    <input class="form__input form__input--hidden" onchange="preview(this)" type="file" id="posts-img-input" multiple="multiple">
                 </div>
-                <div class="form__col form__col--70">
-                    <!-- 이미지 넣자 -->
+                <div class="form__col form__col--70" id="preview">
                 </div>
             </div>
 

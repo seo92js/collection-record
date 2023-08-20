@@ -18,6 +18,14 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom{
     }
 
     @Override
+    public List<Posts> findByArtistContains(String artist, int offset, int size){
+        return queryFactory.selectFrom(posts)
+                .where(posts.artist.containsIgnoreCase(artist))
+                .orderBy(posts.createdDate.desc())
+                .fetch();
+    }
+
+    @Override
     public List<Posts> findByUserIdAndArtist(Long userId, String artist, int offset, int size){
         if (Objects.equals(artist, "all")){
             return queryFactory.selectFrom(posts)
@@ -53,6 +61,14 @@ public class PostsRepositoryImpl implements PostsRepositoryCustom{
                     .limit(size)
                     .fetch();
         }
+    }
+
+    @Override
+    public List<Posts> findByAlbumContains(String album, int offset, int size){
+        return queryFactory.selectFrom(posts)
+                .where(posts.album.containsIgnoreCase(album))
+                .orderBy(posts.createdDate.desc())
+                .fetch();
     }
 
     @Override

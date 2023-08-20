@@ -145,7 +145,7 @@
                                     <div> └ </div>
                                 </div>
                                 <div class="posts__comment--col posts__comment--col-img">
-                                    <img class="posts__comment-img" th:src="@{/api/v1/image/{imageId}(imageId=${parentComment.profileImageId})}">
+                                    <img class="posts__comment-img" th:src="@{/api/v1/image/{imageId}(imageId=${childComment.profileImageId})}">
                                 </div>
                                 <div class="posts__comment--col">
                                     <div class="posts__comment-username" th:text="${childComment.username}"></div>

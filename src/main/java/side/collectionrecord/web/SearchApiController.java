@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.service.UserService;
-import side.collectionrecord.web.dto.GetSearchResponseDto;
+import side.collectionrecord.web.dto.GetSearchAlbumPostsResponseDto;
+import side.collectionrecord.web.dto.GetSearchArtistPostsResponseDto;
 import side.collectionrecord.web.dto.GetSearchUserResponseDto;
 
 import java.util.List;
@@ -16,13 +17,21 @@ import java.util.List;
 public class SearchApiController {
     private final UserService userService;
     private final PostsService postsService;
-    @GetMapping("/api/v1/search/{text}/{page}")
-    public GetSearchResponseDto getAllSearch(@PathVariable String text, @PathVariable int page){
+    @GetMapping("/api/v1/search/user/{text}/{page}")
+    public List<GetSearchUserResponseDto> getAllSearchUser(@PathVariable String text, @PathVariable int page){
 
-        List<GetSearchUserResponseDto> userSearchList = userService.getAllUserByUsernameContains(text, page, 5);
+        return userService.getAllUserByUsernameContains(text, page, 5);
+    }
 
-/*        List<GetSearchPostsResponseDto> postsSearchList = postsService.getAllPostsByHashtagsContains(text, page, 5);*/
+    @GetMapping("/api/v1/search/artist/{text}/{page}")
+    public List<GetSearchArtistPostsResponseDto> getAllSearchArtistPosts(@PathVariable String text, @PathVariable int page) {
 
-        return new GetSearchResponseDto(userSearchList);
+        return postsService.getAllPostsByArtistContains(text, page, 5);
+    }
+
+    @GetMapping("/api/v1/search/album/{text}/{page}")
+    public List<GetSearchAlbumPostsResponseDto> getAllSearchAlbumPosts(@PathVariable String text, @PathVariable int page){
+
+        return postsService.getAllPostsByAlbumContains(text, page, 5);
     }
 }

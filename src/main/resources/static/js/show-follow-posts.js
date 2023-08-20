@@ -21,6 +21,8 @@ function getFollowPosts(page){
         }
 
         response.forEach(function(post){
+            var a = $('<a>').attr('href', '/posts/' + post.id).addClass('posts-main__posts');
+
             const div = $('<div>').addClass('posts-main__posts');
 
             const firstRow = $('<div>').addClass('posts-main__row');
@@ -30,16 +32,14 @@ function getFollowPosts(page){
             var row1 = $('<div>').addClass('posts-main__row').addClass('posts-main__row--short');
             row1.append($('<div>').text(post.createdDate).addClass('posts-main__created-date'));
             var row2 = $('<div>').addClass('posts-main__row');
-            row2.append($('<a>').text(post.username).attr('href', '/user/' + post.username + '/home').addClass('posts-main__username'));
+            row2.append($('<div>').text(post.username).addClass('posts-main__username'));
             col.append(row1);
             col.append(row2);
             firstRow.append(col);
 
             //col 2 앨범아트
             col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--album-art');
-            var a = $('<a>').attr('href', '/posts/' + post.id).addClass('posts-main__link');
-            a.append($('<img>').attr("src", post.albumArt).addClass('posts-main__album-art'));
-            col.append(a);
+            col.append($('<img>').attr("src", post.albumArt).addClass('posts-main__album-art'));
             firstRow.append(col);
 
             //col 3 아티스트, 앨범, 장르
@@ -67,7 +67,9 @@ function getFollowPosts(page){
 
             div.append(firstRow);
 
-            $('#follow-posts-list').append(div);
+            a.append(div);
+
+            $('#follow-posts-list').append(a);
         });
     }).fail(function (error){
         alert(JSON.stringify(error));

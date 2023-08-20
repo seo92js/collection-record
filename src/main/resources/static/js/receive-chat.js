@@ -14,5 +14,5 @@ chatSocket.onopen = function() {
 chatSocket.onmessage = function(event) {
     const chat = document.getElementById('chat');
 
-    chatroomList.classList.add('nav__li--red');
+    chat.classList.add('nav__li--red');
 }

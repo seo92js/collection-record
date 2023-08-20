@@ -31,8 +31,25 @@ function updateUser(id){
         contentType: false
     }).done(function(){
         alert('수정 완료');
-        location.reload();
+        window.location.href = '/user/' + updateUserRequestDto.username + '/home';
     }).fail(function (error){
         alert(JSON.stringify(error));
     });
+}
+
+function preview(input){
+  $('#preview').empty();
+
+  if (input.files) {
+    for (var i = 0; i < input.files.length; i++){
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#preview').attr("src", e.target.result).addClass('posts-add__preview');
+        };
+
+        reader.readAsDataURL(input.files[i]);
+    }
+  } else {
+    $('#preview').empty();
+  }
 }

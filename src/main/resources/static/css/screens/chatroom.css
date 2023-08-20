@@ -1,50 +1,61 @@
 .chatroom {
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-}
-
-.chatroom__form {
-}
-
-.chatroom__container {
-    padding-top: 10px;
     display:flex;
     flex-direction:column;
     align-items:center;
-    width:400px;
 }
 
-.chatroom__container-me {
+.chatroom__container {
+    margin-top: 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width: 500px;
+    height: 450px;
+    overflow:auto;
+}
+
+.chatroom__me {
     display:flex;
     flex-direction:column;
     margin-left:auto;
     padding: 5px;
 }
 
-.chatroom__container-opponent {
+.chatroom__opponent {
     display:flex;
     flex-direction:column;
     margin-right:auto;
     padding: 5px;
 }
 
-.chatroom__container-message-createdDate {
+.chatroom__createdDate {
     font-size:7px;
     padding:5px;
+    color: blue;
 }
 
-.chatroom__container-message-content {
+.chatroom__content {
     display:flex;
+    align-items:center;
     padding:5px;
 }
 
-.chatroom__container-message-username {
+.chatroom__username {
     font-weight:bold;
     padding:5px;
 }
 
-.chatroom__container-message-message {
-    border:1px solid #c0c0c0;
-    padding: 5px;
+.chatroom__message {
+    font-size: 12px;
+    border:none;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.chatroom__message--me {
+    background-color: yellow;
+}
+
+.chatroom__message--opponent {
+    background-color: lightblue;
 }

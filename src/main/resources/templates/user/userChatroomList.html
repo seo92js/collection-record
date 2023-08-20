@@ -11,9 +11,13 @@
     </header>
 
     <main class="user-chatroom-list">
-        <!-- 채팅방 리스트 -->
         <div class="user-chatroom-list__chatroom" th:each="chatroom : ${chatrooms}">
-            <a th:class="${chatroom.read == false} ? 'user-chatroom\_\_not-read' : 'user-chatroom\_\_read'"  th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${chatroom.userId})}" th:text="${chatroom.username}" target="_blank"></a>
+            <div class="user-chatroom-list__col">
+                <img class="user-chatroom-list__img"  th:src="@{/api/v1/image/{imageId}(imageId=${chatroom.profileImageId})}">
+            </div>
+            <div class="user-chatroom-list__col">
+                <a th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${loginUserId}, userId=${chatroom.userId})}" th:class="${chatroom.read == false} ? 'user-chatroom-list\_\_not-read' : 'user-chatroom-list\_\_read'"  onclick="window.open(this.href, '_blank', 'width=500, height=700'); return false;" th:text="${chatroom.username}"></a>
+            </div>
         </div>
     </main>
 

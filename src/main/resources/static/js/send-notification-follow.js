@@ -19,7 +19,7 @@ function sendNotification(senderName, receiverName){
     const createNotificationRequestDto = {
         senderName: senderName,
         receiverName: receiverName,
-        text: senderName + '님이 팔로우 하였습니다.',
+        text: senderName + ' 님이 팔로우 하였습니다.',
         url: '/user/' + senderName + '/home'
     }
 

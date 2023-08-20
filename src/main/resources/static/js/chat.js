@@ -1,5 +1,7 @@
 const chatSocket = new WebSocket('ws://localhost:8080/chatroom');
 
+$('#message-container').scrollTop($('#message-container')[0].scrollHeight);
+
 chatSocket.onopen = function() {
 
       const username = document.getElementById('loginUsername').value;

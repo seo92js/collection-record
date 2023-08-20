@@ -10,10 +10,7 @@ import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.CreatePostsRequestDto;
-import side.collectionrecord.web.dto.GetArtistPostsResponseDto;
-import side.collectionrecord.web.dto.GetCategoryPostsResponseDto;
-import side.collectionrecord.web.dto.UpdatePostsRequestDto;
+import side.collectionrecord.web.dto.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +32,7 @@ public class PostsService {
     }
 
     @Transactional
-    public List<GetArtistPostsResponseDto> getAllPostsByArtist(Long userId, String artist, int page, int size){
+    public List<GetArtistPostsResponseDto> getAllPostsByUserIdAndArtist(Long userId, String artist, int page, int size){
         int offset = page * size;
 
         return postsRepository.findByUserIdAndArtist(userId, artist, offset, size).stream()
@@ -44,11 +41,29 @@ public class PostsService {
     }
 
     @Transactional
-    public List<GetCategoryPostsResponseDto> getAllPostsByCategory(Long userId, String category, int page, int size){
+    public List<GetSearchArtistPostsResponseDto> getAllPostsByArtistContains(String artist, int page, int size){
+        int offset = page * size;
+
+        return postsRepository.findByArtistContains(artist, offset, size).stream()
+                .map(GetSearchArtistPostsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<GetCategoryPostsResponseDto> getAllPostsByUserIdAndCategory(Long userId, String category, int page, int size){
         int offset = page * size;
 
         return postsRepository.findByUserIdAndCategory(userId, category, offset, size).stream()
                 .map(GetCategoryPostsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<GetSearchAlbumPostsResponseDto> getAllPostsByAlbumContains(String album, int page, int size){
+        int offset = page * size;
+
+        return postsRepository.findByAlbumContains(album, offset, size).stream()
+                .map(GetSearchAlbumPostsResponseDto::new)
                 .collect(Collectors.toList());
     }
 

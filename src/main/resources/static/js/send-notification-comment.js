@@ -19,7 +19,7 @@ function sendNotification(senderName, receiverName, postsId){
     const createNotificationRequestDto = {
         senderName: senderName,
         receiverName: receiverName,
-        text: senderName + '님이 댓글을 달았습니다.',
+        text: senderName + ' 님이 댓글을 달았습니다.',
         url: '/posts/' + postsId
     }
 

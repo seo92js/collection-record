@@ -12,7 +12,7 @@
         <div class="user-main">
             <div class="user-main__row user-main__row--70">
                 <div class="user-main__col user-main__col--70">
-                    <img class="user-main__img" th:if="${imageId != null}" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
+                    <img class="user-main__img" th:if="${imageId != null}" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}" id="preview">
                 </div>
                 <div class="user-main__col user-main__col--30">
                     <div class="user-main__row user-main__row--small">
@@ -27,7 +27,7 @@
 
         <form class="form" th:object="${getUserProfileResponseDto}" id="user-profile-form">
 
-            <input class="form__input form__input--hidden" type="file" id="user-profile-img">
+            <input class="form__input form__input--hidden" onchange="preview(this)" type="file" id="user-profile-img">
 
             <div class="form__row">
                 <div class="form__col form__col--30">

@@ -198,6 +198,8 @@
 }
 
 .posts__img {
+    width: 550px;
+    height: 700px;
     object-fit: contain;
 }
 
