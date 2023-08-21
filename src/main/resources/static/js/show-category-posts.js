@@ -8,12 +8,19 @@ $('#category-all-btn').on('click', function() {
     page = 0;
     $('#category-posts-list').empty();
     isEnd = false;
+
+    $('.user-home__link').removeClass('focus');
+    $(this).addClass('focus');
 });
 
 $('.user-home__link').on('click', function() {
     page = 0;
     $('#category-posts-list').empty();
     isEnd = false;
+
+    $('#category-all-btn').removeClass('focus');
+    $('.user-home__link').removeClass('focus');
+    $(this).addClass('focus');
 });
 
 $('#category-all-btn').click();
@@ -41,6 +48,7 @@ function getCategoryPosts(id, category) {
         url: '/api/v1/posts/category/' + id + '/' + category + '/' + page,
     }).done(function(response){
         if (response.length === 0){
+            console.log('length = 0');
             isEnd = true;
             return;
         }
