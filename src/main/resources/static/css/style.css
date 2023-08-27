@@ -6,6 +6,7 @@
 @import "component/form.css";
 @import "component/user-main.css";
 @import "component/posts-main.css";
+@import "component/posts-feed.css";
 
 /* screen */
 @import "screens/navigation.css";

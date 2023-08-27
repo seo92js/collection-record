@@ -3,7 +3,11 @@ function createPosts(userId){
 
     const formData = new FormData(createPostsForm);
 
-    const imageFileInput = document.getElementById('posts-img-input');
+    const imageFileInput1 = document.getElementById('posts-img-input-1');
+    const imageFileInput2 = document.getElementById('posts-img-input-2');
+    const imageFileInput3 = document.getElementById('posts-img-input-3');
+    const imageFileInput4 = document.getElementById('posts-img-input-4');
+    const imageFileInput5 = document.getElementById('posts-img-input-5');
 
     const createPostsRequestDto = {
         userId: userId,
@@ -23,13 +27,18 @@ function createPosts(userId){
 
     formData.append('createPostsRequestDto', new Blob([JSON.stringify(createPostsRequestDto)] , {type: "application/json"}));
 
-    //이미지 파일 선택 확인
-    if (imageFileInput.files.length > 0){
-        for (const file of imageFileInput.files) {
-            formData.append('imageFile', file);
+    let imageEmpty = true;
+
+    for (let i = 1; i <= 5; i++) {
+        const input = document.getElementById(`posts-img-input-${i}`);
+        if (input.files.length > 0) {
+            imageEmpty = false;
+            formData.append('imageFile', input.files[0]);
         }
-    } else{
-        alert('이미지를 선택하세요.');
+    }
+
+    if (imageEmpty == true){
+        alert('이미지를 등록하세요');
         return;
     }
 
@@ -49,9 +58,24 @@ function createPosts(userId){
     });
 }
 
-function preview(input){
-  $('#preview').empty();
+//function preview(input){
+//  $('#preview').empty();
+//
+//  if (input.files) {
+//    for (var i = 0; i < input.files.length; i++){
+//        var reader = new FileReader();
+//        reader.onload = function(e) {
+//            $('#preview').append($('<img>').attr("src", e.target.result).addClass('posts-add__preview'));
+//        };
+//
+//        reader.readAsDataURL(input.files[i]);
+//    }
+//  } else {
+//    $('#preview').empty();
+//  }
+//}
 
+function preview(input){
   if (input.files) {
     for (var i = 0; i < input.files.length; i++){
         var reader = new FileReader();
@@ -62,6 +86,5 @@ function preview(input){
         reader.readAsDataURL(input.files[i]);
     }
   } else {
-    $('#preview').empty();
   }
 }

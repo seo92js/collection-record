@@ -16,6 +16,8 @@ function updatePosts(id){
     if(!updatePostsRequestDto.artist)
         return;
 
+    event.preventDefault();  // 이벤트의 기본 동작 중단
+
     $.ajax({
         type: 'PUT',
         url: '/api/v1/posts/' + id,

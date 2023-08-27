@@ -14,10 +14,8 @@
     flex-direction: column;
     width: 400px;
     height: 100vh;
-    margin-top: 15px;
-    padding:40px 0px 40px 40px;
+    padding:20px 0px 0px 40px;
     background-color: transparent;
-    border-right:  1px solid gainsboro;
 }
 
 .user-home__category {
