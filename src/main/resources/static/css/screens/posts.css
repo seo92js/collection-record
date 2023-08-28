@@ -21,9 +21,10 @@
 .posts__row--long {
     height: 400px;
     overflow: auto;
-    border-bottom: 1px solid gainsboro;
-    padding-left: 30px;
-    padding-bottom: 5px;
+    border-top: 1px solid gainsboro;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 .posts__row--short {
@@ -39,9 +40,10 @@
 .posts__row--comment-input {
     height: 70px;
     border: none;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin: 10px 0px 0px 0px;
+    border-top: 1px solid gainsboro;
 }
 
 .posts__row--comment-list {
@@ -49,7 +51,7 @@
     flex-direction: column;
     justify-content: start;
     overflow: auto;
-    padding-left: 30px;
+    padding-left: 20px;
 }
 
 .posts__col{
@@ -63,7 +65,7 @@
 }
 
 .posts__col--short{
-    width: 80px;
+    width: 100px;
 }
 
 .posts__col--album-art{
@@ -81,6 +83,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
+    margin-top: 10px;
 }
 
 .posts__comment-input {
@@ -158,7 +161,7 @@
 }
 
 .posts__artist {
-    font-size: 15px;
+    font-size: 13px;
 }
 
 .posts__category {
@@ -219,4 +222,8 @@
 
 .hidden {
     display:none;
+}
+
+#posts-img {
+    border-right: 1px solid gainsboro;
 }

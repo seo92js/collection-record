@@ -12,7 +12,7 @@
 .user-home__category-list {
     display:flex;
     flex-direction: column;
-    width: 400px;
+    width: 300px;
     height: 100vh;
     padding:20px 0px 0px 40px;
     background-color: transparent;
@@ -36,8 +36,8 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 10px 20px 0px 20px;
+    align-items: start;
+    padding: 10px 20px 0px 200px;
 }
 
 .focus {

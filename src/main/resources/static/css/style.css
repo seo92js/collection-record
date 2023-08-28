@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
 @import "reset.css";
 @import "variables.css";
 
@@ -23,3 +24,7 @@
 @import "screens/chatroom.css";
 @import "screens/user-chatroom-list.css";
 @import "screens/user-password.css";
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
