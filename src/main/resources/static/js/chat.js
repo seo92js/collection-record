@@ -4,6 +4,7 @@ const chatSocket = new WebSocket('ws://ec2-52-79-198-114.ap-northeast-2.compute.
 $('#message-container').scrollTop($('#message-container')[0].scrollHeight);
 
 chatSocket.onopen = function() {
+      console.log('open 됨 chat');
 
       const username = document.getElementById('loginUsername').value;
       const message = {

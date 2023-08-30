@@ -2,6 +2,7 @@
 const notificationSocket = new WebSocket('ws://ec2-52-79-198-114.ap-northeast-2.compute.amazonaws.com:8080/notification');
 
 notificationSocket.onopen = function() {
+      console.log('open 됨 receive-notification');
 
       const username = document.getElementById('loginUsername').value;
       const message = {
