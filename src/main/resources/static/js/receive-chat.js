@@ -20,3 +20,7 @@ chatSocket.onmessage = function(event) {
 
     chat.classList.add('nav__li--red');
 }
+
+chatSocket.onclose = function(event) {
+    console.log('oncloase 됨 receive-chat');
+}

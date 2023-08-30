@@ -12,6 +12,10 @@ socket.onopen = function() {
       socket.send(JSON.stringify(message));
 };
 
+socket.onclose = function(event) {
+    console.log('oncloase 됨 send-notification-comment');
+}
+
 function sendNotification(senderName, receiverName, postsId){
 
     if (senderName == receiverName)

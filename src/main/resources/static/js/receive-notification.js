@@ -20,3 +20,7 @@ notificationSocket.onmessage = function(event) {
 
     notification.classList.add('nav__li--red');
 }
+
+notificationSocket.onclose = function(event) {
+    console.log('oncloase 됨 receive-notification');
+}
