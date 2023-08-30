@@ -35,7 +35,7 @@ public class UserService {
 
         validateDuplicateUser(createUserRequestDto.getUsername());
 
-        File file = new File("src/main/resources/static/img/default.jpg");
+        File file = new File("./src/main/resources/static/img/default.jpg");
 
         Image image = Image.builder()
                 .filename("default")
