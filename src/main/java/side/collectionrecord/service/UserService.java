@@ -1,6 +1,8 @@
 package side.collectionrecord.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +15,10 @@ import side.collectionrecord.exception.CustomException;
 import side.collectionrecord.exception.ErrorCode;
 import side.collectionrecord.web.dto.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
@@ -30,12 +34,14 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final ResourceLoader resourceLoader;
+
     @Transactional
     public Long createUser(CreateUserRequestDto createUserRequestDto) throws IOException {
 
         validateDuplicateUser(createUserRequestDto.getUsername());
 
-        File file = new File("./src/main/resources/static/img/default.jpg");
+/*        File file = new File("./src/main/resources/static/img/default.jpg");
 
         Image image = Image.builder()
                 .filename("default")
@@ -50,7 +56,35 @@ public class UserService {
                 .profileImage(image)
                 .profileText(null)
                 .userRole(UserRole.USER)
-                .build()).getId();
+                .build()).getId();*/
+
+        Resource resource = resourceLoader.getResource("classpath:static/img/default.jpg");
+
+        try (InputStream inputStream = resource.getInputStream()) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+
+            byte[] imageData = outputStream.toByteArray();
+
+            Image image = Image.builder()
+                    .filename("default")
+                    .data(imageData)
+                    .build();
+
+            imageRepository.save(image);
+
+            return userRepository.save(User.builder()
+                    .username(createUserRequestDto.getUsername())
+                    .password(createUserRequestDto.getPassword())
+                    .profileImage(image)
+                    .profileText(null)
+                    .userRole(UserRole.USER)
+                    .build()).getId();
+        }
     }
 
     @Transactional
