@@ -43,6 +43,6 @@ public class ChatRoomController {
         // 안 읽은 메세지 읽음으로 처리
         chatMessageService.updateChatMessage(userChatRoom.getChatRoom().getId(), user1Id);
 
-        return "/chatroom/chatroom";
+        return "chatroom/chatroom";
     }
 }

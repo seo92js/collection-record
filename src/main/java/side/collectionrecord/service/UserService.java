@@ -35,6 +35,7 @@ public class UserService {
         validateDuplicateUser(createUserRequestDto.getUsername());
 
         byte[] data = getClass().getResourceAsStream("/static/img/default.jpg").readAllBytes();
+
         Image image = Image.builder()
                 .filename("default")
                 .data(data)
