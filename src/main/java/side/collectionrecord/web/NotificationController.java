@@ -23,6 +23,6 @@ public class NotificationController {
 
         model.addAttribute("notifications", notReadNotification);
 
-        return "/notification/notification";
+        return "notification/notification";
     }
 }
