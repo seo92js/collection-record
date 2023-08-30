@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class ChatRoom {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chatroom_id")
     private Long id;
 

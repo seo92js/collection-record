@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Comment extends BaseTimeEntity {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Long id;
 
