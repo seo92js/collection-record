@@ -6,8 +6,8 @@ spring:
     url: jdbc:h2:tcp://localhost/~/collection-record
     #url: jdbc:h2:mem:test
     username: sa
-    hikari:
-      jdbc-url: jdbc:h2:tcp://localhost/~/collection-record;MODE=MYSQL
+#    hikari:
+#      jdbc-url: jdbc:h2:tcp://localhost/~/collection-record;MODE=MYSQL
   jpa:
     hibernate:
       ddl-auto: create
