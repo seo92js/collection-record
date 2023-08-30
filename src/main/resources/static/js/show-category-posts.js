@@ -48,7 +48,6 @@ function getCategoryPosts(id, category) {
         url: '/api/v1/posts/category/' + id + '/' + category + '/' + page,
     }).done(function(response){
         if (response.length === 0){
-            console.log('length = 0');
             isEnd = true;
             return;
         }

@@ -13,7 +13,8 @@ socket.onopen = function() {
 };
 
 socket.onclose = function(event) {
-    console.log('oncloase 됨 send-notification-comment');
+    console.log('onclose 됨 send-notification-comment');
+    alert('onclose 됨 send-notification-comment');
 }
 
 function sendNotification(senderName, receiverName, postsId){

@@ -11,6 +11,7 @@ chatSocket.onopen = function() {
       };
 
       chatSocket.send(JSON.stringify(message));
+    console.log('send 됨 receive-chat');
 };
 
 chatSocket.onmessage = function(event) {
@@ -22,5 +23,6 @@ chatSocket.onmessage = function(event) {
 }
 
 chatSocket.onclose = function(event) {
-    console.log('oncloase 됨 receive-chat');
+    console.log('onclose 됨 receive-chat');
+     alert('onclose 됨 receive-chat');
 }

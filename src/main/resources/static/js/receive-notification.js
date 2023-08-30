@@ -11,6 +11,7 @@ notificationSocket.onopen = function() {
       };
 
       notificationSocket.send(JSON.stringify(message));
+    console.log('send 됨 receive-notification');
 };
 
 notificationSocket.onmessage = function(event) {
@@ -22,5 +23,5 @@ notificationSocket.onmessage = function(event) {
 }
 
 notificationSocket.onclose = function(event) {
-    console.log('oncloase 됨 receive-notification');
+    console.log('onclose 됨 receive-notification');
 }

@@ -11,10 +11,13 @@ socket.onopen = function() {
       };
 
       socket.send(JSON.stringify(message));
+    console.log('send 됨 send-notification-follow');
+
 };
 
 socket.onclose = function(event) {
-    console.log('oncloase 됨 send-notification-follow');
+    console.log('onclose 됨 send-notification-follow');
+    alert('onclose 됨 send-notification-follow');
 }
 
 function sendNotification(senderName, receiverName){
@@ -32,4 +35,5 @@ function sendNotification(senderName, receiverName){
     const json = JSON.stringify(createNotificationRequestDto);
 
     socket.send(json);
+    console.log('send 됨 send-notification-follow');
 }
