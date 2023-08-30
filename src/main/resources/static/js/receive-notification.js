@@ -14,6 +14,8 @@ notificationSocket.onopen = function() {
 };
 
 notificationSocket.onmessage = function(event) {
+    console.log('onmessage 됨 receive-notification');
+
     const notification = document.getElementById('notification');
 
     notification.classList.add('nav__li--red');

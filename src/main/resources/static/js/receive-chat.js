@@ -14,6 +14,8 @@ chatSocket.onopen = function() {
 };
 
 chatSocket.onmessage = function(event) {
+    console.log('onmessage 됨 receive-chat');
+
     const chat = document.getElementById('chat');
 
     chat.classList.add('nav__li--red');
