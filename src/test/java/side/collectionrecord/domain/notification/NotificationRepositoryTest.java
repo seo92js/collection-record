@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 
@@ -25,18 +26,20 @@ class NotificationRepositoryTest {
         //given
         User sender = User.builder()
                 .username("sender")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(sender);
 
         User receiver = User.builder()
                 .username("receiver")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(receiver);
@@ -62,18 +65,20 @@ class NotificationRepositoryTest {
         //given
         User sender = User.builder()
                 .username("sender")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(sender);
 
         User receiver = User.builder()
                 .username("receiver")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(receiver);

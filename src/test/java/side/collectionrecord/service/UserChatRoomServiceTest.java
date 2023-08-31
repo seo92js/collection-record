@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
@@ -31,18 +32,20 @@ class UserChatRoomServiceTest {
         //given
         User user1 = User.builder()
                 .username("user1")
-                .password("1")
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user1);
 
         User user2 = User.builder()
                 .username("user2")
-                .userRole(UserRole.USER)
-                .password("1")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user2);

@@ -17,7 +17,6 @@ class CommentTest {
         //given
         User user = User.builder()
                 .username("test")
-                .password("test")
                 .profileImage(null)
                 .build();
 

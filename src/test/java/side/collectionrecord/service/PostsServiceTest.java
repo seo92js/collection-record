@@ -10,6 +10,7 @@ import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.CreatePostsRequestDto;
@@ -40,9 +41,10 @@ class PostsServiceTest {
         //given
         User user = User.builder()
                 .username("user1")
-                .userRole(UserRole.USER)
-                .password("password1")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user);
@@ -79,7 +81,7 @@ class PostsServiceTest {
 
         //then
         assertThat(posts.getUser()).isEqualTo(user);
-        assertThat(posts.getCategory()).isEqualTo("CD");
+        assertThat(posts.getCategory()).isEqualTo(Category.CD);
         assertThat(posts.getRepresentativeImage().get(0).getFilename()).isEqualTo("image");
         assertThat(posts.getText()).isEqualTo("text");
         assertThat(posts.getStatus()).isEqualTo(PostsStatus.SALE);
@@ -90,9 +92,10 @@ class PostsServiceTest {
         //given
         User user = User.builder()
                 .username("user1")
-                .userRole(UserRole.USER)
-                .password("password1")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user);
@@ -154,9 +157,10 @@ class PostsServiceTest {
         //given
         User user = User.builder()
                 .username("user1")
-                .userRole(UserRole.USER)
-                .password("password1")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user);
@@ -207,7 +211,7 @@ class PostsServiceTest {
         //then
         Posts posts = postsRepository.findById(id).orElse(null);
 
-        assertThat(posts.getCategory()).isEqualTo("VINYL");
+        assertThat(posts.getCategory()).isEqualTo(Category.VINYL);
         assertThat(posts.getText()).isEqualTo(expectedText);
         assertThat(posts.getStatus()).isEqualTo(expectedStatus);
     }

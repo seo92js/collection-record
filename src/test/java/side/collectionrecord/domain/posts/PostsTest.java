@@ -3,6 +3,7 @@ package side.collectionrecord.domain.posts;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import side.collectionrecord.domain.category.Category;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,8 +16,10 @@ class PostsTest {
         //given
         User user = User.builder()
                 .username("user1")
-                .password("password1")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         //when
@@ -34,7 +37,7 @@ class PostsTest {
                 .build();
 
         //then
-        assertThat(posts.getCategory()).isEqualTo("CD");
+        assertThat(posts.getCategory()).isEqualTo(Category.CD);
         assertThat(posts.getStatus()).isEqualTo(PostsStatus.SALE);
     }
 

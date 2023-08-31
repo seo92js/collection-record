@@ -8,6 +8,7 @@ import side.collectionrecord.domain.chatmessage.ChatMessage;
 import side.collectionrecord.domain.chatmessage.ChatMessageRepository;
 import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.chatroom.ChatRoomRepository;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.CreateChatMessageRequestDto;
@@ -36,16 +37,18 @@ class ChatMessageServiceTest {
     public void 아이디로_찾기() {
         User sender = User.builder()
                 .username("user")
-                .userRole(UserRole.USER)
-                .password("1")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         User receiver = User.builder()
                 .username("user")
-                .userRole(UserRole.USER)
-                .password("1")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(sender);
@@ -76,16 +79,18 @@ class ChatMessageServiceTest {
         //given
         User sender = User.builder()
                 .username("sender")
-                .userRole(UserRole.USER)
-                .password("1")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         User receiver = User.builder()
                 .username("receiver")
-                .userRole(UserRole.USER)
-                .password("1")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(sender);
@@ -117,16 +122,18 @@ class ChatMessageServiceTest {
         //given
         User sender = User.builder()
                 .username("sender")
-                .userRole(UserRole.USER)
-                .password("1")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         User receiver = User.builder()
                 .username("receiver")
-                .userRole(UserRole.USER)
-                .password("1")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(sender);

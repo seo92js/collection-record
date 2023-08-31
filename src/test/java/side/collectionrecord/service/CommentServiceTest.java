@@ -7,9 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.comment.CommentRepository;
+import side.collectionrecord.domain.image.Image;
+import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.CreateParentCommentRequestDto;
@@ -34,14 +37,18 @@ class CommentServiceTest {
     @Autowired
     CommentService commentService;
 
+    @Autowired
+    ImageRepository imageRepository;
+
     @Test
     public void 댓글추가(){
         //given
         User user = User.builder()
                 .username("user")
-                .userRole(UserRole.USER)
-                .password("1234")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user);
@@ -80,9 +87,10 @@ class CommentServiceTest {
         //given
         User user = User.builder()
                 .username("user")
-                .userRole(UserRole.USER)
-                .password("1234")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user);
@@ -120,11 +128,19 @@ class CommentServiceTest {
     @Test
     public void 모든댓글찾기(){
         //given
+        Image image = Image.builder()
+                .data(null)
+                .filename("image")
+                .build();
+
+        imageRepository.save(image);
+
         User user = User.builder()
                 .username("user")
-                .userRole(UserRole.USER)
-                .password("1234")
-                .profileImage(null)
+                .role(Role.USER)
+                .profileImage(image)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user);

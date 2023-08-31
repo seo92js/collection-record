@@ -13,7 +13,6 @@ class UserChatRoomTest {
     public void 연관관계_세팅(){
         User user = User.builder()
                 .username("user")
-                .password("1")
                 .profileImage(null)
                 .build();
 

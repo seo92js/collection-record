@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.multipart.MultipartFile;
 import side.collectionrecord.config.auth.SecurityConfig;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.service.ImageService;
@@ -51,10 +52,9 @@ class UserApiControllerTest {
     public void setup(){
         User user = User.builder()
                 .username("user")
-                .password("1")
                 .profileText(null)
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .build();
 
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));

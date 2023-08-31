@@ -9,6 +9,7 @@ import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 
@@ -39,10 +40,11 @@ class CommentRepositoryTest {
     public void save(){
         //given
         User user = User.builder()
+                .email("email")
                 .username("user")
-                .userRole(UserRole.USER)
-                .password("1234")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
                 .build();
 
         userRepository.save(user);
@@ -81,10 +83,11 @@ class CommentRepositoryTest {
     public void 게시물의_모든댓글찾기(){
         //given
         User user = User.builder()
+                .email("email")
                 .username("user")
-                .userRole(UserRole.USER)
-                .password("1234")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
                 .build();
 
         userRepository.save(user);

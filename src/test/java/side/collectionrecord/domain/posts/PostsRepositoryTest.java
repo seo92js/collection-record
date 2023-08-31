@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.category.Category;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 
@@ -25,10 +26,11 @@ class PostsRepositoryTest {
     @Test
     public void save(){
         User user = User.builder()
+                .email("email")
                 .username("user")
-                .password("password")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .profileText(null)
+                .role(Role.USER)
                 .build();
 
         userRepository.save(user);
@@ -56,9 +58,10 @@ class PostsRepositoryTest {
         //given
         User user = User.builder()
                 .username("user")
-                .userRole(UserRole.USER)
-                .password("password")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user);
@@ -104,9 +107,10 @@ class PostsRepositoryTest {
         //given
         User user = User.builder()
                 .username("user")
-                .userRole(UserRole.USER)
-                .password("password")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user);

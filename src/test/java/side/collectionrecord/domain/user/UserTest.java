@@ -17,8 +17,8 @@ class UserTest {
         //given
         User user = User.builder()
                 .username("test")
-                .password("test")
                 .profileImage(null)
+                .profileText(null)
                 .build();
 
         Posts posts = Posts.builder()
@@ -52,15 +52,16 @@ class UserTest {
     void 빌더패턴(){
         //given
         User user = User.builder()
+                .email("email")
                 .username("test")
-                .password("test")
                 .profileImage(null)
+                .profileText(null)
                 .build();
 
         //when
         //then
         assertThat(user.getUsername()).isEqualTo("test");
-        assertThat(user.getPassword()).isEqualTo("test");
+        assertThat(user.getEmail()).isEqualTo("email");
         assertThat(user.getProfileImage()).isNull();
     }
 }

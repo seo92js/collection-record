@@ -24,7 +24,6 @@ class ImageTest {
 
         User user = User.builder()
                 .username("user")
-                .password("password")
                 .profileImage(profileImage)
                 .build();
 

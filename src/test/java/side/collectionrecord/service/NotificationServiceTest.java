@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.notification.Notification;
 import side.collectionrecord.domain.notification.NotificationRepository;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.CreateNotificationRequestDto;
@@ -32,18 +33,20 @@ class NotificationServiceTest {
         //given
         User sender = User.builder()
                 .username("sender")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(sender);
 
         User receiver = User.builder()
                 .username("receiver")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(receiver);
@@ -69,18 +72,20 @@ class NotificationServiceTest {
         //given
         User sender = User.builder()
                 .username("sender")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(sender);
 
         User receiver = User.builder()
                 .username("receiver")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(receiver);
@@ -107,18 +112,20 @@ class NotificationServiceTest {
         //given
         User sender = User.builder()
                 .username("sender")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(sender);
 
         User receiver = User.builder()
                 .username("receiver")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(receiver);

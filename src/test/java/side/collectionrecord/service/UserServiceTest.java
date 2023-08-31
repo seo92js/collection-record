@@ -3,10 +3,10 @@ package side.collectionrecord.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.GetSearchUserResponseDto;
@@ -30,38 +30,15 @@ class UserServiceTest {
     @Autowired
     ImageRepository imageRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Test
-    public void 유저_회원가입() throws IOException {
-        //given
-        CreateUserRequestDto createUserRequestDto = CreateUserRequestDto.builder()
-                .username("test")
-                .password("test")
-                .build();
-
-        createUserRequestDto.encodePassword(passwordEncoder);
-
-        Long id = userService.createUser(createUserRequestDto);
-
-        //when
-        User findUser = userRepository.findById(id).orElse(null);
-
-        //then
-        assertThat(findUser.getUsername()).isEqualTo(createUserRequestDto.getUsername());
-        //assertThat(findUser.getPassword()).isEqualTo(passwordEncoder.encode(userJoinRequestDto.getPassword()));
-        assertThat(passwordEncoder.matches(findUser.getPassword(), createUserRequestDto.getPassword()));
-    }
-
     @Test
     public void 유저_업데이트() throws IOException {
         //given
         User user = User.builder()
                 .username("test")
-                .password("test")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .profileText(null)
+                .email("email")
+                .role(Role.USER)
                 .build();
 
         userRepository.save(user);
@@ -99,10 +76,10 @@ class UserServiceTest {
         //given
         User user = User.builder()
                 .username("test")
-                .password("test")
                 .profileImage(null)
-                .userRole(UserRole.USER)
-
+                .profileText(null)
+                .email("email")
+                .role(Role.USER)
                 .build();
 
         userRepository.save(user);
@@ -129,27 +106,30 @@ class UserServiceTest {
 
         User user1 = User.builder()
                 .username("김김김")
-                .password("1")
                 .profileImage(image)
-                .userRole(UserRole.USER)
+                .profileText(null)
+                .email("email")
+                .role(Role.USER)
                 .build();
 
         userRepository.save(user1);
 
         User user2 = User.builder()
                 .username("김수미")
-                .password("1")
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .profileImage(image)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user2);
 
         User user3 = User.builder()
                 .username("김구라")
-                .password("1")
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .profileImage(image)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user3);

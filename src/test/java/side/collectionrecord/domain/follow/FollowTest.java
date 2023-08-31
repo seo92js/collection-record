@@ -13,13 +13,11 @@ class FollowTest {
         //given
         User user1 = User.builder()
                 .username("user1")
-                .password("1")
                 .profileImage(null)
                 .build();
 
         User user2 = User.builder()
                 .username("user2")
-                .password("1")
                 .profileImage(null)
                 .build();
 
@@ -38,13 +36,11 @@ class FollowTest {
         //given
         User user1 = User.builder()
                 .username("user1")
-                .password("1")
                 .profileImage(null)
                 .build();
 
         User user2 = User.builder()
                 .username("user2")
-                .password("1")
                 .profileImage(null)
                 .build();
 

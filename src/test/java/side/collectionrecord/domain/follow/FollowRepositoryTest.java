@@ -8,6 +8,7 @@ import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 
@@ -32,18 +33,20 @@ class FollowRepositoryTest {
         //then
         User user1 = User.builder()
                 .username("user1")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user1);
 
         User user2 = User.builder()
                 .username("user2")
-                .password("1")
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user2);
@@ -70,18 +73,20 @@ class FollowRepositoryTest {
         //then
         User user1 = User.builder()
                 .username("user1")
-                .password("1")
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user1);
 
         User user2 = User.builder()
                 .username("user2")
-                .password("1")
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user2);

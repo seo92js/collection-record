@@ -14,7 +14,6 @@ import side.collectionrecord.service.UserChatRoomService;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.GetUserChatRoomResponseDto;
 import side.collectionrecord.web.dto.GetUserProfileResponseDto;
-import side.collectionrecord.web.dto.UpdateUserPasswordRequestDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -93,12 +92,5 @@ public class UserController {
         }
 
         return "user/userProfileForm";
-    }
-
-    @GetMapping("user/profile/password")
-    public String userPassword(Model model){
-        model.addAttribute("userPasswordUpdateRequestDto", new UpdateUserPasswordRequestDto());
-
-        return "user/userPasswordForm";
     }
 }

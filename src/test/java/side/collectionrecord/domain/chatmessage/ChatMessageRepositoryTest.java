@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.chatroom.ChatRoomRepository;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 
@@ -28,17 +29,19 @@ class ChatMessageRepositoryTest {
     public void 채팅방의_모든메세지_찾기(){
         //given
         User sender = User.builder()
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .username("sender")
-                .password("1")
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         User receiver = User.builder()
                 .username("receiver")
-                .userRole(UserRole.USER)
-                .password("1")
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(sender);

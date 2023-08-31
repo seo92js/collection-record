@@ -3,7 +3,6 @@ package side.collectionrecord.web.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import side.collectionrecord.domain.comment.Comment;
-import side.collectionrecord.domain.image.Image;
 
 @Getter
 @NoArgsConstructor

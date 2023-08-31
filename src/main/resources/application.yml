@@ -12,9 +12,12 @@ spring:
       jdbc-url: jdbc:h2:tcp://localhost/~/collection-record;MODE=MYSQL
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         show_sql: true
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         storage_engine: innodb
+  session:
+    store-type: jdbc
+    jdbc.initialize-schema: always

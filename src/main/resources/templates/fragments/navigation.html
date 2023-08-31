@@ -46,6 +46,12 @@
                 <i>구글 로그인</i>
             </a>
         </li>
+        <!-- 네이버 로그인 -->
+        <li sec:authorize="isAnonymous()" class="nav__li">
+            <a href="/oauth2/authorization/naver">
+                <i>네이버 로그인</i>
+            </a>
+        </li>
 
         <input type="hidden" th:value="${loginUsername}" th:id="loginUsername">
     </ul>

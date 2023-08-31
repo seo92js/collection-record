@@ -2,6 +2,7 @@ package side.collectionrecord.domain.notification;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,16 +14,14 @@ class NotificationTest {
         //given
         User sender = User.builder()
                 .username("sender")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .build();
 
         User receiver = User.builder()
                 .username("receiver")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .build();
 
         Notification notification = Notification.builder()
@@ -44,16 +43,14 @@ class NotificationTest {
         //given
         User sender = User.builder()
                 .username("sender")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .build();
 
         User receiver = User.builder()
                 .username("receiver")
-                .password("1")
                 .profileImage(null)
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .build();
 
         Notification notification = Notification.builder()

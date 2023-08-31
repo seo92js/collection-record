@@ -11,8 +11,6 @@
 
 /* screen */
 @import "screens/navigation.css";
-@import "screens/join.css";
-@import "screens/login.css";
 @import "screens/home.css";
 @import "screens/user-home.css";
 @import "screens/posts.css";

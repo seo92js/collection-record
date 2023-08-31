@@ -25,9 +25,10 @@ class UserRepositoryTest {
 
         userRepository.save(User.builder()
                         .username(username)
-                        .password(password)
-                        .userRole(UserRole.USER)
+                        .role(Role.USER)
                         .profileImage(null)
+                        .profileText(null)
+                        .email("email")
                 .build());
 
         //when
@@ -36,7 +37,6 @@ class UserRepositoryTest {
         //then
         User findUser = findUsers.get(0);
         assertThat(findUser.getUsername()).isEqualTo(username);
-        assertThat(findUser.getPassword()).isEqualTo(password);
         assertThat(findUser.getProfileImage()).isNull();
     }
 
@@ -47,9 +47,10 @@ class UserRepositoryTest {
 
         userRepository.save(User.builder()
                         .username("test")
-                        .password("test")
-                        .userRole(UserRole.USER)
+                        .role(Role.USER)
                         .profileImage(null)
+                        .profileText(null)
+                        .email("email")
                         .build());
         //when
         List<User> all = userRepository.findAll();
@@ -68,9 +69,10 @@ class UserRepositoryTest {
         //given
         User user = User.builder()
                 .username("user1")
-                .password("1234")
-                .userRole(UserRole.USER)
+                .role(Role.USER)
                 .profileImage(null)
+                .profileText(null)
+                .email("email")
                 .build();
 
         userRepository.save(user);
@@ -80,7 +82,6 @@ class UserRepositoryTest {
 
         //then
         assertThat(findUser.getUsername()).isEqualTo(user.getUsername());
-        assertThat(findUser.getPassword()).isEqualTo(user.getPassword());
         assertThat(findUser.getProfileImage()).isNull();
     }
 }

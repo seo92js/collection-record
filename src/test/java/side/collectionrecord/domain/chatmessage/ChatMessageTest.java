@@ -14,13 +14,11 @@ class ChatMessageTest {
         //given
         User sender = User.builder()
                 .username("sender")
-                .password("1")
                 .profileImage(null)
                 .build();
 
         User receiver = User.builder()
                 .username("receiver")
-                .password("1")
                 .profileImage(null)
                 .build();
 
@@ -46,13 +44,11 @@ class ChatMessageTest {
         //given
         User sender = User.builder()
                 .username("sender")
-                .password("1")
                 .profileImage(null)
                 .build();
 
         User receiver = User.builder()
                 .username("receiver")
-                .password("1")
                 .profileImage(null)
                 .build();
 
