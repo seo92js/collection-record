@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.domain.user.UserRole;
 
 import java.util.List;
 

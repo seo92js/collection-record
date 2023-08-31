@@ -40,16 +40,10 @@
                 <i>로그아웃</i>
             </a>
         </li>
-        <!-- 회원가입 -->
+        <!-- 구글 로그인 -->
         <li sec:authorize="isAnonymous()" class="nav__li">
-            <a href="/user/join">
-                <i>회원가입</i>
-            </a>
-        </li>
-        <!-- 로그인 -->
-        <li sec:authorize="isAnonymous()" class="nav__li">
-            <a href="/login">
-                <i>로그인</i>
+            <a href="/oauth2/authorization/google">
+                <i>구글 로그인</i>
             </a>
         </li>
 

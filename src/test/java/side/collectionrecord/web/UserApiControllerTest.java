@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import side.collectionrecord.config.auth.SecurityConfig;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.service.ImageService;
 import side.collectionrecord.service.UserService;
 import side.collectionrecord.web.dto.UpdateUserRequestDto;

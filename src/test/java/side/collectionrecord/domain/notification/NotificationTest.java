@@ -3,7 +3,6 @@ package side.collectionrecord.domain.notification;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import side.collectionrecord.domain.user.User;
-import side.collectionrecord.domain.user.UserRole;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

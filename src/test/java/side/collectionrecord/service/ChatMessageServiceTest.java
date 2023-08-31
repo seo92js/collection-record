@@ -10,7 +10,6 @@ import side.collectionrecord.domain.chatroom.ChatRoom;
 import side.collectionrecord.domain.chatroom.ChatRoomRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.web.dto.CreateChatMessageRequestDto;
 import side.collectionrecord.web.dto.GetChatMessageResponseDto;
 

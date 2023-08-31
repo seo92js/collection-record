@@ -1,15 +1,10 @@
 package side.collectionrecord.web;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
@@ -17,10 +12,10 @@ import side.collectionrecord.service.FollowService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.service.UserChatRoomService;
 import side.collectionrecord.service.UserService;
-import side.collectionrecord.web.dto.*;
+import side.collectionrecord.web.dto.GetUserChatRoomResponseDto;
+import side.collectionrecord.web.dto.GetUserProfileResponseDto;
+import side.collectionrecord.web.dto.UpdateUserPasswordRequestDto;
 
-import javax.validation.Valid;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,30 +32,6 @@ public class UserController {
     private final PostsService postsService;
 
     private final UserChatRoomService userChatRoomService;
-
-    private final PasswordEncoder passwordEncoder;
-
-    @GetMapping("/user/join")
-    public String joinUserForm(Model model) {
-        model.addAttribute("createUserRequestDto", new CreateUserRequestDto());
-
-        return "user/userJoinForm";
-    }
-
-    @PostMapping("/user/join")
-    public String joinUserForm(@Valid @ModelAttribute CreateUserRequestDto createUserRequestDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws IOException {
-        if(bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("error", bindingResult.getFieldError().getDefaultMessage());
-
-            return "redirect:/user/join";
-        }else {
-            createUserRequestDto.encodePassword(passwordEncoder);
-
-            userService.createUser(createUserRequestDto);
-
-            return "redirect:/";
-        }
-    }
 
     @GetMapping("/user/{username}/home")
     public String userHome(@PathVariable String username, Model model){

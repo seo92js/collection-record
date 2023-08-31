@@ -6,10 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import side.collectionrecord.domain.image.Image;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class UpdateUserRequestDto {
+    @NotBlank(message = "빈 공간이 있습니다.")
+    @Pattern(regexp = "^[a-z0-9]+$", message="소문자 a-z, 숫자 0-9 만 사용 가능합니다.")
     private String username;
     private Image profileImage;
     private String profileText;
@@ -20,8 +25,4 @@ public class UpdateUserRequestDto {
         this.profileImage = profileImage;
         this.profileText = profileText;
     }
-
-/*    public void encodePassword(PasswordEncoder passwordEncoder){
-        this.password = passwordEncoder.encode(this.password);
-    }*/
 }

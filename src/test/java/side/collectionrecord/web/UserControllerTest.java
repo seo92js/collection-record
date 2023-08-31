@@ -20,11 +20,9 @@ import org.springframework.ui.Model;
 import side.collectionrecord.config.auth.SecurityConfig;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.service.FollowService;
 import side.collectionrecord.service.UserChatRoomService;
 import side.collectionrecord.service.UserService;
-import side.collectionrecord.web.dto.CreateUserRequestDto;
 
 import java.util.Optional;
 

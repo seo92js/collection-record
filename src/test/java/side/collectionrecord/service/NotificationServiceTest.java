@@ -8,7 +8,6 @@ import side.collectionrecord.domain.notification.Notification;
 import side.collectionrecord.domain.notification.NotificationRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.web.dto.CreateNotificationRequestDto;
 import side.collectionrecord.web.dto.GetNotificationResponseDto;
 

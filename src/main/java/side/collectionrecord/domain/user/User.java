@@ -26,17 +26,19 @@ public class User extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String username;
+
     @Column(nullable = false)
-    private String password;
+    private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     private String profileText;
 
     @OneToOne
     @JoinColumn(name = "image_id")
     private Image profileImage;
-
-/*    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Category> categories = new ArrayList<>();*/
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
@@ -63,14 +65,6 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "receiver")
     private List<Notification> receiveNotify = new ArrayList<>();
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private UserRole userRole;
-
-/*    public void addCategory(Category category){
-        this.categories.add(category);
-    }*/
 
     public void addPosts(Posts posts){
         this.posts.add(posts);
@@ -120,12 +114,12 @@ public class User extends BaseTimeEntity {
     }
 
     @Builder
-    public User(String username, String password, Image profileImage, String profileText, UserRole userRole){
+    public User(String username, String email, Image profileImage, String profileText, Role role){
         this.username = username;
-        this.password = password;
+        this.email = email;
         this.profileImage = profileImage;
         this.profileText = profileText;
-        this.userRole = userRole;
+        this.role = role;
     }
 
     public void update(String username, Image profileImage, String profileText){
@@ -134,7 +128,7 @@ public class User extends BaseTimeEntity {
         this.profileText = profileText;
     }
 
-    public void updatePassword(String password){
-        this.password = password;
+    public String getRoleKey() {
+        return this.role.getKey();
     }
 }

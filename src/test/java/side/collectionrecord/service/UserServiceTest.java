@@ -9,8 +9,6 @@ import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.domain.user.UserRole;
-import side.collectionrecord.web.dto.CreateUserRequestDto;
 import side.collectionrecord.web.dto.GetSearchUserResponseDto;
 import side.collectionrecord.web.dto.GetUserProfileResponseDto;
 import side.collectionrecord.web.dto.UpdateUserRequestDto;

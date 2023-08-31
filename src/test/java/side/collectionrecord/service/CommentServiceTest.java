@@ -12,7 +12,6 @@ import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.web.dto.CreateParentCommentRequestDto;
 import side.collectionrecord.web.dto.GetCommentResponseDto;
 

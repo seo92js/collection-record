@@ -1,3 +1,4 @@
+/*
 package side.collectionrecord.service;
 
 import lombok.RequiredArgsConstructor;
@@ -26,3 +27,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .build();
     }
 }
+*/

@@ -1,20 +1,18 @@
 package side.collectionrecord.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.domain.user.UserRole;
 import side.collectionrecord.exception.CustomException;
 import side.collectionrecord.exception.ErrorCode;
-import side.collectionrecord.web.dto.*;
+import side.collectionrecord.web.dto.GetSearchUserResponseDto;
+import side.collectionrecord.web.dto.GetUserProfileResponseDto;
+import side.collectionrecord.web.dto.UpdateUserRequestDto;
 
-import java.io.*;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,40 +25,10 @@ public class UserService {
 
     private final ImageRepository imageRepository;
 
-    private final PasswordEncoder passwordEncoder;
-
-    @Transactional
-    public Long createUser(CreateUserRequestDto createUserRequestDto) throws IOException {
-
-        validateDuplicateUser(createUserRequestDto.getUsername());
-
-        byte[] data = getClass().getResourceAsStream("/static/img/default.jpg").readAllBytes();
-
-        Image image = Image.builder()
-                .filename("default")
-                .data(data)
-                .build();
-
-/*        File file = new File("/src/main/resources/static/img/default.jpg");
-
-        Image image = Image.builder()
-                .filename("default")
-                .data(Files.readAllBytes(file.toPath()))
-                .build();*/
-
-        imageRepository.save(image);
-
-        return userRepository.save(User.builder()
-                .username(createUserRequestDto.getUsername())
-                .password(createUserRequestDto.getPassword())
-                .profileImage(image)
-                .profileText(null)
-                .userRole(UserRole.USER)
-                .build()).getId();
-    }
-
     @Transactional
     public Long updateUser(Long id, UpdateUserRequestDto updateUserRequestDto) {
+        validateDuplicateUser(updateUserRequestDto.getUsername());
+
         User findUser = userRepository.findById(id).orElse(null);
 
         Image prevImage = findUser.getProfileImage();
@@ -70,17 +38,6 @@ public class UserService {
         if (prevImage != null && prevImage.getId() != updateUserRequestDto.getProfileImage().getId()){
             imageRepository.delete(prevImage);
         }
-
-        return id;
-    }
-
-    @Transactional
-    public Long updateUserPassword(Long id, UpdateUserPasswordRequestDto updateUserPasswordRequestDto){
-        User findUser = userRepository.findById(id).orElse(null);
-
-        validatePassword(updateUserPasswordRequestDto.getOldPassword(), findUser.getPassword());
-
-        findUser.updatePassword(passwordEncoder.encode(updateUserPasswordRequestDto.getNewPassword()));
 
         return id;
     }
@@ -107,10 +64,5 @@ public class UserService {
         if(findUser.isPresent()){
             throw new CustomException(ErrorCode.USER_DUPLICATE);
         }
-    }
-
-    private void validatePassword(String newPassword, String oldPassword){
-        if (!passwordEncoder.matches(newPassword, oldPassword))
-            throw new CustomException(ErrorCode.USER_DIFFERENT_PASSWORD);
     }
 }
