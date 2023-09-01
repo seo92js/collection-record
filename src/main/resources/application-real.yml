@@ -8,4 +8,3 @@ spring:
         storage_engine: innodb
   session:
     store-type: jdbc
-    jdbc.initialize-schema: always
