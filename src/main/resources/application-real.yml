@@ -6,5 +6,5 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         storage_engine: innodb
-  session:
-    store-type: jdbc
+#  session:
+#    store-type: jdbc
