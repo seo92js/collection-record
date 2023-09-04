@@ -36,7 +36,7 @@ function send(senderId, receiverId, chatRoomId){
         receiverId: receiverId,
         chatRoomId: chatRoomId,
         message: message,
-        read: false
+        confirm: false
     }
 
     const json = JSON.stringify(createChatMessageRequestDto);

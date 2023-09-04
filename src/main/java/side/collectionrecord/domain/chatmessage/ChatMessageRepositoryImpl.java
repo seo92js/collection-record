@@ -26,10 +26,10 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepositoryCustom{
     }
 
     @Override
-    public List<ChatMessage> findByChatroomIdAndUserIdReadFalse(Long chatRoomId, Long userId){
+    public List<ChatMessage> findByChatroomIdAndUserIdConfirmFalse(Long chatRoomId, Long userId){
 
         return queryFactory.selectFrom(chatMessage)
-                .where(chatMessage.chatRoom.id.eq(chatRoomId).and(chatMessage.receiver.id.eq(userId).and(chatMessage.read.eq(false))))
+                .where(chatMessage.chatRoom.id.eq(chatRoomId).and(chatMessage.receiver.id.eq(userId).and(chatMessage.confirm.eq(false))))
                 .fetch();
     }
 }

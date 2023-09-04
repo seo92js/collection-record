@@ -73,8 +73,8 @@ public class UserChatRoomService {
         for (Tuple tuple : userChatRoomList){
             User user = tuple.get(QUserChatRoom.userChatRoom.user);
             Long chatRoomId = tuple.get(QUserChatRoom.userChatRoom.chatRoom.id);
-            List<ChatMessage> readFalseMessage = chatMessageRepository.findByChatroomIdAndUserIdReadFalse(chatRoomId, userId);
-            if(readFalseMessage.size() > 0) {
+            List<ChatMessage> confirmFalseMessage = chatMessageRepository.findByChatroomIdAndUserIdConfirmFalse(chatRoomId, userId);
+            if(confirmFalseMessage.size() > 0) {
                 responseDtoList.add(new GetUserChatRoomResponseDto(user, false));
             }else{
                 responseDtoList.add(new GetUserChatRoomResponseDto(user, true));
@@ -85,13 +85,13 @@ public class UserChatRoomService {
     }
 
     @Transactional
-    public boolean checkReadFalseMessage(Long userId){
+    public boolean confirmFalseMessage(Long userId){
         User user = userRepository.findById(userId).get();
 
         for ( UserChatRoom userChatRoom : user.getUserChatRooms()){
-            List<ChatMessage> readFalseMessage = chatMessageRepository.findByChatroomIdAndUserIdReadFalse(userChatRoom.getChatRoom().getId(), userId);
+            List<ChatMessage> confirmFalseMessage = chatMessageRepository.findByChatroomIdAndUserIdConfirmFalse(userChatRoom.getChatRoom().getId(), userId);
 
-            if (readFalseMessage.size() > 0)
+            if (confirmFalseMessage.size() > 0)
                 return false;
         }
 

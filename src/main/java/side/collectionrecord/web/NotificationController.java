@@ -19,9 +19,9 @@ public class NotificationController {
     @GetMapping("/notification/{userId}")
     public String notification(@PathVariable("userId") Long userId, Model model){
 
-        List<GetNotificationResponseDto> notReadNotification = notificationService.getAllNotificationByUserIdReadFalse(userId);
+        List<GetNotificationResponseDto> notConfirmNotification = notificationService.getAllNotificationByUserIdConfirmFalse(userId);
 
-        model.addAttribute("notifications", notReadNotification);
+        model.addAttribute("notifications", notConfirmNotification);
 
         return "notification/notification";
     }

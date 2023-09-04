@@ -48,7 +48,7 @@ class NotificationRepositoryTest {
                 .sender(sender)
                 .receiver(receiver)
                 .message("message")
-                .read(false)
+                .confirm(false)
                 .url("url")
                 .build();
 
@@ -87,24 +87,24 @@ class NotificationRepositoryTest {
                 .sender(sender)
                 .receiver(receiver)
                 .message("message")
-                .read(false)
+                .confirm(false)
                 .url("url")
                 .build();
 
         notificationRepository.save(notification);
 
         //when
-        List<Notification> notReadNotification = notificationRepository.findByUserIdReadFalse(receiver.getId());
+        List<Notification> notConfirmNotification = notificationRepository.findByUserIdConfirmFalse(receiver.getId());
 
         //when
-        assertThat(notReadNotification.size()).isEqualTo(1);
+        assertThat(notConfirmNotification.size()).isEqualTo(1);
 
         Notification notification1 = notificationRepository.findById(notification.getId()).get();
 
-        notification1.setRead();
+        notification1.setConfirm();
 
-        List<Notification> notReadNotification1 = notificationRepository.findByUserIdReadFalse(receiver.getId());
+        List<Notification> notConfirmNotification1 = notificationRepository.findByUserIdConfirmFalse(receiver.getId());
 
-        assertThat(notReadNotification1.size()).isEqualTo(0);
+        assertThat(notConfirmNotification1.size()).isEqualTo(0);
     }
 }

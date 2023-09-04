@@ -12,14 +12,14 @@ public class CreateChatMessageRequestDto {
 
     private Long chatRoomId;
     private String message;
-    private boolean read;
+    private boolean confirm;
 
     @Builder
-    public CreateChatMessageRequestDto(Long senderId, Long receiverId, Long chatRoomId, String message, Boolean read){
+    public CreateChatMessageRequestDto(Long senderId, Long receiverId, Long chatRoomId, String message, Boolean confirm){
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.chatRoomId = chatRoomId;
         this.message = message;
-        this.read = read;
+        this.confirm = confirm;
     }
 }

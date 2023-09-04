@@ -17,9 +17,9 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom{
     }
 
     @Override
-    public List<Notification> findByUserIdReadFalse(Long userId) {
+    public List<Notification> findByUserIdConfirmFalse(Long userId) {
         return queryFactory.selectFrom(notification)
-                .where(notification.receiver.id.eq(userId).and(notification.read.eq(false)))
+                .where(notification.receiver.id.eq(userId).and(notification.confirm.eq(false)))
                 .orderBy(notification.createdDate.desc())
                 .fetch();
     }

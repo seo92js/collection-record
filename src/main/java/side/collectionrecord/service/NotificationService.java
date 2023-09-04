@@ -29,7 +29,7 @@ public class NotificationService {
                 .sender(sender)
                 .receiver(receiver)
                 .message(createNotificationRequestDto.getText())
-                .read(false)
+                .confirm(false)
                 .url(createNotificationRequestDto.getUrl())
                 .build();
 
@@ -40,14 +40,14 @@ public class NotificationService {
     public Long updateNotification(Long id){
         Notification notification = notificationRepository.findById(id).get();
 
-        notification.setRead();
+        notification.setConfirm();
 
         return id;
     }
 
     @Transactional
-    public List<GetNotificationResponseDto> getAllNotificationByUserIdReadFalse(Long userId){
-        return notificationRepository.findByUserIdReadFalse(userId).stream()
+    public List<GetNotificationResponseDto> getAllNotificationByUserIdConfirmFalse(Long userId){
+        return notificationRepository.findByUserIdConfirmFalse(userId).stream()
                 .map(GetNotificationResponseDto::new).collect(Collectors.toList());
     }
 }

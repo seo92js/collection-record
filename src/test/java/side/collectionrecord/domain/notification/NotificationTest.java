@@ -28,7 +28,7 @@ class NotificationTest {
                 .sender(sender)
                 .receiver(receiver)
                 .message("message")
-                .read(false)
+                .confirm(false)
                 .url("url")
                 .build();
 
@@ -57,7 +57,7 @@ class NotificationTest {
                 .sender(sender)
                 .receiver(receiver)
                 .message("message")
-                .read(false)
+                .confirm(false)
                 .url("url")
                 .build();
 

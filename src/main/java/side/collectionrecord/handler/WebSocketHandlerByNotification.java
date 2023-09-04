@@ -78,10 +78,10 @@ public class WebSocketHandlerByNotification extends TextWebSocketHandler {
 
             User user = userRepository.findByUsername(username).get();
 
-            List<GetNotificationResponseDto> notReadNotification = notificationService.getAllNotificationByUserIdReadFalse(user.getId());
+            List<GetNotificationResponseDto> notConfirmNotification = notificationService.getAllNotificationByUserIdConfirmFalse(user.getId());
 
             // 안읽은 알림이 있으면 본인에게 send
-            if (notReadNotification.size() > 0)
+            if (notConfirmNotification.size() > 0)
                 sendToClient(session);
 
             return true;

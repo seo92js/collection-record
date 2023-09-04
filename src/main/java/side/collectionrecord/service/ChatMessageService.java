@@ -45,7 +45,7 @@ public class ChatMessageService {
                 .receiver(receiver)
                 .chatRoom(chatRoom)
                 .message(createChatMessageRequestDto.getMessage())
-                .read(false)
+                .confirm(false)
                 .build();
 
         return chatMessageRepository.save(chatMessage).getId();
@@ -62,9 +62,9 @@ public class ChatMessageService {
 
     @Transactional
     public void updateChatMessage(Long chatRoomId, Long userId){
-        List<ChatMessage> readFalseChatMessage = chatMessageRepository.findByChatroomIdAndUserIdReadFalse(chatRoomId, userId);
+        List<ChatMessage> confirmFalseChatMessage = chatMessageRepository.findByChatroomIdAndUserIdConfirmFalse(chatRoomId, userId);
 
-        for (ChatMessage chatMessage : readFalseChatMessage)
-            chatMessage.setRead();
+        for (ChatMessage chatMessage : confirmFalseChatMessage)
+            chatMessage.setConfirm();
     }
 }

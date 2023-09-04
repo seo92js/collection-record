@@ -104,7 +104,7 @@ class NotificationServiceTest {
 
         User user = userRepository.findById(receiver.getId()).get();
 
-        assertThat(user.getReceiveNotify().get(0).isRead()).isEqualTo(true);
+        assertThat(user.getReceiveNotify().get(0).isConfirm()).isEqualTo(true);
     }
 
     @Test
@@ -140,9 +140,9 @@ class NotificationServiceTest {
         Long id = notificationService.createNotification(createNotificationRequestDto);
 
         //when
-        List<GetNotificationResponseDto> notReadNotification = notificationService.getAllNotificationByUserIdReadFalse(receiver.getId());
+        List<GetNotificationResponseDto> notConfirmNotification = notificationService.getAllNotificationByUserIdConfirmFalse(receiver.getId());
 
         //then
-        assertThat(notReadNotification.size()).isEqualTo(1);
+        assertThat(notConfirmNotification.size()).isEqualTo(1);
     }
 }

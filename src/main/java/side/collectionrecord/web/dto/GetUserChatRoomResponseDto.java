@@ -11,12 +11,12 @@ public class GetUserChatRoomResponseDto {
     private String username;
     private Long profileImageId;
 
-    private boolean isRead;
+    private boolean isConfirm;
 
-    public GetUserChatRoomResponseDto(User user, boolean isRead){
+    public GetUserChatRoomResponseDto(User user, boolean isConfirm){
         this.userId = user.getId();
         this.username = user.getUsername();
         this.profileImageId = user.getProfileImage().getId();
-        this.isRead = isRead;
+        this.isConfirm = isConfirm;
     }
 }

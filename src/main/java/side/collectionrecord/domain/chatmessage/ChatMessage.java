@@ -31,15 +31,15 @@ public class ChatMessage extends BaseTimeEntity {
 
     private String message;
 
-    private boolean read;
+    private boolean confirm;
 
     @Builder
-    public ChatMessage(User sender, User receiver, ChatRoom chatRoom, String message, boolean read){
+    public ChatMessage(User sender, User receiver, ChatRoom chatRoom, String message, boolean confirm){
         this.sender = sender;
         this.receiver = receiver;
         this.chatRoom = chatRoom;
         this.message = message;
-        this.read = read;
+        this.confirm = confirm;
 
         sender.addSendMessage(this);
         receiver.addReceiveMessage(this);
@@ -47,7 +47,7 @@ public class ChatMessage extends BaseTimeEntity {
         chatRoom.addChatMessage(this);
     }
 
-    public void setRead(){
-        this.read = true;
+    public void setConfirm(){
+        this.confirm = true;
     }
 }

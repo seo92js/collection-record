@@ -105,7 +105,7 @@ class ChatMessageServiceTest {
                 .receiverId(receiver.getId())
                 .chatRoomId(chatRoom.getId())
                 .message("message")
-                .read(false)
+                .confirm(false)
                 .build();
 
         //when
@@ -148,7 +148,7 @@ class ChatMessageServiceTest {
                 .receiverId(receiver.getId())
                 .chatRoomId(chatRoom.getId())
                 .message("message")
-                .read(false)
+                .confirm(false)
                 .build();
 
         chatMessageService.createChatMessage(createChatMessageRequestDto);
