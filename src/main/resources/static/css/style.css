@@ -21,7 +21,6 @@
 @import "screens/notification.css";
 @import "screens/chatroom.css";
 @import "screens/user-chatroom-list.css";
-@import "screens/user-password.css";
 
 body {
     font-family: 'Open Sans', sans-serif;
