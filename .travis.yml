@@ -15,7 +15,7 @@ cache:
 script: "./gradlew clean build"
 
 before_deploy:
-  - zip -r collection-record
+  - zip -r collection-record *
   - mkdir -p deploy
   - mv collection-record.zip deploy/collection-record.zip
 
