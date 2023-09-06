@@ -1,5 +1,5 @@
 //const notificationSocket = new WebSocket('ws://localhost:8080/notification');
-const notificationSocket = new WebSocket('ws://ec2-52-79-198-114.ap-northeast-2.compute.amazonaws.com:8080/notification');
+const notificationSocket = new WebSocket('ws://ec2-52-79-198-114.ap-northeast-2.compute.amazonaws.com/notification');
 
 notificationSocket.onopen = function() {
       const username = document.getElementById('loginUsername').value;
