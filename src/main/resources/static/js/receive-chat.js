@@ -2,7 +2,6 @@
 const chatSocket = new WebSocket('ws://ec2-52-79-198-114.ap-northeast-2.compute.amazonaws.com:8080/chatroom');
 
 chatSocket.onopen = function() {
-      console.log('socket open receive-chat');
       const username = document.getElementById('loginUsername').value;
       const message = {
         type: 'username',
@@ -13,7 +12,6 @@ chatSocket.onopen = function() {
 };
 
 chatSocket.onclose = function() {
-      console.log('socket close receive-chat');
 }
 
 chatSocket.onmessage = function(event) {

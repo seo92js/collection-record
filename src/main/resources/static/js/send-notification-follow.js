@@ -2,7 +2,6 @@
 const socket = new WebSocket('ws://ec2-52-79-198-114.ap-northeast-2.compute.amazonaws.com:8080/notification');
 
 socket.onopen = function() {
-      console.log('socket open notification-follow');
       const username = document.getElementById('loginUsername').value;
       const message = {
         type: 'username',
@@ -13,7 +12,6 @@ socket.onopen = function() {
 };
 
 socket.onclose = function() {
-      console.log('socket close notification-follow');
 }
 
 function sendNotification(senderName, receiverName){
