@@ -11,13 +11,10 @@ window.addEventListener('scroll', function(){
 getFollowPosts(page);
 
 function getFollowPosts(page){
-    console.log('여기');
-
     $.ajax({
         type: 'GET',
         url: '/api/v1/home/' + page,
     }).done(function(response){
-        console.log('여기2');
         if (response.length === 0){
             isEnd = true;
             return;

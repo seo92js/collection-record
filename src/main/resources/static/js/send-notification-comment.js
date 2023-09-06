@@ -1,7 +1,8 @@
-const socket = new WebSocket('ws://localhost:8080/notification');
-/*const socket = new WebSocket('ws://ec2-52-79-198-114.ap-northeast-2.compute.amazonaws.com:8080/notification');*/
+//const socket = new WebSocket('ws://localhost:8080/notification');
+const socket = new WebSocket('ws://ec2-52-79-198-114.ap-northeast-2.compute.amazonaws.com:8080/notification');
 
 socket.onopen = function() {
+      console.log('socket open notification-comment');
       const username = document.getElementById('loginUsername').value;
       const message = {
         type: 'username',
@@ -10,6 +11,10 @@ socket.onopen = function() {
 
       socket.send(JSON.stringify(message));
 };
+
+socket.onclose = function() {
+      console.log('socket close notification-comment');
+}
 
 function sendNotification(senderName, receiverName, postsId){
 
