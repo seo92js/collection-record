@@ -12,10 +12,10 @@
   <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"/>
 </div>
 
-### 배포 주소
+## 배포 주소
 [http://ec2-52-79-198-114.ap-northeast-2.compute.amazonaws.com](http://ec2-52-79-198-114.ap-northeast-2.compute.amazonaws.com)
 
-### 요약
+## 요약
 
 음반 수집 기록 및 공유를 위한 음반 컬렉션 SNS 웹사이트 입니다.
 
@@ -27,7 +27,7 @@ Instagram이나 Blog에는 나의 음반 수집 기록을 포스팅 하는데 �
 
 이러한 이유로 음반 컬렉터들의 SNS 사이트를 개발하게 되었습니다.
 
-### 주요 기능
+## 주요 기능
 
 * 소셜 로그인 (Naver, Google)
 * iTunes Search API로 음반 검색을 통한 게시물 등록
