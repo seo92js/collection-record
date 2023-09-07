@@ -4,6 +4,7 @@
 [http://ec2-52-79-198-114.ap-northeast-2.compute.amazonaws.com](http://ec2-52-79-198-114.ap-northeast-2.compute.amazonaws.com)
 
 
+
 ## 사용 기술
 <div>
   <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=OpenJDK&logoColor=white"/>
@@ -18,6 +19,7 @@
 </div>
 
 
+
 ## 요약
 
 음반 수집 기록 및 공유를 위한 음반 컬렉션 SNS 웹사이트 입니다.
@@ -29,6 +31,7 @@ Instagram이나 Blog에는 나의 음반 수집 기록을 포스팅 하는데 �
 * 중고거래가 원활하지 않다.
 
 이러한 이유로 음반 컬렉터들의 SNS 사이트를 개발하게 되었습니다.
+
 
 
 ## 주요 기능
