@@ -10,6 +10,7 @@
   <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=OpenJDK&logoColor=white"/>
   <img src="https://img.shields.io/badge/spring boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>
   <img src="https://img.shields.io/badge/spring security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"/>
+  <img src="https://img.shields.io/badge/QueryDSL-6DB33F?style=for-the-badge&logo=querydsl&logoColor=white"/>
   <br>
   <img src="https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white"/>
   <img src="https://img.shields.io/badge/hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white"/>
@@ -37,7 +38,9 @@ Instagram이나 Blog에는 나의 음반 수집 기록을 포스팅 하는데 �
 ## 주요 기능
 
 * 소셜 로그인 (Naver, Google)
-* iTunes Search API로 음반 검색을 통한 게시물 등록
-* 유저 팔로우
-* 실시간 채팅
-* 실시간 알람 (채팅, 댓글, 팔로우)
+* 음반 데이터베이스 검색 ( iTuens Search API )
+* 게시물 등록, 수정, 삭제
+* 댓글
+* 팔로우, 언팔로우, 모아보기
+* 실시간 채팅 (WebSocket)
+* 실시간 알림 (WebSocket)
