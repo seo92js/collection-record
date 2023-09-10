@@ -66,6 +66,7 @@ public class UserChatRoomService {
 
     @Transactional
     public List<GetUserChatRoomResponseDto> getAllUserChatroomByUserId(Long userId){
+
         List<Tuple> userChatRoomList = userChatRoomRepository.findUserAndChatroomIdByUserId(userId);
 
         List<GetUserChatRoomResponseDto> responseDtoList = new ArrayList<>();

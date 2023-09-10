@@ -8,7 +8,6 @@ import java.util.List;
 
 import static side.collectionrecord.domain.follow.QFollow.follow;
 import static side.collectionrecord.domain.posts.QPosts.posts;
-import static side.collectionrecord.domain.user.QUser.user;
 
 public class FollowRepositoryImpl implements FollowRepositoryCustom{
     private final EntityManager em;
@@ -21,25 +20,17 @@ public class FollowRepositoryImpl implements FollowRepositoryCustom{
 
     @Override
     public List<Posts> findPostsByUserIdEqFollowingId(Long userId, int offset, int size) {
-/*        List<Long> followUserId = queryFactory
-                .select(follow.follower.id)
-                .from(follow)
-                .where(follow.following.id.eq(userId))
-                .fetch();
 
-        return queryFactory
-                .selectFrom(posts)
-                .where(posts.user.id.in(followUserId))
-                .fetch();*/
-
-        return queryFactory
-                .selectFrom(posts)
-                .join(posts.user, user)
-                .join(user.follower, follow)
-                .where(follow.following.id.eq(userId))
+        return queryFactory.selectFrom(posts)
+                .join(follow)
+                    .on(
+                        posts.user.id.eq(follow.follower.id)
+                                .and(follow.following.id.eq(userId))
+                    )
                 .orderBy(posts.createdDate.desc())
                 .offset(offset)
                 .limit(size)
                 .fetch();
+
     }
 }
