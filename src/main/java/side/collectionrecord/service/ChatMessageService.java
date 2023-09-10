@@ -48,6 +48,8 @@ public class ChatMessageService {
                 .confirm(false)
                 .build();
 
+        chatRoom.preUpdate();
+
         return chatMessageRepository.save(chatMessage).getId();
     }
 
