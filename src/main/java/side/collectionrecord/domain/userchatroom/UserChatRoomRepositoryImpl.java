@@ -48,7 +48,7 @@ public class UserChatRoomRepositoryImpl implements UserChatRoomRepositoryCustom{
                             .and(userChatRoom2.user.id.eq(userId))
                             .and(userChatRoom.user.id.ne(userId))
                     )
-                .orderBy(userChatRoom.chatRoom.chatMessages.any().createdDate.desc())
+                .orderBy(userChatRoom.chatRoom.chatMessages.any().createdDate.desc()).limit(1)
                 .fetch();
 
         return users;
