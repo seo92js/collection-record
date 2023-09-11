@@ -34,7 +34,7 @@ public class PostsController {
                         .album(null)
                         .genre(null)
                         .albumArt(null)
-                        .representativeImage(null)
+                        .images(null)
                         .text(null)
                         .status(null)
                         .build());
@@ -112,7 +112,7 @@ public class PostsController {
         model.addAttribute("statuses", statuses);
 
         // 일단은 첫번쨰 이미지만?
-        model.addAttribute("imageId", posts.getRepresentativeImage().get(0).getId());
+        model.addAttribute("imageId", posts.getImages().get(0).getId());
 
         model.addAttribute("postsId", id);
 

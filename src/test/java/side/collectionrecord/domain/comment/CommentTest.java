@@ -27,7 +27,7 @@ class CommentTest {
                 .genre("genre")
                 .albumArt("art")
                 .category(Category.CD)
-                .representativeImage(null)
+                .images(null)
                 .text("text")
                 .status(PostsStatus.SALE)
                 .build();

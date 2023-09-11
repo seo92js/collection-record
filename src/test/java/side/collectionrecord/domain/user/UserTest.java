@@ -28,7 +28,7 @@ class UserTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .representativeImage(null)
+                .images(null)
                 .text("text")
                 .status(PostsStatus.SALE)
                 .build();

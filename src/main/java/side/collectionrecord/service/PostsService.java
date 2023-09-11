@@ -83,7 +83,7 @@ public class PostsService {
                         .album(createPostsRequestDto.getAlbum())
                         .genre(createPostsRequestDto.getGenre())
                         .albumArt(createPostsRequestDto.getAlbumArt())
-                        .representativeImage(createPostsRequestDto.getRepresentativeImage())
+                        .images(createPostsRequestDto.getImages())
                         .text(createPostsRequestDto.getText())
                         .status(createPostsRequestDto.getStatus())
                         .build())

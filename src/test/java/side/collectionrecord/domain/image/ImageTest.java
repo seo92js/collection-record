@@ -27,13 +27,13 @@ class ImageTest {
                 .profileImage(profileImage)
                 .build();
 
-        Image representativeImage = Image.builder()
-                .filename("representative")
+        Image image = Image.builder()
+                .filename("image")
                 .data(null)
                 .build();
 
         List<Image> images = new ArrayList<>();
-        images.add(representativeImage);
+        images.add(image);
 
         Posts posts = Posts.builder()
                 .artist("artist")
@@ -42,13 +42,13 @@ class ImageTest {
                 .albumArt("albumArt")
                 .category(Category.CD)
                 .text("text")
-                .representativeImage(images)
+                .images(images)
                 .status(PostsStatus.SALE)
                 .build();
         //when
         //then
         assertThat(user.getProfileImage().getId()).isEqualTo(profileImage.getId());
-        assertThat(posts.getRepresentativeImage().get(0).getId()).isEqualTo(representativeImage.getId());
+        assertThat(posts.getImages().get(0).getId()).isEqualTo(image.getId());
     }
 
     @Test

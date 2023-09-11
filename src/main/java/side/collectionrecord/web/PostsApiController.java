@@ -42,7 +42,7 @@ public class PostsApiController {
             images.add(image);
         }
 
-        createPostsRequestDto.setRepresentativeImage(images);
+        createPostsRequestDto.setImages(images);
 
         return postsService.createPosts(createPostsRequestDto);
     }

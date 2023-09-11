@@ -16,14 +16,16 @@
             <div class="posts__row">
                 <div class="posts__col">
                     <!-- 이미지 -->
-                    <div id="posts-img" class="posts__row" th:each="imageId : ${getPostsResponseDto.representativeImageId}">
+                    <div id="posts-img" class="posts__row" th:each="imageId : ${getPostsResponseDto.imageIds}">
                         <img class="posts__img" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
                     </div>
                     <a class="posts__prev" th:onclick="showPrevImage()">
-                        <i class="fas fa-arrow-left fa-lg"></i>
+<!--                        <i class="fas fa-arrow-left fa-lg"></i>-->
+                        <i class="icons__arrow"><</i>
                     </a>
                     <a class="posts__next" th:onclick="showNextImage()">
-                        <i class="fas fa-arrow-right fa-lg"></i>
+<!--                        <i class="fas fa-arrow-right fa-lg"></i>-->
+                        <i class="icons__arrow">></i>
                     </a>
                 </div>
                 <div class="posts__col">

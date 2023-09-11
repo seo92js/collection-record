@@ -20,19 +20,19 @@ public class CreatePostsRequestDto {
     private String album;
     private String genre;
     private String albumArt;
-    private List<Image> representativeImage;
+    private List<Image> images;
     private String text;
     private PostsStatus status;
 
     @Builder
-    public CreatePostsRequestDto(Long userId, Category category, String artist, String album, String genre, String albumArt, List<Image> representativeImage, String text, PostsStatus status){
+    public CreatePostsRequestDto(Long userId, Category category, String artist, String album, String genre, String albumArt, List<Image> images, String text, PostsStatus status){
         this.userId = userId;
         this.category = category;
         this.artist = artist;
         this.album = album;
         this.genre = genre;
         this.albumArt = albumArt;
-        this.representativeImage = representativeImage;
+        this.images = images;
         this.text = text;
         this.status = status;
     }

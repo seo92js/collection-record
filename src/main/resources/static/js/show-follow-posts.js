@@ -75,24 +75,26 @@ function getFollowPosts(page){
             var col1 = $('<div>').addClass('posts-feed__col');
 
             var temp = $('<div>').addClass('posts-feed__row');
-            var imgElement = $('<img>').attr('src', '/api/v1/image/' + post.representativeImageId[0]).addClass('posts-feed__img');
+            var imgElement = $('<img>').attr('src', '/api/v1/image/' + post.imageIds[0]).addClass('posts-feed__img');
             temp.append(imgElement);
             col1.append(temp);
 
             var prevLink = $('<a>').addClass('posts-feed__prev');
 
-            prevLink.append($('<i>').addClass('fas fa-arrow-left fa-lg'));
+//            prevLink.append($('<i>').addClass('fas fa-arrow-left fa-lg'));
+            prevLink.append($('<i>').text('<').addClass('icons__arrow'));
 
             prevLink.on('click', function() {
-                imageHandlers.prevImage(imgElement, post.representativeImageId);
+                imageHandlers.prevImage(imgElement, post.imageIds);
             });
 
             var nextLink = $('<a>').addClass('posts-feed__next');
 
-            nextLink.append($('<i>').addClass('fas fa-arrow-right fa-lg'));
+//            nextLink.append($('<i>').addClass('fas fa-arrow-right fa-lg'));
+            nextLink.append($('<i>').text('>').addClass('icons__arrow'));
 
             nextLink.on('click', function() {
-                imageHandlers.nextImage(imgElement, post.representativeImageId);
+                imageHandlers.nextImage(imgElement, post.imageIds);
             });
 
             col1.append(prevLink);
@@ -123,19 +125,19 @@ function createImageHandlers(post) {
         $(imageElement).attr("src", '/api/v1/image/' + imageId);
     }
 
-    function prevImage(imageElement, representativeImageId) {
+    function prevImage(imageElement, imageIds) {
         if (index != 0) {
             index--;
-            updateImage(imageElement, representativeImageId[index]);
+            updateImage(imageElement, imageIds[index]);
         }
     }
 
-    function nextImage(imageElement, representativeImageId) {
-        let maxLength = representativeImageId.length;
+    function nextImage(imageElement, imageIds) {
+        let maxLength = imageIds.length;
 
         if (index != maxLength - 1) {
             index++;
-            updateImage(imageElement, representativeImageId[index]);
+            updateImage(imageElement, imageIds[index]);
         }
     }
 

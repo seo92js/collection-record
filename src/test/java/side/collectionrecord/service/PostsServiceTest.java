@@ -68,7 +68,7 @@ class PostsServiceTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .representativeImage(images)
+                .images(images)
                 .text("text")
                 .status(PostsStatus.SALE)
                 .build();
@@ -82,7 +82,7 @@ class PostsServiceTest {
         //then
         assertThat(posts.getUser()).isEqualTo(user);
         assertThat(posts.getCategory()).isEqualTo(Category.CD);
-        assertThat(posts.getRepresentativeImage().get(0).getFilename()).isEqualTo("image");
+        assertThat(posts.getImages().get(0).getFilename()).isEqualTo("image");
         assertThat(posts.getText()).isEqualTo("text");
         assertThat(posts.getStatus()).isEqualTo(PostsStatus.SALE);
     }
@@ -119,7 +119,7 @@ class PostsServiceTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .representativeImage(images)
+                .images(images)
                 .status(PostsStatus.SALE)
                 .text("text2")
                 .build();
@@ -131,7 +131,7 @@ class PostsServiceTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .representativeImage(images)
+                .images(images)
                 .status(PostsStatus.SALE)
                 .text("text2")
                 .build();
@@ -184,7 +184,7 @@ class PostsServiceTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .representativeImage(images)
+                .images(images)
                 .status(PostsStatus.SALE)
                 .text("text")
                 .build();

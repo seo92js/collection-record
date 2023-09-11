@@ -60,7 +60,7 @@ class CommentServiceTest {
                 .albumArt("albumArt")
                 .category(Category.CD)
                 .text("text")
-                .representativeImage(null)
+                .images(null)
                 .user(user)
                 .build();
 
@@ -102,7 +102,7 @@ class CommentServiceTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .representativeImage(null)
+                .images(null)
                 .user(user)
                 .build();
 
@@ -152,7 +152,7 @@ class CommentServiceTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .representativeImage(null)
+                .images(null)
                 .user(user)
                 .status(PostsStatus.SALE)
                 .build();

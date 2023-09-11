@@ -19,7 +19,7 @@ public class GetPostsResponseDto {
     String genre;
     String albumArt;
     Category category;
-    List<Long> representativeImageId = new ArrayList<>();
+    List<Long> imageIds = new ArrayList<>();
     String text;
     PostsStatus status;
 
@@ -30,8 +30,8 @@ public class GetPostsResponseDto {
         this.album = posts.getAlbum();
         this.genre = posts.getGenre();
         this.albumArt = posts.getAlbumArt();
-        for (Image image : posts.getRepresentativeImage()){
-            this.representativeImageId.add(image.getId());
+        for (Image image : posts.getImages()){
+            this.imageIds.add(image.getId());
         }
         this.text = posts.getText();
         this.status = posts.getStatus();

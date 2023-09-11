@@ -23,7 +23,7 @@ public class GetFollowPostsResponseDto {
     private String albumArt;
     private Category category;
     private PostsStatus status;
-    private List<Long> representativeImageId = new ArrayList<>();
+    private List<Long> imageIds = new ArrayList<>();
     private String text;
 
     public GetFollowPostsResponseDto(Posts posts){
@@ -36,11 +36,9 @@ public class GetFollowPostsResponseDto {
         this.genre = posts.getGenre();
         this.albumArt = posts.getAlbumArt();
         this.category = posts.getCategory();
-        // 일단 맨 앞 사진?
-        //this.representativeImageId = posts.getRepresentativeImage().get(0).getId();
         this.status = posts.getStatus();
-        for (Image image : posts.getRepresentativeImage()){
-            this.representativeImageId.add(image.getId());
+        for (Image image : posts.getImages()){
+            this.imageIds.add(image.getId());
         }
         this.text = posts.getText();
     }

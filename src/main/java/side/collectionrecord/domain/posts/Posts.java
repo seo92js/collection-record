@@ -33,7 +33,7 @@ public class Posts extends BaseTimeEntity {
 
     @OneToMany
     @JoinColumn(name = "posts_id")
-    private List<Image> representativeImage = new ArrayList<>();
+    private List<Image> images = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Category category;
@@ -54,14 +54,14 @@ public class Posts extends BaseTimeEntity {
     }
 
     @Builder
-    public Posts(User user, String artist, String album, String genre, String albumArt, Category category, List<Image> representativeImage, String text, PostsStatus status){
+    public Posts(User user, String artist, String album, String genre, String albumArt, Category category, List<Image> images, String text, PostsStatus status){
         this.user = user;
         this.artist = artist;
         this.album = album;
         this.genre = genre;
         this.albumArt = albumArt;
         this.category = category;
-        this.representativeImage = representativeImage;
+        this.images = images;
         this.text = text;
         this.status = status;
     }

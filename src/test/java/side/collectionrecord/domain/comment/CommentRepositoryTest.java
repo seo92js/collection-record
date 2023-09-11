@@ -55,7 +55,7 @@ class CommentRepositoryTest {
                 .genre("kpop")
                 .albumArt("albumArt")
                 .text("text")
-                .representativeImage(null)
+                .images(null)
                 .user(user)
                 .category(Category.CD)
                 .status(PostsStatus.SALE)
@@ -94,7 +94,7 @@ class CommentRepositoryTest {
 
         Posts posts = Posts.builder()
                 .text("text")
-                .representativeImage(null)
+                .images(null)
                 .artist("artist")
                 .album("album")
                 .genre("kpop")

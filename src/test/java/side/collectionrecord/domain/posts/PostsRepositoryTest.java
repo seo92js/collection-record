@@ -41,7 +41,7 @@ class PostsRepositoryTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.TAPE)
-                .representativeImage(null)
+                .images(null)
                 .text("text")
                 .category(Category.CD)
                 .build();
@@ -73,7 +73,7 @@ class PostsRepositoryTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.TAPE)
-                .representativeImage(null)
+                .images(null)
                 .text("text1")
                 .status(PostsStatus.SALE)
                 .build();
@@ -87,7 +87,7 @@ class PostsRepositoryTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.TAPE)
-                .representativeImage(null)
+                .images(null)
                 .text("text2")
                 .status(PostsStatus.SALE)
                 .build();
@@ -122,7 +122,7 @@ class PostsRepositoryTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.TAPE)
-                .representativeImage(null)
+                .images(null)
                 .text("text1")
                 .build();
 
@@ -135,7 +135,7 @@ class PostsRepositoryTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.TAPE)
-                .representativeImage(null)
+                .images(null)
                 .text("text2")
                 .build();
 

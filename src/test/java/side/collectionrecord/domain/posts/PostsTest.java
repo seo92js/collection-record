@@ -31,7 +31,7 @@ class PostsTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .representativeImage(null)
+                .images(null)
                 .text("text")
                 .status(PostsStatus.SALE)
                 .build();
@@ -54,14 +54,14 @@ class PostsTest {
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .representativeImage(null)
+                .images(null)
                 .text(text)
                 .status(PostsStatus.SALE)
                 .build();
 
         //then
         assertThat(posts.getText()).isEqualTo(text);
-        assertThat(posts.getRepresentativeImage()).isNull();
+        assertThat(posts.getImages()).isNull();
         assertThat(posts.getStatus()).isEqualTo(PostsStatus.SALE);
     }
 }
