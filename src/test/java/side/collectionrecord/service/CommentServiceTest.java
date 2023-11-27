@@ -15,7 +15,6 @@ import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.CreateParentCommentRequestDto;
 import side.collectionrecord.web.dto.GetCommentResponseDto;
 
 import java.util.List;

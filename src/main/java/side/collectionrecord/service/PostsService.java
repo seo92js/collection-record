@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.comment.Comment;
 import side.collectionrecord.domain.comment.CommentRepository;
-import side.collectionrecord.domain.image.ImageRepository;
+import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
@@ -22,13 +22,14 @@ public class PostsService {
 
     private final PostsRepository postsRepository;
 
-    private final ImageRepository imageRepository;
-
     private final CommentRepository commentRepository;
 
     @Transactional
-    public Posts getPostsById(Long id){
-        return postsRepository.findById(id).get();
+    public PostsResponseDto findById(Long id){
+
+        Posts posts = postsRepository.findById(id).get();
+
+        return new PostsResponseDto(posts);
     }
 
     @Transactional
@@ -73,34 +74,28 @@ public class PostsService {
     }
 
     @Transactional
-    public Long createPosts(CreatePostsRequestDto createPostsRequestDto){
-        User user = userRepository.findById(createPostsRequestDto.getUserId()).orElse(null);
+    public Long postsAdd(PostsAddForm postsAddForm, List<Image> images) {
+        User user = userRepository.findById(postsAddForm.getUserId()).orElse(null);
 
         return postsRepository.save(Posts.builder()
                         .user(user)
-                        .category(createPostsRequestDto.getCategory())
-                        .artist(createPostsRequestDto.getArtist())
-                        .album(createPostsRequestDto.getAlbum())
-                        .genre(createPostsRequestDto.getGenre())
-                        .albumArt(createPostsRequestDto.getAlbumArt())
-                        .images(createPostsRequestDto.getImages())
-                        .text(createPostsRequestDto.getText())
-                        .status(createPostsRequestDto.getStatus())
+                        .category(postsAddForm.getCategory())
+                        .artist(postsAddForm.getArtist())
+                        .album(postsAddForm.getAlbum())
+                        .genre(postsAddForm.getGenre())
+                        .albumArt(postsAddForm.getAlbumArt())
+                        .images(images)
+                        .text(postsAddForm.getText())
+                        .status(postsAddForm.getStatus())
                         .build())
                         .getId();
     }
 
     @Transactional
-    public Long updatePosts(Long userId, Long postsId, UpdatePostsRequestDto updatePostsRequestDto){
+    public Long updatePosts(Long postsId, PostsUpdateForm postsUpdateForm){
         Posts posts = postsRepository.findById(postsId).orElse(null);
 
-        posts.update(updatePostsRequestDto.getCategory(),
-                updatePostsRequestDto.getArtist(),
-                updatePostsRequestDto.getAlbum(),
-                updatePostsRequestDto.getGenre(),
-                updatePostsRequestDto.getAlbumArt(),
-                updatePostsRequestDto.getText(),
-                updatePostsRequestDto.getStatus());
+        posts.update(postsUpdateForm.getText(), postsUpdateForm.getStatus());
 
         return postsId;
     }

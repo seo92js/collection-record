@@ -66,12 +66,7 @@ public class Posts extends BaseTimeEntity {
         this.status = status;
     }
 
-    public void update(Category category, String artist, String album, String genre, String albumArt, String text, PostsStatus status){
-        this.artist = artist;
-        this.album = album;
-        this.genre = genre;
-        this.albumArt = albumArt;
-        this.category = category;
+    public void update(String text, PostsStatus status){
         this.text = text;
         this.status = status;
     }

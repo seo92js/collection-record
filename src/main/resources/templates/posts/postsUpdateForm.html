@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+
+<div th:replace="fragments/navigation :: navigation" />
+
+<header class="header">
+    <h1 class="header__title">게시물 수정</h1>
+</header>
+
+<main class="posts-update">
+    <input type="hidden" name="loginUsername" th:value="${session.user.name}">
+
+    <form class="form" method="post">
+        <div class="form__row">
+            <label for="category">카테고리</label>
+            <select id="category">
+                <option th:text="${postsResponseDto.category}"></option>
+            </select>
+        </div>
+
+        <div class="form__row">
+            <label for="status">게시물 상태</label>
+            <select id="status" name="status" required>
+                <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>
+            </select>
+        </div>
+
+        <div class="form__row">
+            <label for="artist">아티스트</label>
+            <input class="form__input" id="artist" type="text" th:text="${postsResponseDto.artist}" readonly>
+        </div>
+
+        <div class="form__row">
+            <label for="album">앨범</label>
+            <input class="form__input" id="album" type="text" th:text="${postsResponseDto.album}" readonly>
+        </div>
+
+        <div class="form__row">
+            <label for="genre">장르</label>
+            <input class="form__input" id="genre" type="text" th:text="${postsResponseDto.genre}" readonly>
+        </div>
+
+        <div class="form__row form__row--long">
+            <label for="albumArt">앨범아트</label>
+            <img class="form__img" id="albumArt" th:src="@{/api/v1/image/{imageId}(imageId=${postsResponseDto.imageIds[0]})}">
+        </div>
+
+        <div class="form__row">
+            <label for="text">내용</label>
+            <textarea id="text" name="text" th:value="${postsResponseDto.text}" placeholder="내용"></textarea>
+        </div>
+
+        <button class="form__btn" type="submit">수정</button>
+
+    </form>
+</main>
+
+<div th:replace="fragments/footer :: footer" />
+
+<script src="/js/delete-posts.js"></script>
+
+</body>
+</html>

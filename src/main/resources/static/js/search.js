@@ -42,7 +42,7 @@ function searchUser(page, text){
         }
 
         response.forEach(function(user){
-            var a = $('<a>').attr('href', '/user/' + user.username + '/home').addClass('search__link');
+            var a = $('<a>').attr('href', '/user/' + user.id + '/home').addClass('search__link');
 
             const div = $('<div>').addClass('search__user');
 

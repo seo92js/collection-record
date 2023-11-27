@@ -3,7 +3,7 @@ const artistSelect = $("#artist-select");
 const artist = $("#artist");
 const album = $("#album");
 const genre = $("#genre");
-const albumArt = $("#album-art");
+const albumArt = $("#albumArt");
 const albumArtImg = $("#album-art-img");
 
 $("#artist-select").on("change", function (){

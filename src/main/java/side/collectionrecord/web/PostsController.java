@@ -1,43 +1,41 @@
 package side.collectionrecord.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import side.collectionrecord.config.auth.dto.SessionUser;
 import side.collectionrecord.domain.category.Category;
+import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.posts.Posts;
+import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.service.CommentService;
+import side.collectionrecord.service.ImageService;
 import side.collectionrecord.service.PostsService;
 import side.collectionrecord.web.dto.*;
 
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class PostsController {
-    @Autowired
-    PostsService postsService;
-
-    @Autowired
-    CommentService commentService;
+    private final PostsRepository postsRepository;
+    private final PostsService postsService;
+    private final ImageService imageService;
+    private final CommentService commentService;
 
     @GetMapping("/posts/add")
     public String posts(Model model){
-        Long userId = (Long) model.getAttribute("loginUserId");
-
-        model.addAttribute("createPostsRequestDto", CreatePostsRequestDto.builder()
-                        .userId(userId)
-                        .category(null)
-                        .artist(null)
-                        .album(null)
-                        .genre(null)
-                        .albumArt(null)
-                        .images(null)
-                        .text(null)
-                        .status(null)
-                        .build());
 
         List<Category> categories = Arrays.asList(Category.values());
         model.addAttribute("categories", categories);
@@ -45,19 +43,48 @@ public class PostsController {
         List<PostsStatus> statuses = Arrays.asList(PostsStatus.values());
         model.addAttribute("statuses", statuses);
 
-        return "posts/postsAdd";
+        return "posts/postsAddForm";
+    }
+
+    @PostMapping("/posts/add")
+    public String postsAdd(@ModelAttribute PostsAddForm postsAddForm, RedirectAttributes redirectAttributes) throws IOException {
+        List<Long> imageIds = new ArrayList<>();
+
+        for (MultipartFile image : postsAddForm.getImages()) {
+            byte[] data = image.getBytes();
+            Long imageId = imageService.createImage(CreateImageRequestDto.builder()
+                    .filename(image.getOriginalFilename())
+                    .data(data)
+                    .build());
+
+            imageIds.add(imageId);
+        }
+
+        List<Image> images = new ArrayList<>();
+
+        for (Long imageId : imageIds){
+            Image image = imageService.getImageById(imageId);
+            images.add(image);
+        }
+
+        postsService.postsAdd(postsAddForm, images);
+
+        redirectAttributes.addAttribute("userId", postsAddForm.getUserId());
+        return "redirect:/user/{userId}/home";
     }
 
     @GetMapping("/posts/{id}")
-    public String postsView(@PathVariable Long id, Model model){
+    public String postsView(@PathVariable Long id, Model model, HttpSession session){
 
-        Posts posts = postsService.getPostsById(id);
+        Posts posts = postsRepository.findById(id).get();
+
+        PostsResponseDto postsResponseDto = postsService.findById(id);
 
         model.addAttribute("username", posts.getUser().getUsername());
+        model.addAttribute("postsResponseDto", postsResponseDto);
 
-        model.addAttribute("getPostsResponseDto", new GetPostsResponseDto(posts));
-
-        Long userId = (Long)model.getAttribute("loginUserId");
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        Long userId = user.getId();
 
         if (posts.getUser().getId().equals(userId)){
             model.addAttribute("isMyPost", true);
@@ -66,18 +93,22 @@ public class PostsController {
             model.addAttribute("userId", posts.getUser().getId());
         }
 
-        model.addAttribute("createParentCommentRequestDto", CreateParentCommentRequestDto.builder()
-                        .userId(userId)
-                        .postsId(id)
-                        .text(null)
-                .build());
+        CommentParentForm commentParentForm = CommentParentForm.builder()
+                .userId(userId)
+                .postsId(id)
+                .text(null)
+                .build();
 
-        model.addAttribute("createChildCommentRequestDto", CreateChildCommentRequestDto.builder()
+        model.addAttribute("commentParentForm", commentParentForm);
+
+        CommentChildForm commentChildForm = CommentChildForm.builder()
                 .userId(userId)
                 .postsId(id)
                 .parentCommentId(null)
                 .text(null)
-                .build());
+                .build();
+
+        model.addAttribute("commentChildForm", commentChildForm);
 
         List<GetCommentResponseDto> parentComments = commentService.getAllParentCommentsByPosts(posts);
         model.addAttribute("parentComments", parentComments);
@@ -88,34 +119,24 @@ public class PostsController {
         return "posts/posts";
     }
 
-    @GetMapping("/posts/update/{id}")
-    public String postsUpdate(@PathVariable Long id, Model model){
+    @GetMapping("/posts/{id}/update")
+    public String postsUpdateForm(@PathVariable Long id, Model model){
+        PostsResponseDto postsResponseDto = postsService.findById(id);
 
-        Posts posts = postsService.getPostsById(id);
-
-        model.addAttribute("updatePostsRequestDto", UpdatePostsRequestDto.builder()
-                        .category(posts.getCategory())
-                        .artist(posts.getArtist())
-                        .album(posts.getAlbum())
-                        .genre(posts.getGenre())
-                        .albumArt(posts.getAlbumArt())
-                        .text(posts.getText())
-                        .status(posts.getStatus())
-                        .build());
-
-        Long userId = (Long) model.getAttribute("loginUserId");
-
-        List<Category> categories = Arrays.asList(Category.values());
-        model.addAttribute("categories", categories);
+        model.addAttribute("postsResponseDto", postsResponseDto);
 
         List<PostsStatus> statuses = Arrays.asList(PostsStatus.values());
         model.addAttribute("statuses", statuses);
 
-        // 일단은 첫번쨰 이미지만?
-        model.addAttribute("imageId", posts.getImages().get(0).getId());
+        return "posts/postsUpdateForm";
+    }
 
-        model.addAttribute("postsId", id);
+    @PostMapping("/posts/{id}/update")
+    public String postsUpdate(@PathVariable Long id, @ModelAttribute PostsUpdateForm postsUpdateForm, RedirectAttributes redirectAttributes){
 
-        return "posts/postsUpdate";
+        postsService.updatePosts(id, postsUpdateForm);
+
+        redirectAttributes.addAttribute("postsId", id);
+        return "redirect:/posts/{postsId}";
     }
 }

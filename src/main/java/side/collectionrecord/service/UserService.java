@@ -10,8 +10,7 @@ import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.exception.CustomException;
 import side.collectionrecord.exception.ErrorCode;
 import side.collectionrecord.web.dto.GetSearchUserResponseDto;
-import side.collectionrecord.web.dto.GetUserProfileResponseDto;
-import side.collectionrecord.web.dto.UpdateUserRequestDto;
+import side.collectionrecord.web.dto.UserProfileForm;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,16 +25,17 @@ public class UserService {
     private final ImageRepository imageRepository;
 
     @Transactional
-    public Long updateUser(Long id, UpdateUserRequestDto updateUserRequestDto) {
-        validateDuplicateUser(updateUserRequestDto.getUsername());
-
+    public Long userUpdate(Long id, UserProfileForm userProfileForm, Image image){
         User findUser = userRepository.findById(id).orElse(null);
+
+        if (!findUser.getUsername().equals(userProfileForm.getUsername()))
+            validateDuplicateUser(userProfileForm.getUsername());
 
         Image prevImage = findUser.getProfileImage();
 
-        findUser.update(updateUserRequestDto.getUsername(), updateUserRequestDto.getProfileImage(), updateUserRequestDto.getProfileText());
+        findUser.update(userProfileForm.getUsername(), image, userProfileForm.getProfileText());
 
-        if (prevImage != null && prevImage.getId() != updateUserRequestDto.getProfileImage().getId()){
+        if (prevImage != null && prevImage.getId() != image.getId()){
             imageRepository.delete(prevImage);
         }
 
@@ -43,10 +43,14 @@ public class UserService {
     }
 
     @Transactional
-    public GetUserProfileResponseDto getUserById (Long id){
+    public UserProfileForm findById (Long id) {
         User user = userRepository.findById(id).orElse(null);
 
-        return new GetUserProfileResponseDto(user);
+        return UserProfileForm.builder()
+                .username(user.getUsername())
+                .profileText(user.getProfileText())
+                .profileImage(null)
+                .build();
     }
 
     @Transactional

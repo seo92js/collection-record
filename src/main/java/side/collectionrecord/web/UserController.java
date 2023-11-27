@@ -4,17 +4,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import side.collectionrecord.config.auth.dto.SessionUser;
 import side.collectionrecord.domain.category.Category;
+import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.service.FollowService;
-import side.collectionrecord.service.PostsService;
-import side.collectionrecord.service.UserChatRoomService;
-import side.collectionrecord.service.UserService;
+import side.collectionrecord.service.*;
+import side.collectionrecord.web.dto.CreateImageRequestDto;
 import side.collectionrecord.web.dto.GetUserChatRoomResponseDto;
-import side.collectionrecord.web.dto.GetUserProfileResponseDto;
+import side.collectionrecord.web.dto.UserProfileForm;
 
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,19 +37,22 @@ public class UserController {
 
     private final UserChatRoomService userChatRoomService;
 
-    @GetMapping("/user/{username}/home")
-    public String userHome(@PathVariable String username, Model model){
+    private final ImageService imageService;
 
-        User user = userRepository.findByUsername(username).get();
+    @GetMapping("/user/{id}/home")
+    public String userHome(@PathVariable Long id, Model model, HttpSession httpSession){
+
+        User user = userRepository.findById(id).get();
 
         Long userId = user.getId();
 
         List<Category> categories = Arrays.asList(Category.values());
         model.addAttribute("categories", categories);
 
-        Long loginUserId = (Long) model.getAttribute("loginUserId");
+        SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
+        Long loginUserId = sessionUser.getId();
 
-        if (loginUserId != userId) {
+        if (!loginUserId.equals(userId)) {
             if (followService.checkFollow(loginUserId, userId) == false) {
                 model.addAttribute("isFollowing", false);
             } else {
@@ -57,7 +65,7 @@ public class UserController {
         }
 
         model.addAttribute("id", userId);
-        model.addAttribute("username", username);
+        model.addAttribute("username", user.getUsername());
         model.addAttribute("profileText", user.getProfileText());
 
         List<String> artists = postsService.getAllArtistByUserId(userId);
@@ -67,30 +75,53 @@ public class UserController {
     }
 
     @GetMapping("/user/{username}/chatroomList")
-    public String userChatroomList(@PathVariable String username, Model model){
+    public String userChatroomList(@PathVariable String username, Model model, HttpSession httpSession){
 
-        Long loginUserId = (Long) model.getAttribute("loginUserId");
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
-        List<GetUserChatRoomResponseDto> getUserChatRoomResponseDtos = userChatRoomService.getAllUserChatroomByUserId(loginUserId);
+        List<GetUserChatRoomResponseDto> getUserChatRoomResponseDtos = userChatRoomService.getAllUserChatroomByUserId(user.getId());
 
         model.addAttribute("chatrooms", getUserChatRoomResponseDtos);
 
         return "user/userChatroomList";
     }
 
-    @GetMapping("/user/profile")
-    public String userProfile(Model model){
-        Long userId = (Long)model.getAttribute("loginUserId");
+    @GetMapping("/user/{id}/profile")
+    public String userProfile(@PathVariable Long id, Model model){
+        UserProfileForm userProfileForm = userService.findById(id);
 
-        GetUserProfileResponseDto getUserProfileResponseDto = userService.getUserById(userId);
+        User user = userRepository.findById(id).get();
 
-        model.addAttribute("getUserProfileResponseDto", getUserProfileResponseDto);
+        model.addAttribute("imageId", user.getProfileImage().getId());
 
-        if (getUserProfileResponseDto.getProfileImage() != null){
-            User user = userRepository.findById(userId).get();
-            model.addAttribute("imageId", user.getProfileImage().getId());
-        }
+        model.addAttribute("userProfileForm", userProfileForm);
 
         return "user/userProfileForm";
+    }
+
+    @PostMapping("/user/{id}/profile")
+    public String userProfileUpdate(@PathVariable Long id, @ModelAttribute UserProfileForm userProfileForm, RedirectAttributes redirectAttributes) throws IOException {
+        Image profileImage = null;
+
+        if (!userProfileForm.getProfileImage().getOriginalFilename().equals("")) {
+            byte[] bytes = userProfileForm.getProfileImage().getBytes();
+
+            Long imageId = imageService.createImage(CreateImageRequestDto.builder()
+                    .filename(userProfileForm.getProfileImage().getOriginalFilename())
+                    .data(bytes)
+                    .build());
+
+            profileImage = imageService.getImageById(imageId);
+
+        } else {
+            User user = userRepository.findById(id).get();
+
+            profileImage = imageService.getImageById(user.getProfileImage().getId());
+        }
+
+        userService.userUpdate(id, userProfileForm, profileImage);
+
+        redirectAttributes.addAttribute("userId", id);
+        return "redirect:/user/{userId}/home";
     }
 }

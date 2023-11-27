@@ -20,21 +20,21 @@
         </li>
         <!-- 마이홈 -->
         <li sec:authorize="isAuthenticated()" class="nav__li">
-            <a th:href="@{/user/{loginUsername}/home(loginUsername=${loginUsername})}">
+            <a th:href="@{/user/{id}/home(id=${session.user.id})}">
 <!--                <i class="fas fa-user"></i>-->
                 마이홈
             </a>
         </li>
         <!-- 채팅방 -->
         <li sec:authorize="isAuthenticated()" id="chat" class="nav__li">
-            <a th:href="@{/user/{loginUsername}/chatroomList(loginUsername=${loginUsername})}">
+            <a th:href="@{/user/{username}/chatroomList(username=${session.user.name})}">
 <!--                <i class="fas fa-comment"></i>-->
                 채팅
             </a>
         </li>
         <!-- 알림 -->
         <li sec:authorize="isAuthenticated()" id="notification" class="nav__li">
-            <a th:href="@{/notification/{id}(id=${loginUserId})}">
+            <a th:href="@{/notification/{id}(id=${session.user.id})}">
 <!--                <i class="fas fa-bell"></i>-->
                 알림
             </a>
@@ -58,7 +58,7 @@
             </a>
         </li>
 
-        <input type="hidden" th:value="${loginUsername}" th:id="loginUsername">
+        <input type="hidden" sec:authorize="isAuthenticated()" th:value="${session.user.name}" th:id="loginUsername">
     </ul>
 
     <script src="/js/receive-chat.js" sec:authorize="isAuthenticated()"></script>

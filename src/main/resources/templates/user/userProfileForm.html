@@ -16,40 +16,29 @@
                 </div>
                 <div class="user-main__col user-main__col--30">
                     <div class="user-main__row user-main__row--small">
-                        <label class="user-main__label user-main__label--blue" for="user-profile-img">이미지 업로드</label>
-                    </div>
-                    <div class="user-main__row user-main__row--small">
-                        <a class="user-main__link user-main__link--blue" href="/user/profile/password">비밀번호 변경</a>
+                        <label class="user-main__label user-main__label--blue" for="profileImage">이미지 업로드</label>
                     </div>
                 </div>
             </div>
         </div>
 
-        <form class="form" th:object="${getUserProfileResponseDto}" id="user-profile-form">
+        <form class="form" method="post" enctype="multipart/form-data">
 
-            <input class="form__input form__input--hidden" onchange="preview(this)" type="file" id="user-profile-img">
+            <input class="form__input form__input--hidden" onchange="preview(this)" type="file" id="profileImage" name="profileImage">
 
             <div class="form__row">
-                <div class="form__col form__col--30">
-                    <label class="form__label form__label--bold">이름</label>
-                </div>
-                <div class="form__col form__col--70">
-                    <input class="form__input" type="text" th:value="*{username}" th:field="*{username}" placeholder="이름" required/>
-                </div>
+                <label for="username">이름</label>
+                <input class="form__input" type="text" id="username" name="username" th:value="${userProfileForm.username}" required>
             </div>
 
             <div class="form__row">
-                <div class="form__col form__col--30">
-                    <label class="form__label form__label--bold">소개</label>
-                </div>
-                <div class="form__col form__col--70">
-                    <textarea class="form__textarea" th:value="*{profileText}" th:field="*{profileText}" placeholder="소개"></textarea>
-                </div>
+                <label for="profileText">소개</label>
+                <textarea class="form__textarea" id="profileText" name="profileText" th:value="${userProfileForm.profileText}"></textarea>
             </div>
 
             <div class="form__row">
                 <div class="form__col">
-                    <button class="form__btn" type="submit" th:onclick="updateUser([[${loginUserId}]])">수정</button>
+                    <button class="form__btn" type="submit">수정</button>
                 </div>
             </div>
 
@@ -58,7 +47,7 @@
 
     <div th:replace="fragments/footer :: footer" />
 
-    <script src="/js/update-user.js"></script>
+    <script src="/js/preview.js"></script>
 
 </body>
 </html>

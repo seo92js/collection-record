@@ -13,8 +13,6 @@ import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.CreatePostsRequestDto;
-import side.collectionrecord.web.dto.UpdatePostsRequestDto;
 
 import java.util.ArrayList;
 import java.util.List;

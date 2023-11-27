@@ -10,8 +10,6 @@ import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.web.dto.GetSearchUserResponseDto;
-import side.collectionrecord.web.dto.GetUserProfileResponseDto;
-import side.collectionrecord.web.dto.UpdateUserRequestDto;
 
 import java.io.IOException;
 import java.util.List;

@@ -9,8 +9,8 @@ import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.CreateChildCommentRequestDto;
-import side.collectionrecord.web.dto.CreateParentCommentRequestDto;
+import side.collectionrecord.web.dto.CommentChildForm;
+import side.collectionrecord.web.dto.CommentParentForm;
 import side.collectionrecord.web.dto.GetCommentResponseDto;
 
 import java.util.List;
@@ -24,30 +24,29 @@ public class CommentService {
     private final PostsRepository postsRepository;
 
     @Transactional
-    public Long createParentComment(CreateParentCommentRequestDto createParentCommentRequestDto){
-
-        User user = userRepository.findById(createParentCommentRequestDto.getUserId()).get();
-        Posts posts = postsRepository.findById(createParentCommentRequestDto.getPostsId()).get();
+    public Long commentParentAdd(CommentParentForm commentParentForm){
+        User user = userRepository.findById(commentParentForm.getUserId()).get();
+        Posts posts = postsRepository.findById(commentParentForm.getPostsId()).get();
 
         return commentRepository.save(Comment.builder()
                         .user(user)
                         .posts(posts)
                         .parentComment(null)
-                        .text(createParentCommentRequestDto.getText())
+                        .text(commentParentForm.getText())
                         .build())
                         .getId();
     }
 
     @Transactional
-    public Long createChildComment(CreateChildCommentRequestDto createChildCommentRequestDto){
-        User user = userRepository.findById(createChildCommentRequestDto.getUserId()).get();
-        Posts posts = postsRepository.findById(createChildCommentRequestDto.getPostsId()).get();
-        Comment parentComment = commentRepository.findById(createChildCommentRequestDto.getParentCommentId()).get();
+    public Long commentChildAdd(CommentChildForm commentChildForm){
+        User user = userRepository.findById(commentChildForm.getUserId()).get();
+        Posts posts = postsRepository.findById(commentChildForm.getPostsId()).get();
+        Comment parentComment = commentRepository.findById(commentChildForm.getParentCommentId()).get();
 
         return commentRepository.save(Comment.builder()
                         .user(user)
                         .posts(posts)
-                        .text(createChildCommentRequestDto.getText())
+                        .text(commentChildForm.getText())
                         .parentComment(parentComment)
                         .build())
                         .getId();
