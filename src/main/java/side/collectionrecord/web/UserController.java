@@ -1,8 +1,12 @@
 package side.collectionrecord.web;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.h2.engine.Mode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +27,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class UserController {
@@ -41,7 +45,6 @@ public class UserController {
 
     @GetMapping("/user/{id}/home")
     public String userHome(@PathVariable Long id, Model model, HttpSession httpSession){
-
         User user = userRepository.findById(id).get();
 
         Long userId = user.getId();
@@ -100,7 +103,13 @@ public class UserController {
     }
 
     @PostMapping("/user/{id}/profile")
-    public String userProfileUpdate(@PathVariable Long id, @ModelAttribute UserProfileForm userProfileForm, RedirectAttributes redirectAttributes) throws IOException {
+    public String userProfileUpdate(@PathVariable Long id, @Validated @ModelAttribute UserProfileForm userProfileForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) throws IOException {
+        if (bindingResult.hasErrors()) {
+            User user = userRepository.findById(id).get();
+            model.addAttribute("imageId", user.getProfileImage().getId());
+            return "user/userProfileForm";
+        }
+
         Image profileImage = null;
 
         if (!userProfileForm.getProfileImage().getOriginalFilename().equals("")) {

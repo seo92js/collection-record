@@ -15,7 +15,7 @@
         <div class="user-main">
             <div class="user-main__row user-main__row--70">
                 <div class="user-main__col user-main__col--70">
-                    <img class="user-main__img" th:if="${imageId != null}" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
+                    <img class="user-main__img" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
                 </div>
                 <div class="user-main__col user-main__col--30">
                     <div class="user-main__row user-main__row--small" th:if="${isFollowing == null}">

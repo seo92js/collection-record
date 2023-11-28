@@ -12,7 +12,7 @@
         <div class="user-main">
             <div class="user-main__row user-main__row--70">
                 <div class="user-main__col user-main__col--70">
-                    <img class="user-main__img" th:if="${imageId != null}" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}" id="preview">
+                    <img class="user-main__img" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}" id="preview">
                 </div>
                 <div class="user-main__col user-main__col--30">
                     <div class="user-main__row user-main__row--small">
@@ -29,6 +29,7 @@
             <div class="form__row">
                 <label for="username">이름</label>
                 <input class="form__input" type="text" id="username" name="username" th:value="${userProfileForm.username}" required>
+                <p th:errors="${userProfileForm.username}"></p>
             </div>
 
             <div class="form__row">
