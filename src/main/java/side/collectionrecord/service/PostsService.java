@@ -10,9 +10,11 @@ import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.web.dto.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -75,7 +77,7 @@ public class PostsService {
 
     @Transactional
     public Long postsAdd(PostsAddForm postsAddForm, List<Image> images) {
-        User user = userRepository.findById(postsAddForm.getUserId()).orElse(null);
+        User user = userRepository.findById(postsAddForm.getUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         return postsRepository.save(Posts.builder()
                         .user(user)

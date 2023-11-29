@@ -7,10 +7,12 @@ import side.collectionrecord.domain.follow.Follow;
 import side.collectionrecord.domain.follow.FollowRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.web.dto.CreateFollowRequestDto;
 import side.collectionrecord.web.dto.GetFollowPostsResponseDto;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -22,8 +24,8 @@ public class FollowService {
 
     @Transactional
     public void createFollow(CreateFollowRequestDto createFollowRequestDto){
-        User user = userRepository.findById(createFollowRequestDto.getUserId()).get();
-        User followingUser = userRepository.findById(createFollowRequestDto.getFollowingUserId()).get();
+        User user = userRepository.findById(createFollowRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+        User followingUser = userRepository.findById(createFollowRequestDto.getFollowingUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         Follow follow = Follow.builder()
                 .following(user)
@@ -35,8 +37,8 @@ public class FollowService {
 
     @Transactional
     public void deleteFollow(CreateFollowRequestDto createFollowRequestDto){
-        User user = userRepository.findById(createFollowRequestDto.getUserId()).get();
-        User unfollowingUser = userRepository.findById(createFollowRequestDto.getFollowingUserId()).get();
+        User user = userRepository.findById(createFollowRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+        User unfollowingUser = userRepository.findById(createFollowRequestDto.getFollowingUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         Follow follow = user.getFollowByUser(unfollowingUser);
 
@@ -48,8 +50,8 @@ public class FollowService {
 
     @Transactional
     public boolean checkFollow(Long userId, Long followingUserId){
-        User user = userRepository.findById(userId).get();
-        User followingUser = userRepository.findById(followingUserId).get();
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+        User followingUser = userRepository.findById(followingUserId).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         if (user.getFollowByUser(followingUser) == null){
             return false;

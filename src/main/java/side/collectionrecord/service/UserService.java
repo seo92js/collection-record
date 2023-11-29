@@ -7,8 +7,7 @@ import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.exception.CustomException;
-import side.collectionrecord.exception.ErrorCode;
+import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.web.dto.GetSearchUserResponseDto;
 import side.collectionrecord.web.dto.UserProfileForm;
 
@@ -26,10 +25,7 @@ public class UserService {
 
     @Transactional
     public Long userUpdate(Long id, UserProfileForm userProfileForm, Image image){
-        User findUser = userRepository.findById(id).orElse(null);
-
-        if (!findUser.getUsername().equals(userProfileForm.getUsername()))
-            validateDuplicateUser(userProfileForm.getUsername());
+        User findUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         Image prevImage = findUser.getProfileImage();
 
@@ -44,7 +40,7 @@ public class UserService {
 
     @Transactional
     public UserProfileForm findById (Long id) {
-        User user = userRepository.findById(id).orElse(null);
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         return UserProfileForm.builder()
                 .username(user.getUsername())
@@ -62,11 +58,17 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    private void validateDuplicateUser(String username){
+//    private void validateDuplicateUser(String username){
+//        Optional<User> findUser = userRepository.findByUsername(username);
+//
+//        if(findUser.isPresent()){
+//            throw new CustomException(ErrorCode.USER_DUPLICATE);
+//        }
+//    }
+
+    public boolean validateDuplicateUser(String username){
         Optional<User> findUser = userRepository.findByUsername(username);
 
-        if(findUser.isPresent()){
-            throw new CustomException(ErrorCode.USER_DUPLICATE);
-        }
+        return findUser.isEmpty();
     }
 }

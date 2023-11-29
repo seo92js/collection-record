@@ -10,6 +10,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.service.ChatMessageService;
 import side.collectionrecord.service.UserChatRoomService;
 import side.collectionrecord.web.dto.CreateChatMessageRequestDto;
@@ -83,7 +84,7 @@ public class WebSocketHandlerByChat extends TextWebSocketHandler {
             if (!webSocketSessions.containsKey(username))
                 webSocketSessions.put(username, session);
 
-            User users = userRepository.findByUsername(username).get();
+            User users = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
             boolean confirmAllMessage = userChatRoomService.confirmFalseMessage(users.getId());
 

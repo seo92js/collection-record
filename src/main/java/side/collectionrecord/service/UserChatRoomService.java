@@ -13,10 +13,12 @@ import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.userchatroom.QUserChatRoom;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
 import side.collectionrecord.domain.userchatroom.UserChatRoomRepository;
+import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.web.dto.GetUserChatRoomResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -32,8 +34,8 @@ public class UserChatRoomService {
         UserChatRoom userChatRoom = getUserChatroom(user1Id, user2Id);
 
         if (userChatRoom == null){
-            User user1 = userRepository.findById(user1Id).get();
-            User user2 = userRepository.findById(user2Id).get();
+            User user1 = userRepository.findById(user1Id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+            User user2 = userRepository.findById(user2Id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
             ChatRoom chatRoom = new ChatRoom();
 
@@ -87,7 +89,7 @@ public class UserChatRoomService {
 
     @Transactional
     public boolean confirmFalseMessage(Long userId){
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         for ( UserChatRoom userChatRoom : user.getUserChatRooms()){
             List<ChatMessage> confirmFalseMessage = chatMessageRepository.findByChatroomIdAndUserIdConfirmFalse(userChatRoom.getChatRoom().getId(), userId);

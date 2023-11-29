@@ -2,7 +2,6 @@ package side.collectionrecord.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.h2.engine.Mode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +16,7 @@ import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.service.*;
 import side.collectionrecord.web.dto.CreateImageRequestDto;
 import side.collectionrecord.web.dto.GetUserChatRoomResponseDto;
@@ -26,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -45,7 +46,7 @@ public class UserController {
 
     @GetMapping("/user/{id}/home")
     public String userHome(@PathVariable Long id, Model model, HttpSession httpSession){
-        User user = userRepository.findById(id).get();
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         Long userId = user.getId();
 
@@ -91,9 +92,9 @@ public class UserController {
 
     @GetMapping("/user/{id}/profile")
     public String userProfile(@PathVariable Long id, Model model){
-        UserProfileForm userProfileForm = userService.findById(id);
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
-        User user = userRepository.findById(id).get();
+        UserProfileForm userProfileForm = userService.findById(id);
 
         model.addAttribute("imageId", user.getProfileImage().getId());
 
@@ -104,8 +105,16 @@ public class UserController {
 
     @PostMapping("/user/{id}/profile")
     public String userProfileUpdate(@PathVariable Long id, @Validated @ModelAttribute UserProfileForm userProfileForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) throws IOException {
+
+        if (!userService.validateDuplicateUser(userProfileForm.getUsername())){
+            User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+            model.addAttribute("imageId", user.getProfileImage().getId());
+            bindingResult.rejectValue("username", "duplicate","이미 사용 중인 이름입니다.");
+            return "user/userProfileForm";
+        }
+
         if (bindingResult.hasErrors()) {
-            User user = userRepository.findById(id).get();
+            User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
             model.addAttribute("imageId", user.getProfileImage().getId());
             return "user/userProfileForm";
         }
@@ -123,8 +132,7 @@ public class UserController {
             profileImage = imageService.getImageById(imageId);
 
         } else {
-            User user = userRepository.findById(id).get();
-
+            User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
             profileImage = imageService.getImageById(user.getProfileImage().getId());
         }
 

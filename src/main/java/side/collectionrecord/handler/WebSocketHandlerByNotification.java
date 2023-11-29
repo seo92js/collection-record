@@ -10,6 +10,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.service.NotificationService;
 import side.collectionrecord.web.dto.CreateNotificationRequestDto;
 import side.collectionrecord.web.dto.GetNotificationResponseDto;
@@ -76,7 +77,7 @@ public class WebSocketHandlerByNotification extends TextWebSocketHandler {
             if (!webSocketSessions.containsKey(username))
                 webSocketSessions.put(username, session);
 
-            User user = userRepository.findByUsername(username).get();
+            User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
             List<GetNotificationResponseDto> notConfirmNotification = notificationService.getAllNotificationByUserIdConfirmFalse(user.getId());
 

@@ -9,11 +9,13 @@ import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.web.dto.CommentChildForm;
 import side.collectionrecord.web.dto.CommentParentForm;
 import side.collectionrecord.web.dto.GetCommentResponseDto;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -25,7 +27,8 @@ public class CommentService {
 
     @Transactional
     public Long commentParentAdd(CommentParentForm commentParentForm){
-        User user = userRepository.findById(commentParentForm.getUserId()).get();
+        User user = userRepository.findById(commentParentForm.getUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+
         Posts posts = postsRepository.findById(commentParentForm.getPostsId()).get();
 
         return commentRepository.save(Comment.builder()
@@ -39,7 +42,8 @@ public class CommentService {
 
     @Transactional
     public Long commentChildAdd(CommentChildForm commentChildForm){
-        User user = userRepository.findById(commentChildForm.getUserId()).get();
+        User user = userRepository.findById(commentChildForm.getUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+
         Posts posts = postsRepository.findById(commentChildForm.getPostsId()).get();
         Comment parentComment = commentRepository.findById(commentChildForm.getParentCommentId()).get();
 

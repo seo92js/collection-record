@@ -7,10 +7,12 @@ import side.collectionrecord.domain.notification.Notification;
 import side.collectionrecord.domain.notification.NotificationRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.web.dto.CreateNotificationRequestDto;
 import side.collectionrecord.web.dto.GetNotificationResponseDto;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -22,8 +24,8 @@ public class NotificationService {
 
     @Transactional
     public Long createNotification(CreateNotificationRequestDto createNotificationRequestDto){
-        User sender = userRepository.findByUsername(createNotificationRequestDto.getSenderName()).get();
-        User receiver = userRepository.findByUsername(createNotificationRequestDto.getReceiverName()).get();
+        User sender = userRepository.findByUsername(createNotificationRequestDto.getSenderName()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+        User receiver = userRepository.findByUsername(createNotificationRequestDto.getReceiverName()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         Notification notification = Notification.builder()
                 .sender(sender)

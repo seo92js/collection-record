@@ -41,19 +41,30 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        User user = userRepository.findByEmail(attributes.getEmail()).orElse(null);
+//        User user = userRepository.findByEmail(attributes.getEmail()).orElse(null);
+//
+//        //유저가 없으면 save 하고,
+//        if (user == null){
+//            try {
+//                user = save(attributes);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        } /*else {
+//            //소셜에서 업데이트 된 내용이 있을 수 있으니.
+//            user = update(attributes);
+//        }*/
+//
+//        httpSession.setAttribute("user", new SessionUser(user));
 
-        //유저가 없으면 save 하고,
-        if (user == null){
-            try {
-                user = save(attributes);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } /*else {
-            //소셜에서 업데이트 된 내용이 있을 수 있으니.
-            user = update(attributes);
-        }*/
+        User user = userRepository.findByEmail(attributes.getEmail())
+                .orElseGet(() -> {
+                    try {
+                        return save(attributes);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
 
         httpSession.setAttribute("user", new SessionUser(user));
 

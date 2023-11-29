@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
+import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.service.ChatMessageService;
 import side.collectionrecord.service.UserChatRoomService;
 import side.collectionrecord.web.dto.GetChatMessageResponseDto;
@@ -28,7 +29,7 @@ public class ChatRoomController {
 
         UserChatRoom userChatRoom = userChatRoomService.createUserChatRoom(user1Id, user2Id);
 
-        User user = userRepository.findById(user2Id).get();
+        User user = userRepository.findById(user2Id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         model.addAttribute("receiverId", user2Id);
 
