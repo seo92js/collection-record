@@ -7,35 +7,35 @@
         <!-- 홈 -->
         <li sec:authorize="isAuthenticated()" class="nav__li">
             <a href="/" >
-<!--                <i class="fas fa-home"></i>-->
+                <!--                <i class="fas fa-home"></i>-->
                 홈
             </a>
         </li>
         <!-- 검색 -->
         <li sec:authorize="isAuthenticated()" class="nav__li">
             <a href="/search">
-<!--                <i class="fas fa-search"></i>-->
+                <!--                <i class="fas fa-search"></i>-->
                 검색
             </a>
         </li>
         <!-- 마이홈 -->
         <li sec:authorize="isAuthenticated()" class="nav__li">
             <a th:href="@{/user/{id}/home(id=${session.user.id})}">
-<!--                <i class="fas fa-user"></i>-->
+                <!--                <i class="fas fa-user"></i>-->
                 마이홈
             </a>
         </li>
         <!-- 채팅방 -->
         <li sec:authorize="isAuthenticated()" id="chat" class="nav__li">
             <a th:href="@{/user/{username}/chatroomList(username=${session.user.name})}">
-<!--                <i class="fas fa-comment"></i>-->
+                <!--                <i class="fas fa-comment"></i>-->
                 채팅
             </a>
         </li>
         <!-- 알림 -->
         <li sec:authorize="isAuthenticated()" id="notification" class="nav__li">
             <a th:href="@{/notification/{id}(id=${session.user.id})}">
-<!--                <i class="fas fa-bell"></i>-->
+                <!--                <i class="fas fa-bell"></i>-->
                 알림
             </a>
         </li>

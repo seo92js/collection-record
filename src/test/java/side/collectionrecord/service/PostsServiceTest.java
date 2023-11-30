@@ -13,6 +13,7 @@ import side.collectionrecord.domain.posts.PostsStatus;
 import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.exception.PostsNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +76,7 @@ class PostsServiceTest {
         Long id = postsService.createPosts(createPostsRequestDto);
 
         //when
-        Posts posts = postsRepository.findById(id).get();
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new PostsNotFoundException("게시물이 없습니다."));
 
         //then
         assertThat(posts.getUser()).isEqualTo(user);
@@ -207,7 +208,7 @@ class PostsServiceTest {
         postsService.updatePosts(user.getId(), id, updatePostsRequestDto);
 
         //then
-        Posts posts = postsRepository.findById(id).orElse(null);
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new PostsNotFoundException("게시물이 없습니다."));
 
         assertThat(posts.getCategory()).isEqualTo(Category.VINYL);
         assertThat(posts.getText()).isEqualTo(expectedText);

@@ -15,6 +15,7 @@ import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.posts.PostsStatus;
+import side.collectionrecord.exception.PostsNotFoundException;
 import side.collectionrecord.service.CommentService;
 import side.collectionrecord.service.ImageService;
 import side.collectionrecord.service.PostsService;
@@ -75,8 +76,7 @@ public class PostsController {
 
     @GetMapping("/posts/{id}")
     public String postsView(@PathVariable Long id, Model model, HttpSession session){
-
-        Posts posts = postsRepository.findById(id).get();
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new PostsNotFoundException("게시물이 없습니다."));
 
         PostsResponseDto postsResponseDto = postsService.findById(id);
 

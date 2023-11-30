@@ -7,6 +7,7 @@ import side.collectionrecord.domain.notification.Notification;
 import side.collectionrecord.domain.notification.NotificationRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.exception.NotificationNotFoundException;
 import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.web.dto.CreateNotificationRequestDto;
 import side.collectionrecord.web.dto.GetNotificationResponseDto;
@@ -40,7 +41,7 @@ public class NotificationService {
 
     @Transactional
     public Long updateNotification(Long id){
-        Notification notification = notificationRepository.findById(id).get();
+        Notification notification = notificationRepository.findById(id).orElseThrow(() -> new NotificationNotFoundException("알림이 없습니다."));
 
         notification.setConfirm();
 

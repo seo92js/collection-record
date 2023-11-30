@@ -106,7 +106,7 @@ public class UserController {
     @PostMapping("/user/{id}/profile")
     public String userProfileUpdate(@PathVariable Long id, @Validated @ModelAttribute UserProfileForm userProfileForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) throws IOException {
 
-        if (!userService.validateDuplicateUser(userProfileForm.getUsername())){
+        if (!userService.validateDuplicateUser(id, userProfileForm.getUsername())){
             User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
             model.addAttribute("imageId", user.getProfileImage().getId());
             bindingResult.rejectValue("username", "duplicate","이미 사용 중인 이름입니다.");

@@ -12,7 +12,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ExControllerAdvice {
 
     @ExceptionHandler(UserNotFoundException.class)
-    public String userExceptionHandler(UserNotFoundException e, Model model){
+    public String userExceptionHandler(UserNotFoundException e, Model model) {
+        log.error("[exceptionHandler] ex", e);
+        model.addAttribute("message", e.getMessage());
+        return "error/400";
+    }
+
+    @ExceptionHandler(PostsNotFoundException.class)
+    public String postsExceptionHandler(PostsNotFoundException e, Model model) {
         log.error("[exceptionHandler] ex", e);
         model.addAttribute("message", e.getMessage());
         return "error/400";

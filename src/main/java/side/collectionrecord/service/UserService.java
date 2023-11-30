@@ -66,9 +66,14 @@ public class UserService {
 //        }
 //    }
 
-    public boolean validateDuplicateUser(String username){
-        Optional<User> findUser = userRepository.findByUsername(username);
+    public boolean validateDuplicateUser(Long id, String username){
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
-        return findUser.isEmpty();
+        if (!user.getUsername().equals(username)){
+            Optional<User> findUser = userRepository.findByUsername(username);
+            return findUser.isEmpty();
+        }
+
+        return true;
     }
 }

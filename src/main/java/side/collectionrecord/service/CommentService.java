@@ -9,6 +9,9 @@ import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.exception.CommentNotFoundException;
+import side.collectionrecord.exception.ImageNotFoundException;
+import side.collectionrecord.exception.PostsNotFoundException;
 import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.web.dto.CommentChildForm;
 import side.collectionrecord.web.dto.CommentParentForm;
@@ -29,7 +32,7 @@ public class CommentService {
     public Long commentParentAdd(CommentParentForm commentParentForm){
         User user = userRepository.findById(commentParentForm.getUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
-        Posts posts = postsRepository.findById(commentParentForm.getPostsId()).get();
+        Posts posts = postsRepository.findById(commentParentForm.getPostsId()).orElseThrow(() -> new PostsNotFoundException("게시물이 없습니다."));
 
         return commentRepository.save(Comment.builder()
                         .user(user)
@@ -44,8 +47,9 @@ public class CommentService {
     public Long commentChildAdd(CommentChildForm commentChildForm){
         User user = userRepository.findById(commentChildForm.getUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
-        Posts posts = postsRepository.findById(commentChildForm.getPostsId()).get();
-        Comment parentComment = commentRepository.findById(commentChildForm.getParentCommentId()).get();
+        Posts posts = postsRepository.findById(commentChildForm.getPostsId()).orElseThrow(() -> new PostsNotFoundException("게시물이 없습니다."));
+
+        Comment parentComment = commentRepository.findById(commentChildForm.getParentCommentId()).orElseThrow(() -> new CommentNotFoundException("댓글이 없습니다."));
 
         return commentRepository.save(Comment.builder()
                         .user(user)
@@ -58,7 +62,7 @@ public class CommentService {
 
     @Transactional
     public void deleteComment(Long id){
-        Comment comment = commentRepository.findById(id).orElse(null);
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new CommentNotFoundException("댓글이 없습니다."));
 
         commentRepository.delete(comment);
     }

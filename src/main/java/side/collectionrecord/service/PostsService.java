@@ -10,6 +10,7 @@ import side.collectionrecord.domain.posts.Posts;
 import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
+import side.collectionrecord.exception.PostsNotFoundException;
 import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.web.dto.*;
 
@@ -28,8 +29,7 @@ public class PostsService {
 
     @Transactional
     public PostsResponseDto findById(Long id){
-
-        Posts posts = postsRepository.findById(id).get();
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new PostsNotFoundException("게시물이 없습니다."));
 
         return new PostsResponseDto(posts);
     }
@@ -95,7 +95,7 @@ public class PostsService {
 
     @Transactional
     public Long updatePosts(Long postsId, PostsUpdateForm postsUpdateForm){
-        Posts posts = postsRepository.findById(postsId).orElse(null);
+        Posts posts = postsRepository.findById(postsId).orElseThrow(() -> new PostsNotFoundException("게시물이 없습니다."));
 
         posts.update(postsUpdateForm.getText(), postsUpdateForm.getStatus());
 
@@ -104,7 +104,7 @@ public class PostsService {
 
     @Transactional
     public void deletePosts(Long id){
-        Posts posts = postsRepository.findById(id).orElse(null);
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new PostsNotFoundException("게시물이 없습니다."));
 
         List<Comment> comments = posts.getComments();
 
