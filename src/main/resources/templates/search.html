@@ -10,42 +10,35 @@
         <h1 class="header__title">검색</h1>
     </header>
 
-    <main class="search">
-        <div class="search__form">
-            <form class="form">
-                <div class="form__row">
-                    <div class="form__col">
-                        <label class="form__label">유저</label>
-                    </div>
-                    <div class="form__col">
-                        <input type="radio" name="type" value="user" checked>
-                    </div>
-                    <div class="form__col">
-                        <label class="form__label">아티스트</label>
-                    </div>
-                    <div class="form__col">
-                        <input type="radio" name="type" value="artist">
-                    </div>
-                    <div class="form__col">
-                        <label class="form__label">앨범</label>
-                    </div>
-                    <div class="form__col">
-                        <input type="radio" name="type" value="album">
-                    </div>
-                </div>
-                <div class="form__row">
-                    <input class="form__input" id="search-text" type="text" placeholder="유저이름, 아티스트, 앨범" required>
-                </div>
-                <div class="form__row">
-                    <button class="form__btn" type="submit" th:onclick="search()" id="search-btn">검색</button>
-                </div>
-            </form>
-        </div>
+    <div class="container w-75">
+        <form>
+            <div class="form-check mb-3">
+                <label class="form-check-label" for="radioUser">유저</label>
+                <input id="radioUser" class="form-check-input" type="radio" name="type" value="user" checked>
+            </div>
+
+            <div class="form-check mb-3">
+                <label class="form-check-label" for="radioArtist">아티스트</label>
+                <input id="radioArtist" class="form-check-input" type="radio" name="type" value="artist">
+            </div>
+
+            <div class="form-check mb-3">
+                <label class="form-check-label" for="radioAlbum">앨범</label>
+                <input id="radioAlbum" class="form-check-input" type="radio" name="type" value="album">
+            </div>
+
+            <div class="mb-3">
+                <input class="form-control" id="search-text" type="text" placeholder="유저이름, 아티스트, 앨범" required>
+            </div>
+
+            <button class="btn btn-dark btn-lg w-100 mb-3" type="submit" th:onclick="search()" id="search-btn">검색</button>
+        </form>
 
         <div class="search__list" id="search-list">
             <!--검색 결과-->
         </div>
-    </main>
+
+    </div>
 
     <div th:replace="fragments/footer :: footer" />
 

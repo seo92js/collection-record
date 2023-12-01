@@ -9,73 +9,158 @@
         <h1 class="header__title">글쓰기</h1>
     </header>
 
+    <div class="container w-75">
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="userId" th:value="${session.user.id}">
+
+            <div class="row mb-3">
+                <label for="category" class="col-sm-2 col-form-label">카테고리</label>
+                <div class="col-sm-10">
+                    <select id="category" class="form-control" name="category">
+                        <option th:each = "category : ${categories}" th:text="${category}" th:value="${category}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="status" class="col-sm-2 col-form-label">게시물 상태</label>
+                <div class="col-sm-10">
+                    <select id="status" class="form-control" name="status" required>
+                        <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="artist-input" class="col-sm-2 col-form-label">검색</label>
+                <div class="col-md-8">
+                    <input class="form-control" type="text" placeholder="아티스트 or 앨범 명" id="artist-input">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-dark" th:onclick="searchAlbum()">검색</button>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="artist-select" class="col-sm-2 col-form-label">검색 결과 (선택)</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="artist-select">
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="artist" class="col-sm-2 col-form-label">아티스트</label>
+                <div class="col-sm-10">
+                    <input id="artist" class="form-control" name="artist" type="text" placeholder="아티스트를 검색하세요" readonly required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="album" class="col-sm-2 col-form-label">앨범</label>
+                <div class="col-sm-10">
+                    <input id="album" class="form-control" name="album" type="text" placeholder="아티스트를 검색하세요" readonly required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="genre" class="col-sm-2 col-form-label">장르</label>
+                <div class="col-sm-10">
+                    <input id="genre" class="form-control" name="genre" type="text" placeholder="아티스트를 검색하세요" readonly required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="album-art-img" class="col-sm-2 col-form-label">앨범아트</label>
+                <div class="col-sm-10">
+                    <input id="albumArt" class="form-control" name="albumArt" type="hidden" placeholder="아티스트를 검색하세요" readonly required>
+                    <img class="img-thumbnail" id="album-art-img">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="images" class="col-sm-2 col-form-label">이미지 선택</label>
+                <div class="col-sm-10">
+                    <input id="images" class="form-control-file" name="images" type="file" multiple="multiple" onchange="preview(this)" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="preview" class="col-sm-2 col-form-label">이미지 미리보기</label>
+                <div class="col-sm-10" id="preview">
+
+                </div>
+            </div>
+        </form>
+    </div>
+
     <main class="posts-add">
         <input type="hidden" name="loginUsername" th:value="${session.user.name}">
 
         <form class="form" method="post" enctype="multipart/form-data">
             <input type="hidden" name="userId" th:value="${session.user.id}">
 
-            <div class="form__row">
-                <label for="category">카테고리</label>
-                <select id="category" name="category">
-                    <option th:each = "category : ${categories}" th:text="${category}" th:value="${category}"></option>
-                </select>
-            </div>
+<!--            <div class="form__row">-->
+<!--                <label for="category">카테고리</label>-->
+<!--                <select id="category" name="category">-->
+<!--                    <option th:each = "category : ${categories}" th:text="${category}" th:value="${category}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
 
-            <div class="form__row">
-                <label for="status">게시물 상태</label>
-                <select id="status" name="status" required>
-                    <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>
-                </select>
-            </div>
+<!--            <div class="form__row">-->
+<!--                <label for="status">게시물 상태</label>-->
+<!--                <select id="status" name="status" required>-->
+<!--                    <option th:each = "status : ${statuses}" th:text="${status}" th:value="${status}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
 
-            <div class="form__row">
-                <div class="form__col form__col--70">
-                    <input class="form__input" type="text" placeholder="아티스트 명" id="artist-input">
-                </div>
-                <div class="form__col form__col--30">
-                    <button type="button" class="form__input" th:onclick="searchAlbum()">검색</button>
-                </div>
-            </div>
+<!--            <div class="form__row">-->
+<!--                <div class="form__col form__col&#45;&#45;70">-->
+<!--                    <input class="form__input" type="text" placeholder="아티스트 명" id="artist-input">-->
+<!--                </div>-->
+<!--                <div class="form__col form__col&#45;&#45;30">-->
+<!--                    <button type="button" class="form__input" th:onclick="searchAlbum()">검색</button>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="form__row">
-                <div class="form__col form__col--30">
-                    <label class="form__label form__label--bold">검색 결과</label>
-                </div>
-                <div class="form__col form__col--70">
-                    <select class="form__select" id="artist-select">
+<!--            <div class="form__row">-->
+<!--                <div class="form__col form__col&#45;&#45;30">-->
+<!--                    <label class="form__label form__label&#45;&#45;bold">검색 결과</label>-->
+<!--                </div>-->
+<!--                <div class="form__col form__col&#45;&#45;70">-->
+<!--                    <select class="form__select" id="artist-select">-->
 
-                    </select>
-                </div>
-            </div>
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="form__row">
-                <label for="artist">아티스트</label>
-                <input id="artist" name="artist" type="text" placeholder="아티스트를 검색하세요" readonly required>
-            </div>
+<!--            <div class="form__row">-->
+<!--                <label for="artist">아티스트</label>-->
+<!--                <input id="artist" name="artist" type="text" placeholder="아티스트를 검색하세요" readonly required>-->
+<!--            </div>-->
 
-            <div class="form__row">
-                <label for="album">앨범</label>
-                <input id="album" name="album" type="text" placeholder="아티스트를 검색하세요" readonly required>
-            </div>
+<!--            <div class="form__row">-->
+<!--                <label for="album">앨범</label>-->
+<!--                <input id="album" name="album" type="text" placeholder="아티스트를 검색하세요" readonly required>-->
+<!--            </div>-->
 
-            <div class="form__row">
-                <label for="genre">장르</label>
-                <input id="genre" name="genre" type="text" placeholder="아티스트를 검색하세요" readonly required>
-            </div>
+<!--            <div class="form__row">-->
+<!--                <label for="genre">장르</label>-->
+<!--                <input id="genre" name="genre" type="text" placeholder="아티스트를 검색하세요" readonly required>-->
+<!--            </div>-->
 
-            <div class="form__row form__row--long">
-                <label for="albumArt">앨범아트</label>
-                <input id="albumArt" name="albumArt" type="text" placeholder="아티스트를 검색하세요" readonly required>
-                <img class="posts-add__album-art" id="album-art-img">
-            </div>
+<!--            <div class="form__row form__row&#45;&#45;long">-->
+<!--                <label for="albumArt">앨범아트</label>-->
+<!--                <input id="albumArt" name="albumArt" type="text" placeholder="아티스트를 검색하세요" readonly required>-->
+<!--                <img class="posts-add__album-art" id="album-art-img">-->
+<!--            </div>-->
 
-            <input id="images" name="images" type="file" multiple="multiple" onchange="preview(this)" required>
+<!--            <input id="images" name="images" type="file" multiple="multiple" onchange="preview(this)" required>-->
 
-            <div class="form__row form__row--long">
-                <div class="form__col" id="preview">
-                </div>
-            </div>
+<!--            <div class="form__row form__row&#45;&#45;long">-->
+<!--                <div class="form__col" id="preview">-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="form__row">
                 <label for="text">내용</label>
