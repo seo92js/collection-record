@@ -1,24 +1,6 @@
-.posts-add {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-.posts-add__album-art {
-    width: 60%;
-    height: 60%;
-    border: none;
-}
-
 #preview {
     display: flex;
     flex-direction: row;
     justify-content: start;
     overflow: auto;
-}
-
-.posts-add__preview{
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
 }

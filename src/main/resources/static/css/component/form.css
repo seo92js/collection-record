@@ -4,23 +4,6 @@
     width: 500px;
 }
 
-.form--small {
-    width: 300px;
-}
-
-.form__row {
-    width: 100%;
-    height: 40px;
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    margin: 5px;
-}
-
-.form__row--long {
-    height: 250px;
-}
-
 .form__col {
     width: 100%;
     height: 100%;

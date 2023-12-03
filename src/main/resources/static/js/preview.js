@@ -22,7 +22,8 @@ function preview(input){
     for (var i = 0; i < input.files.length; i++){
         var reader = new FileReader();
         reader.onload = function(e) {
-            $('#preview').attr("src", e.target.result).addClass('img-thumbnail');
+            var imgElement = $('<img>').attr('src', e.target.result).addClass('img-thumbnail');
+            $('#preview').append(imgElement);
         };
 
         reader.readAsDataURL(input.files[i]);
