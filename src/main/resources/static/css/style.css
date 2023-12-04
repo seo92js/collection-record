@@ -9,13 +9,13 @@
 @import "component/posts-main.css";
 @import "component/posts-feed.css";
 @import "component/icons.css";
+@import "component/image.css";
 
 /* screen */
 @import "screens/navigation.css";
 @import "screens/home.css";
 @import "screens/user-home.css";
 @import "screens/posts.css";
-@import "screens/user-profile.css";
 @import "screens/posts-add.css";
 @import "screens/search.css";
 @import "screens/notification.css";

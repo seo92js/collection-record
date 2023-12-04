@@ -1,0 +1,16 @@
+#preview {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    overflow-x: auto;
+}
+
+.image-profile {
+    width:200px;
+    height:200px;
+}
+
+.image-upload {
+    width: 110px;
+    height: 110px;
+}
