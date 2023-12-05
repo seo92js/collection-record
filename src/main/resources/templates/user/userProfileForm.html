@@ -8,13 +8,13 @@
         <h1 class="header__title">프로필</h1>
     </header>
 
-    <div class="container">
+    <div class="container w-50">
         <div class="row mb-5 w-50 mx-auto align-items-center">
-            <div class="col-sm-6 d-flex justify-content-center">
-                <img class="profile-image" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}" id="preview">
+            <div class="col d-flex justify-content-center">
+                <img class="image-profile" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}" id="preview">
             </div>
-            <div class="col-sm-3 d-flex justify-content-center">
-                <label for="profileImage">이미지 업로드</label>
+            <div class="col d-flex justify-content-center">
+                <label for="profileImage" class="user-profile__label">이미지 업로드</label>
             </div>
         </div>
 

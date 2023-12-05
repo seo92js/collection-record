@@ -9,17 +9,17 @@ $('#category-all-btn').on('click', function() {
     $('#category-posts-list').empty();
     isEnd = false;
 
-    $('.user-home__link').removeClass('focus');
+    $('.user-home__category-list').removeClass('focus');
     $(this).addClass('focus');
 });
 
-$('.user-home__link').on('click', function() {
+$('.user-home__category-list').on('click', function() {
     page = 0;
     $('#category-posts-list').empty();
     isEnd = false;
 
     $('#category-all-btn').removeClass('focus');
-    $('.user-home__link').removeClass('focus');
+    $('.user-home__category-list').removeClass('focus');
     $(this).addClass('focus');
 });
 
@@ -53,53 +53,42 @@ function getCategoryPosts(id, category) {
         }
 
         response.forEach(function(post, index) {
-            var a = $('<a>').attr('href', '/posts/' + post.id).addClass('posts-main__posts');
+            var row = $('<a>').attr('href', '/posts/' + post.id).addClass('row mb-3 mx-auto align-items-center user-home__posts');
+            //날짜, 인덱스
+            var col1 = $('<div>').addClass('col-sm-2');
 
-            const div = $('<div>').addClass('posts-main__posts');
+            col1.append($('<div>').text(post.createdDate).addClass('row mb-3 justify-content-center user-home__date'));
+            col1.append($('<div>').text("#" + (response.length - index)).addClass('row mb-3 justify-content-center user-home__index'))
 
-            const firstRow = $('<div>').addClass('posts-main__row');
+            //앨범 아트
+            var col2 = $('<div>').addClass('col-sm-2 text-center');
 
-            //col 1 날짜, 인덱스
-            var col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--short');
-            var row1 = $('<div>').addClass('posts-main__row').addClass('posts-main__row--short');
-            row1.append($('<div>').text(post.createdDate).addClass('posts-main__created-date'));
-            var row2 = $('<div>').addClass('posts-main__row');
-            row2.append($('<div>').text("#" + (response.length - index)).addClass('posts-main__index'))
-            col.append(row1);
-            col.append(row2);
-            firstRow.append(col);
+            col2.append($('<img>').attr("src", post.albumArt).addClass('user-home__albumArt'));
 
-            //col 2 앨범아트
-            col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--album-art');
-            col.append($('<img>').attr("src", post.albumArt).addClass('posts-main__album-art'));
-            firstRow.append(col);
+            //아티스트, 앨범, 장르
+            var col3 = $('<div>').addClass('col-sm-6');
 
-            //col 3 아티스트, 앨범, 장르
-            col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--flex1');
-            row1 = $('<div>').addClass('posts-main__row');
-            row2 = $('<div>').addClass('posts-main__row');
-            var row3 = $('<div>').addClass('posts-main__row');
-            row1.append($('<div>').text(post.artist).addClass('posts-main__artist'));
-            row2.append($('<div>').text(post.album).addClass('posts-main__album'));
-            row3.append($('<div>').text(post.genre).addClass('posts-main__genre'));
-            col.append(row1);
-            col.append(row2);
-            col.append(row3);
-            firstRow.append(col);
+            col3.append($('<div>').text(post.artist).addClass('row mb-3 justify-content-center user-home__artist'));
+            col3.append($('<div>').text(post.album).addClass('row mb-3 justify-content-center user-home__album'));
+            col3.append($('<div>').text(post.genre).addClass('row mb-3 justify-content-center user-home__genre'));
 
-            //col 4 카테고리
-            col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--short');
-            col.append($('<div>').text(post.category).addClass('posts-main__category'));
-            firstRow.append(col);
+            //카테고리
+            var col4 = $('<div>').addClass('col-sm-1');
 
-            //col 5 상태
-            col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--short');
-            col.append($('<div>').text(post.status).addClass('posts-main__status'));
-            firstRow.append(col);
+            col4.append($('<div>').text(post.category).addClass('row justify-content-center user-home__category'));
 
-            div.append(firstRow);
-            a.append(div)
-            $('#category-posts-list').append(a);
+            //상태
+            var col5 = $('<div>').addClass('col-sm-1');
+
+            col5.append($('<div>').text(post.status).addClass('row justify-content-center user-home__status'));
+
+            row.append(col1);
+            row.append(col2);
+            row.append(col3);
+            row.append(col4);
+            row.append(col5);
+
+            $('#category-posts-list').append(row);
         });
     }).fail(function (error){
         alert(JSON.stringify(error));
@@ -121,56 +110,42 @@ function getArtistPosts(id, artist) {
         }
 
         response.forEach(function(post, index) {
+            var row = $('<a>').attr('href', '/posts/' + post.id).addClass('row mb-3 mx-auto align-items-center user-home__posts');
+            //날짜, 인덱스
+            var col1 = $('<div>').addClass('col-sm-2');
 
-            var a = $('<a>').attr('href', '/posts/' + post.id).addClass('posts-main__posts');
+            col1.append($('<div>').text(post.createdDate).addClass('row mb-3 justify-content-center user-home__date'));
+            col1.append($('<div>').text("#" + (response.length - index)).addClass('row mb-3 justify-content-center user-home__index'))
 
-            const div = $('<div>').addClass('posts-main__posts');
+            //앨범 아트
+            var col2 = $('<div>').addClass('col-sm-2 text-center');
 
-            const firstRow = $('<div>').addClass('posts-main__row');
+            col2.append($('<img>').attr("src", post.albumArt).addClass('user-home__albumArt'));
 
-            //col 1 날짜, 인덱스
-            var col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--short');
-            var row1 = $('<div>').addClass('posts-main__row').addClass('posts-main__row--short');
-            row1.append($('<div>').text(post.createdDate).addClass('posts-main__created-date'));
-            var row2 = $('<div>').addClass('posts-main__row');
-            row2.append($('<div>').text("#" + (response.length - index)).addClass('posts-main__index'))
-            col.append(row1);
-            col.append(row2);
-            firstRow.append(col);
+            //아티스트, 앨범, 장르
+            var col3 = $('<div>').addClass('col-sm-6');
 
-            //col 2 앨범아트
-            col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--album-art');
-            col.append($('<img>').attr("src", post.albumArt).addClass('posts-main__album-art'));
-            firstRow.append(col);
+            col3.append($('<div>').text(post.artist).addClass('row mb-3 justify-content-center user-home__artist'));
+            col3.append($('<div>').text(post.album).addClass('row mb-3 justify-content-center user-home__album'));
+            col3.append($('<div>').text(post.genre).addClass('row mb-3 justify-content-center user-home__genre'));
 
-            //col 3 아티스트, 앨범, 장르
-            col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--flex1');
-            row1 = $('<div>').addClass('posts-main__row');
-            row2 = $('<div>').addClass('posts-main__row');
-            var row3 = $('<div>').addClass('posts-main__row');
-            row1.append($('<div>').text(post.artist).addClass('posts-main__artist'));
-            row2.append($('<div>').text(post.album).addClass('posts-main__album'));
-            row3.append($('<div>').text(post.genre).addClass('posts-main__genre'));
-            col.append(row1);
-            col.append(row2);
-            col.append(row3);
-            firstRow.append(col);
+            //카테고리
+            var col4 = $('<div>').addClass('col-sm-1');
 
-            //col 4 카테고리
-            col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--short');
-            col.append($('<div>').text(post.category).addClass('posts-main__category'));
-            firstRow.append(col);
+            col4.append($('<div>').text(post.category).addClass('row justify-content-center user-home__category'));
 
-            //col 5 상태
-            col = $('<div>').addClass('posts-main__col').addClass('posts-main__col--short');
-            col.append($('<div>').text(post.status).addClass('posts-main__status'));
-            firstRow.append(col);
+            //상태
+            var col5 = $('<div>').addClass('col-sm-1');
 
-            div.append(firstRow);
+            col5.append($('<div>').text(post.status).addClass('row justify-content-center user-home__status'));
 
-            a.append(div)
+            row.append(col1);
+            row.append(col2);
+            row.append(col3);
+            row.append(col4);
+            row.append(col5);
 
-            $('#category-posts-list').append(a);
+            $('#category-posts-list').append(row);
         });
     }).fail(function (error){
         alert(JSON.stringify(error));

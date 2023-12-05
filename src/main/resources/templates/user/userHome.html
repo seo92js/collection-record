@@ -9,59 +9,56 @@
         <h1 th:text="${username}" class="header__title"></h1>
     </header>
 
-    <main class="user-home">
-
-        <!-- 프로필 이미지, 메뉴 -->
-        <div class="user-main">
-            <div class="user-main__row user-main__row--70">
-                <div class="user-main__col user-main__col--70">
-                    <img class="user-main__img" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
-                </div>
-                <div class="user-main__col user-main__col--30">
-                    <div class="user-main__row user-main__row--small" th:if="${isFollowing == null}">
-                        <a class="user-main__link user-main__link--blue"  th:href="@{/user/{id}/profile(id=${session.user.id})}">내 정보</a>
-                    </div>
-                    <div class="user-main__row user-main__row--small" th:if="${isFollowing == null}">
-                        <a class="user-main__link user-main__link--blue" href="/posts/add">글쓰기</a>
-                    </div>
-                    <div class="user-main__row user-main__row--small" th:if="${isFollowing != null}">
-                        <a class="user-main__link user-main__link--blue" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${session.user.id}, userId=${id})}" target="_blank">채팅</a>
-                    </div>
-                    <div class="user-main__row user-main__row--small" th:if="${isFollowing == true}">
-                        <button class="user-main__btn user-main__btn--red" type="button" th:onclick="deleteFollow([[${id}]])">팔로우 취소</button>
-                    </div>
-                    <div class="user-main__row user-main__row--small" th:if="${isFollowing == false}">
-                        <button class="user-main__btn" type="button" th:onclick="createFollow([[${id}]]); sendNotification([[${session.user.name}]], [[${username}]])">팔로우</button>
-                    </div>
-                </div>
+    <div class="container">
+        <!--프로필-->
+        <div class="row mb-3 w-50 mx-auto align-items-center">
+            <div class="col-sm-6 d-flex justify-content-center">
+                <img class="image-profile" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
             </div>
-            <div class="user-main__row user-main__row--30">
-                <div class="user-main__col">
-                    <pre class="user-main__profile-text" th:text="${profileText}"></pre>
+            <div class="col-sm-3">
+                <div class="row mb-3 text-center" th:if="${isFollowing == null}">
+                    <a class="user-home__link" th:href="@{/user/{id}/profile(id=${session.user.id})}">내 정보</a>
+                </div>
+                <div class="row mb-3 text-center" th:if="${isFollowing == null}">
+                    <a  class="user-home__link" href="/posts/add">글쓰기</a>
+                </div>
+                <div class="row mb-3" th:if="${isFollowing != null}">
+                    <a class="user-home__link text-center" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${session.user.id}, userId=${id})}" target="_blank">채팅</a>
+                </div>
+                <div class="row mb-3" th:if="${isFollowing == true}">
+                    <button class="user-home__button" th:onclick="deleteFollow([[${id}]])">팔로우 취소</button>
+                </div>
+                <div class="row mb-3" th:if="${isFollowing == false}">
+                    <button class="user-home__button" th:onclick="createFollow([[${id}]]); sendNotification([[${session.user.name}]], [[${username}]])">팔로우</button>
                 </div>
             </div>
         </div>
+        <div class="row mb-5 w-50 mx-auto text-center">
+            <pre th:text="${profileText}"></pre>
+        </div>
 
-        <div class="user-home__content">
-            <!-- 카테고리 목록 -->
-            <div class="user-home__category-list">
-                <div class="user-home__category">
+        <div class="row pt-5">
+            <!-- 카테고리 -->
+            <div class="col-sm-3">
+                <div class="row mb-3">
                     <a id="category-all-btn" th:onclick="getCategoryPosts([[${id}]], 'all')">전체</a>
                 </div>
-                <div class="user-home__category" th:each="category : ${categories}">
-                    <a class="user-home__link" th:text="${category}" th:onclick="getCategoryPosts([[${id}]], [[${category}]])"></a>
+
+                <div class="row mb-3" th:each="category : ${categories}">
+                    <a class="user-home__category-list" th:text="${category}" th:onclick="getCategoryPosts([[${id}]], [[${category}]])"></a>
                 </div>
 
-                <div class="user-home__artist" th:each="artist : ${artists}">
-                    <a class="user-home__link" th:text="${artist}" th:onclick="getArtistPosts([[${id}]], [[${artist}]])"></a>
+                <div class="row mb-3" th:each="artist : ${artists}">
+                    <a class="user-home__category-list" th:text="${artist}" th:onclick="getArtistPosts([[${id}]], [[${artist}]])"></a>
                 </div>
             </div>
 
-            <!-- 게시물 목록 -->
-            <div class="user-home__posts-list" id="category-posts-list">
+            <!-- 목록 -->
+            <div class="col-sm-9" id="category-posts-list">
+
             </div>
         </div>
-    </main>
+    </div>
 
     <div th:replace="fragments/footer :: footer" />
 

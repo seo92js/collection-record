@@ -1,43 +1,67 @@
-.user-home {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#category-all-btn {
+    font-size: 14px;
+    text-decoration-line: none;
+    font-weight: bold;
 }
 
-.user-home__content {
-    width: 100%;
-    display: flex;
+.user-home__link {
+    font-size: 11px;
+    color: gray;
+    text-decoration-line: none;
+}
+
+.user-home__button {
+    border: none;
+    font-size:11px;
+    background-color: transparent;
+    color: gray;
+    text-decoration-line: none;
 }
 
 .user-home__category-list {
-    display:flex;
-    flex-direction: column;
-    width: 300px;
-    height: 100vh;
-    padding:20px 0px 0px 40px;
-    background-color: transparent;
+    font-size: 14px;
+    text-decoration-line: none;
+    font-weight: bold;
 }
 
-.user-home__category {
-    width: 100%;
-    margin-bottom:30px;
-    font-size: 18px;
-    font-weight: 600;
+.user-home__posts {
+    border: 1px solid gainsboro;
+    padding:10px;
+    text-decoration-line: none;
+}
+
+.user-home__date {
+    font-size: 11px;
+}
+
+.user-home__index {
+    font-size: 12px;
 }
 
 .user-home__artist {
-    width: 100%;
-    margin-bottom:20px;
     font-size: 13px;
 }
 
-.user-home__posts-list {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding: 10px 20px 0px 200px;
+.user-home__album {
+    font-size: 12px;
+}
+
+.user-home__genre {
+    font-size: 12px;
+}
+
+.user-home__category {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.user-home__status {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.user-home__albumArt {
+    width:150px;
 }
 
 .focus {

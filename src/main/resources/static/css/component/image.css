@@ -8,9 +8,11 @@
 .image-profile {
     width:200px;
     height:200px;
+    object-fit: contain;
 }
 
 .image-upload {
     width: 110px;
     height: 110px;
+    object-fit: contain;
 }
