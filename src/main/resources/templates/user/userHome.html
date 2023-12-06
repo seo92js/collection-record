@@ -11,7 +11,7 @@
 
     <div class="container">
         <!--프로필-->
-        <div class="row mb-3 w-50 mx-auto align-items-center">
+        <div class="row mb-5 w-50 mx-auto align-items-center">
             <div class="col-sm-6 d-flex justify-content-center">
                 <img class="image-profile" th:src="@{/api/v1/image/{imageId}(imageId=${imageId})}">
             </div>
@@ -40,16 +40,16 @@
         <div class="row pt-5">
             <!-- 카테고리 -->
             <div class="col-sm-3">
-                <div class="row mb-3">
-                    <a id="category-all-btn" th:onclick="getCategoryPosts([[${id}]], 'all')">전체</a>
+                <div class="row mb-4">
+                    <a id="category-all-btn" class="user-home__categories" th:onclick="getCategoryPosts([[${id}]], 'all')">전체</a>
                 </div>
 
-                <div class="row mb-3" th:each="category : ${categories}">
-                    <a class="user-home__category-list" th:text="${category}" th:onclick="getCategoryPosts([[${id}]], [[${category}]])"></a>
+                <div class="row mb-4" th:each="category : ${categories}">
+                    <a class="user-home__categories" th:text="${category}" th:onclick="getCategoryPosts([[${id}]], [[${category}]])"></a>
                 </div>
 
-                <div class="row mb-3" th:each="artist : ${artists}">
-                    <a class="user-home__category-list" th:text="${artist}" th:onclick="getArtistPosts([[${id}]], [[${artist}]])"></a>
+                <div class="row mb-4" th:each="artist : ${artists}">
+                    <a class="user-home__categories user-home__categories--artist" th:text="${artist}" th:onclick="getArtistPosts([[${id}]], [[${artist}]])"></a>
                 </div>
             </div>
 

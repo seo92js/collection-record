@@ -1,9 +1,3 @@
-#category-all-btn {
-    font-size: 14px;
-    text-decoration-line: none;
-    font-weight: bold;
-}
-
 .user-home__link {
     font-size: 11px;
     color: gray;
@@ -18,10 +12,17 @@
     text-decoration-line: none;
 }
 
-.user-home__category-list {
-    font-size: 14px;
+.user-home__categories {
+    font-size: 15px;
     text-decoration-line: none;
     font-weight: bold;
+    color: black;
+}
+
+.user-home__categories--artist {
+    font-size: 12px;
+    font-weight: normal;
+    color: black;
 }
 
 .user-home__posts {
@@ -36,28 +37,34 @@
 
 .user-home__index {
     font-size: 12px;
+    color: black;
 }
 
 .user-home__artist {
     font-size: 13px;
+    color: black;
 }
 
 .user-home__album {
     font-size: 12px;
+    color: black;
 }
 
 .user-home__genre {
     font-size: 12px;
+    color: darkgray;
 }
 
 .user-home__category {
     font-size: 13px;
     font-weight: bold;
+    color: black;
 }
 
 .user-home__status {
     font-size: 13px;
     font-weight: bold;
+    color: black;
 }
 
 .user-home__albumArt {

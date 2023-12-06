@@ -9,17 +9,17 @@ $('#category-all-btn').on('click', function() {
     $('#category-posts-list').empty();
     isEnd = false;
 
-    $('.user-home__category-list').removeClass('focus');
+    $('.user-home__categories').removeClass('focus');
     $(this).addClass('focus');
 });
 
-$('.user-home__category-list').on('click', function() {
+$('.user-home__categories').on('click', function() {
     page = 0;
     $('#category-posts-list').empty();
     isEnd = false;
 
     $('#category-all-btn').removeClass('focus');
-    $('.user-home__category-list').removeClass('focus');
+    $('.user-home__categories').removeClass('focus');
     $(this).addClass('focus');
 });
 
@@ -53,12 +53,12 @@ function getCategoryPosts(id, category) {
         }
 
         response.forEach(function(post, index) {
-            var row = $('<a>').attr('href', '/posts/' + post.id).addClass('row mb-3 mx-auto align-items-center user-home__posts');
+            var row = $('<a>').attr('href', '/posts/' + post.id).addClass('row mb-3 mx-auto align-items-center shadow p-3 bg-body rounded user-home__posts');
             //날짜, 인덱스
             var col1 = $('<div>').addClass('col-sm-2');
 
             col1.append($('<div>').text(post.createdDate).addClass('row mb-3 justify-content-center user-home__date'));
-            col1.append($('<div>').text("#" + (response.length - index)).addClass('row mb-3 justify-content-center user-home__index'))
+            col1.append($('<div>').text("#" + (response.length - index)).addClass('row justify-content-center user-home__index'))
 
             //앨범 아트
             var col2 = $('<div>').addClass('col-sm-2 text-center');
@@ -68,9 +68,9 @@ function getCategoryPosts(id, category) {
             //아티스트, 앨범, 장르
             var col3 = $('<div>').addClass('col-sm-6');
 
-            col3.append($('<div>').text(post.artist).addClass('row mb-3 justify-content-center user-home__artist'));
-            col3.append($('<div>').text(post.album).addClass('row mb-3 justify-content-center user-home__album'));
-            col3.append($('<div>').text(post.genre).addClass('row mb-3 justify-content-center user-home__genre'));
+            col3.append($('<div>').text(post.artist).addClass('row mb-4 justify-content-center user-home__artist'));
+            col3.append($('<div>').text(post.album).addClass('row mb-4 justify-content-center user-home__album'));
+            col3.append($('<div>').text(post.genre).addClass('row justify-content-center user-home__genre'));
 
             //카테고리
             var col4 = $('<div>').addClass('col-sm-1');
@@ -110,12 +110,12 @@ function getArtistPosts(id, artist) {
         }
 
         response.forEach(function(post, index) {
-            var row = $('<a>').attr('href', '/posts/' + post.id).addClass('row mb-3 mx-auto align-items-center user-home__posts');
+            var row = $('<a>').attr('href', '/posts/' + post.id).addClass('row mb-3 mx-auto align-items-center shadow p-3 bg-body rounded user-home__posts');
             //날짜, 인덱스
             var col1 = $('<div>').addClass('col-sm-2');
 
             col1.append($('<div>').text(post.createdDate).addClass('row mb-3 justify-content-center user-home__date'));
-            col1.append($('<div>').text("#" + (response.length - index)).addClass('row mb-3 justify-content-center user-home__index'))
+            col1.append($('<div>').text("#" + (response.length - index)).addClass('row justify-content-center user-home__index'))
 
             //앨범 아트
             var col2 = $('<div>').addClass('col-sm-2 text-center');
@@ -125,9 +125,9 @@ function getArtistPosts(id, artist) {
             //아티스트, 앨범, 장르
             var col3 = $('<div>').addClass('col-sm-6');
 
-            col3.append($('<div>').text(post.artist).addClass('row mb-3 justify-content-center user-home__artist'));
-            col3.append($('<div>').text(post.album).addClass('row mb-3 justify-content-center user-home__album'));
-            col3.append($('<div>').text(post.genre).addClass('row mb-3 justify-content-center user-home__genre'));
+            col3.append($('<div>').text(post.artist).addClass('row mb-4 justify-content-center user-home__artist'));
+            col3.append($('<div>').text(post.album).addClass('row mb-4 justify-content-center user-home__album'));
+            col3.append($('<div>').text(post.genre).addClass('row justify-content-center user-home__genre'));
 
             //카테고리
             var col4 = $('<div>').addClass('col-sm-1');
