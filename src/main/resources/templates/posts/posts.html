@@ -91,20 +91,22 @@
                 </div>
 
                 <!-- 댓글 목록-->
-                <div th:each="parentComment : ${parentComments}">
+                <div class="posts__comment-list">
                     <!--부모 댓글-->
-                    <div class="row mb-3 align-items-center">
+                    <div class="row mb-3 align-items-center" th:each="parentComment : ${parentComments}">
                         <div class="col-sm-1">
                             <img class="posts__comment-img" th:src="@{/api/v1/image/{imageId}(imageId=${parentComment.profileImageId})}">
                         </div>
-                        <div class="col-sm-3 posts__comment-username" th:text="${parentComment.username}"></div>
-                        <div class="col-sm-4 posts__comment-text" th:text="${parentComment.text}"></div>
-                        <div class="col-sm-2 posts__comment-createdDate" th:text="${parentComment.createdDate}"></div>
-                        <div class="col-sm-1">
-                            <button class="posts__comment-btn" type="button" th:onclick="switchChildForm([[${parentComment.id}]])">답글</button>
-                        </div>
-                        <div class="col-sm-1">
-                            <button class="posts__comment-btn" th:if="${parentComment.username == session.user.name}" type="button" th:onclick="deleteComment([[${parentComment.id}]])">삭제</button>
+                        <div class="col">
+                            <div class="row mb-1">
+                                <div class="col-sm-3 posts__comment-username" th:text="${parentComment.username}"></div>
+                                <div class="col posts__comment-text" th:text="${parentComment.text}"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3 posts__comment-createdDate" th:text="${parentComment.createdDate}"></div>
+                                <button class="col-sm-1 posts__comment-btn" type="button" th:onclick="switchChildForm([[${parentComment.id}]])">답글</button>
+                                <button class="col-sm-1 posts__comment-btn" th:if="${parentComment.username == session.user.name}" type="button" th:onclick="deleteComment([[${parentComment.id}]])">삭제</button>
+                            </div>
                         </div>
                     </div>
                     <!--자식 댓글-->
@@ -113,11 +115,16 @@
                         <div class="col-sm-1">
                             <img class="posts__comment-img" th:src="@{/api/v1/image/{imageId}(imageId=${childComment.profileImageId})}">
                         </div>
-                        <div class="col-sm-3 posts__comment-username" th:text="${childComment.username}"></div>
-                        <div class="col-sm-4 posts__comment-text" th:text="${childComment.text}"></div>
-                        <div class="col-sm-2 posts__comment-createdDate" th:text="${childComment.createdDate}"></div>
-                        <div class="col-sm-1" th:if="${childComment.username == session.user.name}">
-                            <button class="posts__comment-btn" type="button" th:onclick="deleteComment([[${childComment.id}]])">삭제</button>
+
+                        <div class="col">
+                            <div class="row mb-1">
+                                <div class="col-sm-3 posts__comment-username" th:text="${childComment.username}"></div>
+                                <div class="col posts__comment-text" th:text="${childComment.text}"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3 posts__comment-createdDate" th:text="${childComment.createdDate}"></div>
+                                <button class="col-sm-1 posts__comment-btn" type="button" th:onclick="deleteComment([[${childComment.id}]])">삭제</button>
+                            </div>
                         </div>
                     </div>
                 </div>

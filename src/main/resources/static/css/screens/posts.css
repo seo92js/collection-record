@@ -67,6 +67,10 @@
     color: gray;
 }
 
+.posts__comment-list {
+    height: 400px;
+    overflow:auto;
+}
 
 
 
