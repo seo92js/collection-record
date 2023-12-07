@@ -9,32 +9,27 @@
         <h1 th:text="|${username} 님|" class="header__title"></h1>
     </header>
 
-    <main class="chatroom">
-        <div class="chatroom__container" id="message-container">
-            <div th:each ="chatRoomMessage : ${chatRoomMessages}" th:class="${chatRoomMessage.senderName == session.user.name} ? 'chatroom\_\_me' : 'chatroom\_\_opponent'">
-                <div class="chatroom__createdDate">
-                    <div th:text="${chatRoomMessage.createdTime}"></div>
-                </div>
-                <div class="chatroom__content">
-                    <div class="chatroom__username" th:text="${chatRoomMessage.senderName}"></div>
-                    <div th:class="${chatRoomMessage.senderName == session.user.name} ? 'chatroom\_\_message chatroom\_\_message--me' : 'chatroom\_\_message chatroom\_\_message--opponent'" th:text="${chatRoomMessage.message}"></div>
-                </div>
+    <div class="container">
+        <div id="message-container">
+            <div th:each ="chatRoomMessage : ${chatRoomMessages}" th:class="${chatRoomMessage.senderName == session.user.name} ? 'row chatroom\_\_me' : 'row chatroom\_\_opponent'">
+                    <div class="row chatroom__createdDate" th:text="${chatRoomMessage.createdTime}"></div>
+                    <div th:class="${chatRoomMessage.senderName == session.user.name} ? 'row justify-content-end' : 'row justify-content-start'">
+                        <div class="col-sm-2 chatroom__username" th:text="${chatRoomMessage.senderName}"></div>
+                        <div th:class="${chatRoomMessage.senderName == session.user.name} ? 'col-sm-2 chatroom\_\_message chatroom\_\_message--me' : 'col-sm-2 chatroom\_\_message chatroom\_\_message--opponent'" th:text="${chatRoomMessage.message}"></div>
+                    </div>
             </div>
         </div>
 
-        <div class="form">
+        <form class="row align-items-center">
             <input type="hidden" id="loginUsername" th:value="${session.user.name}">
-
-            <div class="form__row">
-                <div class="form__col form__col--70">
-                    <input class="form__input" type="text" id="input-chat" placeholder="내용" th:required="true">
-                </div>
-                <div class="form__col form__col--30">
-                    <button class="form__btn" type="button" th:onclick="send([[${session.user.id}]], [[${receiverId}]], [[${chatRoomId}]])">보내기</button>
-                </div>
+            <div class="col-sm-9">
+                <input class="form-control" type="text" id="input-chat" placeholder="내용" th:required="true">
             </div>
-        </div>
-    </main>
+            <div class="col-sm-3">
+                <button class="btn btn-dark btn-sm" type="button" th:onclick="send([[${session.user.id}]], [[${receiverId}]], [[${chatRoomId}]])">보내기</button>
+            </div>
+        </form>
+    </div>
 
     <div th:replace="fragments/footer :: footer" />
 

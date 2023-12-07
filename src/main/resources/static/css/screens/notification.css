@@ -1,14 +1,6 @@
-.notification {
-}
-
-.notification__list {
-    display:flex;
-    align-items:center;
-    justify-content: center;
-}
-
 .notification__link {
-    padding:10px;
+    text-decoration: none;
+    color: black;
 }
 
 .notification__created-date {

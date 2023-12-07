@@ -1,34 +1,3 @@
-.chatroom {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-.chatroom__container {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    width: 500px;
-    height: 450px;
-    overflow:auto;
-}
-
-.chatroom__me {
-    display:flex;
-    flex-direction:column;
-    margin-left:auto;
-    padding: 5px;
-}
-
-.chatroom__opponent {
-    display:flex;
-    flex-direction:column;
-    margin-right:auto;
-    padding: 5px;
-}
-
 .chatroom__createdDate {
     font-size:7px;
     padding:5px;

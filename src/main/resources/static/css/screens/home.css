@@ -1,14 +1,29 @@
-.home {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+.home__createdDate {
+    font-size: 10px;
+    color: blue;
 }
 
-.home__feed {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 20px 0px 20px;
+.home__username {
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+    text-decoration-line: none;
+}
+
+.home__status,
+.home__category,
+.home__artist,
+.home__album,
+.home__genre {
+    font-size:12px;
+    color:darkgray;
+}
+
+.home__image {
+    height: 300px;
+    object-fit: contain;
+}
+
+.home__text {
+    color: black;
 }

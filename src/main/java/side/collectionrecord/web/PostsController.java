@@ -80,6 +80,7 @@ public class PostsController {
 
         PostsResponseDto postsResponseDto = postsService.findById(id);
 
+        model.addAttribute("userId", posts.getUser().getId());
         model.addAttribute("username", posts.getUser().getUsername());
         model.addAttribute("postsResponseDto", postsResponseDto);
 

@@ -24,10 +24,6 @@
     box-sizing: border-box;
 }
 
-.form__input--hidden {
-    display: none;
-}
-
 .form__btn {
     width: 100%;
     height: 100%;

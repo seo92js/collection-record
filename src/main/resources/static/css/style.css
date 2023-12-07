@@ -5,9 +5,6 @@
 /* component */
 @import "component/header.css";
 @import "component/form.css";
-@import "component/posts-main.css";
-@import "component/posts-feed.css";
-@import "component/icons.css";
 @import "component/image.css";
 
 /* screen */

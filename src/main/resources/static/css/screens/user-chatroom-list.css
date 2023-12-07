@@ -1,37 +1,11 @@
-.user-chatroom-list {
-    margin-top:10px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-.user-chatroom-list__chatroom {
-    display: flex;
-    width: 250px;
-    height: 70px;
-    margin:5px;
-
-    border: 1px solid gainsboro;
-}
-
-.user-chatroom-list__col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width:100%;
-    height:100%;
-}
-
 .user-chatroom-list__not-read {
     color:red;
 }
 
 .user-chatroom-list__read {
+    text-decoration: none;
+    color: black;
 }
 
 .user-chatroom-list__img {
-    width:100%;
-    height:100%;
-    object-fit: contain;
 }

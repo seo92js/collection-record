@@ -12,11 +12,9 @@
         <H1 class="header__title"></H1>
     </header>
 
-    <main class="home" sec:authorize="isAuthenticated()">
-        <div class="home__feed" id="follow-posts-list">
-            <!-- 팔로잉 유저 게시물 -->
-        </div>
-    </main>
+    <div id="follow-posts-list" class="container w-50" sec:authorize="isAuthenticated()">
+
+    </div>
 
     <div th:replace="fragments/footer :: footer" />
 

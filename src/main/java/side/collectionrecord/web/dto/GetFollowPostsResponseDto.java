@@ -15,6 +15,7 @@ import java.util.List;
 public class GetFollowPostsResponseDto {
     private String createdDate;
     private String username;
+    private Long userId;
     private Long userProfileImageId;
     private Long id;
     private String artist;
@@ -28,6 +29,7 @@ public class GetFollowPostsResponseDto {
 
     public GetFollowPostsResponseDto(Posts posts){
         this.createdDate = posts.getCreatedDate();
+        this.userId = posts.getUser().getId();
         this.username = posts.getUser().getUsername();
         this.userProfileImageId = posts.getUser().getProfileImage().getId();
         this.id = posts.getId();

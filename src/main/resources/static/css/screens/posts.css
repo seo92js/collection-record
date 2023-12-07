@@ -72,46 +72,44 @@
     overflow:auto;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .posts__modify {
     font-weight: bold;
-    font-size: 13px;
-    color: blue;
+    font-size: 14px;
+    color: darkgray;
+    text-decoration-line: none;
 }
 
 .posts__chat{
     font-weight: bold;
-    font-size: 13px;
-    color: blue;
+    font-size: 14px;
+    color: darkgray;
+    text-decoration-line: none;
 }
 
 .posts__prev {
     position: absolute;
     top: 50%;
     left: 20px;
-    color: gray;
+    color: white;
+    text-decoration-line: none;
+    background-color: gray;
+    opacity: 0.3;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .posts__next {
     position: absolute;
     top: 50%;
     right: 20px;
-    color: gray;
+    color: white;
+    text-decoration-line: none;
+    background-color: gray;
+    opacity: 0.3;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .hidden {
