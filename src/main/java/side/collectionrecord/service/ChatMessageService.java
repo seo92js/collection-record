@@ -12,11 +12,10 @@ import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.exception.ChatMessageNotFoundException;
 import side.collectionrecord.exception.ChatRoomNotFoundException;
 import side.collectionrecord.exception.UserNotFoundException;
-import side.collectionrecord.web.dto.CreateChatMessageRequestDto;
-import side.collectionrecord.web.dto.GetChatMessageResponseDto;
+import side.collectionrecord.web.dto.ChatMessageRequestDto;
+import side.collectionrecord.web.dto.ChatMessageResponseDto;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -29,25 +28,25 @@ public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
 
     @Transactional
-    public GetChatMessageResponseDto getChatMessageById(Long id){
+    public ChatMessageResponseDto getChatMessageById(Long id){
         ChatMessage chatMessage = chatMessageRepository.findById(id).orElseThrow(() -> new ChatMessageNotFoundException("메세지가 없습니다."));
 
-        GetChatMessageResponseDto getChatMessageResponseDto = new GetChatMessageResponseDto(chatMessage);
+        ChatMessageResponseDto chatMessageResponseDto = new ChatMessageResponseDto(chatMessage);
 
-        return getChatMessageResponseDto;
+        return chatMessageResponseDto;
     }
 
     @Transactional
-    public Long createChatMessage(CreateChatMessageRequestDto createChatMessageRequestDto){
-        User sender = userRepository.findById(createChatMessageRequestDto.getSenderId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
-        User receiver = userRepository.findById(createChatMessageRequestDto.getReceiverId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
-        ChatRoom chatRoom = chatRoomRepository.findById(createChatMessageRequestDto.getChatRoomId()).orElseThrow(() -> new ChatRoomNotFoundException("채팅방이 없습니다."));
+    public Long createChatMessage(ChatMessageRequestDto chatMessageRequestDto){
+        User sender = userRepository.findById(chatMessageRequestDto.getSenderId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+        User receiver = userRepository.findById(chatMessageRequestDto.getReceiverId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+        ChatRoom chatRoom = chatRoomRepository.findById(chatMessageRequestDto.getChatRoomId()).orElseThrow(() -> new ChatRoomNotFoundException("채팅방이 없습니다."));
 
         ChatMessage chatMessage = ChatMessage.builder()
                 .sender(sender)
                 .receiver(receiver)
                 .chatRoom(chatRoom)
-                .message(createChatMessageRequestDto.getMessage())
+                .message(chatMessageRequestDto.getMessage())
                 .confirm(false)
                 .build();
 
@@ -57,10 +56,10 @@ public class ChatMessageService {
     }
 
     @Transactional
-    public List<GetChatMessageResponseDto> getChatMessageByChatRoomId(Long chatRoomId){
+    public List<ChatMessageResponseDto> getChatMessageByChatRoomId(Long chatRoomId){
 
         return chatMessageRepository.findByChatRoomId(chatRoomId).stream()
-                .map(GetChatMessageResponseDto::new)
+                .map(ChatMessageResponseDto::new)
                 .collect(Collectors.toList());
 
     }

@@ -11,7 +11,7 @@ import side.collectionrecord.domain.userchatroom.UserChatRoom;
 import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.service.ChatMessageService;
 import side.collectionrecord.service.UserChatRoomService;
-import side.collectionrecord.web.dto.GetChatMessageResponseDto;
+import side.collectionrecord.web.dto.ChatMessageResponseDto;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class ChatRoomController {
 
         model.addAttribute("chatRoomId", userChatRoom.getChatRoom().getId());
 
-        List<GetChatMessageResponseDto> chatRoomMessage = chatMessageService.getChatMessageByChatRoomId(userChatRoom.getChatRoom().getId());
+        List<ChatMessageResponseDto> chatRoomMessage = chatMessageService.getChatMessageByChatRoomId(userChatRoom.getChatRoom().getId());
 
         model.addAttribute("chatRoomMessages", chatRoomMessage);
 

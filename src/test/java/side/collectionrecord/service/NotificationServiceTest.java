@@ -9,8 +9,8 @@ import side.collectionrecord.domain.notification.NotificationRepository;
 import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.CreateNotificationRequestDto;
-import side.collectionrecord.web.dto.GetNotificationResponseDto;
+import side.collectionrecord.web.dto.NotificationRequestDto;
+import side.collectionrecord.web.dto.NotificationResponseDto;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ class NotificationServiceTest {
 
         userRepository.save(receiver);
 
-        CreateNotificationRequestDto createNotificationRequestDto = CreateNotificationRequestDto.builder()
+        NotificationRequestDto notificationRequestDto = NotificationRequestDto.builder()
                 .senderName(sender.getUsername())
                 .receiverName(receiver.getUsername())
                 .text("text")
@@ -59,7 +59,7 @@ class NotificationServiceTest {
                 .build();
 
         //when
-        notificationService.createNotification(createNotificationRequestDto);
+        notificationService.createNotification(notificationRequestDto);
 
         //then
         List<Notification> all = notificationRepository.findAll();
@@ -90,7 +90,7 @@ class NotificationServiceTest {
 
         userRepository.save(receiver);
 
-        CreateNotificationRequestDto createNotificationRequestDto = CreateNotificationRequestDto.builder()
+        NotificationRequestDto notificationRequestDto = NotificationRequestDto.builder()
                 .senderName(sender.getUsername())
                 .receiverName(receiver.getUsername())
                 .text("text")
@@ -98,7 +98,7 @@ class NotificationServiceTest {
                 .build();
 
         //when
-        Long id = notificationService.createNotification(createNotificationRequestDto);
+        Long id = notificationService.createNotification(notificationRequestDto);
 
         notificationService.updateNotification(id);
 
@@ -130,17 +130,17 @@ class NotificationServiceTest {
 
         userRepository.save(receiver);
 
-        CreateNotificationRequestDto createNotificationRequestDto = CreateNotificationRequestDto.builder()
+        NotificationRequestDto notificationRequestDto = NotificationRequestDto.builder()
                 .senderName(sender.getUsername())
                 .receiverName(receiver.getUsername())
                 .text("text")
                 .url("url")
                 .build();
 
-        Long id = notificationService.createNotification(createNotificationRequestDto);
+        Long id = notificationService.createNotification(notificationRequestDto);
 
         //when
-        List<GetNotificationResponseDto> notConfirmNotification = notificationService.getAllNotificationByUserIdConfirmFalse(receiver.getId());
+        List<NotificationResponseDto> notConfirmNotification = notificationService.getAllNotificationByUserIdConfirmFalse(receiver.getId());
 
         //then
         assertThat(notConfirmNotification.size()).isEqualTo(1);

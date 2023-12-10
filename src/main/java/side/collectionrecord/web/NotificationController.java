@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import side.collectionrecord.service.NotificationService;
-import side.collectionrecord.web.dto.GetNotificationResponseDto;
+import side.collectionrecord.web.dto.NotificationResponseDto;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class NotificationController {
     @GetMapping("/notification/{userId}")
     public String notification(@PathVariable("userId") Long userId, Model model){
 
-        List<GetNotificationResponseDto> notConfirmNotification = notificationService.getAllNotificationByUserIdConfirmFalse(userId);
+        List<NotificationResponseDto> notConfirmNotification = notificationService.getAllNotificationByUserIdConfirmFalse(userId);
 
         model.addAttribute("notifications", notConfirmNotification);
 

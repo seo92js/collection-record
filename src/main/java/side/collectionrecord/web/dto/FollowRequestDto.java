@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class CreateFollowRequestDto {
+public class FollowRequestDto {
     private Long userId;
     private Long followingUserId;
 
     @Builder
-    public CreateFollowRequestDto(Long userId, Long followingUserId){
+    public FollowRequestDto(Long userId, Long followingUserId){
         this.userId = userId;
         this.followingUserId = followingUserId;
     }

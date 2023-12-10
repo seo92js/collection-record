@@ -1,6 +1,7 @@
 package side.collectionrecord.domain.user;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -16,14 +17,13 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
         this.queryFactory = new JPAQueryFactory(em);
     }
 
-
     @Override
-    public List<User> findByUsernameContains(String username, int offset, int size) {
+    public List<User> findByUsernameContains(String username, Pageable pageable) {
         return queryFactory.selectFrom(user)
                 .where(user.username.contains(username))
                 .orderBy(user.username.asc())
-                .offset(offset)
-                .limit(size)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
     }
 }

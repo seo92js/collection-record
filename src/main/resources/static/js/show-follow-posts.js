@@ -1,8 +1,7 @@
 let page = 0;
-let isEnd = false;
 
 window.addEventListener('scroll', function(){
-    if ($(window).scrollTop() + $(window).height() == $(document).height() && !isEnd) {
+    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
       page = page + 1;
       getFollowPosts(page);
     }
@@ -16,7 +15,6 @@ function getFollowPosts(page){
         url: '/api/v1/home/' + page,
     }).done(function(response){
         if (response.length === 0){
-            isEnd = true;
             return;
         }
 
@@ -46,7 +44,7 @@ function getFollowPosts(page){
             row6.append($('<div>').text(post.genre).addClass('col home__genre'));
             //이미지
             var row7 = $('<div>').addClass('row mb-3');
-            row7.append($('<img>').attr('src', '/api/v1/image/' + post.imageIds[0]).addClass('col home__img'));
+            row7.append($('<img>').attr('src', '/api/v1/image/' + post.imageIds[0]).addClass('col home__image'));
             //텍스트
             var row8 = $('<div>').addClass('row');
             row8.append($('<pre>').text(post.text).addClass('col home__text'));

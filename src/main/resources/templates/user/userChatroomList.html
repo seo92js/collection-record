@@ -13,7 +13,7 @@
     <div class="container w-25">
         <div class="row" th:each="chatroom : ${chatrooms}">
             <img class="col-sm-2 user-chatroom-list__img"  th:src="@{/api/v1/image/{imageId}(imageId=${chatroom.profileImageId})}">
-            <a th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${session.user.id}, userId=${chatroom.userId})}" th:class="${chatroom.confirm == false} ? 'col user-chatroom-list\_\_not-read' : 'col user-chatroom-list\_\_read'"  onclick="window.open(this.href, '_blank', 'width=500, height=700'); return false;" th:text="${chatroom.username}"></a>
+            <a th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${session.user.id}, userId=${chatroom.userId})}" th:class="${chatroom.confirm == false} ? 'col user-chatroom-list\_\_not-read' : 'col user-chatroom-list\_\_read'"  onclick="window.open(this.href, '_blank', 'width=900, height=900'); return false;" th:text="${chatroom.username}"></a>
         </div>
     </div>
 

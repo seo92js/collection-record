@@ -23,7 +23,8 @@
                     <a  class="user-home__link" href="/posts/add">글쓰기</a>
                 </div>
                 <div class="row mb-3" th:if="${isFollowing != null}">
-                    <a class="user-home__link text-center" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${session.user.id}, userId=${id})}" target="_blank">채팅</a>
+<!--                    <a class="user-home__link text-center" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${session.user.id}, userId=${id})}" target="_blank">채팅</a>-->
+                    <a class="user-home__link text-center" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${session.user.id}, userId=${id})}" onclick="window.open(this.href, '_blank', 'width=900, height=900'); return false;">채팅</a>
                 </div>
                 <div class="row mb-3" th:if="${isFollowing == true}">
                     <button class="user-home__button" th:onclick="deleteFollow([[${id}]])">팔로우 취소</button>

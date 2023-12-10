@@ -6,14 +6,14 @@ import side.collectionrecord.domain.user.User;
 
 @Getter
 @NoArgsConstructor
-public class GetUserChatRoomResponseDto {
+public class UserChatRoomResponseDto {
     private Long userId;
     private String username;
     private Long profileImageId;
 
     private boolean isConfirm;
 
-    public GetUserChatRoomResponseDto(User user, boolean isConfirm){
+    public UserChatRoomResponseDto(User user, boolean isConfirm){
         this.userId = user.getId();
         this.username = user.getUsername();
         this.profileImageId = user.getProfileImage().getId();

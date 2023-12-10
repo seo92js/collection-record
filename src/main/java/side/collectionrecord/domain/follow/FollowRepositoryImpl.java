@@ -1,6 +1,7 @@
 package side.collectionrecord.domain.follow;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Pageable;
 import side.collectionrecord.domain.posts.Posts;
 
 import javax.persistence.EntityManager;
@@ -19,17 +20,17 @@ public class FollowRepositoryImpl implements FollowRepositoryCustom{
     }
 
     @Override
-    public List<Posts> findPostsByUserIdEqFollowingId(Long userId, int offset, int size) {
+    public List<Posts> findPostsByUserIdEqFollowingId(Long userId, Pageable pageable) {
 
         return queryFactory.selectFrom(posts)
                 .join(follow)
-                    .on(
+                .on(
                         posts.user.id.eq(follow.follower.id)
                                 .and(follow.following.id.eq(userId))
-                    )
+                )
                 .orderBy(posts.createdDate.desc())
-                .offset(offset)
-                .limit(size)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
     }

@@ -12,8 +12,8 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.service.NotificationService;
-import side.collectionrecord.web.dto.CreateNotificationRequestDto;
-import side.collectionrecord.web.dto.GetNotificationResponseDto;
+import side.collectionrecord.web.dto.NotificationRequestDto;
+import side.collectionrecord.web.dto.NotificationResponseDto;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -40,11 +40,11 @@ public class WebSocketHandlerByNotification extends TextWebSocketHandler {
             return;
 
         // 일반 알림
-        CreateNotificationRequestDto createNotificationRequestDto = objectMapper.readValue(payload, CreateNotificationRequestDto.class);
-        Long id = notificationService.createNotification(createNotificationRequestDto);
+        NotificationRequestDto notificationRequestDto = objectMapper.readValue(payload, NotificationRequestDto.class);
+        Long id = notificationService.createNotification(notificationRequestDto);
 
         // 상대한테 send
-        WebSocketSession sessionByUsername = findSessionByUsername(createNotificationRequestDto.getReceiverName());
+        WebSocketSession sessionByUsername = findSessionByUsername(notificationRequestDto.getReceiverName());
         sendToClient(sessionByUsername);
     }
 
@@ -79,7 +79,7 @@ public class WebSocketHandlerByNotification extends TextWebSocketHandler {
 
             User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
-            List<GetNotificationResponseDto> notConfirmNotification = notificationService.getAllNotificationByUserIdConfirmFalse(user.getId());
+            List<NotificationResponseDto> notConfirmNotification = notificationService.getAllNotificationByUserIdConfirmFalse(user.getId());
 
             // 안읽은 알림이 있으면 본인에게 send
             if (notConfirmNotification.size() > 0)

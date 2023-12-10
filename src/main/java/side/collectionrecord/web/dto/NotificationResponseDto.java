@@ -6,7 +6,7 @@ import side.collectionrecord.domain.notification.Notification;
 
 @Getter
 @NoArgsConstructor
-public class GetNotificationResponseDto {
+public class NotificationResponseDto {
     private String createdDate;
     private Long id;
     private String senderName;
@@ -14,7 +14,7 @@ public class GetNotificationResponseDto {
     private String message;
     private String url;
 
-    public GetNotificationResponseDto(Notification notification){
+    public NotificationResponseDto(Notification notification){
         this.createdDate = notification.getCreatedDate();
         this.id = notification.getId();
         this.senderName = notification.getSender().getUsername();

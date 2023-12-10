@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.exception.ImageNotFoundException;
-import side.collectionrecord.web.dto.CreateImageRequestDto;
+import side.collectionrecord.web.dto.ImageRequestDto;
 
 @Getter
 @RequiredArgsConstructor
@@ -16,11 +16,11 @@ public class ImageService {
     private final ImageRepository imageRepository;
 
     @Transactional
-    public Long createImage(CreateImageRequestDto createImageRequestDto){
+    public Long createImage(ImageRequestDto imageRequestDto){
 
         Image image = Image.builder()
-                .filename(createImageRequestDto.getFilename())
-                .data(createImageRequestDto.getData())
+                .filename(imageRequestDto.getFilename())
+                .data(imageRequestDto.getData())
                 .build();
 
         return imageRepository.save(image).getId();

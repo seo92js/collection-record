@@ -6,14 +6,14 @@ import side.collectionrecord.domain.chatmessage.ChatMessage;
 
 @Getter
 @NoArgsConstructor
-public class GetChatMessageResponseDto {
+public class ChatMessageResponseDto {
     private Long chatRoomId;
     private String senderName;
     private String receiverName;
     private String createdTime;
     private String message;
 
-    public GetChatMessageResponseDto(ChatMessage chatMessage){
+    public ChatMessageResponseDto(ChatMessage chatMessage){
         this.chatRoomId = chatMessage.getChatRoom().getId();
         this.senderName = chatMessage.getSender().getUsername();
         this.receiverName = chatMessage.getReceiver().getUsername();

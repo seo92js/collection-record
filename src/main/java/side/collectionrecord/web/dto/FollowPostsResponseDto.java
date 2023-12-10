@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class GetFollowPostsResponseDto {
+public class FollowPostsResponseDto {
     private String createdDate;
     private String username;
     private Long userId;
@@ -27,7 +27,7 @@ public class GetFollowPostsResponseDto {
     private List<Long> imageIds = new ArrayList<>();
     private String text;
 
-    public GetFollowPostsResponseDto(Posts posts){
+    public FollowPostsResponseDto(Posts posts){
         this.createdDate = posts.getCreatedDate();
         this.userId = posts.getUser().getId();
         this.username = posts.getUser().getUsername();

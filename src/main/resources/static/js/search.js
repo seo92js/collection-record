@@ -1,15 +1,13 @@
 let page = 0;
-let isEnd = false;
 
 window.addEventListener('scroll', function(){
-    if ($(window).scrollTop() + $(window).height() == $(document).height() && !isEnd) {
+    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
       page = page + 1;
       searchList(page, $('#search-text').val());
     }
 })
 
 function search(){
-    isEnd = false;
 
     page = 0;
 
@@ -37,7 +35,6 @@ function searchUser(page, text){
     }).done(function(response){
 
         if (response.length === 0){
-            isEnd = true;
             return;
         }
 
@@ -67,7 +64,6 @@ function searchArtistPosts(page, text){
     }).done(function(response){
 
         if (response.length === 0){
-            isEnd = true;
             return;
         }
 
@@ -122,7 +118,6 @@ function searchAlbumPosts(page, text){
     }).done(function(response){
 
         if (response.length === 0){
-            isEnd = true;
             return;
         }
 

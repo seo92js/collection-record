@@ -1,13 +1,13 @@
-.chatroom__createdDate {
-    font-size:7px;
-    padding:5px;
-    color: blue;
+#message-container {
+    width:  100%;
+    height: 700px;
+    overflow: auto;
 }
 
-.chatroom__content {
-    display:flex;
-    align-items:center;
+.chatroom__createdDate {
+    font-size:9px;
     padding:5px;
+    color: blue;
 }
 
 .chatroom__username {

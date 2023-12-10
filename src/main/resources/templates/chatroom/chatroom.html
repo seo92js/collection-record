@@ -12,7 +12,7 @@
     <div class="container">
         <div id="message-container">
             <div th:each ="chatRoomMessage : ${chatRoomMessages}" th:class="${chatRoomMessage.senderName == session.user.name} ? 'row chatroom\_\_me' : 'row chatroom\_\_opponent'">
-                    <div class="row chatroom__createdDate" th:text="${chatRoomMessage.createdTime}"></div>
+                    <div th:class="${chatRoomMessage.senderName == session.user.name} ? 'row justify-content-end chatroom\_\_createdDate' : 'row justify-content-start chatroom\_\_createdDate'" th:text="${chatRoomMessage.createdTime}"></div>
                     <div th:class="${chatRoomMessage.senderName == session.user.name} ? 'row justify-content-end' : 'row justify-content-start'">
                         <div class="col-sm-2 chatroom__username" th:text="${chatRoomMessage.senderName}"></div>
                         <div th:class="${chatRoomMessage.senderName == session.user.name} ? 'col-sm-2 chatroom\_\_message chatroom\_\_message--me' : 'col-sm-2 chatroom\_\_message chatroom\_\_message--opponent'" th:text="${chatRoomMessage.message}"></div>

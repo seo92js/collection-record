@@ -14,11 +14,10 @@ import side.collectionrecord.domain.userchatroom.QUserChatRoom;
 import side.collectionrecord.domain.userchatroom.UserChatRoom;
 import side.collectionrecord.domain.userchatroom.UserChatRoomRepository;
 import side.collectionrecord.exception.UserNotFoundException;
-import side.collectionrecord.web.dto.GetUserChatRoomResponseDto;
+import side.collectionrecord.web.dto.UserChatRoomResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -67,20 +66,20 @@ public class UserChatRoomService {
     }
 
     @Transactional
-    public List<GetUserChatRoomResponseDto> getAllUserChatroomByUserId(Long userId){
+    public List<UserChatRoomResponseDto> getAllUserChatroomByUserId(Long userId){
 
         List<Tuple> userChatRoomList = userChatRoomRepository.findUserAndChatroomIdByUserId(userId);
 
-        List<GetUserChatRoomResponseDto> responseDtoList = new ArrayList<>();
+        List<UserChatRoomResponseDto> responseDtoList = new ArrayList<>();
 
         for (Tuple tuple : userChatRoomList){
             User user = tuple.get(QUserChatRoom.userChatRoom.user);
             Long chatRoomId = tuple.get(QUserChatRoom.userChatRoom.chatRoom.id);
             List<ChatMessage> confirmFalseMessage = chatMessageRepository.findByChatroomIdAndUserIdConfirmFalse(chatRoomId, userId);
-            if(confirmFalseMessage.size() > 0) {
-                responseDtoList.add(new GetUserChatRoomResponseDto(user, false));
+            if(!confirmFalseMessage.isEmpty()) {
+                responseDtoList.add(new UserChatRoomResponseDto(user, false));
             }else{
-                responseDtoList.add(new GetUserChatRoomResponseDto(user, true));
+                responseDtoList.add(new UserChatRoomResponseDto(user, true));
             }
         }
 

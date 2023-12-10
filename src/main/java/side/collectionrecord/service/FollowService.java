@@ -1,6 +1,7 @@
 package side.collectionrecord.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.follow.Follow;
@@ -8,11 +9,10 @@ import side.collectionrecord.domain.follow.FollowRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.exception.UserNotFoundException;
-import side.collectionrecord.web.dto.CreateFollowRequestDto;
-import side.collectionrecord.web.dto.GetFollowPostsResponseDto;
+import side.collectionrecord.web.dto.FollowPostsResponseDto;
+import side.collectionrecord.web.dto.FollowRequestDto;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -23,9 +23,9 @@ public class FollowService {
     private final FollowRepository followRepository;
 
     @Transactional
-    public void createFollow(CreateFollowRequestDto createFollowRequestDto){
-        User user = userRepository.findById(createFollowRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
-        User followingUser = userRepository.findById(createFollowRequestDto.getFollowingUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+    public void createFollow(FollowRequestDto followRequestDto){
+        User user = userRepository.findById(followRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+        User followingUser = userRepository.findById(followRequestDto.getFollowingUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         Follow follow = Follow.builder()
                 .following(user)
@@ -36,9 +36,9 @@ public class FollowService {
     }
 
     @Transactional
-    public void deleteFollow(CreateFollowRequestDto createFollowRequestDto){
-        User user = userRepository.findById(createFollowRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
-        User unfollowingUser = userRepository.findById(createFollowRequestDto.getFollowingUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+    public void deleteFollow(FollowRequestDto followRequestDto){
+        User user = userRepository.findById(followRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+        User unfollowingUser = userRepository.findById(followRequestDto.getFollowingUserId()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         Follow follow = user.getFollowByUser(unfollowingUser);
 
@@ -61,12 +61,10 @@ public class FollowService {
     }
 
     @Transactional
-    public List<GetFollowPostsResponseDto> getAllPostsByUserIdEqFollowingId(Long userId, int page, int size){
+    public List<FollowPostsResponseDto> getAllPostsByUserIdEqFollowingId(Long userId, Pageable pageable){
 
-        int offset = page * size;
-
-        return followRepository.findPostsByUserIdEqFollowingId(userId, offset, size).stream()
-                .map(GetFollowPostsResponseDto::new)
+        return followRepository.findPostsByUserIdEqFollowingId(userId, pageable).stream()
+                .map(FollowPostsResponseDto::new)
                 .collect(Collectors.toList());
     }
 }

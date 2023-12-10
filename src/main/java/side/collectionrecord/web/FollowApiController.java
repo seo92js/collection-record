@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import side.collectionrecord.config.auth.dto.SessionUser;
 import side.collectionrecord.service.FollowService;
-import side.collectionrecord.web.dto.CreateFollowRequestDto;
+import side.collectionrecord.web.dto.FollowRequestDto;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,7 +21,7 @@ public class FollowApiController {
     public Long createFollow(@PathVariable Long id, HttpSession httpSession){
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
-        followService.createFollow(CreateFollowRequestDto.builder()
+        followService.createFollow(FollowRequestDto.builder()
                 .userId(user.getId())
                 .followingUserId(id)
                 .build());
@@ -33,7 +33,7 @@ public class FollowApiController {
     public Long deleteFollow(@PathVariable Long id, HttpSession httpSession){
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
-        followService.deleteFollow(CreateFollowRequestDto.builder()
+        followService.deleteFollow(FollowRequestDto.builder()
                 .userId(user.getId())
                 .followingUserId(id)
                 .build());

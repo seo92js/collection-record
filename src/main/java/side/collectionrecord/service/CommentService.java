@@ -10,15 +10,13 @@ import side.collectionrecord.domain.posts.PostsRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.exception.CommentNotFoundException;
-import side.collectionrecord.exception.ImageNotFoundException;
 import side.collectionrecord.exception.PostsNotFoundException;
 import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.web.dto.CommentChildForm;
 import side.collectionrecord.web.dto.CommentParentForm;
-import side.collectionrecord.web.dto.GetCommentResponseDto;
+import side.collectionrecord.web.dto.CommentResponseDto;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -68,18 +66,18 @@ public class CommentService {
     }
 
     @Transactional
-    public List<GetCommentResponseDto> getAllParentCommentsByPosts(Posts posts){
+    public List<CommentResponseDto> getAllParentCommentsByPosts(Posts posts){
 
         return commentRepository.findParentCommentByPosts(posts).stream()
-                .map(GetCommentResponseDto::new)
+                .map(CommentResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<GetCommentResponseDto> getAllChildCommentsByPosts(Posts posts){
+    public List<CommentResponseDto> getAllChildCommentsByPosts(Posts posts){
 
         return commentRepository.findChildCommentByPosts(posts).stream()
-                .map(GetCommentResponseDto::new)
+                .map(CommentResponseDto::new)
                 .collect(Collectors.toList());
     }
 }

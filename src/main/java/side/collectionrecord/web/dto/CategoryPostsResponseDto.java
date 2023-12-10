@@ -8,7 +8,7 @@ import side.collectionrecord.domain.posts.PostsStatus;
 
 @Getter
 @NoArgsConstructor
-public class GetCategoryPostsResponseDto {
+public class CategoryPostsResponseDto {
     Long id;
     String createdDate;
     Category category;
@@ -18,7 +18,7 @@ public class GetCategoryPostsResponseDto {
     String albumArt;
     PostsStatus status;
 
-    public GetCategoryPostsResponseDto(Posts posts){
+    public CategoryPostsResponseDto(Posts posts){
         this.id = posts.getId();
         this.createdDate = posts.getCreatedDate();
         this.category = posts.getCategory();

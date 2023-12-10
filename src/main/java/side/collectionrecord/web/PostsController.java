@@ -53,7 +53,7 @@ public class PostsController {
 
         for (MultipartFile image : postsAddForm.getImages()) {
             byte[] data = image.getBytes();
-            Long imageId = imageService.createImage(CreateImageRequestDto.builder()
+            Long imageId = imageService.createImage(ImageRequestDto.builder()
                     .filename(image.getOriginalFilename())
                     .data(data)
                     .build());
@@ -111,10 +111,10 @@ public class PostsController {
 
         model.addAttribute("commentChildForm", commentChildForm);
 
-        List<GetCommentResponseDto> parentComments = commentService.getAllParentCommentsByPosts(posts);
+        List<CommentResponseDto> parentComments = commentService.getAllParentCommentsByPosts(posts);
         model.addAttribute("parentComments", parentComments);
 
-        List<GetCommentResponseDto> childComments = commentService.getAllChildCommentsByPosts(posts);
+        List<CommentResponseDto> childComments = commentService.getAllChildCommentsByPosts(posts);
         model.addAttribute("childComments", childComments);
 
         return "posts/posts";

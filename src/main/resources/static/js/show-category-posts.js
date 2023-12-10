@@ -1,5 +1,4 @@
 let page = 0;
-let isEnd = false;
 let id;
 let category;
 let artist;
@@ -7,7 +6,6 @@ let artist;
 $('#category-all-btn').on('click', function() {
     page = 0;
     $('#category-posts-list').empty();
-    isEnd = false;
 
     $('.user-home__categories').removeClass('focus');
     $(this).addClass('focus');
@@ -16,7 +14,6 @@ $('#category-all-btn').on('click', function() {
 $('.user-home__categories').on('click', function() {
     page = 0;
     $('#category-posts-list').empty();
-    isEnd = false;
 
     $('#category-all-btn').removeClass('focus');
     $('.user-home__categories').removeClass('focus');
@@ -26,7 +23,7 @@ $('.user-home__categories').on('click', function() {
 $('#category-all-btn').click();
 
 $(window).on('scroll', function(){
-    if ($(window).scrollTop() + $(window).height() == $(document).height() && !isEnd) {
+    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
           page = page + 1;
 
           event.preventDefault();
@@ -48,7 +45,6 @@ function getCategoryPosts(id, category) {
         url: '/api/v1/posts/category/' + id + '/' + category + '/' + page,
     }).done(function(response){
         if (response.length === 0){
-            isEnd = true;
             return;
         }
 
@@ -105,7 +101,6 @@ function getArtistPosts(id, artist) {
         url: '/api/v1/posts/artist/' + id + '/' + artist + '/' + page,
     }).done(function(response){
         if (response.length === 0){
-            isEnd = true;
             return;
         }
 

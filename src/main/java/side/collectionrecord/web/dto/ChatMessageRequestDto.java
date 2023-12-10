@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CreateChatMessageRequestDto {
+public class ChatMessageRequestDto {
     private Long senderId;
     private Long receiverId;
 
@@ -15,7 +15,7 @@ public class CreateChatMessageRequestDto {
     private boolean confirm;
 
     @Builder
-    public CreateChatMessageRequestDto(Long senderId, Long receiverId, Long chatRoomId, String message, Boolean confirm){
+    public ChatMessageRequestDto(Long senderId, Long receiverId, Long chatRoomId, String message, Boolean confirm){
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.chatRoomId = chatRoomId;

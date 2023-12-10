@@ -3,6 +3,7 @@ package side.collectionrecord.domain.follow;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.posts.Posts;
@@ -126,7 +127,9 @@ class FollowRepositoryTest {
 
         Follow saved = followRepository.save(follow);
 
-        List<Posts> followPosts = followRepository.findPostsByUserIdEqFollowingId(user1.getId(), 0, 5);
+        PageRequest pageRequest = PageRequest.of(0, 5);
+
+        List<Posts> followPosts = followRepository.findPostsByUserIdEqFollowingId(user1.getId(), pageRequest);
         assertThat(followPosts.size()).isEqualTo(2);
         // 초 단위 까지 변경
         //assertThat(followPosts.get(0).getTitle()).isEqualTo("title2");

@@ -3,6 +3,7 @@ package side.collectionrecord.domain.posts;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.category.Category;
 import side.collectionrecord.domain.user.Role;
@@ -94,8 +95,10 @@ class PostsRepositoryTest {
 
         postsRepository.save(post2);
 
+        PageRequest pageRequest = PageRequest.of(0, 9);
+
         //when
-        List<Posts> postsList = postsRepository.findByUserIdAndCategory(user.getId(), "TAPE", 0, 9);
+        List<Posts> postsList = postsRepository.findByUserIdAndCategory(user.getId(), "TAPE", pageRequest);
 
         //then
         assertThat(postsList.size()).isEqualTo(2);
@@ -141,8 +144,9 @@ class PostsRepositoryTest {
 
         postsRepository.save(post2);
 
+        PageRequest pageRequest = PageRequest.of(0, 5);
         //when
-        List<Posts> hashtags = postsRepository.findByUserIdAndCategory(user.getId(), "TAPE", 0, 5);
+        List<Posts> hashtags = postsRepository.findByUserIdAndCategory(user.getId(), "TAPE", pageRequest);
 
         //then
         assertThat(hashtags.size()).isEqualTo(2);

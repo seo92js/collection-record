@@ -3,13 +3,15 @@ package side.collectionrecord.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
 import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
-import side.collectionrecord.web.dto.GetSearchUserResponseDto;
+import side.collectionrecord.web.dto.SearchUserResponseDto;
+import side.collectionrecord.web.dto.UserProfileForm;
 
 import java.io.IOException;
 import java.util.List;
@@ -50,15 +52,15 @@ class UserServiceTest {
 
         imageRepository.save(image);
 
-        UpdateUserRequestDto updateUserRequestDto = UpdateUserRequestDto.builder()
+        UserProfileForm userProfileForm = UserProfileForm.builder()
                 .username(expectedName)
-                .profileImage(image)
+                .profileImage(null)
                 .profileText("text")
                 .build();
 
         //userUpdateRequestDto.encodePassword(passwordEncoder);
 
-        userService.updateUser(user.getId(), updateUserRequestDto);
+        userService.userUpdate(user.getId(), userProfileForm, image);
 
         //when
         User findUser = userRepository.findAll().get(0);
@@ -83,11 +85,11 @@ class UserServiceTest {
         userRepository.save(user);
 
         //when
-        GetUserProfileResponseDto getUserProfileResponseDto = userService.getUserById(user.getId());
+        UserProfileForm userProfileForm = userService.findById(user.getId());
 
         //then
-        assertThat(getUserProfileResponseDto.getUsername()).isEqualTo(user.getUsername());
-        assertThat(getUserProfileResponseDto.getProfileImage()).isEqualTo(user.getProfileImage());
+        assertThat(userProfileForm.getUsername()).isEqualTo(user.getUsername());
+        assertThat(userProfileForm.getProfileImage()).isEqualTo(user.getProfileImage());
     }
 
     @Test
@@ -132,8 +134,9 @@ class UserServiceTest {
 
         userRepository.save(user3);
 
+        PageRequest pageRequest = PageRequest.of(0, 5);
         //when
-        List<GetSearchUserResponseDto> containsUsername = userService.getAllUserByUsernameContains(username, 0, 5);
+        List<SearchUserResponseDto> containsUsername = userService.getAllUserByUsernameContains(username, pageRequest);
 
         //then
         assertThat(containsUsername.size()).isEqualTo(3);

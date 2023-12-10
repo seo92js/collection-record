@@ -18,15 +18,14 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.service.*;
-import side.collectionrecord.web.dto.CreateImageRequestDto;
-import side.collectionrecord.web.dto.GetUserChatRoomResponseDto;
+import side.collectionrecord.web.dto.ImageRequestDto;
+import side.collectionrecord.web.dto.UserChatRoomResponseDto;
 import side.collectionrecord.web.dto.UserProfileForm;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -57,7 +56,7 @@ public class UserController {
         Long loginUserId = sessionUser.getId();
 
         if (!loginUserId.equals(userId)) {
-            if (followService.checkFollow(loginUserId, userId) == false) {
+            if (!followService.checkFollow(loginUserId, userId)) {
                 model.addAttribute("isFollowing", false);
             } else {
                 model.addAttribute("isFollowing", true);
@@ -83,9 +82,9 @@ public class UserController {
 
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
-        List<GetUserChatRoomResponseDto> getUserChatRoomResponseDtos = userChatRoomService.getAllUserChatroomByUserId(user.getId());
+        List<UserChatRoomResponseDto> userChatRoomResponseDtos = userChatRoomService.getAllUserChatroomByUserId(user.getId());
 
-        model.addAttribute("chatrooms", getUserChatRoomResponseDtos);
+        model.addAttribute("chatrooms", userChatRoomResponseDtos);
 
         return "user/userChatroomList";
     }
@@ -124,7 +123,7 @@ public class UserController {
         if (!userProfileForm.getProfileImage().getOriginalFilename().equals("")) {
             byte[] bytes = userProfileForm.getProfileImage().getBytes();
 
-            Long imageId = imageService.createImage(CreateImageRequestDto.builder()
+            Long imageId = imageService.createImage(ImageRequestDto.builder()
                     .filename(userProfileForm.getProfileImage().getOriginalFilename())
                     .data(bytes)
                     .build());

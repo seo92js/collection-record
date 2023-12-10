@@ -1,6 +1,7 @@
 package side.collectionrecord.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.comment.Comment;
@@ -15,7 +16,6 @@ import side.collectionrecord.exception.UserNotFoundException;
 import side.collectionrecord.web.dto.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -35,38 +35,34 @@ public class PostsService {
     }
 
     @Transactional
-    public List<GetArtistPostsResponseDto> getAllPostsByUserIdAndArtist(Long userId, String artist, int page, int size){
-        int offset = page * size;
+    public List<ArtistPostsResponseDto> getAllPostsByUserIdAndArtist(Long userId, String artist, Pageable pageable){
 
-        return postsRepository.findByUserIdAndArtist(userId, artist, offset, size).stream()
-                .map(GetArtistPostsResponseDto::new)
+        return postsRepository.findByUserIdAndArtist(userId, artist, pageable).stream()
+                .map(ArtistPostsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<GetSearchArtistPostsResponseDto> getAllPostsByArtistContains(String artist, int page, int size){
-        int offset = page * size;
+    public List<SearchArtistPostsResponseDto> getAllPostsByArtistContains(String artist, Pageable pageable){
 
-        return postsRepository.findByArtistContains(artist, offset, size).stream()
-                .map(GetSearchArtistPostsResponseDto::new)
+        return postsRepository.findByArtistContains(artist, pageable).stream()
+                .map(SearchArtistPostsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<GetCategoryPostsResponseDto> getAllPostsByUserIdAndCategory(Long userId, String category, int page, int size){
-        int offset = page * size;
+    public List<CategoryPostsResponseDto> getAllPostsByUserIdAndCategory(Long userId, String category, Pageable pageable){
 
-        return postsRepository.findByUserIdAndCategory(userId, category, offset, size).stream()
-                .map(GetCategoryPostsResponseDto::new)
+        return postsRepository.findByUserIdAndCategory(userId, category, pageable).stream()
+                .map(CategoryPostsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<GetSearchAlbumPostsResponseDto> getAllPostsByAlbumContains(String album, int page, int size){
-        int offset = page * size;
+    public List<SearchAlbumPostsResponseDto> getAllPostsByAlbumContains(String album, Pageable pageable){
 
-        return postsRepository.findByAlbumContains(album, offset, size).stream()
-                .map(GetSearchAlbumPostsResponseDto::new)
+        return postsRepository.findByAlbumContains(album, pageable).stream()
+                .map(SearchAlbumPostsResponseDto::new)
                 .collect(Collectors.toList());
     }
 

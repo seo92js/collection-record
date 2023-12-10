@@ -9,11 +9,10 @@ import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.exception.NotificationNotFoundException;
 import side.collectionrecord.exception.UserNotFoundException;
-import side.collectionrecord.web.dto.CreateNotificationRequestDto;
-import side.collectionrecord.web.dto.GetNotificationResponseDto;
+import side.collectionrecord.web.dto.NotificationRequestDto;
+import side.collectionrecord.web.dto.NotificationResponseDto;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -24,16 +23,16 @@ public class NotificationService {
     private final NotificationRepository notificationRepository;
 
     @Transactional
-    public Long createNotification(CreateNotificationRequestDto createNotificationRequestDto){
-        User sender = userRepository.findByUsername(createNotificationRequestDto.getSenderName()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
-        User receiver = userRepository.findByUsername(createNotificationRequestDto.getReceiverName()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+    public Long createNotification(NotificationRequestDto notificationRequestDto){
+        User sender = userRepository.findByUsername(notificationRequestDto.getSenderName()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
+        User receiver = userRepository.findByUsername(notificationRequestDto.getReceiverName()).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
 
         Notification notification = Notification.builder()
                 .sender(sender)
                 .receiver(receiver)
-                .message(createNotificationRequestDto.getText())
+                .message(notificationRequestDto.getText())
                 .confirm(false)
-                .url(createNotificationRequestDto.getUrl())
+                .url(notificationRequestDto.getUrl())
                 .build();
 
         return notificationRepository.save(notification).getId();
@@ -49,8 +48,8 @@ public class NotificationService {
     }
 
     @Transactional
-    public List<GetNotificationResponseDto> getAllNotificationByUserIdConfirmFalse(Long userId){
+    public List<NotificationResponseDto> getAllNotificationByUserIdConfirmFalse(Long userId){
         return notificationRepository.findByUserIdConfirmFalse(userId).stream()
-                .map(GetNotificationResponseDto::new).collect(Collectors.toList());
+                .map(NotificationResponseDto::new).collect(Collectors.toList());
     }
 }

@@ -14,7 +14,8 @@
     <div class="container">
         <div class="row mt-5 mb-5 justify-content-end">
             <a class="col-sm-1 posts__modify" th:if="${isMyPost}" th:href="@{/posts/{id}/update(id=${postsResponseDto.id})}">수정</a>
-            <a class="col-sm-1 posts__chat" th:unless="${isMyPost}" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${session.user.id}, userId=${userId})}" target="_blank">채팅</a>
+<!--            <a class="col-sm-1 posts__chat" th:unless="${isMyPost}" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${session.user.id}, userId=${userId})}" target="_blank">채팅</a>-->
+            <a class="col-sm-1 posts__chat" th:unless="${isMyPost}" th:href="@{/chatroom/{loginUserId}/{userId}(loginUserId=${session.user.id}, userId=${userId})}" onclick="window.open(this.href, '_blank', 'width=900, height=900'); return false;">채팅</a>
         </div>
         <div class="row border">
             <div class="col-sm-6 align-self-center position-relative">

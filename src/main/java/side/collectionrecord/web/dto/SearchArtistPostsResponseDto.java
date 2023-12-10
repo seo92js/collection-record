@@ -8,7 +8,7 @@ import side.collectionrecord.domain.posts.PostsStatus;
 
 @Getter
 @NoArgsConstructor
-public class GetSearchArtistPostsResponseDto {
+public class SearchArtistPostsResponseDto {
     private Long id;
     private String createdDate;
     private String username;
@@ -19,7 +19,7 @@ public class GetSearchArtistPostsResponseDto {
     private String albumArt;
     private PostsStatus status;
 
-    public GetSearchArtistPostsResponseDto(Posts posts){
+    public SearchArtistPostsResponseDto(Posts posts){
         this.id = posts.getId();
         this.createdDate = posts.getCreatedDate();
         this.username = posts.getUser().getUsername();

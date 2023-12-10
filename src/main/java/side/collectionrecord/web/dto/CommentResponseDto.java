@@ -6,7 +6,7 @@ import side.collectionrecord.domain.comment.Comment;
 
 @Getter
 @NoArgsConstructor
-public class GetCommentResponseDto {
+public class CommentResponseDto {
     Long id;
     Long parentId;
     Long profileImageId;
@@ -14,7 +14,7 @@ public class GetCommentResponseDto {
     String text;
     String createdDate;
 
-    public GetCommentResponseDto(Comment comment){
+    public CommentResponseDto(Comment comment){
         this.id = comment.getId();
         this.profileImageId = comment.getUser().getProfileImage().getId();
         if (comment.getParentComment() != null)

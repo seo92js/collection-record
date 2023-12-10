@@ -7,7 +7,7 @@ import side.collectionrecord.domain.BaseTimeEntity;
 
 @Getter
 @NoArgsConstructor
-public class CreateNotificationRequestDto extends BaseTimeEntity {
+public class NotificationRequestDto extends BaseTimeEntity {
     private String senderName;
     private String receiverName;
     private String text;
@@ -15,7 +15,7 @@ public class CreateNotificationRequestDto extends BaseTimeEntity {
     private String url;
 
     @Builder
-    public CreateNotificationRequestDto(String senderName, String receiverName, String text, String url){
+    public NotificationRequestDto(String senderName, String receiverName, String text, String url){
         this.senderName = senderName;
         this.receiverName = receiverName;
         this.text = text;

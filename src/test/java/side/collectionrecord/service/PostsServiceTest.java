@@ -14,6 +14,8 @@ import side.collectionrecord.domain.user.Role;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.exception.PostsNotFoundException;
+import side.collectionrecord.web.dto.PostsAddForm;
+import side.collectionrecord.web.dto.PostsUpdateForm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,20 +62,20 @@ class PostsServiceTest {
         List<Image> images = new ArrayList<>();
         images.add(image);
 
-        CreatePostsRequestDto createPostsRequestDto = CreatePostsRequestDto.builder()
+        PostsAddForm postsAddForm = PostsAddForm.builder()
                 .userId(user.getId())
                 .artist("artist")
                 .album("album")
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .images(images)
+                .images(null)
                 .text("text")
                 .status(PostsStatus.SALE)
                 .build();
 
 
-        Long id = postsService.createPosts(createPostsRequestDto);
+        Long id = postsService.postsAdd(postsAddForm, images);
 
         //when
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new PostsNotFoundException("게시물이 없습니다."));
@@ -111,33 +113,33 @@ class PostsServiceTest {
         List<Image> images = new ArrayList<>();
         images.add(image);
 
-        CreatePostsRequestDto createPostsRequestDto1 = CreatePostsRequestDto.builder()
+        PostsAddForm postsAddForm1 = PostsAddForm.builder()
                 .userId(user.getId())
                 .artist("artist")
                 .album("album")
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .images(images)
+                .images(null)
                 .status(PostsStatus.SALE)
                 .text("text2")
                 .build();
 
-        CreatePostsRequestDto createPostsRequestDto2 = CreatePostsRequestDto.builder()
+        PostsAddForm postsAddForm2 = PostsAddForm.builder()
                 .userId(user.getId())
                 .artist("artist")
                 .album("album")
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .images(images)
+                .images(null)
                 .status(PostsStatus.SALE)
                 .text("text2")
                 .build();
 
-        postsService.createPosts(createPostsRequestDto1);
+        postsService.postsAdd(postsAddForm1, images);
 
-        Long id = postsService.createPosts(createPostsRequestDto2);
+        Long id = postsService.postsAdd(postsAddForm2, images);
 
         List<Posts> all = postsRepository.findAll();
 
@@ -176,41 +178,35 @@ class PostsServiceTest {
         List<Image> images = new ArrayList<>();
         images.add(image);
 
-        CreatePostsRequestDto createPostsRequestDto1 = CreatePostsRequestDto.builder()
+        PostsAddForm postsAddForm = PostsAddForm.builder()
                 .userId(user.getId())
                 .artist("artist")
                 .album("album")
                 .genre("genre")
                 .albumArt("albumArt")
                 .category(Category.CD)
-                .images(images)
+                .images(null)
                 .status(PostsStatus.SALE)
                 .text("text")
                 .build();
 
-        Long id = postsService.createPosts(createPostsRequestDto1);
+        Long id = postsService.postsAdd(postsAddForm, images);
 
-        String expectedTitle = "title2";
         String expectedText = "text2";
         PostsStatus expectedStatus = PostsStatus.SOLD_OUT;
 
         //when
-        UpdatePostsRequestDto updatePostsRequestDto = UpdatePostsRequestDto.builder()
-                .artist("artist")
-                .album("album")
-                .genre("genre")
-                .albumArt("albumArt")
-                .category(Category.VINYL)
+        PostsUpdateForm postsUpdateForm = PostsUpdateForm.builder()
                 .status(expectedStatus)
                 .text(expectedText)
                 .build();
 
-        postsService.updatePosts(user.getId(), id, updatePostsRequestDto);
+        postsService.updatePosts(id, postsUpdateForm);
 
         //then
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new PostsNotFoundException("게시물이 없습니다."));
 
-        assertThat(posts.getCategory()).isEqualTo(Category.VINYL);
+        assertThat(posts.getCategory()).isEqualTo(Category.CD);
         assertThat(posts.getText()).isEqualTo(expectedText);
         assertThat(posts.getStatus()).isEqualTo(expectedStatus);
     }

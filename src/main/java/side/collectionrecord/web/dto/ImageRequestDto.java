@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CreateImageRequestDto {
+public class ImageRequestDto {
 
     private String filename;
     private byte[] data;
 
     @Builder
-    public CreateImageRequestDto(String filename, byte[] data){
+    public ImageRequestDto(String filename, byte[] data){
         this.filename = filename;
         this.data = data;
     }

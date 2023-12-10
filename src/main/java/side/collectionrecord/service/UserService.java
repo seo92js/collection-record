@@ -1,6 +1,7 @@
 package side.collectionrecord.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import side.collectionrecord.domain.image.Image;
@@ -8,7 +9,7 @@ import side.collectionrecord.domain.image.ImageRepository;
 import side.collectionrecord.domain.user.User;
 import side.collectionrecord.domain.user.UserRepository;
 import side.collectionrecord.exception.UserNotFoundException;
-import side.collectionrecord.web.dto.GetSearchUserResponseDto;
+import side.collectionrecord.web.dto.SearchUserResponseDto;
 import side.collectionrecord.web.dto.UserProfileForm;
 
 import java.util.List;
@@ -50,21 +51,12 @@ public class UserService {
     }
 
     @Transactional
-    public List<GetSearchUserResponseDto> getAllUserByUsernameContains(String username, int page, int size){
-        int offset = page * size;
+    public List<SearchUserResponseDto> getAllUserByUsernameContains(String username, Pageable pageable){
 
-        return userRepository.findByUsernameContains(username, offset, size).stream()
-                .map(GetSearchUserResponseDto::new)
+        return userRepository.findByUsernameContains(username, pageable).stream()
+                .map(SearchUserResponseDto::new)
                 .collect(Collectors.toList());
     }
-
-//    private void validateDuplicateUser(String username){
-//        Optional<User> findUser = userRepository.findByUsername(username);
-//
-//        if(findUser.isPresent()){
-//            throw new CustomException(ErrorCode.USER_DUPLICATE);
-//        }
-//    }
 
     public boolean validateDuplicateUser(Long id, String username){
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("유저가 없습니다."));
